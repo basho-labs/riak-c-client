@@ -21,8 +21,8 @@ riak-c-client
 ### OSX Build
 
 	brew install protobuf protobuf-c log4c scons libevent
-	git clone git@github.com:/basho-labs/debris.git
-	cd debris
+	git clone git@github.com:/basho/riak-c-client.git
+	cd riak-c-client
 	scons
 
 
@@ -35,9 +35,9 @@ wget https://protobuf-c.googlecode.com/files/protobuf-c-0.15.tar.gz
 cd protobuf-c-0.15
 ./configure && make && sudo make install
 cd ..
- 
-git clone git@github.com:/basho-labs/debris.git
-cd debris
+
+git clone git@github.com:/basho/riak-c-client.git
+cd riak-c-client
 scons
 ```
 
