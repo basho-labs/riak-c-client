@@ -8,7 +8,7 @@ env = Environment(
     )
 env.ParseConfig("pkg-config --libs libevent libprotobuf-c protobuf")
 env.ParseConfig("pkg-config --cflags libevent libprotobuf-c protobuf")
-files = ['registry.c','test_binary.c']
+files = ['registry.c','test_binary.c','test_context.c']
 
 riak_c_cunit = env.Program('riak_c_cunit', files, LIBS=['riak_c_client', 'event_core', 'event_extra', 'log4c', 'pthread', 'protobuf', 'protobuf-c','cunit'])
 Depends(riak_c_cunit, '../../build/libriak_c_client.a')

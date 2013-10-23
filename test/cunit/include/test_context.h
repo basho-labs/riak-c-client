@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * riak_error.h: Riak C Error Handling
+ * test_context.h: Riak C Unit testing for riak_context
  *
  * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
  *
@@ -20,36 +20,5 @@
  *
  *********************************************************************/
 
-#ifndef RIAK_ERROR_H_
-#define RIAK_ERROR_H_
-
-typedef enum riak_error_enum {
-    ERIAK_OK = 0,
-    ERIAK_DNS_RESOLUTION,
-    ERIAK_OUT_OF_MEMORY,
-    ERIAK_WRITE,
-    ERIAK_EVENT,
-    ERIAK_NO_PING,
-    ERIAK_LOGGING,
-    ERIAK_UNINITIALIZED,
-    ERIAK_LAST_ERRORNUM
-} riak_error;
-
-#ifdef _RIAK_ERROR_DEFINE_MSGS
-static const char* errmsgs[] = {
-    "No Error",
-    "Problems resolving host name/port number",
-    "Out of Memory",
-    "Write error",
-    "Riak Event error",
-    "Ping failure error",
-    "Logging failure",
-    "Uninitialized Value",
-    "SENTINEL FOR LAST ERROR MESSAGE"
-};
-#endif
-
-const char*
-riak_strerror(riak_error err);
-
-#endif
+void
+test_build_context();

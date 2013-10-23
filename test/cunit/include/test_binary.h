@@ -37,3 +37,6 @@ test_binary_new_from_string();
 
 void
 test_binary_hex_print();
+
+void
+test_build_binary_from_existing();

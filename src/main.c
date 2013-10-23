@@ -39,7 +39,15 @@ main(int   argc,
 //    event_use_pthreads();
 
     riak_context *ctx;
-    riak_error err = riak_context_new_default(&ctx, args.host, args.portnum);
+    riak_error err = riak_context_new_default(&ctx);
+    if (err) {
+        exit(1);
+    }
+    err = riak_context_add_connection(ctx, args.host, args.portnum);
+    if (err) {
+        exit(1);
+    }
+    err = riak_context_add_logging(ctx, NULL);
     if (err) {
         exit(1);
     }

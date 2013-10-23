@@ -45,7 +45,12 @@ void riak_log(riak_event *rev, riak_log_level_t level, const char *format, ...) 
     if (level < RIAK_LOG_FATAL || level > RIAK_LOG_UNKNOWN) level = RIAK_LOG_UNKNOWN;
     // Map to underlying log4c priorities
     log4c_priority_level_t priority = map_level_to_priority[(int)level];
-    log4c_category_t *category = log4c_category_get(rev->context->logging_category);
+    riak_boolean_t has_logging = RIAK_FALSE;
+    log4c_category_t *category;
+    if (rev->context->logging_category[0] != '\0') {
+        category = log4c_category_get(rev->context->logging_category);
+        has_logging = RIAK_TRUE;
+    }
     // Prefix with the file descriptor
     // TODO: Get rid of copying format string
     char formatted[2048];
@@ -53,7 +58,11 @@ void riak_log(riak_event *rev, riak_log_level_t level, const char *format, ...) 
 
     va_list va;
     va_start(va, format);
-    log4c_category_vlog(category, priority, formatted, va);
+    if (has_logging) {
+        log4c_category_vlog(category, priority, formatted, va);
+    } else {
+        vfprintf(stderr, formatted, va);
+    }
     va_end(va);
 }
 
@@ -62,10 +71,17 @@ void riak_log_context(riak_context *ctx, riak_log_level_t level, const char *for
     if (level < RIAK_LOG_FATAL || level > RIAK_LOG_UNKNOWN) level = RIAK_LOG_UNKNOWN;
     // Map to underlying log4c priorities
     log4c_priority_level_t priority = map_level_to_priority[(int)level];
-    log4c_category_t *category = log4c_category_get(ctx->logging_category);
-
+    riak_boolean_t has_logging = RIAK_FALSE;
+    log4c_category_t *category;
+    if (ctx->logging_category[0] != '\0') {
+        category = log4c_category_get(ctx->logging_category);
+        has_logging = RIAK_TRUE;
+    }
     va_list va;
     va_start(va, format);
-    log4c_category_vlog(category, priority, format, va);
-    va_end(va);
+    if (has_logging) {
+        log4c_category_vlog(category, priority, format, va);
+    } else {
+        vfprintf(stderr, format, va);
+    }
 }

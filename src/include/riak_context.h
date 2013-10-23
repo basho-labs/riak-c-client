@@ -42,24 +42,40 @@ typedef struct _riak_context riak_context;
  * @param freeme Memory releasing function (optional)
  * @param pb_alloc Memory allocator function for protocol buffers (optional)
  * @param pb_free Memory releasing function for protocol buffer (optional)
- * @param logging_category logging prefix (optional)
+ * @return Error code
+ */
+riak_error
+riak_context_new(riak_context    **context,
+                 riak_alloc_fn     alloc,
+                 riak_realloc_fn   realloc,
+                 riak_free_fn      freeme,
+                 riak_pb_alloc_fn  pb_alloc,
+                 riak_pb_free_fn   pb_free);
+// By default use system's built-in memory management utilities (malloc/free)
+#define riak_context_new_default(C) riak_context_new((C),NULL,NULL,NULL,NULL,NULL)
+
+/**
+ * @brief Construct a Riak Context
+ * @param context Existing Riak Context
  * @param hostname Name of Riak server
  * @param portnum Riak PBC port number
  * @return Error code
  */
 riak_error
-riak_context_new(riak_context    **context,
-                 const char       *hostname,
-                 const char       *portnum,
-                 riak_alloc_fn     alloc,
-                 riak_realloc_fn   realloc,
-                 riak_free_fn      freeme,
-                 riak_pb_alloc_fn  pb_alloc,
-                 riak_pb_free_fn   pb_free,
-                 const char       *logging_category);
+riak_context_add_connection(riak_context *context,
+                            const char   *hostname,
+                            const char   *portnum);
 
-// By default use system's built-in memory management utilities (malloc/free)
-#define riak_context_new_default(C,H,P) riak_context_new((C),(H),(P),NULL,NULL,NULL,NULL,NULL,NULL)
+/**
+ * @brief Construct a Riak Context
+ * @param context Spanking new `riak_context` struct
+ * @param logging_category logging prefix (optional)
+ * @return Error code
+ */
+riak_error
+riak_context_add_logging(riak_context *context,
+                         const char   *logging_category);
+
 
 /**
  * @brief Gets the underlying event base

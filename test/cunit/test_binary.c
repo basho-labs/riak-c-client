@@ -34,13 +34,14 @@
 void
 test_build_binary() {
     riak_context *ctx;
-    riak_error    err = riak_context_new_default(&ctx, "localhost", "1");
+    riak_error    err = riak_context_new_default(&ctx);
     CU_ASSERT_FATAL(err == ERIAK_OK)
     riak_binary  *bin = riak_binary_new(ctx, 6, (riak_uint8_t*)"abcdef");
+    CU_ASSERT_FATAL(bin != NULL)
     riak_int32_t  len = riak_binary_len(bin);
-    CU_ASSERT_EQUAL(len,6);
+    CU_ASSERT_EQUAL(len,6)
     riak_uint8_t *data = riak_binary_data(bin);
-    CU_ASSERT_EQUAL(memcmp(data, "abcdef", 6), 0);
+    CU_ASSERT_EQUAL(memcmp(data, "abcdef", 6), 0)
     riak_binary_free(ctx, &bin);
     CU_PASS("test_build_binary passed")
 }
@@ -48,9 +49,10 @@ test_build_binary() {
 void
 test_build_binary_with_null() {
     riak_context *ctx;
-    riak_error    err = riak_context_new_default(&ctx, "localhost", "1");
+    riak_error    err = riak_context_new_default(&ctx);
     CU_ASSERT_FATAL(err == ERIAK_OK)
     riak_binary  *bin = riak_binary_new(ctx, 0, NULL);
+    CU_ASSERT_FATAL(bin != NULL)
     riak_int32_t  len = riak_binary_len(bin);
     CU_ASSERT_EQUAL(len,0);
     riak_uint8_t *data = riak_binary_data(bin);
@@ -60,14 +62,32 @@ test_build_binary_with_null() {
 }
 
 void
+test_build_binary_from_existing() {
+    riak_context *ctx;
+    riak_error    err = riak_context_new_default(&ctx);
+    CU_ASSERT_FATAL(err == ERIAK_OK)
+    riak_binary *bin = riak_binary_new(ctx, 6, (riak_uint8_t*)"abcdef");
+    CU_ASSERT_FATAL(bin != NULL)
+    riak_binary *bin2 = riak_binary_populate(ctx, bin);
+    riak_int32_t  len = riak_binary_len(bin2);
+    CU_ASSERT_EQUAL(len,6);
+    riak_uint8_t *data = riak_binary_data(bin2);
+    CU_ASSERT_EQUAL(memcmp(data, "abcdef", 6), 0);
+    riak_binary_free(ctx, &bin);
+    riak_binary_free(ctx, &bin2);
+    CU_PASS("test_build_binary_from_existing passed")
+}
+
+void
 test_build_binary_from_pb() {
     riak_context       *ctx;
-    riak_error          err = riak_context_new_default(&ctx, "localhost", "1");
+    riak_error          err = riak_context_new_default(&ctx);
     CU_ASSERT_FATAL(err == ERIAK_OK)
     ProtobufCBinaryData pb_bin;
     pb_bin.len  = 6;
     pb_bin.data = (riak_uint8_t *)"abcdef";
     riak_binary *bin = riak_binary_populate_from_pb(ctx, &pb_bin);
+    CU_ASSERT_FATAL(bin != NULL)
     riak_int32_t len = riak_binary_len(bin);
     CU_ASSERT_EQUAL(len,6);
     riak_uint8_t *data = riak_binary_data(bin);
@@ -79,10 +99,11 @@ test_build_binary_from_pb() {
 void
 test_build_binary_to_pb() {
     riak_context *ctx;
-    riak_error    err = riak_context_new_default(&ctx, "localhost", "1");
+    riak_error    err = riak_context_new_default(&ctx);
     CU_ASSERT_FATAL(err == ERIAK_OK)
     ProtobufCBinaryData pb_bin;
     riak_binary *bin = riak_binary_new(ctx, 6, (riak_uint8_t*)"abcdef");
+    CU_ASSERT_FATAL(bin != NULL)
     err = riak_binary_to_pb_deep_copy(ctx, &pb_bin, bin);
     CU_ASSERT_EQUAL(pb_bin.len,6);
     CU_ASSERT_EQUAL(memcmp(pb_bin.data, "abcdef", 6), 0);
@@ -94,9 +115,10 @@ test_build_binary_to_pb() {
 void
 test_binary_new_from_string() {
     riak_context *ctx;
-    riak_error    err = riak_context_new_default(&ctx, "localhost", "1");
+    riak_error    err = riak_context_new_default(&ctx);
     CU_ASSERT_FATAL(err == ERIAK_OK)
     riak_binary  *bin = riak_binary_new_from_string(ctx, "abcdef");
+    CU_ASSERT_FATAL(bin != NULL)
     riak_int32_t  len = riak_binary_len(bin);
     CU_ASSERT_EQUAL(len,6);
     riak_uint8_t *data = riak_binary_data(bin);
@@ -108,7 +130,7 @@ test_binary_new_from_string() {
 void
 test_binary_hex_print() {
     riak_context *ctx;
-    riak_error    err = riak_context_new_default(&ctx, "localhost", "1");
+    riak_error    err = riak_context_new_default(&ctx);
     CU_ASSERT_FATAL(err == ERIAK_OK)
     riak_binary  *bin = riak_binary_new(ctx, 6, (riak_uint8_t*)"abcdef");
     char buffer[128];

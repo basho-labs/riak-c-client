@@ -30,14 +30,11 @@ extern ProtobufCAllocator protobuf_c_default_allocator;
 
 riak_error
 riak_context_new(riak_context    **context,
-                 const char       *hostname,
-                 const char       *portnum,
                  riak_alloc_fn     alloc,
                  riak_realloc_fn   realloc,
                  riak_free_fn      freeme,
                  riak_pb_alloc_fn  pb_alloc,
-                 riak_pb_free_fn   pb_free,
-                 const char       *logging_category) {
+                 riak_pb_free_fn   pb_free) {
     *context                   = NULL;
     riak_alloc_fn   alloc_fn   = malloc;
     riak_realloc_fn realloc_fn = realloc;
@@ -57,6 +54,7 @@ riak_context_new(riak_context    **context,
     if (ctx == NULL) {
         return ERIAK_OUT_OF_MEMORY;
     }
+    memset((void*)ctx, '\0', sizeof(riak_context));
     ctx->malloc_fn    = alloc_fn;
     ctx->realloc_fn   = realloc_fn;
     ctx->free_fn      = free_fn;
@@ -68,37 +66,56 @@ riak_context_new(riak_context    **context,
         ctx->pb_allocator->free = pb_free;
     }
 
-    if (logging_category == NULL) {
-        riak_strlcpy(ctx->logging_category, RIAK_LOGGING_DEFAULT_CATEGORY, sizeof(ctx->logging_category));
-    } else {
-        riak_strlcpy(ctx->logging_category, logging_category, sizeof(ctx->logging_category));
-    }
-    riak_strlcpy(ctx->hostname, hostname, sizeof(ctx->hostname));
-    riak_strlcpy(ctx->portnum, portnum, sizeof(ctx->hostname));
-
-    // Since we will likely only have one context, set up non-thread-safe logging here
-    // TODO: Make logging thread-safe
-    int result = log4c_init();
-    if (result != 0) {
-        fprintf(stderr, "Could not initialize logging\n");
-        riak_context_free(&ctx);
-        return ERIAK_LOGGING;
-    }
     ctx->base = event_base_new();
     if (ctx->base == NULL) {
-        riak_log_context(ctx, RIAK_LOG_FATAL, "Could not construct an event base");
         riak_context_free(&ctx);
         return ERIAK_EVENT;
     }
+
+    *context = ctx;
+    return ERIAK_OK;
+}
+
+riak_error
+riak_context_add_connection(riak_context *ctx,
+                            const char   *hostname,
+                            const char   *portnum) {
+    if (ctx == NULL) {
+        return ERIAK_UNINITIALIZED;
+    }
+
+    riak_strlcpy(ctx->hostname, hostname, sizeof(ctx->hostname));
+    riak_strlcpy(ctx->portnum, portnum, sizeof(ctx->hostname));
 
     riak_error err = riak_resolve_address(ctx, hostname, portnum, &(ctx->addrinfo));
     if (err) {
         riak_context_free(&ctx);
         return ERIAK_DNS_RESOLUTION;
     }
-    *context = ctx;
     return ERIAK_OK;
 }
+
+riak_error
+riak_context_add_logging(riak_context *ctx,
+                         const char   *logging_category) {
+    if (ctx == NULL) {
+        return ERIAK_UNINITIALIZED;
+    }
+    if (logging_category == NULL) {
+        riak_strlcpy(ctx->logging_category, RIAK_LOGGING_DEFAULT_CATEGORY, sizeof(ctx->logging_category));
+    } else {
+        riak_strlcpy(ctx->logging_category, logging_category, sizeof(ctx->logging_category));
+    }
+    // Since we will likely only have one context, set up non-thread-safe logging here
+    // TODO: Make logging thread-safe
+    int result = log4c_init();
+    if (result != 0) {
+        fprintf(stderr, "Could not initialize logging\n");
+        return ERIAK_LOGGING;
+    }
+    return ERIAK_OK;
+}
+
 
 riak_event_base*
 riak_context_get_base(riak_context *ctx) {

@@ -28,9 +28,8 @@
 #include <CUnit/Automated.h>
 #include <CUnit/Basic.h>
 #include "riak.h"
-#include "riak.pb-c.h"
-#include "riak_binary-internal.h"
 #include "test_binary.h"
+#include "test_context.h"
 
 int
 main(int   argc,
@@ -43,13 +42,16 @@ main(int   argc,
     }
     CU_InitializeFunc init_fn = NULL;
     CU_CleanupFunc cleanup_fn = NULL;
+    CU_pSuite context_suite = CU_add_suite("riak_context", init_fn, cleanup_fn);
     CU_pSuite binary_suite = CU_add_suite("riak_binary", init_fn, cleanup_fn);
-    CU_ADD_TEST(binary_suite,  test_build_binary);
-    CU_ADD_TEST(binary_suite,  test_build_binary_with_null);
+    CU_ADD_TEST(binary_suite, test_build_binary);
+    CU_ADD_TEST(binary_suite, test_build_binary_with_null);
     CU_ADD_TEST(binary_suite, test_build_binary_from_pb);
     CU_ADD_TEST(binary_suite, test_build_binary_to_pb);
     CU_ADD_TEST(binary_suite, test_binary_new_from_string);
     CU_ADD_TEST(binary_suite, test_binary_hex_print);
+    CU_ADD_TEST(binary_suite, test_build_binary_from_existing);
+    CU_ADD_TEST(context_suite, test_build_context);
     CU_basic_run_tests();
 
     void CU_cleanup_registry();
