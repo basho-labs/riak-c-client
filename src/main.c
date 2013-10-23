@@ -80,7 +80,8 @@ main(int   argc,
             } else {
                 err = riak_ping(ctx);
                 if (err) {
-                    fprintf(stderr, "No Ping\n");
+                    fprintf(stderr, "No Ping [%s]\n", riak_strerror(err));
+                    exit(1);
                 }
             }
             break;
@@ -92,7 +93,8 @@ main(int   argc,
                 riak_serverinfo_response *serverinfo_response;
                 err = riak_serverinfo(ctx, &serverinfo_response);
                 if (err) {
-                    fprintf(stderr, "Server Info Problems\n");
+                    fprintf(stderr, "Server Info Problems [%s]\n", riak_strerror(err));
+                    exit(1);
                 }
                 riak_print_serverinfo_response(serverinfo_response, output, sizeof(output));
                 printf("%s\n", output);
@@ -107,7 +109,8 @@ main(int   argc,
                 riak_get_response *get_response;
                 err = riak_get(ctx, bucket_bin, key_bin, NULL, &get_response);
                 if (err) {
-                    fprintf(stderr, "Get Problems\n");
+                    fprintf(stderr, "Get Problems [%s]\n", riak_strerror(err));
+                    exit(1);
                 }
                 riak_print_get_response(get_response, output, sizeof(output));
                 printf("%s\n", output);
@@ -140,7 +143,8 @@ main(int   argc,
                 riak_put_response *put_response;
                 err = riak_put(ctx, obj, &put_options, &put_response);
                 if (err) {
-                    fprintf(stderr, "Put Problems\n");
+                    fprintf(stderr, "Put Problems [%s]\n", riak_strerror(err));
+                    exit(1);
                 }
                 riak_print_put_response(put_response, output, sizeof(output));
                 printf("%s\n", output);
@@ -155,7 +159,8 @@ main(int   argc,
             } else {
                 err = riak_delete(ctx, bucket_bin, key_bin, NULL);
                 if (err) {
-                    fprintf(stderr, "Delete Problems\n");
+                    fprintf(stderr, "Delete Problems [%s]\n", riak_strerror(err));
+                    exit(1);
                 }
             }
             break;
@@ -167,7 +172,8 @@ main(int   argc,
                 riak_listbuckets_response *bucket_response;
                 err = riak_listbuckets(ctx, &bucket_response);
                 if (err) {
-                    fprintf(stderr, "List buckets Problems\n");
+                    fprintf(stderr, "List Buckets Problems [%s]\n", riak_strerror(err));
+                    exit(1);
                 }
                 riak_print_listbuckets_response(bucket_response, output, sizeof(output));
                 riak_log_context(ctx, RIAK_LOG_DEBUG, "%s", output);
@@ -182,7 +188,8 @@ main(int   argc,
                 riak_listkeys_response *key_response;
                 err = riak_listkeys(ctx, bucket_bin, args.timeout * 1000, &key_response);
                 if (err) {
-                    fprintf(stderr, "List keys Problems\n");
+                    fprintf(stderr, "List Keys Problems [%s]\n", riak_strerror(err));
+                    exit(1);
                 }
                 riak_print_listkeys_response(key_response, output, sizeof(output));
                 riak_log_context(ctx, RIAK_LOG_DEBUG, "%s", output);
@@ -197,7 +204,8 @@ main(int   argc,
                 riak_get_clientid_response *getcli_response;
                 err = riak_get_clientid(ctx, &getcli_response);
                 if (err) {
-                    fprintf(stderr, "Get ClientId Problems\n");
+                    fprintf(stderr, "Get ClientID Problems [%s]\n", riak_strerror(err));
+                    exit(1);
                 }
                 riak_print_get_clientid_response(getcli_response, output, sizeof(output));
                 printf("%s\n", output);
@@ -212,7 +220,8 @@ main(int   argc,
                 riak_set_clientid_response *setcli_response;
                 err = riak_set_clientid(ctx, value_bin, &setcli_response);
                 if (err) {
-                    fprintf(stderr, "Set ClientId Problems\n");
+                    fprintf(stderr, "Set ClientID Problems [%s]\n", riak_strerror(err));
+                    exit(1);
                 }
                 riak_free_set_clientid_response(ctx, &setcli_response);
             }
@@ -225,7 +234,8 @@ main(int   argc,
                 riak_get_bucketprops_response *bucket_response;
                 err = riak_get_bucketprops(ctx, bucket_bin, &bucket_response);
                 if (err) {
-                    fprintf(stderr, "Get Bucket Properties Problems\n");
+                    fprintf(stderr, "Get Bucket Properties Problems [%s]\n", riak_strerror(err));
+                    exit(1);
                 }
                 riak_print_get_bucketprops_response(bucket_response, output, sizeof(output));
                 riak_log_context(ctx, RIAK_LOG_DEBUG, "%s", output);
@@ -240,7 +250,8 @@ main(int   argc,
                 riak_reset_bucketprops_response *bucket_response;
                  err = riak_reset_bucketprops(ctx, bucket_bin, &bucket_response);
                 if (err) {
-                    fprintf(stderr, "Reset Bucket Properties Problems\n");
+                    fprintf(stderr, "Reset Bucket Properties Problems [%s]\n", riak_strerror(err));
+                    exit(1);
                 }
             }
             break;
@@ -258,7 +269,8 @@ main(int   argc,
                 riak_set_bucketprops_response *bucket_response;
                  err = riak_set_bucketprops(ctx, bucket_bin, props, &bucket_response);
                 if (err) {
-                    fprintf(stderr, "Set Bucket Properties Problems\n");
+                    fprintf(stderr, "Reset Bucket Properties Problems [%s]\n", riak_strerror(err));
+                    exit(1);
                 }
             }
             break;

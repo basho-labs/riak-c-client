@@ -3,14 +3,14 @@ import os
 env = Environment(
     ENV = os.environ,
     CCFLAGS = '-g -Wall -DUSE_DEBUG',
-    CPPPATH=['../../src/include','../../src/internal','../../build/proto'],
+    CPPPATH=['include','../../src/include','../../src/internal','../../build/proto'],
     LIBPATH=['../../build']
     )
 env.ParseConfig("pkg-config --libs libevent libprotobuf-c protobuf")
 env.ParseConfig("pkg-config --cflags libevent libprotobuf-c protobuf")
-lib_files = ['registry.c']
+files = ['registry.c','test_binary.c']
 
-riak_c_cunit = env.Program('riak_c_cunit','registry.c', LIBS=['riak_c_client', 'event_core', 'event_extra', 'log4c', 'pthread', 'protobuf', 'protobuf-c','cunit'])
+riak_c_cunit = env.Program('riak_c_cunit', files, LIBS=['riak_c_client', 'event_core', 'event_extra', 'log4c', 'pthread', 'protobuf', 'protobuf-c','cunit'])
 Depends(riak_c_cunit, '../../build/libriak_c_client.a')
 
 conf = Configure(env)
