@@ -1,0 +1,75 @@
+import os
+
+env = Environment(
+    ENV = os.environ,
+    CCFLAGS = '-g -Wall -DUSE_DEBUG',
+    # .. Required for proctoc-c full pathname
+    CPPPATH=['proto','include','internal','..'],
+    LIBPATH=['.'],
+    toolpath=['tools'],
+    tools=['default', 'protoc'])
+env.ParseConfig("pkg-config --libs libevent libprotobuf-c protobuf")
+env.ParseConfig("pkg-config --cflags libevent libprotobuf-c protobuf")
+
+riak_pb = env.Protoc(
+    [],
+    "proto/riak.proto",
+    PROTOCPROTOPATH=['.'],
+    RPROTOCPROTOPATH=['build/proto'],
+    PROTOCOUTDIR = '.', # defaults to same directory as .proto
+)
+riak_kv_pb = env.Protoc(
+    [],
+    "proto/riak_kv.proto",
+    PROTOCPROTOPATH=['.','build/proto'],
+    RPROTOCPROTOPATH=['build/proto'],
+    PROTOCOUTDIR = '.', # defaults to same directory as .proto
+)
+riak_search_pb = env.Protoc(
+    [],
+    "proto/riak_search.proto",
+    PROTOCPROTOPATH=['.','build/proto'],
+    RPROTOCPROTOPATH=['build/proto'],
+    PROTOCOUTDIR = '.', # defaults to same directory as .proto
+)
+riak_yokozuna_pb = env.Protoc(
+    [],
+    "proto/riak_yokozuna.proto",
+    PROTOCPROTOPATH=['.','build/proto'],
+    RPROTOCPROTOPATH=['build/proto'],
+    PROTOCOUTDIR = '.', # defaults to same directory as .proto
+)
+lib_files = [riak_pb[0], riak_kv_pb[0], riak_search_pb[0], riak_yokozuna_pb[0], Split('riak.c riak_utils.c riak_binary.c riak_context.c riak_event.c riak_messages.c riak_log.c riak_error.c riak_network.c riak_object.c riak_bucket_props.c riak_call_backs.c riak_command.c riak_print.c')]
+
+env.Library('riak_c_client', lib_files)
+env.Program('riak_c_client','main.c', LIBS=['riak_c_client', 'event_core', 'event_extra', 'log4c', 'pthread', 'protobuf', 'protobuf-c'])
+
+
+conf = Configure(env)
+if not conf.CheckLib('pthread'):
+  print 'Did not find pthread lib, exiting!'
+  Exit(1)
+
+if not conf.CheckLib('protobuf'):
+  print 'Did not find protobuf lib, exiting!'
+  Exit(1)
+
+if not conf.CheckLib('protobuf-c'):
+  print 'Did not find protobuf-c lib, exiting!'
+  Exit(1)
+
+#if not conf.CheckLib('iconv'):
+#  print 'Did not find iconv lib, exiting!'
+#  Exit(1)
+
+if not conf.CheckLib('libevent'):
+  print 'Did not find libevent, exiting!'
+  Exit(1)
+
+if not conf.CheckLib('log4c'):
+  print 'Did not find log4c, exiting!'
+  Exit(1)
+
+
+env = conf.Finish()
+
