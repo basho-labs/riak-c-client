@@ -84,6 +84,9 @@ riak_context_add_connection(riak_context      *ctx,
     if (ctx == NULL) {
         return ERIAK_UNINITIALIZED;
     }
+    if (resolver == NULL) {
+        resolver = evutil_getaddrinfo;
+    }
 
     riak_strlcpy(ctx->hostname, hostname, sizeof(ctx->hostname));
     riak_strlcpy(ctx->portnum, portnum, sizeof(ctx->hostname));
