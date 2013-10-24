@@ -57,14 +57,18 @@ riak_context_new(riak_context    **context,
 /**
  * @brief Construct a Riak Context
  * @param context Existing Riak Context
+ * @param resolver IP Address resolving function
  * @param hostname Name of Riak server
  * @param portnum Riak PBC port number
  * @return Error code
  */
 riak_error
-riak_context_add_connection(riak_context *context,
-                            const char   *hostname,
-                            const char   *portnum);
+riak_context_add_connection(riak_context      *context,
+                            riak_addr_resolver resolver,
+                            const char        *hostname,
+                            const char        *portnum);
+// By default use the libevent resolver
+#define riak_context_add_default_connection(C,H,P) riak_context_add_connection((C),NULL,(H),(P))
 
 /**
  * @brief Construct a Riak Context

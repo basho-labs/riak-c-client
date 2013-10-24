@@ -22,3 +22,12 @@
 
 void
 test_build_context();
+
+void
+test_context_with_connection();
+
+void
+test_context_with_bad_connection();
+
+void
+test_context_with_logging();

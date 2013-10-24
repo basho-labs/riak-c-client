@@ -77,9 +77,10 @@ riak_context_new(riak_context    **context,
 }
 
 riak_error
-riak_context_add_connection(riak_context *ctx,
-                            const char   *hostname,
-                            const char   *portnum) {
+riak_context_add_connection(riak_context      *ctx,
+                            riak_addr_resolver resolver,
+                            const char        *hostname,
+                            const char        *portnum) {
     if (ctx == NULL) {
         return ERIAK_UNINITIALIZED;
     }
@@ -87,9 +88,8 @@ riak_context_add_connection(riak_context *ctx,
     riak_strlcpy(ctx->hostname, hostname, sizeof(ctx->hostname));
     riak_strlcpy(ctx->portnum, portnum, sizeof(ctx->hostname));
 
-    riak_error err = riak_resolve_address(ctx, hostname, portnum, &(ctx->addrinfo));
+    riak_error err = riak_resolve_address(ctx, resolver, hostname, portnum, &(ctx->addrinfo));
     if (err) {
-        riak_context_free(&ctx);
         return ERIAK_DNS_RESOLUTION;
     }
     return ERIAK_OK;
@@ -127,7 +127,7 @@ riak_context_free(riak_context **context) {
     riak_context *ctx = *context;
     riak_free_fn freer = ctx->free_fn;
     if (ctx->base != NULL) event_base_free(ctx->base);
-    if (ctx->addrinfo) evutil_freeaddrinfo(ctx->addrinfo);
+    if (ctx->addrinfo != NULL) evutil_freeaddrinfo(ctx->addrinfo);
     (freer)(ctx);
     *context = NULL;
 

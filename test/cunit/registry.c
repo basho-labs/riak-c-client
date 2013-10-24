@@ -52,6 +52,12 @@ main(int   argc,
     CU_ADD_TEST(binary_suite, test_binary_hex_print);
     CU_ADD_TEST(binary_suite, test_build_binary_from_existing);
     CU_ADD_TEST(context_suite, test_build_context);
+    CU_ADD_TEST(context_suite, test_context_with_bad_connection);
+    CU_ADD_TEST(context_suite, test_context_with_connection);
+    CU_ADD_TEST(context_suite, test_context_with_logging);
+
+    // Run all tests using the CUnit Basic interface
+    CU_basic_set_mode(CU_BRM_VERBOSE);
     CU_basic_run_tests();
 
     void CU_cleanup_registry();

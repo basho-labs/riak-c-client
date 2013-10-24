@@ -26,10 +26,11 @@
 #include "riak_utils-internal.h"
 
 riak_error
-riak_resolve_address(riak_context   *ctx,
-                     const char     *host,
-                     const char     *portnum,
-                     riak_addrinfo **addrinfo) {
+riak_resolve_address(riak_context      *ctx,
+                     riak_addr_resolver resolver,
+                     const char        *host,
+                     const char        *portnum,
+                     riak_addrinfo    **addrinfo) {
     riak_addrinfo addrhints;
 
     // Build the hints to tell getaddrinfo how to act.
@@ -42,7 +43,7 @@ riak_resolve_address(riak_context   *ctx,
     addrhints.ai_flags = EVUTIL_AI_ADDRCONFIG;
 
     // Use nice, platform agnostic DNS lookup and return an array of results
-    int err = evutil_getaddrinfo(host, portnum, &addrhints, addrinfo);
+    int err = resolver(host, portnum, &addrhints, addrinfo);
     if (err != 0) {
         riak_log_context(ctx, RIAK_LOG_FATAL, "Error while resolving '%s:%s': %s\n",
                  host, portnum, evutil_gai_strerror(err));

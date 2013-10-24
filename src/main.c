@@ -43,7 +43,7 @@ main(int   argc,
     if (err) {
         exit(1);
     }
-    err = riak_context_add_connection(ctx, args.host, args.portnum);
+    err = riak_context_add_default_connection(ctx, args.host, args.portnum);
     if (err) {
         exit(1);
     }

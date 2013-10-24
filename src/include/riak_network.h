@@ -26,16 +26,18 @@
 /**
  * @brief Turns ASCII host/port into addrinfo struct
  * @param ctx Riak Context
+ * @param resolver Function to resolve IP addresses
  * @param host String name of host (or IP)
  * @param portnum Port number or service name
  * @param addrinfo Return value of populated addrinfo struct
  * @returns Error on DNS resolution issues
  */
 riak_error
-riak_resolve_address(riak_context  *ctx,
-                    const char     *host,
-                    const char     *portnum,
-                    riak_addrinfo **addrinfo);
+riak_resolve_address(riak_context      *ctx,
+                     riak_addr_resolver resolver,
+                     const char        *host,
+                     const char        *portnum,
+                     riak_addrinfo    **addrinfo);
 
 /**
  * @brief Opens a socket and connects to a host
