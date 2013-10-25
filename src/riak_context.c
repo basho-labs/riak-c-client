@@ -25,6 +25,7 @@
 #include "riak_utils-internal.h"
 #include "riak_network.h"
 #include "riak_context-internal.h"
+#include <zlog.h>
 
 extern ProtobufCAllocator protobuf_c_default_allocator;
 
@@ -111,7 +112,7 @@ riak_context_add_logging(riak_context *ctx,
     }
     // Since we will likely only have one context, set up non-thread-safe logging here
     // TODO: Make logging thread-safe
-    int result = log4c_init();
+    int result = zlog_init("zlog.conf");
     if (result != 0) {
         fprintf(stderr, "Could not initialize logging\n");
         return ERIAK_LOGGING;
@@ -135,5 +136,5 @@ riak_context_free(riak_context **context) {
     *context = NULL;
 
     // Since we will only clean up one context, let's shut down non-threadsafe logging here, too
-    log4c_fini();
+    zlog_fini();
 }
