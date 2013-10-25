@@ -20,35 +20,33 @@
  *
  *********************************************************************/
 
+#include <zlog.h>
 #include "riak.h"
 #include "riak_log.h"
 #include "riak_messages-internal.h"
 #include "riak_context-internal.h"
 #include "riak_event-internal.h"
 
-const log4c_priority_level_t map_level_to_priority[] = {
-    LOG4C_PRIORITY_FATAL,
-    LOG4C_PRIORITY_ALERT,
-    LOG4C_PRIORITY_CRIT,
-    LOG4C_PRIORITY_ERROR,
-    LOG4C_PRIORITY_WARN,
-    LOG4C_PRIORITY_NOTICE,
-    LOG4C_PRIORITY_INFO,
-    LOG4C_PRIORITY_DEBUG,
-    LOG4C_PRIORITY_TRACE,
-    LOG4C_PRIORITY_NOTSET,
-    LOG4C_PRIORITY_UNKNOWN
+
+const zlog_level map_level_to_priority[] = {
+    ZLOG_LEVEL_FATAL,
+    ZLOG_LEVEL_ERROR,
+    ZLOG_LEVEL_WARN,
+    ZLOG_LEVEL_NOTICE,
+    ZLOG_LEVEL_INFO,
+    ZLOG_LEVEL_DEBUG,
+    0
 };
 
 // TODO: Create an async queue of log messages to make threadsafe(r)
 void riak_log(riak_event *rev, riak_log_level_t level, const char *format, ...) {
     if (level < RIAK_LOG_FATAL || level > RIAK_LOG_UNKNOWN) level = RIAK_LOG_UNKNOWN;
-    // Map to underlying log4c priorities
-    log4c_priority_level_t priority = map_level_to_priority[(int)level];
+    // Map to underlying zlog priorities
+    zlog_level priority = map_level_to_priority[(int)level];
     riak_boolean_t has_logging = RIAK_FALSE;
-    log4c_category_t *category;
+    zlog_category_t *category;
     if (rev->context->logging_category[0] != '\0') {
-        category = log4c_category_get(rev->context->logging_category);
+        category = zlog_get_category(rev->context->logging_category);
         has_logging = RIAK_TRUE;
     }
     // Prefix with the file descriptor
@@ -59,7 +57,15 @@ void riak_log(riak_event *rev, riak_log_level_t level, const char *format, ...) 
     va_list va;
     va_start(va, format);
     if (has_logging) {
-        log4c_category_vlog(category, priority, formatted, va);
+        vzlog(category,
+              __FILE__,
+              sizeof(__FILE__)-1,
+              __func__,
+              sizeof(__func__)-1,
+              __LINE__,
+              priority,
+              formatted,
+              va);
     } else {
         vfprintf(stderr, formatted, va);
     }
@@ -69,18 +75,26 @@ void riak_log(riak_event *rev, riak_log_level_t level, const char *format, ...) 
 // TODO: Create an async queue of log messages to make threadsafe(r)
 void riak_log_context(riak_context *ctx, riak_log_level_t level, const char *format, ...) {
     if (level < RIAK_LOG_FATAL || level > RIAK_LOG_UNKNOWN) level = RIAK_LOG_UNKNOWN;
-    // Map to underlying log4c priorities
-    log4c_priority_level_t priority = map_level_to_priority[(int)level];
+    // Map to underlying zlog priorities
+    zlog_level priority = map_level_to_priority[(int)level];
     riak_boolean_t has_logging = RIAK_FALSE;
-    log4c_category_t *category;
+    zlog_category_t *category;
     if (ctx->logging_category[0] != '\0') {
-        category = log4c_category_get(ctx->logging_category);
+        category = zlog_get_category(ctx->logging_category);
         has_logging = RIAK_TRUE;
     }
     va_list va;
     va_start(va, format);
     if (has_logging) {
-        log4c_category_vlog(category, priority, format, va);
+        vzlog(category,
+              __FILE__,
+              sizeof(__FILE__)-1,
+              __func__,
+              sizeof(__func__)-1,
+              __LINE__,
+              priority,
+              format,
+              va);
     } else {
         vfprintf(stderr, format, va);
     }

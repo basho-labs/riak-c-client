@@ -24,22 +24,18 @@
 #define RIAK_LOG_H_
 
 #include <stdarg.h>
-#include <log4c.h>
 
-// Pulled from log4c/priority.h but correspond to log levels from syslog(3)
+// Pulled from zlog.h but correspond to log levels from syslog(3)
 typedef enum {
-    /** fatal */    RIAK_LOG_FATAL = 0,
-    /** alert */    RIAK_LOG_ALERT,
-    /** crit */     RIAK_LOG_CRIT,
+    /** fatal */    RIAK_LOG_FATAL,
     /** error */    RIAK_LOG_ERROR,
     /** warn */     RIAK_LOG_WARN,
     /** notice */   RIAK_LOG_NOTICE,
     /** info */     RIAK_LOG_INFO,
     /** debug */    RIAK_LOG_DEBUG,
-    /** trace */    RIAK_LOG_TRACE,
-    /** notset */   RIAK_LOG_NOTSET,
     /** unknown */  RIAK_LOG_UNKNOWN
 } riak_log_level_t;
+
 
 /**
  * @brief Add a record to the Riak log

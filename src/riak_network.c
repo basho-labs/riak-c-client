@@ -88,13 +88,6 @@ riak_just_open_a_socket(riak_context  *ctx,
         riak_log_context(ctx, RIAK_LOG_FATAL, "Could not just open a socket\n");
         return -1;
     }
-#if 0
-    if (evutil_make_socket_nonblocking(sock) < 0) {
-        EVUTIL_CLOSESOCKET(sock);
-        riak_log(ctx, RIAK_LOG_FATAL, "Could make socket non-blocking\n");
-        return -1;
-    }
-#endif
     int err = connect(sock, addrinfo->ai_addr, addrinfo->ai_addrlen);
     if (err) {
         // Since this is nonblocking, we'll need to treat some errors
