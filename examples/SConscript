@@ -1,0 +1,46 @@
+import os
+
+env = Environment(
+    ENV = os.environ,
+    CCFLAGS = '-g -Wall -DUSE_DEBUG',
+    CPPPATH=['include','../src/include','../src/internal','../build/proto'],
+    LIBPATH=['../build']
+    )
+env.ParseConfig("pkg-config --libs libevent libprotobuf-c protobuf")
+env.ParseConfig("pkg-config --cflags libevent libprotobuf-c protobuf")
+files = ['simple.c']
+
+simple = env.Program('simple', files, LIBS=['riak_c_client', 'event_core', 'event_extra', 'log4c', 'pthread', 'protobuf', 'protobuf-c'])
+Depends(simple, '../build/libriak_c_client.a')
+
+conf = Configure(env)
+if not conf.CheckLib('pthread'):
+  print 'Did not find pthread lib, exiting!'
+  Exit(1)
+
+if not conf.CheckLib('protobuf'):
+  print 'Did not find protobuf lib, exiting!'
+  Exit(1)
+
+if not conf.CheckLib('protobuf-c'):
+  print 'Did not find protobuf-c lib, exiting!'
+  Exit(1)
+
+if not conf.CheckLib('libevent'):
+  print 'Did not find libevent, exiting!'
+  Exit(1)
+
+if not conf.CheckLib('log4c'):
+  print 'Did not find log4c, exiting!'
+  Exit(1)
+
+if not conf.CheckLib('cunit'):
+  print 'Did not find cunit, exiting!'
+  Exit(1)
+
+#if not conf.CheckLib('riak_c_client'):
+#  print 'Did not find riak_c_client, exiting!'
+#  Exit(1)
+
+env = conf.Finish()
+
