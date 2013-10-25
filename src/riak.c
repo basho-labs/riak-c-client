@@ -43,9 +43,7 @@ riak_synchronous_request(riak_event **rev_target,
     }
 
     // Terminates only on error or timeout
-    printf("Context = %p\n", rev->context);
     riak_event_loop(rev->context);
-    printf("Context = %p\n", rev->context);
     *response = wrapper.response;
     return ERIAK_OK;
 }

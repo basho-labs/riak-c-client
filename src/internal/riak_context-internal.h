@@ -24,7 +24,8 @@
 #define RIAK_CONTEXT_INTERNAL_H_
 
 // TODO: one day make this configurable?
-#define RIAK_LOGGING_DEFAULT_CATEGORY   "com.basho.client.c"
+// FYI, zlog does not support dots or hyphens in the category
+#define RIAK_LOGGING_DEFAULT_CATEGORY   "riakc"
 #define RIAK_LOGGING_MAX_LEN            256
 #define RIAK_HOST_MAX_LEN               256
 

@@ -104,6 +104,7 @@ riak_send_req(riak_event      *rev,
         if (result != 0) return ERIAK_WRITE;
     }
     riak_log(rev, RIAK_LOG_DEBUG, "Wrote %d bytes\n", (int)len);
+#ifdef DEBUG_SEND_REQUEST
     int i;
     for(i = 0; i < len; i++) {
         fprintf(stdout, "%02x", msgbuf[i]);
@@ -118,5 +119,6 @@ riak_send_req(riak_event      *rev,
     }
 
     fprintf(stdout, "\n");
+#endif
     return ERIAK_OK;
 }
