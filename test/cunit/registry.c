@@ -61,4 +61,5 @@ main(int   argc,
     CU_basic_run_tests();
 
     void CU_cleanup_registry();
+    return 0;
 }
