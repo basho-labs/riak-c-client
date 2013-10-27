@@ -35,7 +35,9 @@ main(int   argc,
     riak_args args;
     int operation = riak_parse_args(argc, argv, &args);
 
+#ifdef _RIAK_DEBUG
     event_enable_debug_mode();
+#endif
 //    event_use_pthreads();
 
     riak_context *ctx;
@@ -69,7 +71,7 @@ main(int   argc,
     }
 
     for(it = 0; it < args.iterate; it++) {
-        riak_log_context(ctx, RIAK_LOG_DEBUG, "Loop %d", it);
+        riak_log_debug_context(ctx, "Loop %d", it);
 
         if (args.async) {
             riak_event *rev;
@@ -128,7 +130,7 @@ main(int   argc,
         case MSG_RPBPUTREQ:
             obj = riak_object_new(ctx);
             if (obj == NULL) {
-                riak_log(rev, RIAK_LOG_FATAL, "Could not allocate a Riak Object");
+                riak_log_fatal(rev, "%s","Could not allocate a Riak Object");
                 return 1;
             }
             riak_object_set_bucket(obj, riak_binary_new_from_string(ctx, args.bucket)); // Not copied
@@ -184,7 +186,7 @@ main(int   argc,
                     exit(1);
                 }
                 riak_print_listbuckets_response(bucket_response, output, sizeof(output));
-                riak_log_context(ctx, RIAK_LOG_DEBUG, "%s", output);
+                riak_log_debug_context(ctx, "%s", output);
                 riak_free_listbuckets_response(ctx, &bucket_response);
             }
             break;
@@ -200,7 +202,7 @@ main(int   argc,
                     exit(1);
                 }
                 riak_print_listkeys_response(key_response, output, sizeof(output));
-                riak_log_context(ctx, RIAK_LOG_DEBUG, "%s", output);
+                riak_log_debug_context(ctx, "%s", output);
                 riak_free_listkeys_response(ctx, &key_response);
             }
             break;
@@ -246,7 +248,7 @@ main(int   argc,
                     exit(1);
                 }
                 riak_print_get_bucketprops_response(bucket_response, output, sizeof(output));
-                riak_log_context(ctx, RIAK_LOG_DEBUG, "%s", output);
+                riak_log_debug_context(ctx, "%s", output);
                 riak_free_get_bucketprops_response(ctx, &bucket_response);
             }
             break;
@@ -266,7 +268,7 @@ main(int   argc,
         case MSG_RPBSETBUCKETREQ:
             props = riak_bucket_props_new(ctx);
             if (obj == NULL) {
-                riak_log(rev, RIAK_LOG_FATAL, "Could not allocate a Riak Bucket Properties");
+                riak_log_fatal(rev, "%s", "Could not allocate a Riak Bucket Properties");
                 return 1;
             }
             riak_bucket_props_set_last_write_wins(props, RIAK_FALSE);
@@ -289,7 +291,7 @@ main(int   argc,
         if (args.async) {
             err = riak_send_req(rev, rev->pb_request);
             if (err) {
-                riak_log(rev, RIAK_LOG_FATAL, "Could not send request");
+                riak_log_fatal(rev, "%s", "Could not send request");
                 exit(1);
             }
         }

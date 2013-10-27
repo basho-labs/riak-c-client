@@ -111,7 +111,7 @@ riak_context_add_logging(riak_context *ctx,
         riak_strlcpy(ctx->logging_category, logging_category, sizeof(ctx->logging_category));
     }
     // Since we will likely only have one context, set up non-thread-safe logging here
-    // TODO: Make logging thread-safe
+    // TODO: Configurable zlog.conf file
     int result = zlog_init("zlog.conf");
     if (result != 0) {
         fprintf(stderr, "Could not initialize logging\n");

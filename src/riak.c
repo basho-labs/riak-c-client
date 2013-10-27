@@ -38,7 +38,7 @@ riak_synchronous_request(riak_event **rev_target,
 
     riak_error err = riak_send_req(rev, rev->pb_request);
     if (err) {
-        riak_log(rev, RIAK_LOG_FATAL, "Could not send request");
+        riak_log_fatal(rev, "Could not send request", NULL);
         return err;
     }
 

@@ -45,7 +45,7 @@ riak_resolve_address(riak_context      *ctx,
     // Use nice, platform agnostic DNS lookup and return an array of results
     int err = resolver(host, portnum, &addrhints, addrinfo);
     if (err != 0) {
-        riak_log_context(ctx, RIAK_LOG_FATAL, "Error while resolving '%s:%s': %s\n",
+        riak_log_fatal_context(ctx, "Error while resolving '%s:%s': %s",
                  host, portnum, evutil_gai_strerror(err));
         return ERIAK_DNS_RESOLUTION;
     }
@@ -85,7 +85,7 @@ riak_just_open_a_socket(riak_context  *ctx,
                                 addrinfo->ai_socktype,
                                 addrinfo->ai_protocol);
     if (sock < 0) {
-        riak_log_context(ctx, RIAK_LOG_FATAL, "Could not just open a socket\n");
+        riak_log_fatal_context(ctx, "%s", "Could not just open a socket");
         return -1;
     }
     int err = connect(sock, addrinfo->ai_addr, addrinfo->ai_addrlen);
@@ -97,7 +97,7 @@ riak_just_open_a_socket(riak_context  *ctx,
             riak_uint16_t port;
             riak_print_host(addrinfo, ip, sizeof(ip), &port);
             EVUTIL_CLOSESOCKET(sock);
-            riak_log_context(ctx, RIAK_LOG_FATAL, "Could not connect a socket to host %s:%d [%s]\n", ip, port, strerror(errno));
+            riak_log_fatal_context(ctx, "Could not connect a socket to host %s:%d [%s]\n", ip, port, strerror(errno));
             return -1;
         }
     }

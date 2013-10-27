@@ -154,7 +154,7 @@ riak_decode_serverinfo_response(riak_event                *rev,
     // decode the PB response etc
     riak_context *ctx = (riak_context*)(rev->context);
     RpbGetServerInfoResp *rpbresp = rpb_get_server_info_resp__unpack(ctx->pb_allocator, (pbresp->len)-1, (uint8_t*)((pbresp->data)+1));
-    riak_log(rev, RIAK_LOG_DEBUG, "riak_decode_server_response len=%d/pb unpack = 0x%lx\n", pbresp->len, (long)(rpbresp));
+    riak_log_debug(rev, "riak_decode_server_response len=%d/pb unpack = 0x%lx\n", pbresp->len, (long)(rpbresp));
     *done = RIAK_TRUE;
     if (rpbresp == NULL) {
         return ERIAK_OUT_OF_MEMORY;
@@ -278,7 +278,7 @@ riak_decode_get_response(riak_event         *rev,
     // decode the PB response etc
     riak_context *ctx = (riak_context*)(rev->context);
     RpbGetResp *rpbresp = rpb_get_resp__unpack(ctx->pb_allocator, (pbresp->len)-1, (uint8_t*)((pbresp->data)+1));
-    riak_log(rev, RIAK_LOG_DEBUG, "riak_decode_get_response len=%d/pb unpack = 0x%lx\n", pbresp->len, (long)(rpbresp));
+    riak_log_debug(rev, "riak_decode_get_response len=%d/pb unpack = 0x%lx\n", pbresp->len, (long)(rpbresp));
     *done = RIAK_TRUE;
     if (rpbresp == NULL) {
         return ERIAK_OUT_OF_MEMORY;
@@ -479,7 +479,7 @@ riak_decode_put_response(riak_event         *rev,
     riak_context *ctx = (riak_context*)(rev->context);
     RpbPutResp *rpbresp = rpb_put_resp__unpack(ctx->pb_allocator, (pbresp->len)-1, (uint8_t*)((pbresp->data)+1));
     *done = RIAK_TRUE;
-    riak_log(rev, RIAK_LOG_DEBUG, "riak_decode_put_response len=%d/pb unpack = 0x%lx\n", pbresp->len, (long)(rpbresp));
+    riak_log_debug(rev, "riak_decode_put_response len=%d/pb unpack = 0x%lx\n", pbresp->len, (long)(rpbresp));
     if (rpbresp == NULL) {
         return ERIAK_OUT_OF_MEMORY;
     }
@@ -687,14 +687,14 @@ riak_decode_listbuckets_response(riak_event                 *rev,
                                  riak_listbuckets_response **resp,
                                  riak_boolean_t             *done) {
     riak_context *ctx = rev->context;
-    riak_log(rev, RIAK_LOG_DEBUG, "riak_decode_listbuckets_response");
+    riak_log_debug(rev, "%s", "riak_decode_listbuckets_response");
     RpbListBucketsResp *listbucketresp = rpb_list_buckets_resp__unpack(ctx->pb_allocator, (pbresp->len)-1, (uint8_t*)((pbresp->data)+1));
     int i;
     // Initialize from an existing response
     riak_listbuckets_response *response = *resp;
     // If this is NULL, there was no previous message
     if (response == NULL) {
-        riak_log(rev, RIAK_LOG_DEBUG, "Initializing listbucket response");
+        riak_log_debug(rev, "%s", "Initializing listbucket response");
         response = (ctx->malloc_fn)(sizeof(riak_listbuckets_response));
         if (response == NULL) {
             return ERIAK_OUT_OF_MEMORY;
@@ -738,7 +738,7 @@ riak_decode_listbuckets_response(riak_event                 *rev,
     }
     response->done = RIAK_FALSE;
     if (listbucketresp->has_done) {
-        riak_log(rev, RIAK_LOG_DEBUG, "HAS DONE");
+        riak_log_debug(rev, "%s", "HAS DONE");
         response->done = listbucketresp->done;
     }
     *done = response->done;
@@ -847,14 +847,14 @@ riak_decode_listkeys_response(riak_event              *rev,
                               riak_listkeys_response **resp,
                               riak_boolean_t          *done) {
     riak_context *ctx = rev->context;
-    riak_log(rev, RIAK_LOG_DEBUG, "riak_decode_listkeys_response");
+    riak_log_debug(rev, "%s", "riak_decode_listkeys_response");
     RpbListKeysResp *listkeyresp = rpb_list_keys_resp__unpack(ctx->pb_allocator, (pbresp->len)-1, (uint8_t*)((pbresp->data)+1));
     int i;
     // Initialize from an existing response
     riak_listkeys_response *response = *resp;
     // If this is NULL, there was no previous message
     if (response == NULL) {
-        riak_log(rev, RIAK_LOG_DEBUG, "Initializing listkey response");
+        riak_log_debug(rev, "%s", "Initializing listkey response");
         response = (ctx->malloc_fn)(sizeof(riak_listkeys_response));
         if (response == NULL) {
             return ERIAK_OUT_OF_MEMORY;
@@ -898,7 +898,7 @@ riak_decode_listkeys_response(riak_event              *rev,
     }
     response->done = RIAK_FALSE;
     if (listkeyresp->has_done) {
-        riak_log(rev, RIAK_LOG_DEBUG, "HAS DONE");
+        riak_log_debug(rev, "%s", "HAS DONE");
         response->done = listkeyresp->done;
     }
     *done = response->done;
@@ -992,7 +992,7 @@ riak_decode_get_clientid_response(riak_event                  *rev,
     // decode the PB response etc
     riak_context *ctx = (riak_context*)(rev->context);
     RpbGetClientIdResp *rpbresp = rpb_get_client_id_resp__unpack(ctx->pb_allocator, (pbresp->len)-1, (uint8_t*)((pbresp->data)+1));
-    riak_log(rev, RIAK_LOG_DEBUG, "riak_decode_get_clientid_response len=%d/pb unpack = 0x%lx\n", pbresp->len, (long)(rpbresp));
+    riak_log_debug(rev, "riak_decode_get_clientid_response len=%d/pb unpack = 0x%lx\n", pbresp->len, (long)(rpbresp));
     *done = RIAK_TRUE;
     if (rpbresp == NULL) {
         return ERIAK_OUT_OF_MEMORY;
@@ -1116,7 +1116,7 @@ riak_decode_get_bucketprops_response(riak_event                     *rev,
     // decode the PB response etc
     riak_context *ctx = (riak_context*)(rev->context);
     RpbGetBucketResp *rpbresp = rpb_get_bucket_resp__unpack(ctx->pb_allocator, (pbresp->len)-1, (uint8_t*)((pbresp->data)+1));
-    riak_log(rev, RIAK_LOG_DEBUG, "riak_decode_get_bucketprops_response len=%d/pb unpack = 0x%lx\n", pbresp->len, (long)(rpbresp));
+    riak_log_debug(rev, "riak_decode_get_bucketprops_response len=%d/pb unpack = 0x%lx\n", pbresp->len, (long)(rpbresp));
     *done = RIAK_TRUE;
     if (rpbresp == NULL) {
         return ERIAK_OUT_OF_MEMORY;

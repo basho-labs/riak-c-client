@@ -39,41 +39,16 @@ const zlog_level map_level_to_priority[] = {
 };
 
 // TODO: Create an async queue of log messages to make threadsafe(r)
-void riak_log(riak_event *rev, riak_log_level_t level, const char *format, ...) {
-    if (level < RIAK_LOG_FATAL || level > RIAK_LOG_UNKNOWN) level = RIAK_LOG_UNKNOWN;
-    // Map to underlying zlog priorities
-    zlog_level priority = map_level_to_priority[(int)level];
-    riak_boolean_t has_logging = RIAK_FALSE;
-    zlog_category_t *category;
-    if (rev->context->logging_category[0] != '\0') {
-        category = zlog_get_category(rev->context->logging_category);
-        has_logging = RIAK_TRUE;
-    }
-    // Prefix with the file descriptor
-    // TODO: Get rid of copying format string
-    char formatted[2048];
-    snprintf(formatted, sizeof(formatted), "[%d] %s", rev->fd, format);
-
-    va_list va;
-    va_start(va, format);
-    if (has_logging) {
-        vzlog(category,
-              __FILE__,
-              sizeof(__FILE__)-1,
-              __func__,
-              sizeof(__func__)-1,
-              __LINE__,
-              priority,
-              formatted,
-              va);
-    } else {
-        vfprintf(stderr, formatted, va);
-    }
-    va_end(va);
-}
-
-// TODO: Create an async queue of log messages to make threadsafe(r)
-void riak_log_context(riak_context *ctx, riak_log_level_t level, const char *format, ...) {
+void
+riak_log_internal(riak_context    *ctx,
+                  riak_log_level_t level,
+                  const char      *file,
+                  size_t           filelen,
+                  const char      *func,
+                  size_t           funclen,
+                  long             line,
+                  const char      *format,
+                  ...) {
     if (level < RIAK_LOG_FATAL || level > RIAK_LOG_UNKNOWN) level = RIAK_LOG_UNKNOWN;
     // Map to underlying zlog priorities
     zlog_level priority = map_level_to_priority[(int)level];
@@ -83,19 +58,21 @@ void riak_log_context(riak_context *ctx, riak_log_level_t level, const char *for
         category = zlog_get_category(ctx->logging_category);
         has_logging = RIAK_TRUE;
     }
+
     va_list va;
     va_start(va, format);
     if (has_logging) {
         vzlog(category,
-              __FILE__,
-              sizeof(__FILE__)-1,
-              __func__,
-              sizeof(__func__)-1,
-              __LINE__,
+              file,
+              filelen,
+              func,
+              funclen,
+              line,
               priority,
               format,
               va);
     } else {
         vfprintf(stderr, format, va);
     }
+    va_end(va);
 }

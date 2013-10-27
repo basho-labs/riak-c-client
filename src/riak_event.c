@@ -37,7 +37,7 @@ riak_event_new(riak_context          *ctx,
 
     riak_event *rev = (riak_event*)(ctx->malloc_fn)(sizeof(riak_event));
     if (rev == NULL) {
-        riak_log_context(ctx, RIAK_LOG_FATAL, "Could not allocate a riak_event");
+        riak_log_fatal_context(ctx, "%s", "Could not allocate a riak_event");
         return ERIAK_OUT_OF_MEMORY;
     }
     *rev_target = rev;
@@ -58,19 +58,19 @@ riak_event_new(riak_context          *ctx,
     // TODO: Implement retry logic
     rev->fd = riak_just_open_a_socket(ctx, ctx->addrinfo);
     if (rev->fd < 0) {
-        riak_log_context(ctx, RIAK_LOG_FATAL, "Could not just open a socket");
+        riak_log_fatal_context(ctx, "%s", "Could not just open a socket");
         return ERIAK_LOGGING;
     }
 
     // rev->bevent = bufferevent_socket_new(base, sock, BEV_OPT_CLOSE_ON_FREE|BEV_OPT_DEFER_CALLBACKS|BEV_OPT_THREADSAFE);
     rev->bevent = bufferevent_socket_new(rev->base, rev->fd, BEV_OPT_CLOSE_ON_FREE|BEV_OPT_DEFER_CALLBACKS);
     if (rev->bevent == NULL) {
-        riak_log_context(ctx, RIAK_LOG_FATAL, "Could not create bufferevent [fd %d]", rev->fd);
+        riak_log_fatal_context(ctx, "Could not create bufferevent [fd %d]", rev->fd);
         return ERIAK_OUT_OF_MEMORY;
     }
     int enabled = bufferevent_enable(rev->bevent, EV_READ|EV_WRITE);
     if (enabled != 0) {
-        riak_log_context(ctx, RIAK_LOG_FATAL, "Could not enable bufferevent [fd %d]", rev->fd);
+        riak_log_fatal_context(ctx, "Could not enable bufferevent [fd %d]", rev->fd);
         return ERIAK_EVENT;
     }
 
@@ -123,3 +123,13 @@ void
 riak_event_loop(riak_context *ctx) {
     event_base_dispatch(riak_context_get_base(ctx));
 }
+
+riak_socket_t
+riak_event_get_fd(riak_event *rev) {
+    return rev->fd;
+}
+riak_context*
+riak_event_get_context(riak_event *rev) {
+    return rev->context;
+}
+

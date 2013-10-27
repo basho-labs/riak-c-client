@@ -27,103 +27,102 @@
 #include "riak_call_backs-internal.h"
 #include "riak_context-internal.h"
 
-//
 // TEST CALLBACKS
 //
 void ping_cb(riak_ping_response *response, void *ptr) {
     riak_event *rev = (riak_event*)ptr;
-    riak_log(rev, RIAK_LOG_DEBUG, "ping_cb");
-    riak_log(rev, RIAK_LOG_DEBUG, "PONG");
+    riak_log_debug(rev, "%s", "ping_cb");
+    riak_log_debug(rev, "%s", "PONG");
     riak_free_ping_response(rev->context, &response);
 }
 
 void serverinfo_cb(riak_serverinfo_response *response, void *ptr) {
     riak_event *rev = (riak_event*)ptr;
-    riak_log(rev, RIAK_LOG_DEBUG, "serverinfo_cb");
+    riak_log_debug(rev, "%s", "serverinfo_cb");
     char output[10240];
     riak_print_serverinfo_response(response, output, sizeof(output));
-    riak_log(rev, RIAK_LOG_DEBUG, "%s\n", output);
+    riak_log_debug(rev, "%s", output);
     riak_free_serverinfo_response(rev->context, &response);
 }
 
 void listbucket_cb(riak_listbuckets_response *response, void *ptr) {
     riak_event *rev = (riak_event*)ptr;
-    riak_log(rev, RIAK_LOG_DEBUG, "listbucket_cb");
+    riak_log_debug(rev, "%s", "listbucket_cb");
     char output[10240];
     riak_print_listbuckets_response(response, output, sizeof(output));
-    riak_log(rev, RIAK_LOG_DEBUG, "%s", output);
+    riak_log_debug(rev, "%s", output);
     fflush(stdout);
     riak_free_listbuckets_response(rev->context, &response);
 }
 
 void listkey_cb(riak_listkeys_response *response, void *ptr) {
     riak_event *rev = (riak_event*)ptr;
-    riak_log(rev, RIAK_LOG_DEBUG, "listkey_cb");
+    riak_log_debug(rev, "%s", "listkey_cb");
     char output[10240];
     riak_print_listkeys_response(response, output, sizeof(output));
-    riak_log(rev, RIAK_LOG_DEBUG, "%s", output);
+    riak_log_debug(rev, "%s", output);
     fflush(stdout);
     riak_free_listkeys_response(rev->context, (riak_listkeys_response**)&(response));
 }
 
 void get_cb(riak_get_response *response, void *ptr) {
     riak_event *rev = (riak_event*)ptr;
-    riak_log(rev, RIAK_LOG_DEBUG, "get_cb");
+    riak_log_debug(rev, "%s", "get_cb");
     char output[10240];
     riak_print_get_response(response, output, sizeof(output));
-    riak_log(rev, RIAK_LOG_DEBUG, "%s\n", output);
+    riak_log_debug(rev, "%s", output);
     riak_free_get_response(rev->context, &response);
 }
 
 void put_cb(riak_put_response *response, void *ptr) {
     riak_event   *rev = (riak_event*)ptr;
-    riak_log(rev, RIAK_LOG_DEBUG, "put_cb\n");
+    riak_log_debug(rev, "%s", "put_cb");
     char output[10240];
     riak_print_put_response(response, output, sizeof(output));
-    riak_log(rev, RIAK_LOG_DEBUG, "%s\n", output);
+    riak_log_debug(rev, "%s", output);
     riak_free_put_response(rev->context, &response);
 }
 
 void delete_cb(riak_delete_response *response, void *ptr) {
     riak_event   *rev = (riak_event*)ptr;
-    riak_log(rev, RIAK_LOG_DEBUG, "delete_cb");
+    riak_log_debug(rev, "%s", "delete_cb");
     riak_free_delete_response(rev->context, &response);
 }
 
 void getclientid_cb(riak_get_clientid_response *response, void *ptr) {
     riak_event   *rev = (riak_event*)ptr;
-    riak_log(rev, RIAK_LOG_DEBUG, "getclientid_cb\n");
+    riak_log_debug(rev, "%s", "getclientid_cb");
     char output[10240];
     riak_print_get_clientid_response(response, output, sizeof(output));
-    riak_log(rev, RIAK_LOG_DEBUG, "%s\n", output);
+    riak_log_debug(rev, "%s", output);
     riak_free_get_clientid_response(rev->context, &response);
 }
 
 void setclientid_cb(riak_set_clientid_response *response, void *ptr) {
     riak_event *rev = (riak_event*)ptr;
-    riak_log(rev, RIAK_LOG_DEBUG, "setclientid_cb");
+    riak_log_debug(rev, "%s", "setclientid_cb");
     riak_free_set_clientid_response(rev->context, &response);
 }
 
 void getbucketprops_cb(riak_get_bucketprops_response *response, void *ptr) {
     riak_event *rev = (riak_event*)ptr;
-    riak_log(rev, RIAK_LOG_DEBUG, "getbucketprops_cb");
+    riak_log_debug(rev, "%s", "getbucketprops_cb");
     char output[10240];
     riak_print_get_bucketprops_response(response, output, sizeof(output));
-    riak_log(rev, RIAK_LOG_DEBUG, "%s", output);
+    riak_log_debug(rev, "%s", output);
     fflush(stdout);
     riak_free_get_bucketprops_response(rev->context, (riak_get_bucketprops_response**)&(response));
 }
 
 void resetbucketprops_cb(riak_reset_bucketprops_response *response, void *ptr) {
     riak_event *rev = (riak_event*)ptr;
-    riak_log(rev, RIAK_LOG_DEBUG, "resetbucketprops_cb");
+    riak_log_debug(rev, "%s", "resetbucketprops_cb");
     riak_free_reset_bucketprops_response(rev->context, (riak_reset_bucketprops_response**)&(response));
 }
 
 void setbucketprops_cb(riak_set_bucketprops_response *response, void *ptr) {
     riak_event *rev = (riak_event*)ptr;
-    riak_log(rev, RIAK_LOG_DEBUG, "setbucketprops_cb");
+    riak_log_debug(rev, "%s", "setbucketprops_cb");
     riak_free_set_bucketprops_response(rev->context, (riak_set_bucketprops_response**)&(response));
 }
 
@@ -135,8 +134,10 @@ void
 riak_sync_cb(void *response,
              void *ptr) {
     riak_sync_wrapper *wrapper = (riak_sync_wrapper*)ptr;
+#ifdef _RIAK_DEBUG
     riak_event       **rev     = wrapper->rev;
-    riak_log(*rev, RIAK_LOG_DEBUG, "riak_sync_cb");
+    riak_log_debug(*rev, "%s", "riak_sync_cb");
+#endif
     wrapper->response = response;
 }
 
@@ -151,27 +152,29 @@ riak_event_callback(riak_bufferevent *bev,
     riak_event   **rev_target = (riak_event**)ptr;
     riak_event    *rev = *rev_target;
     if (events & BEV_EVENT_CONNECTED) {
-         riak_log(rev, RIAK_LOG_DEBUG, "Connect okay.");
+         riak_log_debug(rev, "%s","Connect okay.");
     } else if (events & (BEV_EVENT_ERROR|BEV_EVENT_EOF)) {
          char *reason = "BEV_EVENT_ERROR";
          if (events & BEV_EVENT_ERROR) {
             reason = "BEV_EVENT_EOF";
             int err = bufferevent_socket_get_dns_error(bev);
             if (err)
-                riak_log(rev, RIAK_LOG_ERROR, "DNS error: %s", evutil_gai_strerror(err));
+                riak_log_error(rev, "DNS error: %s", evutil_gai_strerror(err));
          }
+#ifdef _RIAK_DEBUG
          struct evbuffer *ev_read  = bufferevent_get_input(bev);
          struct evbuffer *ev_write = bufferevent_get_output(bev);
-         riak_log(rev, RIAK_LOG_DEBUG, "Closing because of %s [read event=%p, write event=%p]",
+#endif
+         riak_log_debug(rev, "Closing because of %s [read event=%p, write event=%p]",
                  reason, (void*)ev_read, (void*)ev_write);
          bufferevent_free(bev);
          event_base_loopexit(rev->base, NULL);
     } else if (events & BEV_EVENT_TIMEOUT) {
-        riak_log(rev, RIAK_LOG_DEBUG, "Timeout Event");
+        riak_log_debug(rev, "%s","Timeout Event");
         bufferevent_free(bev);
         event_base_loopexit(rev->base, NULL);
     } else {
-        riak_log(rev, RIAK_LOG_DEBUG, "Event %d", events);
+        riak_log_debug(rev, "Event %d", events);
     }
 }
 
@@ -180,10 +183,12 @@ void
 riak_write_callback(riak_bufferevent *bev,
                     void             *ptr)
 {
+#ifdef _RIAK_DEBUG
     riak_event   **rev_target = (riak_event**)ptr;
     riak_event    *rev = *rev_target;
     struct evbuffer *buf = bufferevent_get_output(bev);
-    riak_log(rev, RIAK_LOG_DEBUG, "Ready for write with event %p.\n", (void*)buf);
+    riak_log_debug(rev, "Ready for write with event %p.\n", (void*)buf);
+#endif
 }
 
 
@@ -209,7 +214,7 @@ riak_read_result_callback(riak_bufferevent *bev,
             target = (riak_uint8_t*)(&inmsglen);
             // If we can't ready any more bytes, stop trying
             if (buflen != remaining_msg_len) {
-                riak_log(rev, RIAK_LOG_DEBUG, "Expected %d bytes but received bytes = %d", remaining_msg_len, buflen);
+                riak_log_debug(rev, "Expected %d bytes but received bytes = %d", remaining_msg_len, buflen);
                 if (buflen == 0) break;
                 // A few message size bytes of next message were in this buffer
                 // Stuff the partial size into rev->msglen and note the position
@@ -223,26 +228,26 @@ riak_read_result_callback(riak_bufferevent *bev,
 
             rev->msglen_complete = RIAK_TRUE;
             rev->msglen = ntohl(inmsglen);
-            riak_log(rev, RIAK_LOG_DEBUG, "Read msglen = %d", rev->msglen);
+            riak_log_debug(rev, "%s","Read msglen = %d", rev->msglen);
 
             // TODO: Need to malloc new buffer each time?
             rev->msgbuf = (riak_uint8_t*)(ctx->malloc_fn)(rev->msglen);
             if (rev->msgbuf == NULL) {
-                riak_log(rev, RIAK_LOG_FATAL, "Could not allocate buffer in riak_read_result_callback");
+                riak_log_debug(rev, "%s", "Could not allocate buffer in riak_read_result_callback");
                 abort();
             }
         } else {
-            riak_log(rev, RIAK_LOG_DEBUG, "Continuation of partial message");
+            riak_log_debug(rev, "%s", "Continuation of partial message");
         }
 
         riak_uint8_t *current_position = rev->msgbuf;
         current_position += rev->position;
         buflen = bufferevent_read(bev, (void*)current_position, rev->msglen - rev->position);
-        riak_log(rev, RIAK_LOG_DEBUG, "read %d bytes at position %d, msglen = %d", buflen, rev->position, rev->msglen);
+        riak_log_debug(rev, "%s","read %d bytes at position %d, msglen = %d", buflen, rev->position, rev->msglen);
         rev->position += buflen;
         // Are we done yet? If not, break out and wait for the next callback
         if (rev->position < rev->msglen) {
-            riak_log(rev, RIAK_LOG_DEBUG, "Partial message received");
+            riak_log_debug(rev, "%s","Partial message received");
             return;
         }
         assert(rev->position == rev->msglen);
@@ -259,7 +264,7 @@ riak_read_result_callback(riak_bufferevent *bev,
         // Assume we are doing a single loop, unless told otherwise
         done_streaming = RIAK_TRUE;
         if (rev->decoder == NULL) {
-            riak_log(rev, RIAK_LOG_FATAL, "%d NOT IMPLEMENTED", msgid);
+            riak_log_debug(rev, "%d NOT IMPLEMENTED", msgid);
             abort();
         }
         if (msgid == MSG_RPBERRORRESP) {
@@ -267,7 +272,7 @@ riak_read_result_callback(riak_bufferevent *bev,
             // Convert error response to a null-terminated string
             char errmsg[2048];
             riak_binary_print(err_response->errmsg, errmsg, sizeof(errmsg));
-            riak_log(rev, RIAK_LOG_FATAL, "ERR #%d - %s\n", err_response->errcode, errmsg);
+            riak_log_debug(rev, "ERR #%d - %s\n", err_response->errcode, errmsg);
             if (rev->error_cb) (rev->error_cb)(err_response, rev->cb_data);
             exit(1);
         }

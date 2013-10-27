@@ -103,22 +103,28 @@ riak_send_req(riak_event      *rev,
         result = bufferevent_write(bev, (void*)msgbuf, len);
         if (result != 0) return ERIAK_WRITE;
     }
-    riak_log(rev, RIAK_LOG_DEBUG, "Wrote %d bytes\n", (int)len);
-#ifdef DEBUG_SEND_REQUEST
+    riak_log_debug(rev, "Wrote %d bytes\n", (int)len);
+#ifdef _RIAK_DEBUG
+    char buffer[10240];
+    riak_size_t buflen = sizeof(buffer);
+    char *pos = buffer;
+    riak_int32_t wrote = 0;
     int i;
-    for(i = 0; i < len; i++) {
-        fprintf(stdout, "%02x", msgbuf[i]);
+    for(i = 0; i < buflen; i++) {
+        wrote = snprintf(pos, buflen, "%02x", msgbuf[i]);
+        pos += wrote;
+        buflen -= wrote;
     }
     fprintf(stdout, "\n");
-    for(i = 0; i < len; i++) {
+    for(i = 0; i < buflen; i++) {
         char c = '.';
         if (msgbuf[i] > 31 && msgbuf[i] < 128) {
             c = msgbuf[i];
         }
-        fprintf(stdout, "%c", c);
+        wrote = snprintf(pos, buflen, "%c", c);
+        pos += wrote;
+        buflen -= wrote;
     }
-
-    fprintf(stdout, "\n");
 #endif
     return ERIAK_OK;
 }

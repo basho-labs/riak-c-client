@@ -84,4 +84,20 @@ riak_event_free(riak_event** re);
 void
 riak_event_loop(riak_context *ctx);
 
+/**
+ * @brief Return the underlying socket file descriptor
+ * @param rev Riak Event
+ * @returns File descriptor
+ */
+riak_socket_t
+riak_event_get_fd(riak_event *rev);
+
+/**
+ * @brief Return the Riak Context
+ * @param rev Riak Event
+ * @returns The corresponding Riak Context
+ */
+riak_context*
+riak_event_get_context(riak_event *rev);
+
 #endif
