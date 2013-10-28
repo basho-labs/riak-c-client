@@ -37,7 +37,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
+      <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -59,8 +59,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
   <div id="navrow2" class="tabs2">
     <ul class="tablist">
-      <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
-      <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
+      <li><a href="classes.html"><span>Data&#160;Structure&#160;Index</span></a></li>
+      <li><a href="functions.html"><span>Data&#160;Fields</span></a></li>
     </ul>
   </div>
 <!-- window showing the filter options -->
@@ -68,7 +69,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -80,44 +81,138 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="struct__riak__command-members.html">List of all members</a>  </div>
+<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
 <div class="title">_riak_command Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:ad4a3c27f22589d681f0bf667adbac259"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad4a3c27f22589d681f0bf667adbac259"></a>
-const char *&#160;</td><td class="memItemRight" valign="bottom"><b>name</b></td></tr>
+Data Fields</h2></td></tr>
+<tr class="memitem:ad4a3c27f22589d681f0bf667adbac259"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct__riak__command.html#ad4a3c27f22589d681f0bf667adbac259">name</a></td></tr>
 <tr class="separator:ad4a3c27f22589d681f0bf667adbac259"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8b7772137c66094e50407fd71bb53542"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8b7772137c66094e50407fd71bb53542"></a>
-const char *&#160;</td><td class="memItemRight" valign="bottom"><b>description</b></td></tr>
+<tr class="memitem:a8b7772137c66094e50407fd71bb53542"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct__riak__command.html#a8b7772137c66094e50407fd71bb53542">description</a></td></tr>
 <tr class="separator:a8b7772137c66094e50407fd71bb53542"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6d744ee25a6f0bbbbbf741ba4f42df8e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6d744ee25a6f0bbbbbf741ba4f42df8e"></a>
-const char *&#160;</td><td class="memItemRight" valign="bottom"><b>argument</b></td></tr>
+<tr class="memitem:a6d744ee25a6f0bbbbbf741ba4f42df8e"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct__riak__command.html#a6d744ee25a6f0bbbbbf741ba4f42df8e">argument</a></td></tr>
 <tr class="separator:a6d744ee25a6f0bbbbbf741ba4f42df8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6f60e2a385a61b152b3882bd735e553f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6f60e2a385a61b152b3882bd735e553f"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>val</b></td></tr>
+<tr class="memitem:a6f60e2a385a61b152b3882bd735e553f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct__riak__command.html#a6f60e2a385a61b152b3882bd735e553f">val</a></td></tr>
 <tr class="separator:a6f60e2a385a61b152b3882bd735e553f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab106475c7f448e8deebc6aaaa68d7d63"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab106475c7f448e8deebc6aaaa68d7d63"></a>
-riak_boolean_t&#160;</td><td class="memItemRight" valign="bottom"><b>needs_bucket</b></td></tr>
+<tr class="memitem:ab106475c7f448e8deebc6aaaa68d7d63"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct__riak__command.html#ab106475c7f448e8deebc6aaaa68d7d63">needs_bucket</a></td></tr>
 <tr class="separator:ab106475c7f448e8deebc6aaaa68d7d63"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af84cd23e4b49da51df892a3fdff8e0bb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af84cd23e4b49da51df892a3fdff8e0bb"></a>
-riak_boolean_t&#160;</td><td class="memItemRight" valign="bottom"><b>needs_key</b></td></tr>
+<tr class="memitem:af84cd23e4b49da51df892a3fdff8e0bb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct__riak__command.html#af84cd23e4b49da51df892a3fdff8e0bb">needs_key</a></td></tr>
 <tr class="separator:af84cd23e4b49da51df892a3fdff8e0bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a04d2bc2acf26b58998e245994b0c37"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6a04d2bc2acf26b58998e245994b0c37"></a>
-riak_boolean_t&#160;</td><td class="memItemRight" valign="bottom"><b>needs_value</b></td></tr>
+<tr class="memitem:a6a04d2bc2acf26b58998e245994b0c37"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct__riak__command.html#a6a04d2bc2acf26b58998e245994b0c37">needs_value</a></td></tr>
 <tr class="separator:a6a04d2bc2acf26b58998e245994b0c37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock">
+<p>Definition at line <a class="el" href="riak__command_8c_source.html#l00029">29</a> of file <a class="el" href="riak__command_8c_source.html">riak_command.c</a>.</p>
+</div><h2 class="groupheader">Field Documentation</h2>
+<a class="anchor" id="a6d744ee25a6f0bbbbbf741ba4f42df8e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* _riak_command::argument</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="riak__command_8c_source.html#l00035">35</a> of file <a class="el" href="riak__command_8c_source.html">riak_command.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8b7772137c66094e50407fd71bb53542"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* _riak_command::description</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="riak__command_8c_source.html#l00033">33</a> of file <a class="el" href="riak__command_8c_source.html">riak_command.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad4a3c27f22589d681f0bf667adbac259"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* _riak_command::name</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="riak__command_8c_source.html#l00031">31</a> of file <a class="el" href="riak__command_8c_source.html">riak_command.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab106475c7f448e8deebc6aaaa68d7d63"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a> _riak_command::needs_bucket</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="riak__command_8c_source.html#l00039">39</a> of file <a class="el" href="riak__command_8c_source.html">riak_command.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af84cd23e4b49da51df892a3fdff8e0bb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a> _riak_command::needs_key</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="riak__command_8c_source.html#l00041">41</a> of file <a class="el" href="riak__command_8c_source.html">riak_command.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6a04d2bc2acf26b58998e245994b0c37"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a> _riak_command::needs_value</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="riak__command_8c_source.html#l00043">43</a> of file <a class="el" href="riak__command_8c_source.html">riak_command.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6f60e2a385a61b152b3882bd735e553f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int _riak_command::val</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="riak__command_8c_source.html#l00037">37</a> of file <a class="el" href="riak__command_8c_source.html">riak_command.c</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>src/riak_command.c</li>
+<li>src/<a class="el" href="riak__command_8c_source.html">riak_command.c</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 28 2013 09:45:11 for riak-c-client by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Oct 28 2013 12:34:34 for riak-c-client by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

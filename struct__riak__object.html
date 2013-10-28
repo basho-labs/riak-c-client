@@ -37,7 +37,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
+      <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -59,8 +59,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
   <div id="navrow2" class="tabs2">
     <ul class="tablist">
-      <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
-      <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
+      <li><a href="classes.html"><span>Data&#160;Structure&#160;Index</span></a></li>
+      <li><a href="functions.html"><span>Data&#160;Fields</span></a></li>
     </ul>
   </div>
 <!-- window showing the filter options -->
@@ -68,7 +69,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -80,95 +81,412 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="struct__riak__object-members.html">List of all members</a>  </div>
+<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
 <div class="title">_riak_object Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="riak__object-internal_8h_source.html">riak_object-internal.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:ad578898169bdad5d73f0eadffe060577"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad578898169bdad5d73f0eadffe060577"></a>
-<a class="el" href="struct__riak__binary.html">riak_binary</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>bucket</b></td></tr>
+Data Fields</h2></td></tr>
+<tr class="memitem:ad578898169bdad5d73f0eadffe060577"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct__riak__object.html#ad578898169bdad5d73f0eadffe060577">bucket</a></td></tr>
 <tr class="separator:ad578898169bdad5d73f0eadffe060577"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54d63a0a854552e897f4e47c7da2a630"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a54d63a0a854552e897f4e47c7da2a630"></a>
-riak_boolean_t&#160;</td><td class="memItemRight" valign="bottom"><b>has_key</b></td></tr>
+<tr class="memitem:a54d63a0a854552e897f4e47c7da2a630"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct__riak__object.html#a54d63a0a854552e897f4e47c7da2a630">has_key</a></td></tr>
 <tr class="separator:a54d63a0a854552e897f4e47c7da2a630"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89f47a68ba1572e8544cdb4c8589547e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a89f47a68ba1572e8544cdb4c8589547e"></a>
-<a class="el" href="struct__riak__binary.html">riak_binary</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>key</b></td></tr>
+<tr class="memitem:a89f47a68ba1572e8544cdb4c8589547e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct__riak__object.html#a89f47a68ba1572e8544cdb4c8589547e">key</a></td></tr>
 <tr class="separator:a89f47a68ba1572e8544cdb4c8589547e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a98f1796cc56fcf203934dffd098375d1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a98f1796cc56fcf203934dffd098375d1"></a>
-<a class="el" href="struct__riak__binary.html">riak_binary</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>value</b></td></tr>
+<tr class="memitem:a98f1796cc56fcf203934dffd098375d1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct__riak__object.html#a98f1796cc56fcf203934dffd098375d1">value</a></td></tr>
 <tr class="separator:a98f1796cc56fcf203934dffd098375d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9438a6ad2d1c0bddac891d3b603a2b16"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9438a6ad2d1c0bddac891d3b603a2b16"></a>
-riak_boolean_t&#160;</td><td class="memItemRight" valign="bottom"><b>has_charset</b></td></tr>
+<tr class="memitem:a9438a6ad2d1c0bddac891d3b603a2b16"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct__riak__object.html#a9438a6ad2d1c0bddac891d3b603a2b16">has_charset</a></td></tr>
 <tr class="separator:a9438a6ad2d1c0bddac891d3b603a2b16"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0e6b18b8f3177ded5656c04ec229a163"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0e6b18b8f3177ded5656c04ec229a163"></a>
-<a class="el" href="struct__riak__binary.html">riak_binary</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>charset</b></td></tr>
+<tr class="memitem:a0e6b18b8f3177ded5656c04ec229a163"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct__riak__object.html#a0e6b18b8f3177ded5656c04ec229a163">charset</a></td></tr>
 <tr class="separator:a0e6b18b8f3177ded5656c04ec229a163"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af5b5cfc00183d02ab6d4a5ef5c4609cb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af5b5cfc00183d02ab6d4a5ef5c4609cb"></a>
-riak_boolean_t&#160;</td><td class="memItemRight" valign="bottom"><b>has_last_mod</b></td></tr>
+<tr class="memitem:af5b5cfc00183d02ab6d4a5ef5c4609cb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct__riak__object.html#af5b5cfc00183d02ab6d4a5ef5c4609cb">has_last_mod</a></td></tr>
 <tr class="separator:af5b5cfc00183d02ab6d4a5ef5c4609cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af5318c6d47163c3033123e10f63580d8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af5318c6d47163c3033123e10f63580d8"></a>
-riak_uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>last_mod</b></td></tr>
+<tr class="memitem:af5318c6d47163c3033123e10f63580d8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__types_8h.html#a9dc3c4eb5e5574cccc9c87f28e532d63">riak_uint32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct__riak__object.html#af5318c6d47163c3033123e10f63580d8">last_mod</a></td></tr>
 <tr class="separator:af5318c6d47163c3033123e10f63580d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a33a5a2c07054e648c92d4a6283c68cf0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a33a5a2c07054e648c92d4a6283c68cf0"></a>
-riak_boolean_t&#160;</td><td class="memItemRight" valign="bottom"><b>has_last_mod_usecs</b></td></tr>
+<tr class="memitem:a33a5a2c07054e648c92d4a6283c68cf0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct__riak__object.html#a33a5a2c07054e648c92d4a6283c68cf0">has_last_mod_usecs</a></td></tr>
 <tr class="separator:a33a5a2c07054e648c92d4a6283c68cf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf5aaafc0ba53f016efa649daf4d6dfd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abf5aaafc0ba53f016efa649daf4d6dfd"></a>
-riak_uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>last_mod_usecs</b></td></tr>
+<tr class="memitem:abf5aaafc0ba53f016efa649daf4d6dfd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__types_8h.html#a9dc3c4eb5e5574cccc9c87f28e532d63">riak_uint32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct__riak__object.html#abf5aaafc0ba53f016efa649daf4d6dfd">last_mod_usecs</a></td></tr>
 <tr class="separator:abf5aaafc0ba53f016efa649daf4d6dfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aebbe85d47154fbcc9a82af84ead9f219"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aebbe85d47154fbcc9a82af84ead9f219"></a>
-riak_boolean_t&#160;</td><td class="memItemRight" valign="bottom"><b>has_content_type</b></td></tr>
+<tr class="memitem:aebbe85d47154fbcc9a82af84ead9f219"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct__riak__object.html#aebbe85d47154fbcc9a82af84ead9f219">has_content_type</a></td></tr>
 <tr class="separator:aebbe85d47154fbcc9a82af84ead9f219"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34fb6ec36cfdcfc4ed9dac4809b433cf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a34fb6ec36cfdcfc4ed9dac4809b433cf"></a>
-<a class="el" href="struct__riak__binary.html">riak_binary</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>content_type</b></td></tr>
+<tr class="memitem:a34fb6ec36cfdcfc4ed9dac4809b433cf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct__riak__object.html#a34fb6ec36cfdcfc4ed9dac4809b433cf">content_type</a></td></tr>
 <tr class="separator:a34fb6ec36cfdcfc4ed9dac4809b433cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae668841611b40196694544e9ae90125d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae668841611b40196694544e9ae90125d"></a>
-riak_boolean_t&#160;</td><td class="memItemRight" valign="bottom"><b>has_content_encoding</b></td></tr>
+<tr class="memitem:ae668841611b40196694544e9ae90125d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct__riak__object.html#ae668841611b40196694544e9ae90125d">has_content_encoding</a></td></tr>
 <tr class="separator:ae668841611b40196694544e9ae90125d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf46108eaead5450f334f63489140340"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaf46108eaead5450f334f63489140340"></a>
-<a class="el" href="struct__riak__binary.html">riak_binary</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>encoding</b></td></tr>
+<tr class="memitem:aaf46108eaead5450f334f63489140340"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct__riak__object.html#aaf46108eaead5450f334f63489140340">encoding</a></td></tr>
 <tr class="separator:aaf46108eaead5450f334f63489140340"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac4615a16ba6032e223cdccbe244e9904"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac4615a16ba6032e223cdccbe244e9904"></a>
-riak_boolean_t&#160;</td><td class="memItemRight" valign="bottom"><b>has_deleted</b></td></tr>
+<tr class="memitem:ac4615a16ba6032e223cdccbe244e9904"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct__riak__object.html#ac4615a16ba6032e223cdccbe244e9904">has_deleted</a></td></tr>
 <tr class="separator:ac4615a16ba6032e223cdccbe244e9904"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8fb5662ab455df6af7e1fd55edd8afbb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8fb5662ab455df6af7e1fd55edd8afbb"></a>
-riak_boolean_t&#160;</td><td class="memItemRight" valign="bottom"><b>deleted</b></td></tr>
+<tr class="memitem:a8fb5662ab455df6af7e1fd55edd8afbb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct__riak__object.html#a8fb5662ab455df6af7e1fd55edd8afbb">deleted</a></td></tr>
 <tr class="separator:a8fb5662ab455df6af7e1fd55edd8afbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2abecbadccbe35dfe893953372eb3755"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2abecbadccbe35dfe893953372eb3755"></a>
-riak_boolean_t&#160;</td><td class="memItemRight" valign="bottom"><b>has_vtag</b></td></tr>
+<tr class="memitem:a2abecbadccbe35dfe893953372eb3755"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct__riak__object.html#a2abecbadccbe35dfe893953372eb3755">has_vtag</a></td></tr>
 <tr class="separator:a2abecbadccbe35dfe893953372eb3755"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8968683d89a25836327d5a6025abdcda"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8968683d89a25836327d5a6025abdcda"></a>
-<a class="el" href="struct__riak__binary.html">riak_binary</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>vtag</b></td></tr>
+<tr class="memitem:a8968683d89a25836327d5a6025abdcda"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct__riak__object.html#a8968683d89a25836327d5a6025abdcda">vtag</a></td></tr>
 <tr class="separator:a8968683d89a25836327d5a6025abdcda"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a59ccdc234f7caf778f1c4fbfb3e6a23d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a59ccdc234f7caf778f1c4fbfb3e6a23d"></a>
-riak_int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>n_links</b></td></tr>
+<tr class="memitem:a59ccdc234f7caf778f1c4fbfb3e6a23d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__types_8h.html#a562f946b2c70e57a8a8e2c7f6f7d32c5">riak_int32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct__riak__object.html#a59ccdc234f7caf778f1c4fbfb3e6a23d">n_links</a></td></tr>
 <tr class="separator:a59ccdc234f7caf778f1c4fbfb3e6a23d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0fccb4d3ad0a5b02f5581d0c3fe306ec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0fccb4d3ad0a5b02f5581d0c3fe306ec"></a>
-<a class="el" href="struct__riak__link.html">riak_link</a> **&#160;</td><td class="memItemRight" valign="bottom"><b>links</b></td></tr>
+<tr class="memitem:a0fccb4d3ad0a5b02f5581d0c3fe306ec"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__object_8h.html#a7306a5768fe17e3f083c1282b81c3baa">riak_link</a> **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct__riak__object.html#a0fccb4d3ad0a5b02f5581d0c3fe306ec">links</a></td></tr>
 <tr class="separator:a0fccb4d3ad0a5b02f5581d0c3fe306ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afa02a9c4ced31053811ed154907748c4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afa02a9c4ced31053811ed154907748c4"></a>
-riak_int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>n_usermeta</b></td></tr>
+<tr class="memitem:afa02a9c4ced31053811ed154907748c4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__types_8h.html#a562f946b2c70e57a8a8e2c7f6f7d32c5">riak_int32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct__riak__object.html#afa02a9c4ced31053811ed154907748c4">n_usermeta</a></td></tr>
 <tr class="separator:afa02a9c4ced31053811ed154907748c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3dc5071f40e69c47a55ab3eafaf9532"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac3dc5071f40e69c47a55ab3eafaf9532"></a>
-<a class="el" href="struct__riak__pair.html">riak_pair</a> **&#160;</td><td class="memItemRight" valign="bottom"><b>usermeta</b></td></tr>
+<tr class="memitem:ac3dc5071f40e69c47a55ab3eafaf9532"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__object_8h.html#a85cd6d860cb1203ccfea9e1df4c6345a">riak_pair</a> **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct__riak__object.html#ac3dc5071f40e69c47a55ab3eafaf9532">usermeta</a></td></tr>
 <tr class="separator:ac3dc5071f40e69c47a55ab3eafaf9532"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae5c8a009410c04249a5c9dceedb7d3af"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae5c8a009410c04249a5c9dceedb7d3af"></a>
-riak_int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>n_indexes</b></td></tr>
+<tr class="memitem:ae5c8a009410c04249a5c9dceedb7d3af"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__types_8h.html#a562f946b2c70e57a8a8e2c7f6f7d32c5">riak_int32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct__riak__object.html#ae5c8a009410c04249a5c9dceedb7d3af">n_indexes</a></td></tr>
 <tr class="separator:ae5c8a009410c04249a5c9dceedb7d3af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa50d20677bf697be7ab6303cd7268419"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa50d20677bf697be7ab6303cd7268419"></a>
-<a class="el" href="struct__riak__pair.html">riak_pair</a> **&#160;</td><td class="memItemRight" valign="bottom"><b>indexes</b></td></tr>
+<tr class="memitem:aa50d20677bf697be7ab6303cd7268419"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__object_8h.html#a85cd6d860cb1203ccfea9e1df4c6345a">riak_pair</a> **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct__riak__object.html#aa50d20677bf697be7ab6303cd7268419">indexes</a></td></tr>
 <tr class="separator:aa50d20677bf697be7ab6303cd7268419"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock">
+<p>Definition at line <a class="el" href="riak__object-internal_8h_source.html#l00046">46</a> of file <a class="el" href="riak__object-internal_8h_source.html">riak_object-internal.h</a>.</p>
+</div><h2 class="groupheader">Field Documentation</h2>
+<a class="anchor" id="ad578898169bdad5d73f0eadffe060577"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a>* _riak_object::bucket</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="riak__object-internal_8h_source.html#l00047">47</a> of file <a class="el" href="riak__object-internal_8h_source.html">riak_object-internal.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0e6b18b8f3177ded5656c04ec229a163"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a>* _riak_object::charset</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="riak__object-internal_8h_source.html#l00055">55</a> of file <a class="el" href="riak__object-internal_8h_source.html">riak_object-internal.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a34fb6ec36cfdcfc4ed9dac4809b433cf"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a>* _riak_object::content_type</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="riak__object-internal_8h_source.html#l00064">64</a> of file <a class="el" href="riak__object-internal_8h_source.html">riak_object-internal.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8fb5662ab455df6af7e1fd55edd8afbb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a> _riak_object::deleted</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="riak__object-internal_8h_source.html#l00070">70</a> of file <a class="el" href="riak__object-internal_8h_source.html">riak_object-internal.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aaf46108eaead5450f334f63489140340"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a>* _riak_object::encoding</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="riak__object-internal_8h_source.html#l00067">67</a> of file <a class="el" href="riak__object-internal_8h_source.html">riak_object-internal.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9438a6ad2d1c0bddac891d3b603a2b16"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a> _riak_object::has_charset</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="riak__object-internal_8h_source.html#l00054">54</a> of file <a class="el" href="riak__object-internal_8h_source.html">riak_object-internal.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae668841611b40196694544e9ae90125d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a> _riak_object::has_content_encoding</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="riak__object-internal_8h_source.html#l00066">66</a> of file <a class="el" href="riak__object-internal_8h_source.html">riak_object-internal.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aebbe85d47154fbcc9a82af84ead9f219"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a> _riak_object::has_content_type</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="riak__object-internal_8h_source.html#l00063">63</a> of file <a class="el" href="riak__object-internal_8h_source.html">riak_object-internal.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ac4615a16ba6032e223cdccbe244e9904"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a> _riak_object::has_deleted</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="riak__object-internal_8h_source.html#l00069">69</a> of file <a class="el" href="riak__object-internal_8h_source.html">riak_object-internal.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a54d63a0a854552e897f4e47c7da2a630"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a> _riak_object::has_key</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="riak__object-internal_8h_source.html#l00049">49</a> of file <a class="el" href="riak__object-internal_8h_source.html">riak_object-internal.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af5b5cfc00183d02ab6d4a5ef5c4609cb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a> _riak_object::has_last_mod</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="riak__object-internal_8h_source.html#l00057">57</a> of file <a class="el" href="riak__object-internal_8h_source.html">riak_object-internal.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a33a5a2c07054e648c92d4a6283c68cf0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a> _riak_object::has_last_mod_usecs</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="riak__object-internal_8h_source.html#l00060">60</a> of file <a class="el" href="riak__object-internal_8h_source.html">riak_object-internal.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a2abecbadccbe35dfe893953372eb3755"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a> _riak_object::has_vtag</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="riak__object-internal_8h_source.html#l00072">72</a> of file <a class="el" href="riak__object-internal_8h_source.html">riak_object-internal.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa50d20677bf697be7ab6303cd7268419"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="riak__object_8h.html#a85cd6d860cb1203ccfea9e1df4c6345a">riak_pair</a>** _riak_object::indexes</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="riak__object-internal_8h_source.html#l00081">81</a> of file <a class="el" href="riak__object-internal_8h_source.html">riak_object-internal.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a89f47a68ba1572e8544cdb4c8589547e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a>* _riak_object::key</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="riak__object-internal_8h_source.html#l00050">50</a> of file <a class="el" href="riak__object-internal_8h_source.html">riak_object-internal.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af5318c6d47163c3033123e10f63580d8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="riak__types_8h.html#a9dc3c4eb5e5574cccc9c87f28e532d63">riak_uint32_t</a> _riak_object::last_mod</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="riak__object-internal_8h_source.html#l00058">58</a> of file <a class="el" href="riak__object-internal_8h_source.html">riak_object-internal.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="abf5aaafc0ba53f016efa649daf4d6dfd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="riak__types_8h.html#a9dc3c4eb5e5574cccc9c87f28e532d63">riak_uint32_t</a> _riak_object::last_mod_usecs</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="riak__object-internal_8h_source.html#l00061">61</a> of file <a class="el" href="riak__object-internal_8h_source.html">riak_object-internal.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0fccb4d3ad0a5b02f5581d0c3fe306ec"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="riak__object_8h.html#a7306a5768fe17e3f083c1282b81c3baa">riak_link</a>** _riak_object::links</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="riak__object-internal_8h_source.html#l00076">76</a> of file <a class="el" href="riak__object-internal_8h_source.html">riak_object-internal.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae5c8a009410c04249a5c9dceedb7d3af"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="riak__types_8h.html#a562f946b2c70e57a8a8e2c7f6f7d32c5">riak_int32_t</a> _riak_object::n_indexes</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="riak__object-internal_8h_source.html#l00080">80</a> of file <a class="el" href="riak__object-internal_8h_source.html">riak_object-internal.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a59ccdc234f7caf778f1c4fbfb3e6a23d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="riak__types_8h.html#a562f946b2c70e57a8a8e2c7f6f7d32c5">riak_int32_t</a> _riak_object::n_links</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="riak__object-internal_8h_source.html#l00075">75</a> of file <a class="el" href="riak__object-internal_8h_source.html">riak_object-internal.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="afa02a9c4ced31053811ed154907748c4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="riak__types_8h.html#a562f946b2c70e57a8a8e2c7f6f7d32c5">riak_int32_t</a> _riak_object::n_usermeta</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="riak__object-internal_8h_source.html#l00078">78</a> of file <a class="el" href="riak__object-internal_8h_source.html">riak_object-internal.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ac3dc5071f40e69c47a55ab3eafaf9532"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="riak__object_8h.html#a85cd6d860cb1203ccfea9e1df4c6345a">riak_pair</a>** _riak_object::usermeta</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="riak__object-internal_8h_source.html#l00079">79</a> of file <a class="el" href="riak__object-internal_8h_source.html">riak_object-internal.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a98f1796cc56fcf203934dffd098375d1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a>* _riak_object::value</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="riak__object-internal_8h_source.html#l00052">52</a> of file <a class="el" href="riak__object-internal_8h_source.html">riak_object-internal.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8968683d89a25836327d5a6025abdcda"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a>* _riak_object::vtag</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="riak__object-internal_8h_source.html#l00073">73</a> of file <a class="el" href="riak__object-internal_8h_source.html">riak_object-internal.h</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
 <li>src/internal/<a class="el" href="riak__object-internal_8h_source.html">riak_object-internal.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 28 2013 09:45:11 for riak-c-client by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Oct 28 2013 12:34:34 for riak-c-client by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

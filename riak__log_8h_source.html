@@ -37,7 +37,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="annotated.html"><span>Classes</span></a></li>
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -60,6 +60,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow2" class="tabs2">
     <ul class="tablist">
       <li><a href="files.html"><span>File&#160;List</span></a></li>
+      <li><a href="globals.html"><span>Globals</span></a></li>
     </ul>
   </div>
 <!-- window showing the filter options -->
@@ -67,7 +68,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -86,7 +87,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">riak_log.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*********************************************************************</span></div>
+<a href="riak__log_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*********************************************************************</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> * riak_log.h: Riak C Logging</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> *</span></div>
@@ -114,12 +115,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &lt;stdarg.h&gt;</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">// Pulled from zlog.h but correspond to log levels from syslog(3)</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">typedef</span> <span class="keyword">enum</span> {    RIAK_LOG_FATAL,    RIAK_LOG_ERROR,     RIAK_LOG_WARN,   RIAK_LOG_NOTICE,     RIAK_LOG_INFO,    RIAK_LOG_DEBUG,  RIAK_LOG_UNKNOWN</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;} riak_log_level_t;</div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="code" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060">   29</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">enum</span> {    <a class="code" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060aec53134563a581a33bd679f9d9df04a8">RIAK_LOG_FATAL</a>,    <a class="code" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060a3b8aed816f8d632395104822e73a0417">RIAK_LOG_ERROR</a>,     <a class="code" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060a68ff993c86ddaa217d91e6263d04cc81">RIAK_LOG_WARN</a>,   <a class="code" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060a2d99d941d019c8daef771bbab7944f47">RIAK_LOG_NOTICE</a>,     <a class="code" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060affaaf087b7f136766a0a188cac8d6850">RIAK_LOG_INFO</a>,    <a class="code" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060a1a5089b46adad65d5f88a78b59d6c079">RIAK_LOG_DEBUG</a>,  <a class="code" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060a99dc45d9f58437faba6dd2afba2ca0e0">RIAK_LOG_UNKNOWN</a></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;} <a class="code" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060">riak_log_level_t</a>;</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;riak_log_internal(<a class="code" href="struct__riak__context.html">riak_context</a>    *ctx,</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;                  riak_log_level_t level,</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<a class="code" href="riak__log_8h.html#a3236c5acc6b330310b0c898cd425b191" title="Add a record to the Riak log. ">riak_log_internal</a>(<a class="code" href="struct__riak__context.html">riak_context</a>    *ctx,</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;                  <a class="code" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060">riak_log_level_t</a> level,</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;                  <span class="keyword">const</span> <span class="keywordtype">char</span>      *file,</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;                  <span class="keywordtype">size_t</span>           filelen,</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;                  <span class="keyword">const</span> <span class="keywordtype">char</span>      *func,</div>
@@ -128,16 +129,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                  <span class="keyword">const</span> <span class="keywordtype">char</span>      *format,</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;                  ...);</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">#define riak_log_fatal(rev,format, ...) \</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno"><a class="code" href="riak__log_8h.html#aa0c341fbb5a37a46e7320e44eeab223a">   63</a></span>&#160;<span class="preprocessor">#define riak_log_fatal(rev,format, ...) \</span></div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">        riak_log_internal(riak_event_get_context(rev), RIAK_LOG_FATAL, __FILE__, sizeof(__FILE__)-1, \</span></div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">        __func__, sizeof(__func__)-1, __LINE__, (&quot;[%d] &quot; format), riak_event_get_fd(rev), __VA_ARGS__)</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define riak_log_error(rev,format, ...) \</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="code" href="riak__log_8h.html#ac54890e5668b8b176b42677a1f4e3ce8">   66</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define riak_log_error(rev,format, ...) \</span></div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">        riak_log_internal(riak_event_get_context(rev), RIAK_LOG_ERROR, __FILE__, sizeof(__FILE__)-1, \</span></div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor">        __func__, sizeof(__func__)-1, __LINE__, (&quot;[%d] &quot; format), riak_event_get_fd(rev), __VA_ARGS__)</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define riak_log_warn(rev,format, ...) \</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno"><a class="code" href="riak__log_8h.html#a4d0691ef77fe7729db3e76ecc82b15bc">   69</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define riak_log_warn(rev,format, ...) \</span></div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">        riak_log_internal(riak_event_get_context(rev), RIAK_LOG_WARN, __FILE__, sizeof(__FILE__)-1, \</span></div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">        __func__, sizeof(__func__)-1, __LINE__, (&quot;[%d] &quot; format), riak_event_get_fd(rev), __VA_ARGS__)</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define riak_log_notice(rev,format, ...) \</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno"><a class="code" href="riak__log_8h.html#ab301ddea1942ba06fe6e139effbf27ce">   72</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define riak_log_notice(rev,format, ...) \</span></div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor">        riak_log_internal(riak_event_get_context(rev), RIAK_LOG_NOTICE, __FILE__, sizeof(__FILE__)-1, \</span></div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor">        __func__, sizeof(__func__)-1, __LINE__, (&quot;[%d] &quot; format), riak_event_get_fd(rev), __VA_ARGS__)</span></div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#ifdef _RIAK_DEBUG</span></div>
@@ -145,19 +146,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="preprocessor">        riak_log_internal(riak_event_get_context(rev), RIAK_LOG_DEBUG, __FILE__, sizeof(__FILE__)-1, \</span></div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor">        __func__, sizeof(__func__)-1, __LINE__, (&quot;[%d] &quot; format), riak_event_get_fd(rev), __VA_ARGS__)</span></div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define riak_log_debug(rev,format, ...) // No-Op</span></div>
+<div class="line"><a name="l00080"></a><span class="lineno"><a class="code" href="riak__log_8h.html#a190a526ef85c83bb7851111852f4c007">   80</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define riak_log_debug(rev,format, ...) // No-Op</span></div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="preprocessor">#define riak_log_fatal_context(ctx,format, ...) \</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno"><a class="code" href="riak__log_8h.html#ab05fe5eaa594aedbcd0055e60cdc5015">   83</a></span>&#160;<span class="preprocessor">#define riak_log_fatal_context(ctx,format, ...) \</span></div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="preprocessor">        riak_log_internal((ctx), RIAK_LOG_FATAL, __FILE__, sizeof(__FILE__)-1, \</span></div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="preprocessor">        __func__, sizeof(__func__)-1, __LINE__, (format), __VA_ARGS__)</span></div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define riak_log_error_context(rev,format, ...) \</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno"><a class="code" href="riak__log_8h.html#a9e196c6851bd7375329dfb1c09536009">   86</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define riak_log_error_context(rev,format, ...) \</span></div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="preprocessor">        riak_log_internal((ctx), RIAK_LOG_ERROR, __FILE__, sizeof(__FILE__)-1, \</span></div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="preprocessor">        __func__, sizeof(__func__)-1, __LINE__, (format), __VA_ARGS__)</span></div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define riak_log_warn_context(rev,format, ...) \</span></div>
+<div class="line"><a name="l00089"></a><span class="lineno"><a class="code" href="riak__log_8h.html#a61406ebce9dcf88a6b1af0cf881c53a9">   89</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define riak_log_warn_context(rev,format, ...) \</span></div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="preprocessor">        riak_log_internal(ctx), RIAK_LOG_WARN, __FILE__, sizeof(__FILE__)-1, \</span></div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="preprocessor">        __func__, sizeof(__func__)-1, __LINE__, (format), __VA_ARGS__)</span></div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define riak_log_notice_context(rev,format, ...) \</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno"><a class="code" href="riak__log_8h.html#a60ed8c3ff78b180419107bae1c196c78">   92</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define riak_log_notice_context(rev,format, ...) \</span></div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="preprocessor">        riak_log_internal((ctx), RIAK_LOG_NOTICE, __FILE__, sizeof(__FILE__)-1, \</span></div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="preprocessor">        __func__, sizeof(__func__)-1, __LINE__, (format), __VA_ARGS__)</span></div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#ifdef _RIAK_DEBUG</span></div>
@@ -165,14 +166,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="preprocessor">        riak_log_internal((ctx), RIAK_LOG_DEBUG, __FILE__, sizeof(__FILE__)-1, \</span></div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="preprocessor">        __func__, sizeof(__func__)-1, __LINE__, (format), __VA_ARGS__)</span></div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define riak_log_debug_context(rev,format, ...)</span></div>
+<div class="line"><a name="l00100"></a><span class="lineno"><a class="code" href="riak__log_8h.html#ad9d06a1e1f416d34b2f628cc0abb694b">  100</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define riak_log_debug_context(rev,format, ...)</span></div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 28 2013 09:45:11 for riak-c-client by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Oct 28 2013 12:34:33 for riak-c-client by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

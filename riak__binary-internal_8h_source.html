@@ -37,7 +37,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="annotated.html"><span>Classes</span></a></li>
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -60,6 +60,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow2" class="tabs2">
     <ul class="tablist">
       <li><a href="files.html"><span>File&#160;List</span></a></li>
+      <li><a href="globals.html"><span>Globals</span></a></li>
     </ul>
   </div>
 <!-- window showing the filter options -->
@@ -67,7 +68,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -86,7 +87,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">riak_binary-internal.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*********************************************************************</span></div>
+<a href="riak__binary-internal_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*********************************************************************</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> * riak_binary-internal.h: Riak C Client Binary Object Utilities</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> *</span></div>
@@ -116,38 +117,38 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">// Based off of ProtobufCBinaryData</span></div>
 <div class="line"><a name="l00030"></a><span class="lineno"><a class="code" href="struct__riak__binary.html">   30</a></span>&#160;<span class="keyword">struct </span><a class="code" href="struct__riak__binary.html">_riak_binary</a> {</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    riak_size_t   len;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    riak_uint8_t *data;</div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">   31</a></span>&#160;    <a class="code" href="riak__types_8h.html#ac4b74bedfd8743b6748d23d643d15f43">riak_size_t</a>   <a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">len</a>;</div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">   32</a></span>&#160;    <a class="code" href="riak__types_8h.html#a4a33cd4420942c6ceda4974952e3eb62">riak_uint8_t</a> *<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a>;</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;};</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<a class="code" href="struct__riak__binary.html">riak_binary</a>*</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;riak_binary_populate_from_pb(<a class="code" href="struct__riak__context.html">riak_context</a> *ctx,</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<a class="code" href="riak__binary-internal_8h.html#a925055ea00f7d4be4b8fbc8725667663" title="Allocate a new riak_binary and populate from data pointer. ">riak_binary_populate_from_pb</a>(<a class="code" href="struct__riak__context.html">riak_context</a> *ctx,</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;                             ProtobufCBinaryData  *bin);</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;riak_binary_to_pb_copy(ProtobufCBinaryData *to,</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<a class="code" href="riak__binary-internal_8h.html#ae2d4a0f6f877d33ba7b6d375f3f835d7">riak_binary_to_pb_copy</a>(ProtobufCBinaryData *to,</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;                       <a class="code" href="struct__riak__binary.html">riak_binary</a>         *from);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;riak_error</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;riak_binary_to_pb_deep_copy(<a class="code" href="struct__riak__context.html">riak_context</a>        *ctx,</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<a class="code" href="riak__binary-internal_8h.html#ad71e8ec204c9b3fec257ae106f83d522">riak_binary_to_pb_deep_copy</a>(<a class="code" href="struct__riak__context.html">riak_context</a>        *ctx,</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                            ProtobufCBinaryData *to,</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;                            <a class="code" href="struct__riak__binary.html">riak_binary</a>         *from);</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;riak_binary_from_pb_copy(<a class="code" href="struct__riak__binary.html">riak_binary</a>        *to,</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<a class="code" href="riak__binary-internal_8h.html#a499d1689f1fb7ffa8f60e762fbc893e1">riak_binary_from_pb_copy</a>(<a class="code" href="struct__riak__binary.html">riak_binary</a>        *to,</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;                         ProtobufCBinaryData *from);</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;riak_error</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;riak_binary_from_pb_deep_copy(<a class="code" href="struct__riak__context.html">riak_context</a>        *ctx,</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<a class="code" href="riak__binary-internal_8h.html#a5ecce2dfb23135c9a76a1df834b17c0d">riak_binary_from_pb_deep_copy</a>(<a class="code" href="struct__riak__context.html">riak_context</a>        *ctx,</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;                              <a class="code" href="struct__riak__binary.html">riak_binary</a>         *to,</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;                              ProtobufCBinaryData *from);</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;riak_binary_deep_free_pb(<a class="code" href="struct__riak__context.html">riak_context</a>        *ctx,</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<a class="code" href="riak__binary-internal_8h.html#a3050c342db6b4edb1275fb9980fdaedb" title="Clean up deeply allocated PB binary. ">riak_binary_deep_free_pb</a>(<a class="code" href="struct__riak__context.html">riak_context</a>        *ctx,</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;                         ProtobufCBinaryData *b);</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* RIAK_BINARY_H_ */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 28 2013 09:45:11 for riak-c-client by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Oct 28 2013 12:34:33 for riak-c-client by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

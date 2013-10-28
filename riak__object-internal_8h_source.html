@@ -37,7 +37,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="annotated.html"><span>Classes</span></a></li>
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -60,6 +60,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow2" class="tabs2">
     <ul class="tablist">
       <li><a href="files.html"><span>File&#160;List</span></a></li>
+      <li><a href="globals.html"><span>Globals</span></a></li>
     </ul>
   </div>
 <!-- window showing the filter options -->
@@ -67,7 +68,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -86,7 +87,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">riak_object-internal.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*********************************************************************</span></div>
+<a href="riak__object-internal_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*********************************************************************</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> * riak_object.h: Riak Object suite</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> *</span></div>
@@ -114,72 +115,72 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">// Based off of RpbLink</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno"><a class="code" href="struct__riak__link.html">   27</a></span>&#160;<span class="keyword">struct </span><a class="code" href="struct__riak__link.html">_riak_link</a></div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;{</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    riak_boolean_t has_bucket;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <a class="code" href="struct__riak__binary.html">riak_binary</a>   *bucket;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    riak_boolean_t has_key;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <a class="code" href="struct__riak__binary.html">riak_binary</a>   *key;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    riak_boolean_t has_tag;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <a class="code" href="struct__riak__binary.html">riak_binary</a>   *tag;</div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="code" href="struct__riak__link.html#a17e6ac820831ca48bdd9bfe0478cc709">   29</a></span>&#160;    <a class="code" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a> <a class="code" href="struct__riak__link.html#a17e6ac820831ca48bdd9bfe0478cc709">has_bucket</a>;</div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="code" href="struct__riak__link.html#aeb9acaefcb40a3e28db99212d7e296bf">   30</a></span>&#160;    <a class="code" href="struct__riak__binary.html">riak_binary</a>   *<a class="code" href="struct__riak__link.html#aeb9acaefcb40a3e28db99212d7e296bf">bucket</a>;</div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="code" href="struct__riak__link.html#aba00c70d6906bba85be36c8d8360b787">   31</a></span>&#160;    <a class="code" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a> <a class="code" href="struct__riak__link.html#aba00c70d6906bba85be36c8d8360b787">has_key</a>;</div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="code" href="struct__riak__link.html#a31adac6a7261c7586de5227921bad253">   32</a></span>&#160;    <a class="code" href="struct__riak__binary.html">riak_binary</a>   *<a class="code" href="struct__riak__link.html#a31adac6a7261c7586de5227921bad253">key</a>;</div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="code" href="struct__riak__link.html#ae4a22af5b79c55cd62855e4044512c64">   33</a></span>&#160;    <a class="code" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a> <a class="code" href="struct__riak__link.html#ae4a22af5b79c55cd62855e4044512c64">has_tag</a>;</div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="code" href="struct__riak__link.html#ab09f18f535a040875f9305a4f48649d0">   34</a></span>&#160;    <a class="code" href="struct__riak__binary.html">riak_binary</a>   *<a class="code" href="struct__riak__link.html#ab09f18f535a040875f9305a4f48649d0">tag</a>;</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;};</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment">// Based off of RpbPair</span></div>
 <div class="line"><a name="l00038"></a><span class="lineno"><a class="code" href="struct__riak__pair.html">   38</a></span>&#160;<span class="keyword">struct </span><a class="code" href="struct__riak__pair.html">_riak_pair</a></div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;{</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <a class="code" href="struct__riak__binary.html">riak_binary</a>   *key;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    riak_boolean_t has_value;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <a class="code" href="struct__riak__binary.html">riak_binary</a>   *value;</div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="code" href="struct__riak__pair.html#ac4e94171fb9488e0001ffbae23d9280e">   40</a></span>&#160;    <a class="code" href="struct__riak__binary.html">riak_binary</a>   *<a class="code" href="struct__riak__pair.html#ac4e94171fb9488e0001ffbae23d9280e">key</a>;</div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="code" href="struct__riak__pair.html#a8ca4a1d6f929b448466fa4041a808488">   41</a></span>&#160;    <a class="code" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a> <a class="code" href="struct__riak__pair.html#a8ca4a1d6f929b448466fa4041a808488">has_value</a>;</div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="code" href="struct__riak__pair.html#a10a74710d5032d4938c165c3baef0fae">   42</a></span>&#160;    <a class="code" href="struct__riak__binary.html">riak_binary</a>   *<a class="code" href="struct__riak__pair.html#a10a74710d5032d4938c165c3baef0fae">value</a>;</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;};</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="comment">// Based off of RpbContent</span></div>
 <div class="line"><a name="l00046"></a><span class="lineno"><a class="code" href="struct__riak__object.html">   46</a></span>&#160;<span class="keyword">struct </span><a class="code" href="struct__riak__object.html">_riak_object</a> {</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <a class="code" href="struct__riak__binary.html">riak_binary</a>   *bucket;</div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="code" href="struct__riak__object.html#ad578898169bdad5d73f0eadffe060577">   47</a></span>&#160;    <a class="code" href="struct__riak__binary.html">riak_binary</a>   *<a class="code" href="struct__riak__object.html#ad578898169bdad5d73f0eadffe060577">bucket</a>;</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    riak_boolean_t has_key;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <a class="code" href="struct__riak__binary.html">riak_binary</a>   *key;</div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="code" href="struct__riak__object.html#a54d63a0a854552e897f4e47c7da2a630">   49</a></span>&#160;    <a class="code" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a> <a class="code" href="struct__riak__object.html#a54d63a0a854552e897f4e47c7da2a630">has_key</a>;</div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="code" href="struct__riak__object.html#a89f47a68ba1572e8544cdb4c8589547e">   50</a></span>&#160;    <a class="code" href="struct__riak__binary.html">riak_binary</a>   *<a class="code" href="struct__riak__object.html#a89f47a68ba1572e8544cdb4c8589547e">key</a>;</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <a class="code" href="struct__riak__binary.html">riak_binary</a>   *value;</div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="code" href="struct__riak__object.html#a98f1796cc56fcf203934dffd098375d1">   52</a></span>&#160;    <a class="code" href="struct__riak__binary.html">riak_binary</a>   *<a class="code" href="struct__riak__object.html#a98f1796cc56fcf203934dffd098375d1">value</a>;</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    riak_boolean_t has_charset;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <a class="code" href="struct__riak__binary.html">riak_binary</a>   *charset;</div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="code" href="struct__riak__object.html#a9438a6ad2d1c0bddac891d3b603a2b16">   54</a></span>&#160;    <a class="code" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a> <a class="code" href="struct__riak__object.html#a9438a6ad2d1c0bddac891d3b603a2b16">has_charset</a>;</div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="code" href="struct__riak__object.html#a0e6b18b8f3177ded5656c04ec229a163">   55</a></span>&#160;    <a class="code" href="struct__riak__binary.html">riak_binary</a>   *<a class="code" href="struct__riak__object.html#a0e6b18b8f3177ded5656c04ec229a163">charset</a>;</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    riak_boolean_t has_last_mod;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    riak_uint32_t  last_mod;</div>
+<div class="line"><a name="l00057"></a><span class="lineno"><a class="code" href="struct__riak__object.html#af5b5cfc00183d02ab6d4a5ef5c4609cb">   57</a></span>&#160;    <a class="code" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a> <a class="code" href="struct__riak__object.html#af5b5cfc00183d02ab6d4a5ef5c4609cb">has_last_mod</a>;</div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="code" href="struct__riak__object.html#af5318c6d47163c3033123e10f63580d8">   58</a></span>&#160;    <a class="code" href="riak__types_8h.html#a9dc3c4eb5e5574cccc9c87f28e532d63">riak_uint32_t</a>  <a class="code" href="struct__riak__object.html#af5318c6d47163c3033123e10f63580d8">last_mod</a>;</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    riak_boolean_t has_last_mod_usecs;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    riak_uint32_t  last_mod_usecs;</div>
+<div class="line"><a name="l00060"></a><span class="lineno"><a class="code" href="struct__riak__object.html#a33a5a2c07054e648c92d4a6283c68cf0">   60</a></span>&#160;    <a class="code" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a> <a class="code" href="struct__riak__object.html#a33a5a2c07054e648c92d4a6283c68cf0">has_last_mod_usecs</a>;</div>
+<div class="line"><a name="l00061"></a><span class="lineno"><a class="code" href="struct__riak__object.html#abf5aaafc0ba53f016efa649daf4d6dfd">   61</a></span>&#160;    <a class="code" href="riak__types_8h.html#a9dc3c4eb5e5574cccc9c87f28e532d63">riak_uint32_t</a>  <a class="code" href="struct__riak__object.html#abf5aaafc0ba53f016efa649daf4d6dfd">last_mod_usecs</a>;</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    riak_boolean_t has_content_type;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <a class="code" href="struct__riak__binary.html">riak_binary</a>   *content_type;</div>
+<div class="line"><a name="l00063"></a><span class="lineno"><a class="code" href="struct__riak__object.html#aebbe85d47154fbcc9a82af84ead9f219">   63</a></span>&#160;    <a class="code" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a> <a class="code" href="struct__riak__object.html#aebbe85d47154fbcc9a82af84ead9f219">has_content_type</a>;</div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="code" href="struct__riak__object.html#a34fb6ec36cfdcfc4ed9dac4809b433cf">   64</a></span>&#160;    <a class="code" href="struct__riak__binary.html">riak_binary</a>   *<a class="code" href="struct__riak__object.html#a34fb6ec36cfdcfc4ed9dac4809b433cf">content_type</a>;</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    riak_boolean_t has_content_encoding;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <a class="code" href="struct__riak__binary.html">riak_binary</a>   *encoding;</div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="code" href="struct__riak__object.html#ae668841611b40196694544e9ae90125d">   66</a></span>&#160;    <a class="code" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a> <a class="code" href="struct__riak__object.html#ae668841611b40196694544e9ae90125d">has_content_encoding</a>;</div>
+<div class="line"><a name="l00067"></a><span class="lineno"><a class="code" href="struct__riak__object.html#aaf46108eaead5450f334f63489140340">   67</a></span>&#160;    <a class="code" href="struct__riak__binary.html">riak_binary</a>   *<a class="code" href="struct__riak__object.html#aaf46108eaead5450f334f63489140340">encoding</a>;</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    riak_boolean_t has_deleted;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    riak_boolean_t deleted;</div>
+<div class="line"><a name="l00069"></a><span class="lineno"><a class="code" href="struct__riak__object.html#ac4615a16ba6032e223cdccbe244e9904">   69</a></span>&#160;    <a class="code" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a> <a class="code" href="struct__riak__object.html#ac4615a16ba6032e223cdccbe244e9904">has_deleted</a>;</div>
+<div class="line"><a name="l00070"></a><span class="lineno"><a class="code" href="struct__riak__object.html#a8fb5662ab455df6af7e1fd55edd8afbb">   70</a></span>&#160;    <a class="code" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a> <a class="code" href="struct__riak__object.html#a8fb5662ab455df6af7e1fd55edd8afbb">deleted</a>;</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    riak_boolean_t has_vtag;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <a class="code" href="struct__riak__binary.html">riak_binary</a>   *vtag;</div>
+<div class="line"><a name="l00072"></a><span class="lineno"><a class="code" href="struct__riak__object.html#a2abecbadccbe35dfe893953372eb3755">   72</a></span>&#160;    <a class="code" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a> <a class="code" href="struct__riak__object.html#a2abecbadccbe35dfe893953372eb3755">has_vtag</a>;</div>
+<div class="line"><a name="l00073"></a><span class="lineno"><a class="code" href="struct__riak__object.html#a8968683d89a25836327d5a6025abdcda">   73</a></span>&#160;    <a class="code" href="struct__riak__binary.html">riak_binary</a>   *<a class="code" href="struct__riak__object.html#a8968683d89a25836327d5a6025abdcda">vtag</a>;</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    riak_int32_t   n_links;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <a class="code" href="struct__riak__link.html">riak_link</a>    **links;</div>
+<div class="line"><a name="l00075"></a><span class="lineno"><a class="code" href="struct__riak__object.html#a59ccdc234f7caf778f1c4fbfb3e6a23d">   75</a></span>&#160;    <a class="code" href="riak__types_8h.html#a562f946b2c70e57a8a8e2c7f6f7d32c5">riak_int32_t</a>   <a class="code" href="struct__riak__object.html#a59ccdc234f7caf778f1c4fbfb3e6a23d">n_links</a>;</div>
+<div class="line"><a name="l00076"></a><span class="lineno"><a class="code" href="struct__riak__object.html#a0fccb4d3ad0a5b02f5581d0c3fe306ec">   76</a></span>&#160;    <a class="code" href="struct__riak__link.html">riak_link</a>    **<a class="code" href="struct__riak__object.html#a0fccb4d3ad0a5b02f5581d0c3fe306ec">links</a>;</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    riak_int32_t   n_usermeta;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <a class="code" href="struct__riak__pair.html">riak_pair</a>    **usermeta;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    riak_int32_t   n_indexes;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <a class="code" href="struct__riak__pair.html">riak_pair</a>    **indexes;</div>
+<div class="line"><a name="l00078"></a><span class="lineno"><a class="code" href="struct__riak__object.html#afa02a9c4ced31053811ed154907748c4">   78</a></span>&#160;    <a class="code" href="riak__types_8h.html#a562f946b2c70e57a8a8e2c7f6f7d32c5">riak_int32_t</a>   <a class="code" href="struct__riak__object.html#afa02a9c4ced31053811ed154907748c4">n_usermeta</a>;</div>
+<div class="line"><a name="l00079"></a><span class="lineno"><a class="code" href="struct__riak__object.html#ac3dc5071f40e69c47a55ab3eafaf9532">   79</a></span>&#160;    <a class="code" href="struct__riak__pair.html">riak_pair</a>    **<a class="code" href="struct__riak__object.html#ac3dc5071f40e69c47a55ab3eafaf9532">usermeta</a>;</div>
+<div class="line"><a name="l00080"></a><span class="lineno"><a class="code" href="struct__riak__object.html#ae5c8a009410c04249a5c9dceedb7d3af">   80</a></span>&#160;    <a class="code" href="riak__types_8h.html#a562f946b2c70e57a8a8e2c7f6f7d32c5">riak_int32_t</a>   <a class="code" href="struct__riak__object.html#ae5c8a009410c04249a5c9dceedb7d3af">n_indexes</a>;</div>
+<div class="line"><a name="l00081"></a><span class="lineno"><a class="code" href="struct__riak__object.html#aa50d20677bf697be7ab6303cd7268419">   81</a></span>&#160;    <a class="code" href="struct__riak__pair.html">riak_pair</a>    **<a class="code" href="struct__riak__object.html#aa50d20677bf697be7ab6303cd7268419">indexes</a>;</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;};</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;riak_error</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;riak_object_new_from_pb(<a class="code" href="struct__riak__context.html">riak_context</a> *ctx,</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<a class="code" href="riak__object-internal_8h.html#ae80c266c8c462cf1ec60bb19e79dc0d6" title="Shallow copy a Riak Object from a protocol buffer. ">riak_object_new_from_pb</a>(<a class="code" href="struct__riak__context.html">riak_context</a> *ctx,</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;                        <a class="code" href="struct__riak__object.html">riak_object</a> **to,</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;                        RpbContent   *from);</div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="keywordtype">int</span> riak_object_to_pb_copy(<a class="code" href="struct__riak__context.html">riak_context</a> *ctx,</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="keywordtype">int</span> <a class="code" href="riak__object-internal_8h.html#ac51eec5015ecd1b6db854039cf2f3a74" title="Copy a Riak Object to a protocol buffer. ">riak_object_to_pb_copy</a>(<a class="code" href="struct__riak__context.html">riak_context</a> *ctx,</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;                           RpbContent   *to,</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;                           <a class="code" href="struct__riak__object.html">riak_object</a>  *from);</div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;riak_object_free_pb(<a class="code" href="struct__riak__context.html">riak_context</a> *ctx,</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<a class="code" href="riak__object-internal_8h.html#a30357640749140c1d58af06209632e48" title="Release claimed memory used by PB Riak Object. ">riak_object_free_pb</a>(<a class="code" href="struct__riak__context.html">riak_context</a> *ctx,</div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;                    RpbContent   *obj);</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;</div>
@@ -187,7 +188,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 28 2013 09:45:11 for riak-c-client by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Oct 28 2013 12:34:34 for riak-c-client by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

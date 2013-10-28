@@ -37,7 +37,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="annotated.html"><span>Classes</span></a></li>
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -60,6 +60,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow2" class="tabs2">
     <ul class="tablist">
       <li><a href="files.html"><span>File&#160;List</span></a></li>
+      <li><a href="globals.html"><span>Globals</span></a></li>
     </ul>
   </div>
 <!-- window showing the filter options -->
@@ -67,7 +68,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -86,7 +87,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">riak_context.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*********************************************************************</span></div>
+<a href="riak__context_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*********************************************************************</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> * riak_context.h: Management of the Riak connection context</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> *</span></div>
@@ -114,53 +115,53 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">// per-thread</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">// do we need a *shared* context to complement?</span></div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">void</span> *(*riak_alloc_fn)(<span class="keywordtype">size_t</span> sz);</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">void</span> *(*riak_realloc_fn)(<span class="keywordtype">void</span> *ptr, <span class="keywordtype">size_t</span> size);</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">typedef</span> void (*riak_free_fn)(<span class="keywordtype">void</span> *ptr);</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">void</span> *(*riak_pb_alloc_fn)(<span class="keywordtype">void</span> *allocator_data, <span class="keywordtype">size_t</span> size);</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">typedef</span> void (*riak_pb_free_fn)(<span class="keywordtype">void</span> *allocator_data, <span class="keywordtype">void</span> *pointer);</div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="code" href="riak__context_8h.html#aae36fe2c8f6adb8b1f508e76b4ae05ab">   29</a></span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">void</span> *(*riak_alloc_fn)(<span class="keywordtype">size_t</span> sz);</div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="code" href="riak__context_8h.html#a9dc7a1937c7f6a1b087495de893debd6">   30</a></span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">void</span> *(*riak_realloc_fn)(<span class="keywordtype">void</span> *ptr, <span class="keywordtype">size_t</span> size);</div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="code" href="riak__context_8h.html#a6296fb7c5f9608dffd36dbbe60bbd032">   31</a></span>&#160;<span class="keyword">typedef</span> void (*<a class="code" href="riak__context_8h.html#a6296fb7c5f9608dffd36dbbe60bbd032">riak_free_fn</a>)(<span class="keywordtype">void</span> *ptr);</div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="code" href="riak__context_8h.html#a6c5ffacf121702d29e90cf124cfd3591">   32</a></span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">void</span> *(*riak_pb_alloc_fn)(<span class="keywordtype">void</span> *allocator_data, <span class="keywordtype">size_t</span> size);</div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="code" href="riak__context_8h.html#a2a17690cea73457793db68569742eb02">   33</a></span>&#160;<span class="keyword">typedef</span> void (*<a class="code" href="riak__context_8h.html#a2a17690cea73457793db68569742eb02">riak_pb_free_fn</a>)(<span class="keywordtype">void</span> *allocator_data, <span class="keywordtype">void</span> *pointer);</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="struct__riak__context.html">_riak_context</a> <a class="code" href="struct__riak__context.html">riak_context</a>;</div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="code" href="riak__context_8h.html#ad856681ca733293974b5bec0ac17b247">   35</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="struct__riak__context.html">_riak_context</a> <a class="code" href="struct__riak__context.html">riak_context</a>;</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;riak_error</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;riak_context_new(<a class="code" href="struct__riak__context.html">riak_context</a>    **context,</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                 riak_alloc_fn     alloc,</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;                 riak_realloc_fn   realloc,</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;                 riak_free_fn      freeme,</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;                 riak_pb_alloc_fn  pb_alloc,</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;                 riak_pb_free_fn   pb_free);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<a class="code" href="riak__context_8h.html#a35d4560893d97e50da65b49605d293aa" title="Construct a Riak Context. ">riak_context_new</a>(<a class="code" href="struct__riak__context.html">riak_context</a>    **context,</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                 <a class="code" href="riak__context_8h.html#aae36fe2c8f6adb8b1f508e76b4ae05ab">riak_alloc_fn</a>     alloc,</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;                 <a class="code" href="riak__context_8h.html#a9dc7a1937c7f6a1b087495de893debd6">riak_realloc_fn</a>   realloc,</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;                 <a class="code" href="riak__context_8h.html#a6296fb7c5f9608dffd36dbbe60bbd032">riak_free_fn</a>      freeme,</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;                 <a class="code" href="riak__context_8h.html#a6c5ffacf121702d29e90cf124cfd3591">riak_pb_alloc_fn</a>  pb_alloc,</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;                 <a class="code" href="riak__context_8h.html#a2a17690cea73457793db68569742eb02">riak_pb_free_fn</a>   pb_free);</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="comment">// By default use system&#39;s built-in memory management utilities (malloc/free)</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#define riak_context_new_default(C) riak_context_new((C),NULL,NULL,NULL,NULL,NULL)</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="code" href="riak__context_8h.html#a62c1a0225c0e75ec1bfdca79b5b3f238">   55</a></span>&#160;<span class="preprocessor">#define riak_context_new_default(C) riak_context_new((C),NULL,NULL,NULL,NULL,NULL)</span></div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;riak_error</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;riak_context_add_connection(<a class="code" href="struct__riak__context.html">riak_context</a>      *context,</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;                            riak_addr_resolver resolver,</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;                            <span class="keyword">const</span> <span class="keywordtype">char</span>        *hostname,</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;                            <span class="keyword">const</span> <span class="keywordtype">char</span>        *portnum);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<a class="code" href="riak__context_8h.html#a0863702c74799b6b78763c58ce803f7f" title="Construct a Riak Context. ">riak_context_add_connection</a>(<a class="code" href="struct__riak__context.html">riak_context</a>      *context,</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;                            <a class="code" href="riak__types_8h.html#a7f8b6773136c682371e320746da32c29">riak_addr_resolver</a> resolver,</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;                            <span class="keyword">const</span> <span class="keywordtype">char</span>        *<a class="code" href="struct__riak__context.html#ab96e4e84bdbd0c753364e2cf3eeca6bb">hostname</a>,</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;                            <span class="keyword">const</span> <span class="keywordtype">char</span>        *<a class="code" href="struct__riak__context.html#af6d440097982b4a9816ff56c2004ff70">portnum</a>);</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="comment">// By default use the libevent resolver</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">#define riak_context_add_default_connection(C,H,P) riak_context_add_connection((C),NULL,(H),(P))</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno"><a class="code" href="riak__context_8h.html#af95255d9f4ebef97bf3e5178d80b2b67">   71</a></span>&#160;<span class="preprocessor">#define riak_context_add_default_connection(C,H,P) riak_context_add_connection((C),NULL,(H),(P))</span></div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;riak_error</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;riak_context_add_logging(<a class="code" href="struct__riak__context.html">riak_context</a> *context,</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;                         <span class="keyword">const</span> <span class="keywordtype">char</span>   *logging_category);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<a class="code" href="riak__context_8h.html#a8b98320af89965280f36dbc723c633b3" title="Construct a Riak Context. ">riak_context_add_logging</a>(<a class="code" href="struct__riak__context.html">riak_context</a> *context,</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;                         <span class="keyword">const</span> <span class="keywordtype">char</span>   *<a class="code" href="struct__riak__context.html#a12d0b981fc4dbd45fbf1f4ab249744e7">logging_category</a>);</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;riak_event_base*</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;riak_context_get_base(<a class="code" href="struct__riak__context.html">riak_context</a> *ctx);</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<a class="code" href="riak__types_8h.html#ab977872b4f733c4addc6f8b373852edc">riak_event_base</a>*</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<a class="code" href="riak__context_8h.html#a35f43019dff9d66de3131a7b43ea6926" title="Gets the underlying event base. ">riak_context_get_base</a>(<a class="code" href="struct__riak__context.html">riak_context</a> *ctx);</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;riak_context_free(<a class="code" href="struct__riak__context.html">riak_context</a> **ctx);</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<a class="code" href="riak__context_8h.html#a2a8620eb08889eab7608f8bbd9b8f03a" title="Reclaim memory used by a riak_context ">riak_context_free</a>(<a class="code" href="struct__riak__context.html">riak_context</a> **ctx);</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;riak_free_internal(<a class="code" href="struct__riak__context.html">riak_context</a> *ctx,</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<a class="code" href="riak__context_8h.html#a6ed500088582fb16cbd0d9ef4ff80c68" title="Generic memory de-allocation function. ">riak_free_internal</a>(<a class="code" href="struct__riak__context.html">riak_context</a> *ctx,</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;                   <span class="keywordtype">void</span>        **p);</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="preprocessor">#define riak_free(C,P)  riak_free_internal((C),(void**)(P))</span></div>
+<div class="line"><a name="l00108"></a><span class="lineno"><a class="code" href="riak__context_8h.html#a40be1d2c6b9c88bea0a9f627ee91940c">  108</a></span>&#160;<span class="preprocessor">#define riak_free(C,P)  riak_free_internal((C),(void**)(P))</span></div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* RIAK_CONTEXT_H_ */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 28 2013 09:45:11 for riak-c-client by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Oct 28 2013 12:34:33 for riak-c-client by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

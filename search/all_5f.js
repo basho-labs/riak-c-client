@@ -1,12 +1,15 @@
 var searchData=
 [
+  ['_5finternal',['_internal',['../struct__riak__serverinfo__response.html#a97ffaf775b799802e934637e591f8c88',1,'_riak_serverinfo_response::_internal()'],['../struct__riak__get__response.html#a3b7e7edb92055655f4eff9522f7cb326',1,'_riak_get_response::_internal()'],['../struct__riak__put__response.html#a6900019be0ac40272ab461529b5d439e',1,'_riak_put_response::_internal()'],['../struct__riak__listbuckets__response.html#a2be8257288f76dd1a611a38f5dcd14d0',1,'_riak_listbuckets_response::_internal()'],['../struct__riak__listkeys__response.html#ae6995e9e75c5689e101a9bc0f83c48b8',1,'_riak_listkeys_response::_internal()'],['../struct__riak__error__response.html#a8e87b2ff95263799b892e40e70eed481',1,'_riak_error_response::_internal()'],['../struct__riak__get__clientid__response.html#ae2cfff8623ac3cf2a6a7e7b88e829361',1,'_riak_get_clientid_response::_internal()'],['../struct__riak__get__bucketprops__response.html#abfb76c66d3ced6c2378e40319d463275',1,'_riak_get_bucketprops_response::_internal()']]],
   ['_5friak_5fbinary',['_riak_binary',['../struct__riak__binary.html',1,'']]],
   ['_5friak_5fbucket_5fprops',['_riak_bucket_props',['../struct__riak__bucket__props.html',1,'']]],
+  ['_5friak_5fbucket_5frepl_5fmode',['_riak_bucket_repl_mode',['../riak__bucket__props_8h.html#a7ed436fa0c330e3240f7ce01a184d49e',1,'riak_bucket_props.h']]],
   ['_5friak_5fcommand',['_riak_command',['../struct__riak__command.html',1,'']]],
   ['_5friak_5fcommit_5fhook',['_riak_commit_hook',['../struct__riak__commit__hook.html',1,'']]],
   ['_5friak_5fcontext',['_riak_context',['../struct__riak__context.html',1,'']]],
   ['_5friak_5fdelete_5foptions',['_riak_delete_options',['../struct__riak__delete__options.html',1,'']]],
   ['_5friak_5fdelete_5fresponse',['_riak_delete_response',['../struct__riak__delete__response.html',1,'']]],
+  ['_5friak_5ferror_5fdefine_5fmsgs',['_RIAK_ERROR_DEFINE_MSGS',['../riak__error_8c.html#a46b6f4e948b76b6c83600dad6ab0b3b6',1,'riak_error.c']]],
   ['_5friak_5ferror_5fresponse',['_riak_error_response',['../struct__riak__error__response.html',1,'']]],
   ['_5friak_5fevent',['_riak_event',['../struct__riak__event.html',1,'']]],
   ['_5friak_5fget_5fbucketprops_5frequest',['_riak_get_bucketprops_request',['../struct__riak__get__bucketprops__request.html',1,'']]],

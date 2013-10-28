@@ -37,7 +37,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="annotated.html"><span>Classes</span></a></li>
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -60,6 +60,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow2" class="tabs2">
     <ul class="tablist">
       <li><a href="files.html"><span>File&#160;List</span></a></li>
+      <li><a href="globals.html"><span>Globals</span></a></li>
     </ul>
   </div>
 <!-- window showing the filter options -->
@@ -67,7 +68,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -86,7 +87,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">riak_print-internal.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*********************************************************************</span></div>
+<a href="riak__print-internal_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*********************************************************************</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> * riak_print.h: Riak C Client Printing Utilities</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> *</span></div>
@@ -111,51 +112,51 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#ifndef RIAK_PRINT_INTERNAL_H</span></div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define RIAK_PRINT_INTERNAL_H</span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;riak_int32_t</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;riak_print_int(<span class="keywordtype">char</span>         *name,</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;               riak_int32_t  value,</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<a class="code" href="riak__types_8h.html#a562f946b2c70e57a8a8e2c7f6f7d32c5">riak_int32_t</a></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<a class="code" href="riak__print-internal_8h.html#a5c12e4b9ff53b1cf1742af9f8951da17" title="Print an integer value to a string. ">riak_print_int</a>(<span class="keywordtype">char</span>         *name,</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;               <a class="code" href="riak__types_8h.html#a562f946b2c70e57a8a8e2c7f6f7d32c5">riak_int32_t</a>  value,</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;               <span class="keywordtype">char</span>        **target,</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;               riak_int32_t *len,</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;               riak_int32_t *total);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;riak_int32_t</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;riak_print_bool(<span class="keywordtype">char</span>           *name,</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;                riak_boolean_t  value,</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;               <a class="code" href="riak__types_8h.html#a562f946b2c70e57a8a8e2c7f6f7d32c5">riak_int32_t</a> *len,</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;               <a class="code" href="riak__types_8h.html#a562f946b2c70e57a8a8e2c7f6f7d32c5">riak_int32_t</a> *total);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<a class="code" href="riak__types_8h.html#a562f946b2c70e57a8a8e2c7f6f7d32c5">riak_int32_t</a></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<a class="code" href="riak__print-internal_8h.html#aced512bc9977dea4e78c423cdb810932">riak_print_bool</a>(<span class="keywordtype">char</span>           *name,</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;                <a class="code" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a>  value,</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;                <span class="keywordtype">char</span>          **target,</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;                riak_int32_t   *len,</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;                riak_int32_t   *total);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;                <a class="code" href="riak__types_8h.html#a562f946b2c70e57a8a8e2c7f6f7d32c5">riak_int32_t</a>   *len,</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;                <a class="code" href="riak__types_8h.html#a562f946b2c70e57a8a8e2c7f6f7d32c5">riak_int32_t</a>   *total);</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;riak_int32_t</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;riak_print_binary(<span class="keywordtype">char</span>         *name,</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<a class="code" href="riak__types_8h.html#a562f946b2c70e57a8a8e2c7f6f7d32c5">riak_int32_t</a></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<a class="code" href="riak__print-internal_8h.html#a8de18dd02823ebcd158e73a939f18e46">riak_print_binary</a>(<span class="keywordtype">char</span>         *name,</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;                  <a class="code" href="struct__riak__binary.html">riak_binary</a>  *value,</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;                  <span class="keywordtype">char</span>        **target,</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;                  riak_int32_t *len,</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;                  riak_int32_t *total);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;                  <a class="code" href="riak__types_8h.html#a562f946b2c70e57a8a8e2c7f6f7d32c5">riak_int32_t</a> *len,</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;                  <a class="code" href="riak__types_8h.html#a562f946b2c70e57a8a8e2c7f6f7d32c5">riak_int32_t</a> *total);</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;riak_int32_t</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;riak_print_time(<span class="keywordtype">char</span>         *name,</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;                riak_int32_t  value,</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<a class="code" href="riak__types_8h.html#a562f946b2c70e57a8a8e2c7f6f7d32c5">riak_int32_t</a></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<a class="code" href="riak__print-internal_8h.html#a3cb07f74cfe2a2fca1b298eca8fb02e0">riak_print_time</a>(<span class="keywordtype">char</span>         *name,</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;                <a class="code" href="riak__types_8h.html#a562f946b2c70e57a8a8e2c7f6f7d32c5">riak_int32_t</a>  value,</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;                <span class="keywordtype">char</span>        **target,</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                riak_int32_t *len,</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;                riak_int32_t *total);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                <a class="code" href="riak__types_8h.html#a562f946b2c70e57a8a8e2c7f6f7d32c5">riak_int32_t</a> *len,</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;                <a class="code" href="riak__types_8h.html#a562f946b2c70e57a8a8e2c7f6f7d32c5">riak_int32_t</a> *total);</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;riak_int32_t</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;riak_print_label(<span class="keywordtype">char</span>         *value,</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<a class="code" href="riak__types_8h.html#a562f946b2c70e57a8a8e2c7f6f7d32c5">riak_int32_t</a></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<a class="code" href="riak__print-internal_8h.html#a9f4f9d72dd4e45357047437b418185f5">riak_print_label</a>(<span class="keywordtype">char</span>         *value,</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;                 <span class="keywordtype">char</span>        **target,</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;                 riak_int32_t *len,</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;                 riak_int32_t *total);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;                 <a class="code" href="riak__types_8h.html#a562f946b2c70e57a8a8e2c7f6f7d32c5">riak_int32_t</a> *len,</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;                 <a class="code" href="riak__types_8h.html#a562f946b2c70e57a8a8e2c7f6f7d32c5">riak_int32_t</a> *total);</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;riak_int32_t</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;riak_print_string(<span class="keywordtype">char</span>         *name,</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<a class="code" href="riak__types_8h.html#a562f946b2c70e57a8a8e2c7f6f7d32c5">riak_int32_t</a></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<a class="code" href="riak__print-internal_8h.html#a40f7622788401ca3eebd7b8ae36df16a">riak_print_string</a>(<span class="keywordtype">char</span>         *name,</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                  <span class="keywordtype">char</span>         *value,</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;                  <span class="keywordtype">char</span>        **target,</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;                  riak_int32_t *len,</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;                  riak_int32_t *total);</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;                  <a class="code" href="riak__types_8h.html#a562f946b2c70e57a8a8e2c7f6f7d32c5">riak_int32_t</a> *len,</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;                  <a class="code" href="riak__types_8h.html#a562f946b2c70e57a8a8e2c7f6f7d32c5">riak_int32_t</a> *total);</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 28 2013 09:45:11 for riak-c-client by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Oct 28 2013 12:34:34 for riak-c-client by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>
