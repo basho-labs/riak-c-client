@@ -293,7 +293,7 @@ riak_read_result_callback(riak_bufferevent *bev,
     // What has been queued up
     fflush(stdout);
     #ifdef _RIAK_DEBUG
-    //event_base_dump_events(rev->base, stdout);
+    event_base_dump_events(rev->base, stdout);
     #endif
 
     if (done_streaming) {

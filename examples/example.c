@@ -162,8 +162,8 @@ main(int   argc,
                     fprintf(stderr, "Put Problems [%s]\n", riak_strerror(err));
                     exit(1);
                 }
-                //riak_print_put_response(put_response, output, sizeof(output));
-                //printf("%s\n", output);
+                riak_print_put_response(put_response, output, sizeof(output));
+                printf("%s\n", output);
                 riak_free_put_response(ctx, &put_response);
             }
             riak_object_free(ctx, &obj);
