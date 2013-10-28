@@ -36,12 +36,14 @@ main(int   argc,
     int operation = riak_parse_args(argc, argv, &args);
 
 #ifdef _RIAK_DEBUG
-//    event_enable_debug_mode();
+    event_enable_debug_mode();
 #endif
 
     // if you see an error such as "Could not initialize logging"
     // make sure you have zlog.conf in the same directory as the
     // binary (ie ./examples/build/zlog.conf)
+
+    // a riak_context serves as your per-thread state to interact with Riak
     riak_context *ctx;
     riak_error err = riak_context_new_default(&ctx);
     if (err) {
