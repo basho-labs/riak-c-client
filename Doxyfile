@@ -171,7 +171,7 @@ QT_AUTOBRIEF           = NO
 # The new default is to treat a multi-line C++ comment block as a detailed
 # description. Set this tag to YES if you prefer the old behaviour instead.
 
-MULTILINE_CPP_IS_BRIEF = NO
+MULTILINE_CPP_IS_BRIEF = YES
 
 # If the INHERIT_DOCS tag is set to YES (the default) then an undocumented
 # member inherits the documentation from any documented member that it
@@ -211,7 +211,7 @@ TCL_SUBST              =
 # For instance, some of the names that are used will be different. The list
 # of all members will be omitted, etc.
 
-OPTIMIZE_OUTPUT_FOR_C  = NO
+OPTIMIZE_OUTPUT_FOR_C  = YES 
 
 # Set the OPTIMIZE_OUTPUT_JAVA tag to YES if your project consists of Java
 # sources only. Doxygen will then generate output that is more tailored for
@@ -243,7 +243,7 @@ OPTIMIZE_OUTPUT_VHDL   = NO
 # that for custom extensions you also need to set FILE_PATTERNS otherwise the
 # files are not read by doxygen.
 
-EXTENSION_MAPPING      =
+EXTENSION_MAPPING      = C
 
 # If MARKDOWN_SUPPORT is enabled (the default) then doxygen pre-processes all
 # comments according to the Markdown format, which allows for more readable
@@ -351,7 +351,7 @@ LOOKUP_CACHE_SIZE      = 0
 # Private class members and static file members will be hidden unless
 # the EXTRACT_PRIVATE respectively EXTRACT_STATIC tags are set to YES
 
-EXTRACT_ALL            = NO
+EXTRACT_ALL            = YES
 
 # If the EXTRACT_PRIVATE tag is set to YES all private members of a class
 # will be included in the documentation.
@@ -661,6 +661,7 @@ INPUT                  = ./src
 # also the default input encoding. Doxygen uses libiconv (or the iconv built
 # into libc) for the transcoding. See http://www.gnu.org/software/libiconv for
 # the list of possible encodings.
+#
 
 INPUT_ENCODING         = UTF-8
 
@@ -790,12 +791,12 @@ USE_MDFILE_AS_MAINPAGE =
 # Note: To get rid of all source code in the generated output, make sure also
 # VERBATIM_HEADERS is set to NO.
 
-SOURCE_BROWSER         = NO
+SOURCE_BROWSER         = YES
 
 # Setting the INLINE_SOURCES tag to YES will include the body
 # of functions and classes directly in the documentation.
 
-INLINE_SOURCES         = NO
+INLINE_SOURCES         = YES
 
 # Setting the STRIP_CODE_COMMENTS tag to YES (the default) will instruct
 # doxygen to hide any special comment blocks from generated source code
@@ -1888,3 +1889,5 @@ GENERATE_LEGEND        = YES
 # the various graphs.
 
 DOT_CLEANUP            = YES
+
+
