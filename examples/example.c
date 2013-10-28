@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * riak_types.h: Riak C Main
+ * example.h: Riak C Main
  *
  * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
  *
@@ -38,8 +38,10 @@ main(int   argc,
 #ifdef _RIAK_DEBUG
     event_enable_debug_mode();
 #endif
-//    event_use_pthreads();
 
+    // if you see an error such as "Could not initialize logging"
+    // make sure you have zlog.conf in the same directory as the
+    // binary (ie ./examples/build/zlog.conf)
     riak_context *ctx;
     riak_error err = riak_context_new_default(&ctx);
     if (err) {
