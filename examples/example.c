@@ -28,20 +28,10 @@
 #include "riak_event-internal.h"
 #include "riak_utils-internal.h"
 
-// included to call event_enable_debug_mode()
-#include <event2/event.h>
-#define EVENT_DBG_NONE 0
-static void discard_cb(int severity, const char *msg)
-{
-  printf("Severity %d\n", severity);
-    /* This callback does nothing. */
-}
-
 int
 main(int   argc,
      char *argv[])
 {
-    event_set_log_callback(discard_cb);
     riak_args args;
     int operation = riak_parse_args(argc, argv, &args);
 
