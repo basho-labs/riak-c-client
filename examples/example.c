@@ -28,15 +28,25 @@
 #include "riak_event-internal.h"
 #include "riak_utils-internal.h"
 
+// included to call event_enable_debug_mode()
+#include <event2/event.h>
+#define EVENT_DBG_NONE 0
+static void discard_cb(int severity, const char *msg)
+{
+  printf("Severity %d\n", severity);
+    /* This callback does nothing. */
+}
+
 int
 main(int   argc,
      char *argv[])
 {
+    event_set_log_callback(discard_cb);
     riak_args args;
     int operation = riak_parse_args(argc, argv, &args);
 
 #ifdef _RIAK_DEBUG
-    event_enable_debug_mode();
+//    event_enable_debug_mode();
 #endif
 
     // if you see an error such as "Could not initialize logging"
@@ -144,10 +154,12 @@ main(int   argc,
                 exit(1);
             }
             memset(&put_options, '\0', sizeof(riak_put_options));
-            put_options.has_return_head = RIAK_TRUE;
-            put_options.return_head = RIAK_TRUE;
-            put_options.has_return_body = RIAK_TRUE;
-            put_options.return_body = RIAK_TRUE;
+
+            put_options.has_return_head = RIAK_FALSE;
+            put_options.return_head = RIAK_FALSE;
+            put_options.has_return_body = RIAK_FALSE;
+            put_options.return_body = RIAK_FALSE;
+
             if (args.async) {
                 riak_event_set_response_cb(rev, (riak_response_callback)put_cb);
                 riak_encode_put_request(rev, obj, &put_options, &(rev->pb_request));
@@ -158,8 +170,8 @@ main(int   argc,
                     fprintf(stderr, "Put Problems [%s]\n", riak_strerror(err));
                     exit(1);
                 }
-                riak_print_put_response(put_response, output, sizeof(output));
-                printf("%s\n", output);
+                //riak_print_put_response(put_response, output, sizeof(output));
+                //printf("%s\n", output);
                 riak_free_put_response(ctx, &put_response);
             }
             riak_object_free(ctx, &obj);
