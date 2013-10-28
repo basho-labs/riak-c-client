@@ -343,14 +343,6 @@ riak_decode_error_response(riak_event           *rev,
                            riak_pb_message      *pbresp,
                            riak_error_response **resp,
                            riak_boolean_t       *done);
-/**
- * @brief Free memory used by an error response
- * @param ctx Riak Context
- * @param resp Error structure to be freed
- */
-void
-riak_free_error_response(riak_context         *ctx,
-                         riak_error_response **resp);
 
 /**
  * @brief Build a ping request
@@ -376,14 +368,6 @@ riak_decode_ping_response(riak_event          *rev,
                           riak_ping_response **resp,
                           riak_boolean_t      *done);
 
-/**
- * @brief Free memory from response
- * @param ctx Riak Context
- * @param resp Ping PBC Response
- */
-void
-riak_free_ping_response(riak_context        *ctx,
-                        riak_ping_response **resp);
 
 /**
  * @brief Build a server info request
@@ -471,14 +455,6 @@ riak_print_get_response(riak_get_response *response,
                         char              *target,
                         riak_size_t        len);
 
-/**
- * @brief Free get response
- * @param ctx Riak Context
- * @param resp Get response
- */
-void
-riak_free_get_response(riak_context       *ctx,
-                       riak_get_response **resp);
 
 /**
  * @brief Create Put Request
@@ -519,14 +495,6 @@ riak_print_put_response(riak_put_response *response,
                         char              *target,
                         riak_size_t        len);
 
-/**
- * @brief Free put response
- * @param ctx Riak Context
- * @param resp Put message to be cleaned up
- */
-void
-riak_free_put_response(riak_context       *ctx,
-                       riak_put_response **resp);
 
 /**
  * @brief Create a deletion request
@@ -558,14 +526,6 @@ riak_decode_delete_response(riak_event            *rev,
                             riak_delete_response **resp,
                             riak_boolean_t        *done);
 
-/**
- * @brief Free memory from response
- * @param ctx Riak Context
- * @param resp Delete PBC Response
- */
-void
-riak_free_delete_response(riak_context          *ctx,
-                          riak_delete_response **resp);
 
 /**
  * @brief Create a request to find all buckets
@@ -601,14 +561,6 @@ void
 riak_print_listbuckets_response(riak_listbuckets_response *response,
                                 char                      *target,
                                 riak_size_t                len);
-/**
- * @brief Free listbuckets response
- * @param ctx Riak Context
- * @param resp List buckets message to be cleaned up
- */
-void
-riak_free_listbuckets_response(riak_context               *ctx,
-                               riak_listbuckets_response **resp);
 
 /**
  * @brief Create a request to find all keys in a bucket
@@ -649,14 +601,6 @@ riak_print_listkeys_response(riak_listkeys_response *response,
                              char                   *target,
                              riak_size_t             len);
 
-/**
- * @brief Free listkeys response
- * @param ctx Riak Context
- * @param resp List keys message to be cleaned up
- */
-void
-riak_free_listkeys_response(riak_context            *ctx,
-                            riak_listkeys_response **resp);
 
 /**
  * @brief Build a client id request
@@ -693,14 +637,6 @@ riak_print_get_clientid_response(riak_get_clientid_response *response,
                                  char                       *target,
                                  riak_size_t                 len);
 
-/**
- * @brief Free memory from response
- * @param ctx Riak Context
- * @param resp client id PBC Response
- */
-void
-riak_free_get_clientid_response(riak_context              *ctx,
-                              riak_get_clientid_response **resp);
 
 /**
  * @brief Build a client id request
@@ -727,15 +663,6 @@ riak_decode_set_clientid_response(riak_event                  *rev,
                                   riak_pb_message             *pbresp,
                                   riak_set_clientid_response **resp,
                                   riak_boolean_t              *done);
-
-/**
- * @brief Free memory from response
- * @param ctx Riak Context
- * @param resp client id PBC Response
- */
-void
-riak_free_set_clientid_response(riak_context              *ctx,
-                              riak_set_clientid_response **resp);
 
 /**
  * @brief Create a request to fetch bucket properies
@@ -774,14 +701,6 @@ riak_print_get_bucketprops_response(riak_get_bucketprops_response *response,
                                     char                          *target,
                                     riak_size_t                    len);
 
-/**
- * @brief Free memory from response
- * @param ctx Riak Context
- * @param resp Bucket Properties PBC Response
- */
-void
-riak_free_get_bucketprops_response(riak_context                   *ctx,
-                                   riak_get_bucketprops_response **resp);
 
 /**
  * @brief Create a request to reset bucket properties
@@ -809,14 +728,6 @@ riak_decode_reset_bucketprops_response(riak_event                       *rev,
                                        riak_reset_bucketprops_response **resp,
                                        riak_boolean_t                   *done);
 
-/**
- * @brief Free memory from response
- * @param ctx Riak Context
- * @param resp Bucket Properties PBC Response
- */
-void
-riak_free_reset_bucketprops_response(riak_context                     *ctx,
-                                     riak_reset_bucketprops_response **resp);
 
 /**
  * @brief Create a request to set bucket properties
@@ -846,13 +757,5 @@ riak_decode_set_bucketprops_response(riak_event                     *rev,
                                      riak_set_bucketprops_response **resp,
                                      riak_boolean_t                 *done);
 
-/**
- * @brief Free memory from response
- * @param ctx Riak Context
- * @param resp Bucket Properties PBC Response
- */
-void
-riak_free_set_bucketprops_response(riak_context                   *ctx,
-                                   riak_set_bucketprops_response **resp);
 
 #endif

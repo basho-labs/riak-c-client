@@ -26,6 +26,8 @@
 #include "riak_call_backs-internal.h"
 #include "riak_event.h"
 #include "riak_event-internal.h"
+
+// used for riak_send_req, to be refactored
 #include "riak_utils-internal.h"
 
 int
