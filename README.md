@@ -1,5 +1,7 @@
-riak-c-client
-=============
+
+
+![riak-c-client](./docs/riak_c_client_large.png "Riak C Client") 
+
 
 
 # Status
