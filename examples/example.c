@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * riak_types.h: Riak C Main
+ * example.h: Riak C Main
  *
  * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
  *
@@ -38,8 +38,12 @@ main(int   argc,
 #ifdef _RIAK_DEBUG
     event_enable_debug_mode();
 #endif
-//    event_use_pthreads();
 
+    // if you see an error such as "Could not initialize logging"
+    // make sure you have zlog.conf in the same directory as the
+    // binary (ie ./examples/build/zlog.conf)
+
+    // a riak_context serves as your per-thread state to interact with Riak
     riak_context *ctx;
     riak_error err = riak_context_new_default(&ctx);
     if (err) {
@@ -142,10 +146,12 @@ main(int   argc,
                 exit(1);
             }
             memset(&put_options, '\0', sizeof(riak_put_options));
-            put_options.has_return_head = RIAK_TRUE;
-            put_options.return_head = RIAK_TRUE;
-            put_options.has_return_body = RIAK_TRUE;
-            put_options.return_body = RIAK_TRUE;
+
+            put_options.has_return_head = RIAK_FALSE;
+            put_options.return_head = RIAK_FALSE;
+            put_options.has_return_body = RIAK_FALSE;
+            put_options.return_body = RIAK_FALSE;
+
             if (args.async) {
                 riak_event_set_response_cb(rev, (riak_response_callback)put_cb);
                 riak_encode_put_request(rev, obj, &put_options, &(rev->pb_request));
