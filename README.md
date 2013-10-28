@@ -12,7 +12,7 @@ riak-c-client
 * protobuf
 * protobuf-c
 * pthreads
-* log4c
+* [zlog](https://github.com/basho/zlog/tree/feature/add-pkgconfig) 
 * doxygen (if you are building docs)
 
 
@@ -20,7 +20,17 @@ riak-c-client
 
 ### OSX Build
 
-	brew install protobuf protobuf-c log4c scons libevent
+	git clone https://github.com/basho/zlog.git
+	cd zlog
+	git checkout feature/add-pkgconfig
+	
+	make
+	sudo make install
+		or 
+	make PREFIX=/usr/local/
+	sudo make PREFIX=/usr/local/ install
+	
+	brew install protobuf protobuf-c scons libevent
 	git clone git@github.com:/basho/riak-c-client.git
 	cd riak-c-client
 	scons
@@ -29,7 +39,17 @@ riak-c-client
 ### Ubuntu 13.04 build
 
 ```
-sudo apt-get install scons libevent-dev protobuf-c-compiler dev-libprotobuf dev-libprotoc liblog4c-dev
+sudo apt-get install scons libevent-dev protobuf-c-compiler dev-libprotobuf dev-libprotoc libcunit1 libcunit1-ncurses-dev
+ 
+git clone https://github.com/basho/zlog.git
+cd zlog
+git checkout feature/add-pkgconfig
+	
+make
+sudo make install
+	or 
+make PREFIX=/usr/local/
+sudo make PREFIX=/usr/local/ install 
  
 wget https://protobuf-c.googlecode.com/files/protobuf-c-0.15.tar.gz
 cd protobuf-c-0.15
@@ -41,12 +61,16 @@ cd riak-c-client
 scons
 ```
 
+### API Documentation
 
-### Building docs
+[Here](http://basho.github.io/riak-c-client/index.html)
+
+### Building local API docs
 
 To build API documentation + man pages, you'll need `doxygen` installed. 
 
 	scons docs
+
 
 # Tutorial
 
@@ -130,14 +154,15 @@ riak_binary *value_bin  = riak_binary_new_from_string(ctx, "my_value"); // Not c
 
 ### Get
 
-```
-riak_error
-riak_get(riak_context              *ctx,
-         riak_binary               *bucket,
-         riak_binary               *key,
-         riak_get_options          *opts,
-         riak_get_response        **response);
-```
+### Put
+### Delete
+### Ping
+### Server info
+### List buckets
+### List keys
+### Get/set client id
+### Get/set/reset bucket properties
+
 
 #### Example
 ```
@@ -190,6 +215,17 @@ riak_event_set_response_cb(rev, (riak_response_callback)get_cb);
 riak_encode_get_request(rev, bucket_bin, key_bin, NULL, &(rev->pb_request));
 
 ```
+
+
+### Get
+### Put
+### Delete
+### Ping
+### Server info
+### List buckets
+### List keys
+### Get/set client id
+### Get/set/reset bucket properties
 
 ### TODO
 
