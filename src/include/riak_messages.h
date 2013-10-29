@@ -56,4 +56,114 @@ typedef void (*riak_get_bucketprops_response_callback)(riak_get_bucketprops_resp
 typedef void (*riak_set_bucketprops_response_callback)(riak_set_bucketprops_response *response, void *ptr);
 typedef void (*riak_reset_bucketprops_response_callback)(riak_reset_bucketprops_response *response, void *ptr);
 
+
+/**
+ * @brief Free memory used by an error response
+ * @param ctx Riak Context
+ * @param resp Error structure to be freed
+ */
+void
+riak_free_error_response(riak_context         *ctx,
+                         riak_error_response **resp);
+
+
+/**
+ * @brief Free memory from response
+ * @param ctx Riak Context
+ * @param resp Ping PBC Response
+ */
+void
+riak_free_ping_response(riak_context        *ctx,
+                        riak_ping_response **resp);
+
+/**
+ * @brief Free get response
+ * @param ctx Riak Context
+ * @param resp Get response
+ */
+void
+riak_free_get_response(riak_context       *ctx,
+                       riak_get_response **resp);
+
+/**
+ * @brief Free put response
+ * @param ctx Riak Context
+ * @param resp Put message to be cleaned up
+ */
+void
+riak_free_put_response(riak_context       *ctx,
+                       riak_put_response **resp);
+
+/**
+ * @brief Free memory from response
+ * @param ctx Riak Context
+ * @param resp Delete PBC Response
+ */
+void
+riak_free_delete_response(riak_context          *ctx,
+                          riak_delete_response **resp);
+
+/**
+ * @brief Free listbuckets response
+ * @param ctx Riak Context
+ * @param resp List buckets message to be cleaned up
+ */
+void
+riak_free_listbuckets_response(riak_context               *ctx,
+                               riak_listbuckets_response **resp);
+
+/**
+ * @brief Free listkeys response
+ * @param ctx Riak Context
+ * @param resp List keys message to be cleaned up
+ */
+void
+riak_free_listkeys_response(riak_context            *ctx,
+                            riak_listkeys_response **resp);
+
+/**
+ * @brief Free memory from response
+ * @param ctx Riak Context
+ * @param resp client id PBC Response
+ */
+void
+riak_free_get_clientid_response(riak_context              *ctx,
+                              riak_get_clientid_response **resp);
+
+/**
+ * @brief Free memory from response
+ * @param ctx Riak Context
+ * @param resp client id PBC Response
+ */
+void
+riak_free_set_clientid_response(riak_context              *ctx,
+                              riak_set_clientid_response **resp);
+
+/**
+ * @brief Free memory from response
+ * @param ctx Riak Context
+ * @param resp Bucket Properties PBC Response
+ */
+void
+riak_free_get_bucketprops_response(riak_context                   *ctx,
+                                   riak_get_bucketprops_response **resp);
+
+/**
+ * @brief Free memory from response
+ * @param ctx Riak Context
+ * @param resp Bucket Properties PBC Response
+ */
+void
+riak_free_reset_bucketprops_response(riak_context                     *ctx,
+                                     riak_reset_bucketprops_response **resp);
+
+/**
+ * @brief Free memory from response
+ * @param ctx Riak Context
+ * @param resp Bucket Properties PBC Response
+ */
+void
+riak_free_set_bucketprops_response(riak_context                   *ctx,
+                                   riak_set_bucketprops_response **resp);
+
 #endif // RIAK_MESSAGES_H
