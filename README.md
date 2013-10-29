@@ -1,5 +1,4 @@
 
-
 ![riak-c-client](./docs/riak_c_client_large.png "Riak C Client") 
 
 
@@ -7,6 +6,10 @@
 # Status
 
 **This project is currently under heavy development and is NOT ready to use in a production environment.**
+
+* libevent threading tweaks
+* clean up header files, only require riak.h 
+* documentation 
 
 # Dependencies
 
