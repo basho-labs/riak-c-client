@@ -4,7 +4,8 @@
 
 # Status
 
-**This project is currently under heavy development and is NOT ready to use in a production environment.**
+**This project is currently under heavy development and is NOT ready to use in a production environment. Expect
+significant changes to the API.**
 
 #### TODO:
 
@@ -252,15 +253,17 @@ Please use the *riak-users* mailing list for questions + comments:
 
 # Contributing
 
+If you want to help code, write documentation, or test the Riak C Client:
+
 1. Fork the `riak-c-client` repo
 2. Clone the repo from your fork
 3. Create a branch:
 	* `git checkout -b my_branch`
 4. git push origin my_branch
 5. Submit a pull request
-    - if it's a major feature request, please email riak-users 
+    - if it's a major feature change/request, please email riak-users 
 	- please provide CUnit test cases for your PR 
-
+	
 #License
 
 http://www.apache.org/licenses/LICENSE-2.0.html
