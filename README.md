@@ -8,10 +8,12 @@
 
 #### TODO:
 
-* libevent threading tweaks
-* clean up header files, only require riak.h 
-* documentation 
+* cleanup around libevent threading (currently broken)
+* clean up header files, only require a single riak.h 
+* testing testing testing
 * general code cleanup
+* documentation 
+* performance tuning
 
 # Dependencies
 
@@ -79,7 +81,7 @@ To build API documentation + man pages, you'll need `doxygen` installed.
 	scons docs
 
 
-# Tutorial
+# Tutorial (outdated, work in progress)
 
 **Note** 
 Links to documentation below are against the Git *master* branch. 
