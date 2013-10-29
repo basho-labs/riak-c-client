@@ -20,8 +20,8 @@
  *
  *********************************************************************/
 
-#ifndef CALL_BACKS_INTERNAL_H_
-#define CALL_BACKS_INTERNAL_H_
+#ifndef CALL_BACKS_H_
+#define CALL_BACKS_H_
 
 void
 ping_cb(riak_ping_response *response,

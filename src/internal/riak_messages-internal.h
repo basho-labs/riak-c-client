@@ -394,27 +394,6 @@ riak_decode_serverinfo_response(riak_event                *rev,
                                 riak_boolean_t            *done);
 
 /**
- * @brief Print a summary of a `riak_serverinfo_response`
- * @param response Result from a Server Info request
- * @param target Location of string to be formatted
- * @param len Number of free bytes
- */
-void
-riak_print_serverinfo_response(riak_serverinfo_response *response,
-                               char                     *target,
-                               riak_size_t               len);
-
-/**
- * @brief Free memory from response
- * @param ctx Riak Context
- * @param resp Server Info PBC Response
- */
-void
-riak_free_serverinfo_response(riak_context              *ctx,
-                              riak_serverinfo_response **resp);
-
-
-/**
  * @brief Create a get/fetch Request
  * @param rev Riak Event
  * @param bucket Name of Riak bucket
@@ -445,18 +424,6 @@ riak_decode_get_response(riak_event         *rev,
                          riak_boolean_t     *done);
 
 /**
- * @brief Print a summary of a `riak_get_response`
- * @param response Result from a Get request
- * @param target Location of string to be formatted
- * @param len Number of free bytes
- */
-void
-riak_print_get_response(riak_get_response *response,
-                        char              *target,
-                        riak_size_t        len);
-
-
-/**
  * @brief Create Put Request
  * @param rev Riak Event
  * @param riak_obj Riak object to be put
@@ -485,18 +452,6 @@ riak_decode_put_response(riak_event         *rev,
                          riak_boolean_t     *done);
 
 /**
- * @brief Print a summary of a `riak_put_response`
- * @param response Result from a Put request
- * @param target Location of string to be formatted
- * @param len Number of free bytes
- */
-void
-riak_print_put_response(riak_put_response *response,
-                        char              *target,
-                        riak_size_t        len);
-
-
-/**
  * @brief Create a deletion request
  * @param bucket Name of Riak bucket
  * @param key Name of Riak key
@@ -510,7 +465,6 @@ riak_encode_delete_request(riak_event          *rev,
                            riak_binary         *key,
                            riak_delete_options *options,
                            riak_pb_message    **req);
-
 
 /**
  * @brief Translate PBC delete message to a Riak response
@@ -552,17 +506,6 @@ riak_decode_listbuckets_response(riak_event                 *rev,
                                  riak_boolean_t             *done);
 
 /**
- * @brief Print a summary of a `riak_listbuckets_response`
- * @param response Result from a List buckets request
- * @param target Location of string to be formatted
- * @param len Number of free bytes
- */
-void
-riak_print_listbuckets_response(riak_listbuckets_response *response,
-                                char                      *target,
-                                riak_size_t                len);
-
-/**
  * @brief Create a request to find all keys in a bucket
  * @param rev Riak Event
  * @param bucket Name of Riak bucket
@@ -591,18 +534,6 @@ riak_decode_listkeys_response(riak_event              *rev,
                               riak_boolean_t          *done);
 
 /**
- * @brief Print a summary of a `riak_listkeys_response`
- * @param response Result from a Listkeys request
- * @param target Location of string to be formatted
- * @param len Number of free bytes
- */
-void
-riak_print_listkeys_response(riak_listkeys_response *response,
-                             char                   *target,
-                             riak_size_t             len);
-
-
-/**
  * @brief Build a client id request
  * @param rev Riak Event
  * @param req Created PB message
@@ -625,18 +556,6 @@ riak_decode_get_clientid_response(riak_event                  *rev,
                                   riak_pb_message             *pbresp,
                                   riak_get_clientid_response **resp,
                                   riak_boolean_t              *done);
-
-/**
- * @brief Print a summary of a `riak_get_clientid_response`
- * @param response Result from a client id request
- * @param target Location of string to be formatted
- * @param len Number of free bytes
- */
-void
-riak_print_get_clientid_response(riak_get_clientid_response *response,
-                                 char                       *target,
-                                 riak_size_t                 len);
-
 
 /**
  * @brief Build a client id request
@@ -689,18 +608,6 @@ riak_decode_get_bucketprops_response(riak_event                     *rev,
                                      riak_pb_message                *pbresp,
                                      riak_get_bucketprops_response **resp,
                                      riak_boolean_t                 *done);
-
-/**
- * @brief Print a summary of a `riak_get_bucketprops_response`
- * @param response Result from a get_bucketprops request
- * @param target Location of string to be formatted
- * @param len Number of free bytes
- */
-void
-riak_print_get_bucketprops_response(riak_get_bucketprops_response *response,
-                                    char                          *target,
-                                    riak_size_t                    len);
-
 
 /**
  * @brief Create a request to reset bucket properties

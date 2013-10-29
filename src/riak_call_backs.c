@@ -24,7 +24,7 @@
 #include "riak_messages-internal.h"
 #include "riak_utils-internal.h"
 #include "riak_event-internal.h"
-#include "riak_call_backs-internal.h"
+#include "riak_call_backs.h"
 #include "riak_context-internal.h"
 
 // TEST CALLBACKS
