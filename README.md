@@ -96,10 +96,11 @@ Links to specific line numbers in the html API documentation may not work as som
 ## 
 
 ```
- // TODO: should we create a single .h to include?
- #include "riak.h" 
- #include "riak.pb-c.h"
- #include "riak_binary-internal.h"
+ // TODO: more cleanup around .h files
+ #include "riak.h"
+ #include "riak_command.h"
+ #include "riak_event.h"
+ #include "riak_call_backs.h"
 ```
 
 ## Connecting to Riak
@@ -194,44 +195,7 @@ riak_free_get_response(ctx, &get_response);
 ### TODO
 
 ## Asynchronous communications
-
 ### Asynch setup
-
-```
-riak_event *rev;
-err = riak_event_new(ctx, &rev, NULL, NULL, NULL);
-if (err) {
-	return err;
-}
-// have user callback know about its riak_event
-riak_event_set_cb_data(rev, rev);
-```
-
-### Asynch Get
-
-``` 
-void my_get_cb(riak_get_response *response, void *ptr) {
-  // process the get callback
-}
-
-int main() {
-	…  
-	riak_event  *rev = NULL;
-	riak_encode_get_request(rev, bucket_bin, key_bin, NULL, &(rev->pb_request));
-}
-
-```
-
-
-
-#### Example
-```
-riak_event_set_response_cb(rev, (riak_response_callback)get_cb);
-riak_encode_get_request(rev, bucket_bin, key_bin, NULL, &(rev->pb_request));
-
-```
-
-
 ### Get
 ### Put
 ### Delete
