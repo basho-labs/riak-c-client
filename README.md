@@ -1,5 +1,4 @@
-![riak-c-client](./docs/riak_c_client_large.png "Riak C Client") 
-
+## Riak C Client
 
 
 # Status
