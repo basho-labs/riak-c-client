@@ -26,10 +26,27 @@
  // TODO: Move sample callbacks into examples?
 #include "riak_call_backs.h"
 
+
+
+#ifdef WIN32
+int evthread_use_windows_threads(void);
+#define EVTHREAD_USE_WINDOWS_THREADS_IMPLEMENTED
+#endif
+#ifdef _EVENT_HAVE_PTHREADS
+int evthread_use_pthreads(void);
+#define EVTHREAD_USE_PTHREADS_IMPLEMENTED
+#endif
+
+
 int
 main(int   argc,
      char *argv[])
 {
+
+    // used to enable pthreads support in libevent
+    // TODO: move somewhere?
+    evthread_use_pthreads();
+
     riak_args args;
     int operation = riak_parse_args(argc, argv, &args);
 
