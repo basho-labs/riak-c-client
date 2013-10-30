@@ -8,8 +8,8 @@ env = Environment(
     LIBPATH=['.'],
     toolpath=['tools'],
     tools=['default', 'protoc'])
-env.ParseConfig("pkg-config --libs libevent libprotobuf-c protobuf zlog")
-env.ParseConfig("pkg-config --cflags libevent libprotobuf-c protobuf zlog")
+env.ParseConfig("pkg-config --libs libevent libevent_pthreads libprotobuf-c protobuf zlog")
+env.ParseConfig("pkg-config --cflags libevent libevent_pthreads libprotobuf-c protobuf zlog")
 
 riak_pb = env.Protoc(
     [],
