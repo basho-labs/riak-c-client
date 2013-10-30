@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * riak_types.h: Riak Operations
+ * riak.c: Riak Operations
  *
  * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
  *
@@ -21,7 +21,7 @@
  *********************************************************************/
 
 #include "riak.h"
-#include "riak_call_backs-internal.h"
+#include "riak_call_backs.h"
 #include "riak_event.h"
 #include "riak_messages-internal.h"
 #include "riak_utils-internal.h"

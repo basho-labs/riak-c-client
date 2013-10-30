@@ -45,21 +45,21 @@ struct _riak_command {
 
 static riak_command s_commands[] = {
     // These options set a flag.
-    {"delete",       "Delete a key",                 NULL, MSG_RPBDELREQ,           RIAK_TRUE,  RIAK_TRUE,  RIAK_FALSE},
-    {"get-bucket",   "Fetch bucket properties",      NULL, MSG_RPBGETBUCKETREQ,     RIAK_TRUE,  RIAK_FALSE, RIAK_FALSE},
-    {"get-clientid", "Fetch client identifier",      NULL, MSG_RPBGETCLIENTIDREQ,   RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
-    {"get",          "Fetch a key value",            NULL, MSG_RPBGETREQ,           RIAK_TRUE,  RIAK_TRUE,  RIAK_FALSE},
-    {"index",        "Index a bucket",               NULL, MSG_RPBINDEXRESP,        RIAK_TRUE,  RIAK_FALSE, RIAK_FALSE},
-    {"list-buckets", "List all buckets on a server", NULL, MSG_RPBLISTBUCKETSREQ,   RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
-    {"list-keys",    "List all keys in a bucket",    NULL, MSG_RPBLISTKEYSREQ,      RIAK_TRUE,  RIAK_FALSE, RIAK_FALSE},
-    {"map-reduce",   "Execute map/reduce",           NULL, MSG_RPBMAPREDREQ,        RIAK_TRUE,  RIAK_FALSE, RIAK_FALSE},
-    {"ping",         "Look for signs of life",       NULL, MSG_RPBPINGREQ,          RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
-    {"put",          "Store a value in a key",       NULL, MSG_RPBPUTREQ,           RIAK_TRUE,  RIAK_TRUE,  RIAK_TRUE},
-    {"reset-bucket", "Reset bucket properties",      NULL, MSG_RPBRESETBUCKETREQ,   RIAK_TRUE,  RIAK_FALSE, RIAK_FALSE},
-    {"search",       "Use 2i Search",                NULL, MSG_RPBSEARCHQUERYREQ,   RIAK_TRUE,  RIAK_FALSE, RIAK_TRUE},
-    {"server-info",  "Return server settings",       NULL, MSG_RPBGETSERVERINFOREQ, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
-    {"set-bucket",   "Store bucket properties",      NULL, MSG_RPBSETBUCKETREQ,     RIAK_TRUE,  RIAK_FALSE, RIAK_FALSE},
-    {"set-clientid", "Store client identifier",      NULL, MSG_RPBSETCLIENTIDREQ,   RIAK_FALSE, RIAK_FALSE, RIAK_TRUE},
+    {"delete",       "Delete a key",                 NULL, RIAK_COMMAND_DEL,           RIAK_TRUE,  RIAK_TRUE,  RIAK_FALSE},
+    {"get-bucket",   "Fetch bucket properties",      NULL, RIAK_COMMAND_GETBUCKET,     RIAK_TRUE,  RIAK_FALSE, RIAK_FALSE},
+    {"get-clientid", "Fetch client identifier",      NULL, RIAK_COMMAND_GETCLIENTID,   RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
+    {"get",          "Fetch a key value",            NULL, RIAK_COMMAND_GET,           RIAK_TRUE,  RIAK_TRUE,  RIAK_FALSE},
+    {"index",        "Index a bucket",               NULL, RIAK_COMMAND_INDEX,         RIAK_TRUE,  RIAK_FALSE, RIAK_FALSE},
+    {"list-buckets", "List all buckets on a server", NULL, RIAK_COMMAND_LISTBUCKETS,   RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
+    {"list-keys",    "List all keys in a bucket",    NULL, RIAK_COMMAND_LISTKEYS,      RIAK_TRUE,  RIAK_FALSE, RIAK_FALSE},
+    {"map-reduce",   "Execute map/reduce",           NULL, RIAK_COMMAND_MAPRED,        RIAK_TRUE,  RIAK_FALSE, RIAK_FALSE},
+    {"ping",         "Look for signs of life",       NULL, RIAK_COMMAND_PING,          RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
+    {"put",          "Store a value in a key",       NULL, RIAK_COMMAND_PUT,           RIAK_TRUE,  RIAK_TRUE,  RIAK_TRUE},
+    {"reset-bucket", "Reset bucket properties",      NULL, RIAK_COMMAND_RESETBUCKET,   RIAK_TRUE,  RIAK_FALSE, RIAK_FALSE},
+    {"search",       "Use 2i Search",                NULL, RIAK_COMMAND_SEARCHQUERY,   RIAK_TRUE,  RIAK_FALSE, RIAK_TRUE},
+    {"server-info",  "Return server settings",       NULL, RIAK_COMMAND_GETSERVERINFO, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
+    {"set-bucket",   "Store bucket properties",      NULL, RIAK_COMMAND_SETBUCKET,     RIAK_TRUE,  RIAK_FALSE, RIAK_FALSE},
+    {"set-clientid", "Store client identifier",      NULL, RIAK_COMMAND_SETCLIENTID,   RIAK_FALSE, RIAK_FALSE, RIAK_TRUE},
 
     // These options don't set a flag.
     // We distinguish them by their indices.

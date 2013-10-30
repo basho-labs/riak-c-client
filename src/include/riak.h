@@ -42,6 +42,7 @@
 #include "riak_object.h"
 #include "riak_bucket_props.h"
 #include "riak_messages.h"
+#include "riak_options.h"
 #include "riak_log.h"
 
 //
@@ -201,5 +202,82 @@ void riak_bucket_get_props(riak_context*);
 void riak_query_2i(riak_context*);
 
 void riak_map_reduce(riak_context*);
+
+//
+// A S Y N C H R O N O U S
+//
+
+/**
+ * @brief Create a Riak Event for async use
+ * @param ctx Riak Context
+ * @param rev Riak Event (out)
+ * @returns Error code
+ */
+riak_error
+riak_async_create_event(riak_context *ctx,
+                        riak_event  **rev);
+
+riak_error
+riak_async_register_ping(riak_event            *rev,
+                         riak_response_callback cb);
+
+riak_error
+riak_async_register_serverinfo(riak_event            *rev,
+                               riak_response_callback cb);
+
+riak_error
+riak_async_register_get(riak_event            *rev,
+                        riak_binary           *bucket,
+                        riak_binary           *key,
+                        riak_get_options      *get_options,
+                        riak_response_callback cb);
+
+riak_error
+riak_async_register_put(riak_event            *rev,
+                        riak_object           *riak_obj,
+                        riak_put_options      *options,
+                        riak_response_callback cb);
+riak_error
+riak_async_register_delete(riak_event            *rev,
+                           riak_binary           *bucket,
+                           riak_binary           *key,
+                           riak_delete_options   *options,
+                           riak_response_callback cb);
+
+riak_error
+riak_async_register_listbuckets(riak_event            *rev,
+                                riak_response_callback cb);
+
+riak_error
+riak_async_register_listkeys(riak_event            *rev,
+                             riak_binary           *bucket,
+                             riak_uint32_t          timeout,
+                             riak_response_callback cb );
+
+riak_error
+riak_async_register_get_clientid(riak_event            *rev,
+                                 riak_response_callback cb);
+
+riak_error
+riak_async_register_set_clientid(riak_event            *rev,
+                                 riak_binary           *clientid,
+                                 riak_response_callback cb);
+
+riak_error
+riak_async_register_get_bucketprops(riak_event            *rev,
+                                    riak_binary           *bucket,
+                                    riak_response_callback cb);
+riak_error
+riak_async_register_reset_bucketprops(riak_event            *rev,
+                                      riak_binary           *bucket,
+                                      riak_response_callback cb);
+riak_error
+riak_async_register_set_bucketprops(riak_event            *rev,
+                                    riak_binary           *bucket,
+                                    riak_bucket_props     *props,
+                                    riak_response_callback cb);
+
+riak_error
+riak_async_send_msg(riak_event *rev);
 
 #endif
