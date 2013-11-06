@@ -44,6 +44,8 @@ struct _riak_pair
 
 // Based off of RpbContent
 struct _riak_object {
+    riak_boolean_t has_bucket_type;
+    riak_binary   *bucket_type;
     riak_binary   *bucket;
 
     riak_boolean_t has_key;
@@ -116,4 +118,4 @@ riak_object_free_pb(riak_context *ctx,
                     RpbContent   *obj);
 
 
-#endif /* RIAK_OBJECT_H_ */
+#endif /* RIAK_OBJECT_INTERNAL_H_ */

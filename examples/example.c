@@ -61,6 +61,10 @@ main(int   argc,
     char output[10240];
     int it;
 
+    riak_binary *btype_bin  = NULL;
+    if (args.has_btype) {
+      btype_bin = riak_binary_new_from_string(ctx, args.btype);
+    }
     riak_binary *bucket_bin = riak_binary_new_from_string(ctx, args.bucket); // Not copied
     riak_binary *key_bin    = riak_binary_new_from_string(ctx, args.key); // Not copied
     riak_binary *value_bin  = riak_binary_new_from_string(ctx, args.value); // Not copied
@@ -112,7 +116,7 @@ main(int   argc,
                 err = riak_async_register_get(rev, bucket_bin, key_bin, NULL, (riak_response_callback)get_cb);
             } else {
                 riak_get_response *get_response;
-                err = riak_get(ctx, bucket_bin, key_bin, NULL, &get_response);
+                err = riak_get(ctx, btype_bin, bucket_bin, key_bin, NULL, &get_response);
                 if (err == ERIAK_OK) {
                     riak_print_get_response(get_response, output, sizeof(output));
                     printf("%s\n", output);
@@ -129,6 +133,9 @@ main(int   argc,
             if (obj == NULL) {
                 riak_log_fatal(rev, "%s","Could not allocate a Riak Object");
                 return 1;
+            }
+            if (args.has_btype) {
+              riak_object_set_bucket_type(obj, riak_binary_new_from_string(ctx, args.btype)); // not copied
             }
             riak_object_set_bucket(obj, riak_binary_new_from_string(ctx, args.bucket)); // Not copied
             if (args.has_key) {
@@ -200,7 +207,7 @@ main(int   argc,
                 err = riak_async_register_listkeys(rev, bucket_bin, args.timeout * 1000, (riak_response_callback)listkey_cb);
             } else {
                 riak_listkeys_response *key_response;
-                err = riak_listkeys(ctx, bucket_bin, args.timeout * 1000, &key_response);
+                err = riak_listkeys(ctx, btype_bin, bucket_bin, args.timeout * 1000, &key_response);
                 if (err == ERIAK_OK) {
                     riak_print_listkeys_response(key_response, output, sizeof(output));
                     riak_log_debug_context(ctx, "%s", output);

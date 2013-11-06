@@ -93,6 +93,7 @@ riak_serverinfo(riak_context              *ctx,
 
 riak_error
 riak_get(riak_context      *ctx,
+         riak_binary       *type,
          riak_binary       *bucket,
          riak_binary       *key,
          riak_get_options  *opts,
@@ -102,7 +103,7 @@ riak_get(riak_context      *ctx,
     if (err) {
         return err;
     }
-    err = riak_encode_get_request(rev, bucket, key, opts, &(rev->pb_request));
+    err = riak_encode_get_request(rev, type, bucket, key, opts, &(rev->pb_request));
     if (err) {
         return err;
     }
@@ -180,6 +181,7 @@ riak_listbuckets(riak_context               *ctx,
 
 riak_error
 riak_listkeys(riak_context            *ctx,
+              riak_binary             *bucket_type,
               riak_binary             *bucket,
               riak_uint32_t            timeout,
               riak_listkeys_response **response) {
@@ -188,7 +190,7 @@ riak_listkeys(riak_context            *ctx,
     if (err) {
         return err;
     }
-    err = riak_encode_listkeys_request(rev, bucket, timeout, &(rev->pb_request));
+    err = riak_encode_listkeys_request(rev, bucket_type, bucket, timeout, &(rev->pb_request));
     if (err) {
         return err;
     }

@@ -67,7 +67,7 @@ riak_async_register_get(riak_event            *rev,
                         riak_response_callback cb) {
 
     riak_event_set_response_cb(rev, cb);
-    return riak_encode_get_request(rev, bucket, key, get_options, &(rev->pb_request));
+    return riak_encode_get_request(rev, NULL, bucket, key, get_options, &(rev->pb_request));
 }
 
 riak_error
@@ -102,7 +102,7 @@ riak_async_register_listkeys(riak_event            *rev,
                              riak_uint32_t          timeout,
                              riak_response_callback cb ) {
     riak_event_set_response_cb(rev, cb);
-    return riak_encode_listkeys_request(rev, bucket, timeout, &(rev->pb_request));
+    return riak_encode_listkeys_request(rev, NULL, bucket, timeout, &(rev->pb_request));
 }
 
 riak_error

@@ -66,11 +66,13 @@ typedef struct {
     riak_boolean_t has_bucket;
     riak_boolean_t has_key;
     riak_boolean_t has_value;
+    riak_boolean_t has_btype;
     char bucket[1024];
     char host[256];
     char portnum[6];
     char key[1024];
     char value[1024];
+    char btype[1024];
 } riak_args;
 
 void

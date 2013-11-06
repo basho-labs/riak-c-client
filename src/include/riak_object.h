@@ -80,6 +80,8 @@ riak_object_free_array(riak_context  *ctx,
                        riak_object ***array,
                        riak_size_t    len);
 
+riak_boolean_t riak_object_get_has_bucket_type(riak_object *obj);
+riak_binary   *riak_object_get_bucket_type(riak_object *obj);
 riak_binary   *riak_object_get_bucket(riak_object *obj);
 riak_boolean_t riak_object_get_has_key(riak_object *obj);
 riak_binary   *riak_object_get_key(riak_object *obj);
@@ -104,6 +106,7 @@ riak_int32_t   riak_object_get_n_usermeta(riak_object *obj);
 riak_pair    **riak_object_get_usermeta(riak_object *obj);
 riak_int32_t   riak_object_get_n_indexes(riak_object *obj);
 riak_pair    **riak_object_get_indexes(riak_object *obj);
+void riak_object_set_bucket_type(riak_object *obj, riak_binary *value);
 void riak_object_set_bucket(riak_object *obj, riak_binary *value);
 void riak_object_set_key(riak_object *obj, riak_binary *value);
 void riak_object_set_value(riak_object *obj, riak_binary *value);

@@ -70,6 +70,7 @@ riak_serverinfo(riak_context              *ctx,
 /**
  * @brief Synchronous Fetch request
  * @param ctx Riak Context
+ * @param type Name of the Riak bucket type or NULL for the default type
  * @param bucket Name of Riak bucket
  * @param key Name of Riak key
  * @param opts Fetch options
@@ -78,10 +79,12 @@ riak_serverinfo(riak_context              *ctx,
  */
 riak_error
 riak_get(riak_context              *ctx,
+         riak_binary               *type,
          riak_binary               *bucket,
          riak_binary               *key,
          riak_get_options          *opts,
          riak_get_response        **response);
+
 
 /**
  * @brief Synchronous Store request
@@ -124,6 +127,7 @@ riak_listbuckets(riak_context               *ctx,
 /**
  * @brief List all of the keys in a bucket
  * @param ctx Riak Context
+ * @param bucket_type Name of the bucket type or NULL for the default type
  * @param bucket Name of bucket
  * @param timeout How long to wait for a response
  * @param response Returned collection of key names
@@ -131,6 +135,7 @@ riak_listbuckets(riak_context               *ctx,
  */
 riak_error
 riak_listkeys(riak_context            *ctx,
+              riak_binary             *bucket_type,
               riak_binary             *bucket,
               riak_uint32_t            timeout,
               riak_listkeys_response **repsonse);

@@ -607,6 +607,16 @@ riak_object_free_pb(riak_context *ctx,
 //
 // ACCESSORS
 //
+riak_boolean_t
+riak_object_get_has_bucket_type(riak_object *obj)
+{
+  return obj->has_bucket_type;
+}
+riak_binary*
+riak_object_get_bucket_type(riak_object *obj)
+{
+  return obj->bucket_type;
+}
 riak_binary*
 riak_object_get_bucket(riak_object *obj)
 {
@@ -728,6 +738,10 @@ riak_object_get_indexes(riak_object *obj)
     return obj->indexes;
 }
 
+void riak_object_set_bucket_type(riak_object *obj, riak_binary *value) {
+     obj->bucket_type = value;
+     obj->has_bucket_type = RIAK_TRUE;
+}
 void riak_object_set_bucket(riak_object *obj, riak_binary *value) {
      obj->bucket = value;
 }

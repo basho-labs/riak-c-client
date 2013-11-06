@@ -220,6 +220,7 @@ riak_free_serverinfo_response(riak_context              *ctx,
 
 riak_error
 riak_encode_get_request(riak_event       *rev,
+                        riak_binary      *type,
                         riak_binary      *bucket,
                         riak_binary      *key,
                         riak_get_options *get_options,
@@ -228,6 +229,10 @@ riak_encode_get_request(riak_event       *rev,
     riak_context *ctx = (riak_context*)(rev->context);
     RpbGetReq getmsg = RPB_GET_REQ__INIT;
 
+    if (type != NULL) {
+      riak_binary_to_pb_copy(&getmsg.type, type);
+      getmsg.has_type = RIAK_TRUE;
+    }
     riak_binary_to_pb_copy(&getmsg.bucket, bucket);
     riak_binary_to_pb_copy(&getmsg.key, key);
 
@@ -389,6 +394,11 @@ riak_encode_put_request(riak_event       *rev,
     if (riak_obj->has_key) {
         putmsg.has_key = RIAK_TRUE;
         riak_binary_to_pb_copy(&(putmsg.key), riak_obj->key);
+    }
+
+    if (riak_obj->has_bucket_type) {
+      putmsg.has_type = RIAK_TRUE;
+      riak_binary_to_pb_copy(&(putmsg.type), riak_obj->bucket_type);
     }
 
     // Data content payload
@@ -817,6 +827,7 @@ riak_free_listbuckets_response(riak_context               *ctx,
 
 riak_error
 riak_encode_listkeys_request(riak_event       *rev,
+                             riak_binary      *bucket_type,
                              riak_binary      *bucket,
                              riak_uint32_t     timeout,
                              riak_pb_message **req) {
@@ -827,6 +838,10 @@ riak_encode_listkeys_request(riak_event       *rev,
     if (timeout > 0) {
         listkeysreq.has_timeout = RIAK_TRUE;
         listkeysreq.timeout = timeout;
+    }
+    if (bucket_type) {
+        listkeysreq.has_type = RIAK_TRUE;
+        riak_binary_to_pb_copy(&(listkeysreq.type), bucket_type);
     }
     riak_size_t msglen = rpb_list_keys_req__get_packed_size(&listkeysreq);
     riak_uint8_t *msgbuf = (riak_uint8_t*)(ctx->malloc_fn)(msglen);

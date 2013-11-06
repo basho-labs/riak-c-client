@@ -396,6 +396,7 @@ riak_decode_serverinfo_response(riak_event                *rev,
 /**
  * @brief Create a get/fetch Request
  * @param rev Riak Event
+ * @param type Name of the Riak bucket type or NULL for the default type
  * @param bucket Name of Riak bucket
  * @param key Name of Riak key
  * @param options Get request parameters
@@ -404,6 +405,7 @@ riak_decode_serverinfo_response(riak_event                *rev,
  */
 riak_error
 riak_encode_get_request(riak_event       *rev,
+                        riak_binary      *type,
                         riak_binary      *bucket,
                         riak_binary      *key,
                         riak_get_options *options,
@@ -508,6 +510,7 @@ riak_decode_listbuckets_response(riak_event                 *rev,
 /**
  * @brief Create a request to find all keys in a bucket
  * @param rev Riak Event
+ * @param bucket_type Name of the Riak bucket type or NULL for default type
  * @param bucket Name of Riak bucket
  * @param timeout How long to wait for a response
  * @param req Returned listbuckets request
@@ -515,9 +518,10 @@ riak_decode_listbuckets_response(riak_event                 *rev,
  */
 riak_error
 riak_encode_listkeys_request(riak_event       *rev,
-                                 riak_binary  *bucket,
-                                 riak_uint32_t timeout,
-                                 riak_pb_message **req);
+                             riak_binary      *bucket_type,
+                             riak_binary      *bucket,
+                             riak_uint32_t    timeout,
+                             riak_pb_message  **req);
 
 /**
  * @brief Translate PBC listkeys response into Riak structure

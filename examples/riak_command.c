@@ -70,6 +70,7 @@ static riak_command s_commands[] = {
     {"key",          "",                       "name",   'k', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
     {"port",         "",                       "number", 'p', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
     {"timeout",      "",                       "secs",   't', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
+    {"type",         "",                       "type",   'T', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
     {"value",        "",                       "val",    'v', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
     {NULL, NULL, NULL, 0, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE}
 };
@@ -188,6 +189,7 @@ riak_parse_args(int           argc,
     args->iterate    = 1;
     args->port       = 10017;
     args->timeout    = 10;
+    args->has_btype  = RIAK_FALSE;
     args->has_bucket = RIAK_FALSE;
     args->has_key    = RIAK_FALSE;
     args->has_value  = RIAK_FALSE;
@@ -260,6 +262,11 @@ riak_parse_args(int           argc,
                 args->timeout = atol(optarg);
                 break;
 
+            case 'T':
+                printf ("option -T with value `%s'\n", optarg);
+                riak_strlcpy(args->btype, optarg, sizeof(args->btype));
+                args->has_btype = RIAK_TRUE;
+                break;
             case 'v':
                 printf ("option -v with value `%s'\n", optarg);
                 riak_strlcpy(args->value, optarg, sizeof(args->value));
