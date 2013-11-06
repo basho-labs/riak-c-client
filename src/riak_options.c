@@ -88,123 +88,171 @@ riak_put_options_free(riak_context *ctx,
 //
 // ACCESSORS
 //
-riak_boolean_t riak_put_options_get_has_vclock(riak_put_options *opt) {
+riak_boolean_t
+riak_put_options_get_has_vclock(riak_put_options *opt) {
     return opt->has_vclock;
 }
-riak_binary   *riak_put_options_get_vclock(riak_put_options *opt) {
+riak_binary*
+riak_put_options_get_vclock(riak_put_options *opt) {
     return opt->vclock;
 }
-riak_boolean_t riak_put_options_get_has_w(riak_put_options *opt) {
+riak_boolean_t
+riak_put_options_get_has_w(riak_put_options *opt) {
     return opt->has_w;
 }
-riak_uint32_t  riak_put_options_get_w(riak_put_options *opt) {
+riak_uint32_t
+riak_put_options_get_w(riak_put_options *opt) {
     return opt->w;
 }
-riak_boolean_t riak_put_options_get_has_dw(riak_put_options *opt) {
+riak_boolean_t
+riak_put_options_get_has_dw(riak_put_options *opt) {
     return opt->has_dw;
 }
-riak_uint32_t  riak_put_options_get_dw(riak_put_options *opt) {
+riak_uint32_t
+riak_put_options_get_dw(riak_put_options *opt) {
     return opt->dw;
 }
-riak_boolean_t riak_put_options_get_has_return_body(riak_put_options *opt) {
+riak_boolean_t
+riak_put_options_get_has_return_body(riak_put_options *opt) {
     return opt->has_return_body;
 }
-riak_boolean_t riak_put_options_get_return_body(riak_put_options *opt) {
+riak_boolean_t
+riak_put_options_get_return_body(riak_put_options *opt) {
     return opt->return_body;
 }
-riak_boolean_t riak_put_options_get_has_pw(riak_put_options *opt) {
+riak_boolean_t
+riak_put_options_get_has_pw(riak_put_options *opt) {
     return opt->has_pw;
 }
-riak_uint32_t  riak_put_options_get_pw(riak_put_options *opt) {
+riak_uint32_t
+riak_put_options_get_pw(riak_put_options *opt) {
     return opt->pw;
 }
-riak_boolean_t riak_put_options_get_has_if_not_modified(riak_put_options *opt) {
+riak_boolean_t
+riak_put_options_get_has_if_not_modified(riak_put_options *opt) {
     return opt->has_if_not_modified;
 }
-riak_boolean_t riak_put_options_get_if_not_modified(riak_put_options *opt) {
+riak_boolean_t
+riak_put_options_get_if_not_modified(riak_put_options *opt) {
     return opt->if_not_modified;
 }
-riak_boolean_t riak_put_options_get_has_if_none_match(riak_put_options *opt) {
+riak_boolean_t
+riak_put_options_get_has_if_none_match(riak_put_options *opt) {
     return opt->has_if_none_match;
 }
-riak_boolean_t riak_put_options_get_if_none_match(riak_put_options *opt) {
+riak_boolean_t
+riak_put_options_get_if_none_match(riak_put_options *opt) {
     return opt->if_none_match;
 }
-riak_boolean_t riak_put_options_get_has_return_head(riak_put_options *opt) {
+riak_boolean_t
+riak_put_options_get_has_return_head(riak_put_options *opt) {
     return opt->has_return_head;
 }
-riak_boolean_t riak_put_options_get_return_head(riak_put_options *opt) {
+riak_boolean_t
+riak_put_options_get_return_head(riak_put_options *opt) {
     return opt->return_head;
 }
-riak_boolean_t riak_put_options_get_has_timeout(riak_put_options *opt) {
+riak_boolean_t
+riak_put_options_get_has_timeout(riak_put_options *opt) {
     return opt->has_timeout;
 }
-riak_uint32_t  riak_put_options_get_timeout(riak_put_options *opt) {
+riak_uint32_t
+riak_put_options_get_timeout(riak_put_options *opt) {
     return opt->timeout;
 }
-riak_boolean_t riak_put_options_get_has_asis(riak_put_options *opt) {
+riak_boolean_t
+riak_put_options_get_has_asis(riak_put_options *opt) {
     return opt->has_asis;
 }
-riak_boolean_t riak_put_options_get_asis(riak_put_options *opt) {
+riak_boolean_t
+riak_put_options_get_asis(riak_put_options *opt) {
     return opt->asis;
 }
-riak_boolean_t riak_put_options_get_has_sloppy_quorum(riak_put_options *opt) {
+riak_boolean_t
+riak_put_options_get_has_sloppy_quorum(riak_put_options *opt) {
     return opt->has_sloppy_quorum;
 }
-riak_boolean_t riak_put_options_get_sloppy_quorum(riak_put_options *opt) {
+riak_boolean_t
+riak_put_options_get_sloppy_quorum(riak_put_options *opt) {
     return opt->sloppy_quorum;
 }
-riak_boolean_t riak_put_options_get_has_n_val(riak_put_options *opt) {
+riak_boolean_t
+riak_put_options_get_has_n_val(riak_put_options *opt) {
     return opt->has_n_val;
 }
-riak_uint32_t  riak_put_options_get_n_val(riak_put_options *opt) {
+riak_uint32_t
+riak_put_options_get_n_val(riak_put_options *opt) {
     return opt->n_val;
 }
-void riak_put_options_set_vclock(riak_put_options *opt, riak_binary *value) {
+void
+riak_put_options_set_vclock(riak_put_options *opt,
+                            riak_binary      *value) {
     opt->has_vclock = RIAK_TRUE;
     opt->vclock = value;
 }
-void riak_put_options_set_w(riak_put_options *opt, riak_uint32_t value) {
+void
+riak_put_options_set_w(riak_put_options *opt,
+                       riak_uint32_t     value) {
     opt->has_w = RIAK_TRUE;
     opt->w = value;
 }
-void riak_put_options_set_dw(riak_put_options *opt, riak_uint32_t value) {
+void
+riak_put_options_set_dw(riak_put_options *opt,
+                        riak_uint32_t     value) {
     opt->has_dw = RIAK_TRUE;
     opt->dw = value;
 }
-void riak_put_options_set_return_body(riak_put_options *opt, riak_boolean_t value) {
+void
+riak_put_options_set_return_body(riak_put_options *opt,
+                                 riak_boolean_t    value) {
     opt->has_return_body = RIAK_TRUE;
     opt->return_body = value;
 }
-void riak_put_options_set_pw(riak_put_options *opt, riak_uint32_t value) {
+void
+riak_put_options_set_pw(riak_put_options *opt,
+                        riak_uint32_t     value) {
     opt->has_pw = RIAK_TRUE;
     opt->pw = value;
 }
-void riak_put_options_set_if_not_modified(riak_put_options *opt, riak_boolean_t value) {
+void
+riak_put_options_set_if_not_modified(riak_put_options *opt,
+                                     riak_boolean_t    value) {
     opt->has_if_not_modified = RIAK_TRUE;
     opt->if_not_modified = value;
 }
-void riak_put_options_set_if_none_match(riak_put_options *opt, riak_boolean_t value) {
+void
+riak_put_options_set_if_none_match(riak_put_options *opt,
+                                   riak_boolean_t    value) {
     opt->has_if_none_match = RIAK_TRUE;
     opt->if_none_match = value;
 }
-void riak_put_options_set_return_head(riak_put_options *opt, riak_boolean_t value) {
+void
+riak_put_options_set_return_head(riak_put_options *opt,
+                                 riak_boolean_t    value) {
     opt->has_return_head = RIAK_TRUE;
     opt->return_head = value;
 }
-void riak_put_options_set_timeout(riak_put_options *opt, riak_uint32_t value) {
+void
+riak_put_options_set_timeout(riak_put_options *opt,
+                             riak_uint32_t     value) {
     opt->has_timeout = RIAK_TRUE;
     opt->timeout = value;
 }
-void riak_put_options_set_asis(riak_put_options *opt, riak_boolean_t value) {
+void
+riak_put_options_set_asis(riak_put_options *opt,
+                          riak_boolean_t    value) {
     opt->has_asis = RIAK_TRUE;
     opt->asis = value;
 }
-void riak_put_options_set_sloppy_quorum(riak_put_options *opt, riak_boolean_t value) {
+void
+riak_put_options_set_sloppy_quorum(riak_put_options *opt,
+                                   riak_boolean_t    value) {
     opt->has_sloppy_quorum = RIAK_TRUE;
     opt->sloppy_quorum = value;
 }
-void riak_put_options_set_n_val(riak_put_options *opt, riak_uint32_t value) {
+void
+riak_put_options_set_n_val(riak_put_options *opt,
+                           riak_uint32_t     value) {
     opt->has_n_val = RIAK_TRUE;
     opt->n_val = value;
 }

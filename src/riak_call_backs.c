@@ -228,7 +228,7 @@ riak_read_result_callback(riak_bufferevent *bev,
 
             rev->msglen_complete = RIAK_TRUE;
             rev->msglen = ntohl(inmsglen);
-            riak_log_debug(rev, "%s","Read msglen = %d", rev->msglen);
+            riak_log_debug(rev, "Read msglen = %d", rev->msglen);
 
             // TODO: Need to malloc new buffer each time?
             rev->msgbuf = (riak_uint8_t*)(ctx->malloc_fn)(rev->msglen);
@@ -243,11 +243,11 @@ riak_read_result_callback(riak_bufferevent *bev,
         riak_uint8_t *current_position = rev->msgbuf;
         current_position += rev->position;
         buflen = bufferevent_read(bev, (void*)current_position, rev->msglen - rev->position);
-        riak_log_debug(rev, "%s","read %d bytes at position %d, msglen = %d", buflen, rev->position, rev->msglen);
+        riak_log_debug(rev, "read %d bytes at position %d, msglen = %d", buflen, rev->position, rev->msglen);
         rev->position += buflen;
         // Are we done yet? If not, break out and wait for the next callback
         if (rev->position < rev->msglen) {
-            riak_log_debug(rev, "%s","Partial message received");
+            riak_log_error(rev, "%s","Partial message received");
             return;
         }
         assert(rev->position == rev->msglen);
@@ -272,17 +272,22 @@ riak_read_result_callback(riak_bufferevent *bev,
             // Convert error response to a null-terminated string
             char errmsg[2048];
             riak_binary_print(err_response->errmsg, errmsg, sizeof(errmsg));
-            riak_log_debug(rev, "ERR #%d - %s\n", err_response->errcode, errmsg);
-            if (rev->error_cb) (rev->error_cb)(err_response, rev->cb_data);
-            exit(1);
+            riak_log_error(rev, "ERR #%d - %s\n", err_response->errcode, errmsg);
+            if (rev->error_cb) {
+                (rev->error_cb)(err_response, rev->cb_data);
+            }
+            rev->response = NULL;
+            riak_event_free(rev_target);
+            return;
         }
         // Decode the message from Protocol Buffers
         result = (rev->decoder)(rev, pbresp, &(rev->response), &done_streaming);
         riak_free(ctx, &pbresp);
         riak_free(ctx, &rev->msgbuf);
+
         // Call the user-defined callback for this message, when finished
-        if (done_streaming) {
-            if (rev->response_cb) (rev->response_cb)(rev->response, rev->cb_data);
+        if (done_streaming && rev->response_cb) {
+            (rev->response_cb)(rev->response, rev->cb_data);
         }
 
         // Something is amiss
@@ -292,9 +297,9 @@ riak_read_result_callback(riak_bufferevent *bev,
 
     // What has been queued up
     fflush(stdout);
-    #ifdef _RIAK_DEBUG
+#ifdef _RIAK_DEBUG
     event_base_dump_events(rev->base, stdout);
-    #endif
+#endif
 
     if (done_streaming) {
         riak_event_free(rev_target);

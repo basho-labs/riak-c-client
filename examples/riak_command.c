@@ -54,7 +54,7 @@ static riak_command s_commands[] = {
     {"list-keys",    "List all keys in a bucket",    NULL, RIAK_COMMAND_LISTKEYS,      RIAK_TRUE,  RIAK_FALSE, RIAK_FALSE},
     {"map-reduce",   "Execute map/reduce",           NULL, RIAK_COMMAND_MAPRED,        RIAK_TRUE,  RIAK_FALSE, RIAK_FALSE},
     {"ping",         "Look for signs of life",       NULL, RIAK_COMMAND_PING,          RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
-    {"put",          "Store a value in a key",       NULL, RIAK_COMMAND_PUT,           RIAK_TRUE,  RIAK_TRUE,  RIAK_TRUE},
+    {"put",          "Store a value in a key",       NULL, RIAK_COMMAND_PUT,           RIAK_TRUE,  RIAK_FALSE, RIAK_TRUE},
     {"reset-bucket", "Reset bucket properties",      NULL, RIAK_COMMAND_RESETBUCKET,   RIAK_TRUE,  RIAK_FALSE, RIAK_FALSE},
     {"search",       "Use 2i Search",                NULL, RIAK_COMMAND_SEARCHQUERY,   RIAK_TRUE,  RIAK_FALSE, RIAK_TRUE},
     {"server-info",  "Return server settings",       NULL, RIAK_COMMAND_GETSERVERINFO, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},

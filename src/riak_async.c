@@ -41,6 +41,11 @@ riak_async_create_event(riak_context *ctx,
 }
 
 riak_error
+riak_async_send_msg(riak_event *rev) {
+    return riak_send_req(rev, rev->pb_request);
+}
+
+riak_error
 riak_async_register_ping(riak_event            *rev,
                          riak_response_callback cb) {
     riak_event_set_response_cb(rev, cb);
@@ -138,10 +143,5 @@ riak_async_register_set_bucketprops(riak_event            *rev,
                                     riak_response_callback cb) {
     riak_event_set_response_cb(rev, cb);
     return riak_encode_set_bucketprops_request(rev, bucket, props, &(rev->pb_request));
-}
-
-riak_error
-riak_async_send_msg(riak_event *rev) {
-    return riak_send_req(rev, rev->pb_request);
 }
 

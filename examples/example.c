@@ -131,6 +131,10 @@ main(int   argc,
                 return 1;
             }
             riak_object_set_bucket(obj, riak_binary_new_from_string(ctx, args.bucket)); // Not copied
+            if (args.has_key) {
+                riak_object_set_key(obj, riak_binary_new_from_string(ctx, args.key)); // Not copied
+            }
+            riak_object_set_key(obj, riak_binary_new_from_string(ctx, "")); // Not copied
             riak_object_set_value(obj, riak_binary_new_from_string(ctx, args.value)); // Not copied
             if (riak_object_get_bucket(obj) == NULL ||
                 riak_object_get_value(obj) == NULL) {

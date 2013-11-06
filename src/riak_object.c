@@ -579,7 +579,10 @@ riak_object_print(riak_object  *obj,
 void
 riak_object_free(riak_context *ctx,
                  riak_object **obj) {
+    if (obj == NULL) return;
     riak_object* object = *obj;
+    if (object == NULL) return;
+
     riak_free(ctx, &(object->bucket));
     riak_free(ctx, &(object->charset));
     riak_free(ctx, &(object->content_type));

@@ -89,6 +89,7 @@ void
 riak_free_error_response(riak_context         *ctx,
                          riak_error_response **resp) {
     riak_error_response *response = *resp;
+    if (response == NULL) return;
     rpb_error_resp__free_unpacked(response->_internal, ctx->pb_allocator);
     riak_free(ctx, &(response->errmsg));
     riak_free(ctx, resp);
@@ -210,6 +211,7 @@ void
 riak_free_serverinfo_response(riak_context              *ctx,
                               riak_serverinfo_response **resp) {
     riak_serverinfo_response *response = *resp;
+    if (response == NULL) return;
     rpb_get_server_info_resp__free_unpacked(response->_internal, ctx->pb_allocator);
     riak_free(ctx, &(response->node));
     riak_free(ctx, &(response->server_version));
@@ -362,6 +364,7 @@ void
 riak_free_get_response(riak_context       *ctx,
                        riak_get_response **resp) {
     riak_get_response *response = *resp;
+    if (response == NULL) return;
     if (response->n_content > 0) {
         riak_object_free_array(ctx, &(response->content), response->n_content);
     }
@@ -466,6 +469,7 @@ void
 riak_free_put_request(riak_context       *ctx,
                       riak_put_response **resp) {
     riak_put_response *response = *resp;
+    if (response == NULL) return;
     rpb_put_resp__free_unpacked(response->_internal, ctx->pb_allocator);
     riak_free(ctx, resp);
 }
@@ -561,6 +565,7 @@ void
 riak_free_put_response(riak_context       *ctx,
                        riak_put_response **resp) {
     riak_put_response *response = *resp;
+    if (response == NULL) return;
     if (response->n_content > 0) {
         riak_object_free_array(ctx, &(response->content), response->n_content);
     }
@@ -794,6 +799,7 @@ void
 riak_free_listbuckets_response(riak_context               *ctx,
                                riak_listbuckets_response **resp) {
     riak_listbuckets_response *response = *resp;
+    if (response == NULL) return;
     int i;
     for(i = 0; i < response->n_buckets; i++) {
         riak_free(ctx, &(response->buckets[i]));
@@ -954,6 +960,7 @@ void
 riak_free_listkeys_response(riak_context            *ctx,
                             riak_listkeys_response **resp) {
     riak_listkeys_response *response = *resp;
+    if (response == NULL) return;
     int i;
     for(i = 0; i < response->n_keys; i++) {
         riak_free(ctx, &(response->keys[i]));
@@ -1028,6 +1035,7 @@ void
 riak_free_get_clientid_response(riak_context                *ctx,
                                 riak_get_clientid_response **resp) {
     riak_get_clientid_response *response = *resp;
+    if (response == NULL) return;
     riak_free(ctx, &(response->client_id));
     rpb_get_client_id_resp__free_unpacked(response->_internal, ctx->pb_allocator);
     riak_free(ctx, resp);
@@ -1142,6 +1150,7 @@ void
 riak_free_get_bucketprops_response(riak_context                   *ctx,
                                    riak_get_bucketprops_response **resp) {
     riak_get_bucketprops_response *response = *resp;
+    if (response == NULL) return;
     riak_bucket_props_free(ctx, &(response->props));
     riak_free(ctx, resp);
 }

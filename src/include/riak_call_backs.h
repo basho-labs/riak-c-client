@@ -70,6 +70,8 @@ typedef struct _riak_sync_wrapper {
     void          *response;
 } riak_sync_wrapper;
 
+#define RIAK_INIT_SYNC_WRAPPER  { NULL, NULL }
+
 void
 riak_sync_cb(void *response,
              void *ptr);

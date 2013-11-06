@@ -32,7 +32,7 @@ riak_synchronous_request(riak_event **rev_target,
                          void       **response) {
     riak_event *rev = *rev_target;
     riak_event_set_response_cb(rev, (riak_response_callback)riak_sync_cb);
-    riak_sync_wrapper wrapper;
+    riak_sync_wrapper wrapper = RIAK_INIT_SYNC_WRAPPER;
     wrapper.rev = rev_target;
     riak_event_set_cb_data(rev, &wrapper);
 

@@ -48,6 +48,7 @@ struct _riak_event {
     // Results of message translation
     struct _riak_pb_message *pb_request;
     struct _riak_pb_message *pb_response;
+
     void                    *response;
 };
 
