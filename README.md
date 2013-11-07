@@ -6,14 +6,19 @@
 **This project is currently under heavy development and is NOT ready to use in a production environment. Expect
 significant changes to the API.**
 
-#### TODO:
-
+## Current tasks:
+* abstracting out an events layer
 * cleanup around libevent threading (currently broken)
+* support Riak 2.0 messages
+   * CRDTs (riak_dt)
+   * Yokozuna
+* move C headers generation to riak-pb 
 * clean up header files, only require a single riak.h 
-* testing testing testing
+* testing
 * general code cleanup
 * documentation 
 * performance tuning
+
 
 # Dependencies
 
