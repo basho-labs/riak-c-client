@@ -49,6 +49,8 @@ struct _riak_event {
     struct _riak_pb_message *pb_request;
     struct _riak_pb_message *pb_response;
 
+    riak_server_error       *error;
+
     void                    *response;
 };
 

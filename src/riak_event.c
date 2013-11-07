@@ -54,6 +54,7 @@ riak_event_new(riak_context          *ctx,
     rev->pb_request = NULL;
     rev->pb_response = NULL;
     rev->response = NULL;
+    rev->error = NULL;
 
     // TODO: Implement retry logic
     rev->fd = riak_just_open_a_socket(ctx, ctx->addrinfo);
@@ -131,5 +132,10 @@ riak_event_get_fd(riak_event *rev) {
 riak_context*
 riak_event_get_context(riak_event *rev) {
     return rev->context;
+}
+
+riak_server_error*
+riak_event_get_server_error(riak_event *rev) {
+    return rev->error;
 }
 

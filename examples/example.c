@@ -26,6 +26,19 @@
  // TODO: Move sample callbacks into examples?
 #include "riak_call_backs.h"
 
+void
+example_error_cb(void *resp,
+                 void *ptr) {
+    riak_event **rev = (riak_event**)ptr;
+    char message[1024];
+    riak_server_error *error = riak_event_get_server_error(*rev);
+    if (error) {
+        riak_binary_print(riak_server_error_get_errmsg(error), message, sizeof(message));
+        fprintf(stderr, "ERROR: %s\n", message);
+    }
+    exit(1);
+}
+
 int
 main(int   argc,
      char *argv[])
@@ -79,6 +92,7 @@ main(int   argc,
             if (err) {
                 return err;
             }
+            riak_event_set_error_cb(rev, example_error_cb);
         }
         switch (operation) {
         case RIAK_COMMAND_PING:
@@ -134,7 +148,6 @@ main(int   argc,
             if (args.has_key) {
                 riak_object_set_key(obj, riak_binary_new_from_string(ctx, args.key)); // Not copied
             }
-            riak_object_set_key(obj, riak_binary_new_from_string(ctx, "")); // Not copied
             riak_object_set_value(obj, riak_binary_new_from_string(ctx, args.value)); // Not copied
             if (riak_object_get_bucket(obj) == NULL ||
                 riak_object_get_value(obj) == NULL) {
@@ -155,7 +168,7 @@ main(int   argc,
             } else {
                 riak_put_response *put_response;
                 err = riak_put(ctx, obj, put_options, &put_response);
-                if (err != ERIAK_OK) {
+                if (err == ERIAK_OK) {
                     riak_print_put_response(put_response, output, sizeof(output));
                     printf("%s\n", output);
                 }

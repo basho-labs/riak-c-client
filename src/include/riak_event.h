@@ -100,4 +100,12 @@ riak_event_get_fd(riak_event *rev);
 riak_context*
 riak_event_get_context(riak_event *rev);
 
+/**
+ * @brief Get the optional server error
+ * @param rev Riak Event
+ * @returns Error message sent from the server
+ */
+riak_server_error*
+riak_event_get_server_error(riak_event *rev);
+
 #endif
