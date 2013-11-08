@@ -32,6 +32,7 @@ typedef enum riak_error_enum {
     ERIAK_NO_PING,
     ERIAK_LOGGING,
     ERIAK_UNINITIALIZED,
+    ERIAK_SERVER_ERROR,
     ERIAK_LAST_ERRORNUM
 } riak_error;
 
@@ -45,9 +46,52 @@ static const char* errmsgs[] = {
     "Ping failure error",
     "Logging failure",
     "Uninitialized Value",
+    "An error was returned from the server",
     "SENTINEL FOR LAST ERROR MESSAGE"
 };
 #endif
+
+typedef struct _riak_server_error riak_server_error;
+struct _riak_context;
+struct _riak_binary;
+
+/**
+ * @brief Create a new server error structure
+ * @param ctx Riak Context
+ * @param err Returned Server Eeeror
+ * @param errcode Code returned by the server in the error message
+ * @param errmsg Message returned by the server
+ * @returns Error Code
+ */
+
+riak_error
+riak_server_error_new(struct _riak_context *ctx,
+                      riak_server_error   **err,
+                      riak_uint32_t         errcode,
+                      struct _riak_binary   *errmsg);
+
+/**
+ * @brief Free memory used by a server error
+ * @param cxt Riak Context
+ * @param err Server error to free
+ */
+void
+riak_server_error_free(struct _riak_context *ctx,
+                       riak_server_error   **err);
+
+/**
+ * @brief Return the code associated with an error response from the server
+ * @returns Error Code
+ */
+riak_uint32_t
+riak_server_error_get_errcode(riak_server_error *err);
+
+/**
+ * @brief Return the error message returned by the server
+ * @returns Binary representation of error message
+ */
+struct _riak_binary*
+riak_server_error_get_errmsg(riak_server_error *err);
 
 const char*
 riak_strerror(riak_error err);

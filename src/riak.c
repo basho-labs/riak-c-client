@@ -45,6 +45,11 @@ riak_synchronous_request(riak_event **rev_target,
     // Terminates only on error or timeout
     riak_event_loop(rev->context);
     *response = wrapper.response;
+
+    if (rev->error) {
+        return ERIAK_SERVER_ERROR;
+    }
+
     return ERIAK_OK;
 }
 

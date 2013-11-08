@@ -82,6 +82,17 @@ riak_decode_error_response(riak_event           *rev,
     }
     *resp = response;
 
+    riak_error err = riak_server_error_new(ctx,
+                                           &(rev->error),
+                                           response->errcode,
+                                           response->errmsg);
+
+    if (err) {
+        riak_free(ctx, &response);
+        rpb_error_resp__free_unpacked(errresp, ctx->pb_allocator);
+        return err;
+    }
+
     return ERIAK_OK;
 }
 
