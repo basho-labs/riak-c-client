@@ -36,19 +36,19 @@ typedef struct _riak_bucket_props riak_bucket_props;
 
 /**
  * @brief Construct a new Riak Bucket Property object
- * @param ctx Riak Context
+ * @param cfg Riak Configuration
  * @return Riak Bucket Property object
  */
 riak_bucket_props*
-riak_bucket_props_new(riak_context *ctx);
+riak_bucket_props_new(riak_config *cfg);
 
 /**
  * @brief Release claimed memory used by a Riak Bucket Property object
- * @param ctx Riak Context
+ * @param cfg Riak Configuration
  * @param props Riak Bucket Property object to be freed
  */
 void
-riak_bucket_props_free(riak_context       *ctx,
+riak_bucket_props_free(riak_config       *cfg,
                        riak_bucket_props **props);
 
 /**
@@ -135,33 +135,33 @@ void riak_bucket_props_set_yz_index(riak_bucket_props*prop, riak_binary *value);
 
 /**
  * @brief Create a commit hook
- * @param ctx Riak Context
+ * @param cfg Riak Configuration
  * @returns Freshly baked Riak Commit Hook
  */
 riak_commit_hook*
-riak_commit_hook_new(riak_context *ctx);
+riak_commit_hook_new(riak_config *cfg);
 
 /**
  * @brief Create an array of commit hooks
- * @param ctx Riak Context
+ * @param cfg Riak Configuration
  * @param array Freshly baked Riak Commit Hooks (out)
  * @param len Number of hooks to bake
  * @returns Error code
  */
 
 riak_error
-riak_commit_hook_new_array(riak_context       *ctx,
+riak_commit_hook_new_array(riak_config       *cfg,
                            riak_commit_hook ***array,
                            riak_size_t         len);
 
 /**
  * @brief Free memory claimed by an array of commit hooks
- * @param ctx Riak Context
+ * @param cfg Riak Configuration
  * @param hooks Pointer to array of hooks
  * @param num Number of hooks to free
  */
 void
-riak_commit_hooks_free(riak_context        *ctx,
+riak_commit_hooks_free(riak_config        *cfg,
                        riak_commit_hook  ***hooks,
                        riak_uint32_t        num);
 
@@ -173,19 +173,19 @@ void riak_commit_hook_set_name(riak_commit_hook *hook, riak_binary *value);
 
 /**
  * @brief Create an Erlang module/function
- * @param ctx Riak Context
+ * @param cfg Riak Configuration
  * @returns Freshly baked Riak Mod/Fun
  */
 riak_mod_fun*
-riak_mod_fun_new(riak_context *ctx);
+riak_mod_fun_new(riak_config *cfg);
 
 /**
  * @brief Free memory claimed by a mod/fun
- * @param ctx Riak Context
+ * @param cfg Riak Configuration
  * @param mod_fun Pointer to mod/fun
  */
 void
-riak_mod_fun_free(riak_context  *ctx,
+riak_mod_fun_free(riak_config  *cfg,
                   riak_mod_fun **mod_fun);
 
 riak_binary *riak_mod_fun_get_module(riak_mod_fun *mod_fun);

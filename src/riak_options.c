@@ -24,12 +24,12 @@
 #include "riak_messages-internal.h"
 #include "riak_utils-internal.h"
 #include "riak_binary-internal.h"
-#include "riak_context-internal.h"
+#include "riak_config-internal.h"
 #include "riak_print-internal.h"
 
 riak_put_options*
-riak_put_options_new(riak_context *ctx) {
-    riak_put_options *o = (riak_put_options*)(ctx->malloc_fn)(sizeof(riak_put_options));
+riak_put_options_new(riak_config *cfg) {
+    riak_put_options *o = (riak_put_options*)(cfg->malloc_fn)(sizeof(riak_put_options));
     if (o) memset(o, '\0', sizeof(riak_put_options));
     return o;
 }
@@ -80,9 +80,9 @@ riak_put_options_print(riak_put_options  *opt,
 }
 
 void
-riak_put_options_free(riak_context *ctx,
+riak_put_options_free(riak_config  *cfg,
                  riak_put_options **opt) {
-    riak_free(ctx, opt);
+    riak_free(cfg, opt);
 }
 
 //

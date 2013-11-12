@@ -33,7 +33,7 @@ typedef struct _riak_binary riak_binary;
  * @returns pointer to newly created `riak_binary` struct
  */
 riak_binary*
-riak_binary_new(riak_context *ctx,
+riak_binary_new(riak_config *cfg,
                 riak_size_t   len,
                 riak_uint8_t *data);
 
@@ -45,7 +45,7 @@ riak_binary_new(riak_context *ctx,
  * @returns pointer to newly created `riak_binary` struct
  */
 riak_binary*
-riak_binary_deep_new(riak_context *ctx,
+riak_binary_deep_new(riak_config *cfg,
                      riak_size_t   len,
                      riak_uint8_t *data);
 
@@ -55,17 +55,17 @@ riak_binary_deep_new(riak_context *ctx,
  * @returns pointer to newly created `riak_binary` struct
  */
 riak_binary*
-riak_binary_populate(riak_context *ctx,
+riak_binary_populate(riak_config *cfg,
                      riak_binary  *bin);
 
 /**
  * @brief Free allocated memory used by `riak_binary`
  */
 void
-riak_binary_free(riak_context  *ctx,
+riak_binary_free(riak_config  *cfg,
                  riak_binary  **bin);
 void
-riak_binary_deep_free(riak_context  *ctx,
+riak_binary_deep_free(riak_config  *cfg,
                       riak_binary  **bin);
 
 /**
@@ -88,7 +88,7 @@ void
 riak_binary_copy(riak_binary *to,
                  riak_binary *from);
 riak_error
-riak_binary_deep_copy(riak_context *ctx,
+riak_binary_deep_copy(riak_config *cfg,
                       riak_binary  *to,
                       riak_binary  *from);
 int
@@ -103,11 +103,11 @@ void
 riak_binary_from_string(riak_binary *to,
                         const char  *from);
 riak_error
-riak_binary_from_string_deep_copy(riak_context *ctx,
+riak_binary_from_string_deep_copy(riak_config *cfg,
                                   riak_binary  *to,
                                   const char   *from);
 riak_binary*
-riak_binary_new_from_string(riak_context *ctx,
+riak_binary_new_from_string(riak_config *cfg,
                             const char   *from);
 
 #endif /* RIAK_BINARY_H_ */

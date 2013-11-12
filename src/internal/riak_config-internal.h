@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * riak_context.h: Management of the Riak connection context
+ * riak_config.h: Management of the Riak connection config
  *
  * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
  *
@@ -29,13 +29,13 @@
 #define RIAK_LOGGING_MAX_LEN            256
 #define RIAK_HOST_MAX_LEN               256
 
-struct _riak_context {
+struct _riak_config {
     riak_alloc_fn       malloc_fn;
     riak_realloc_fn     realloc_fn;
     riak_free_fn        free_fn;
     ProtobufCAllocator *pb_allocator;
     char                logging_category[RIAK_LOGGING_MAX_LEN];
-    riak_event_base    *base; // Is this the right location? One per thread, so probably
+    riak_connection_base    *base; // Is this the right location? One per thread, so probably
     char                hostname[RIAK_HOST_MAX_LEN];
     char                portnum[RIAK_HOST_MAX_LEN]; // Keep as a string for debugging
     riak_addrinfo      *addrinfo;

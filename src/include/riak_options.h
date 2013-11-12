@@ -25,19 +25,19 @@
 
 /**
  * @brief Construct a new Riak Put Options object
- * @param ctx Riak Context
+ * @param cfg Riak Configuration
  * @return Riak Object
  */
 riak_put_options*
-riak_put_options_new(riak_context *ctx);
+riak_put_options_new(riak_config *cfg);
 
 /**
  * @brief Release claimed memory used by Riak Put Options
- * @param ctx Riak Context
+ * @param cfg Riak Configuration
  * @param obj Riak Object to be freed
  */
 void
-riak_put_options_free(riak_context *ctx,
+riak_put_options_free(riak_config *cfg,
                  riak_put_options **opt);
 
 /**

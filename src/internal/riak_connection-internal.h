@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * riak_event-internal.h: Management of the Riak event
+ * riak_connection-internal.h: Management of the Riak event
  *
  * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
  *
@@ -23,15 +23,15 @@
 #ifndef RIAK_EVENT_INTERNAL_H_
 #define RIAK_EVENT_INTERNAL_H_
 
-typedef riak_error (*riak_response_decoder)(struct _riak_event      *rev,
+typedef riak_error (*riak_response_decoder)(struct _riak_connection      *cxn,
                                             struct _riak_pb_message *pbresp,
                                             void                   **response,
                                             riak_boolean_t          *done);
 
 // Essentially the state of the current event
-struct _riak_event {
-    riak_context            *context;
-    riak_event_base         *base;
+struct _riak_connection {
+    riak_config            *config;
+    riak_connection_base         *base;
     riak_bufferevent        *bevent;
     riak_response_decoder    decoder;
     riak_response_callback   response_cb;
@@ -56,18 +56,18 @@ struct _riak_event {
 
 /**
  * @brief Called by libevent when event posts
- * @param bev Riak Bufferevent (libevent)
- * @param ptr User-supplied pointer (Riak Event)
+ * @param bev Riak Buffecxnent (libevent)
+ * @param ptr User-supplied pointer (Riak Connection)
  */
 void
-riak_event_callback(riak_bufferevent *bev,
+riak_connection_callback(riak_bufferevent *bev,
                     short             events,
                     void             *ptr);
 
 /**
  * @brief Called by libevent when event is ready for writing
- * @param bev Riak Bufferevent (libevent)
- * @param ptr User-supplied pointer (Riak Event)
+ * @param bev Riak Buffecxnent (libevent)
+ * @param ptr User-supplied pointer (Riak Connection)
  */
 void
 riak_write_callback(riak_bufferevent *bev,
@@ -75,8 +75,8 @@ riak_write_callback(riak_bufferevent *bev,
 
 /**
  * @brief Called by libevent on a read event
- * @param bev Riak Bufferevent (libevent)
- * @param ptr User-supplied pointer (Riak Event)
+ * @param bev Riak Buffecxnent (libevent)
+ * @param ptr User-supplied pointer (Riak Connection)
  */
 void
 riak_read_result_callback(riak_bufferevent *bev,
@@ -84,11 +84,11 @@ riak_read_result_callback(riak_bufferevent *bev,
 
 /**
  * @brief Set the event's message decoding function
- * @param rev Riak Event
+ * @param cxn Riak Connection
  * @param decoder Function pointer to message translator
  */
 void
-riak_event_set_response_decoder(riak_event           *rev,
+riak_connection_set_response_decoder(riak_connection           *cxn,
                                 riak_response_decoder decoder);
 
 

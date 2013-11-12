@@ -94,12 +94,12 @@ struct _riak_bucket_props
 };
 
 riak_error
-riak_bucket_props_new_from_pb(riak_context       *ctx,
+riak_bucket_props_new_from_pb(riak_config       *cfg,
                               riak_bucket_props **target,
                               RpbBucketProps     *from);
 
 riak_error
-riak_bucket_props_to_pb_copy(riak_context      *ctx,
+riak_bucket_props_to_pb_copy(riak_config      *cfg,
                              RpbBucketProps    *to,
                              riak_bucket_props *from);
 

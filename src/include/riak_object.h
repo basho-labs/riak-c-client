@@ -29,19 +29,19 @@ typedef struct _riak_object riak_object;
 
 /**
  * @brief Construct a new Riak Object
- * @param ctx Riak Context
+ * @param cfg Riak Configuration
  * @return Riak Object
  */
 riak_object*
-riak_object_new(riak_context *ctx);
+riak_object_new(riak_config *cfg);
 
 /**
  * @brief Release claimed memory used by a Riak Object
- * @param ctx Riak Context
+ * @param cfg Riak Configuration
  * @param obj Riak Object to be freed
  */
 void
-riak_object_free(riak_context *ctx,
+riak_object_free(riak_config *cfg,
                  riak_object **obj);
 
 /**
@@ -58,25 +58,25 @@ riak_object_print(riak_object  *obj,
 
 /**
  * @brief Allocate an array of `riak_object` pointers
- * @param ctx Riak Context
+ * @param cfg Riak Configuration
  * @param array Returned array of pointers to `riak_object`s
  * @param len Number of elements to allocate
  *
  * @returns Error Code
  */
 riak_error
-riak_object_new_array(riak_context  *ctx,
+riak_object_new_array(riak_config  *cfg,
                       riak_object ***array,
                       riak_size_t    len);
 
 /**
  * @brief Clean up memory allocated for an array of `riak_objects`
- * @param ctx Riak Context
+ * @param cfg Riak Configuration
  * @param array Target of destruction
  * @param len Number of elements to allocate
  */
 void
-riak_object_free_array(riak_context  *ctx,
+riak_object_free_array(riak_config  *cfg,
                        riak_object ***array,
                        riak_size_t    len);
 
@@ -124,33 +124,33 @@ void riak_object_set_indexes(riak_object *obj, riak_pair **value);
 
 /**
  * @brief Construct a new Riak Object
- * @param ctx Riak Context
+ * @param cfg Riak Configuration
  * @return Riak link
  */
 riak_link*
-riak_link_new(riak_context *ctx);
+riak_link_new(riak_config *cfg);
 
 /**
  * @brief Allocate an array of `riak_links` pointers
- * @param ctx Riak Context
+ * @param cfg Riak Configuration
  * @param array Returned array of pointers to `riak_links`s
  * @param len Number of elements to allocate
  *
  * @returns Error Code
  */
 riak_error
-riak_link_new_array(riak_context  *ctx,
+riak_link_new_array(riak_config  *cfg,
                     riak_link   ***array,
                     riak_size_t    len);
 
 /**
  * @brief Release memory claimed by links
- * @param ctx Riak Context
+ * @param cfg Riak Configuration
  * @param links Pointer to array of links to be freed
  * @param num_links Number of links in array
  */
 void
-riak_links_free(riak_context *ctx,
+riak_links_free(riak_config *cfg,
                 riak_link  ***links,
                 int           num_links);
 
@@ -166,33 +166,33 @@ void riak_link_set_tag(riak_link *link, riak_binary *value);
 
 /**
  * @brief Construct a new Riak Object
- * @param ctx Riak Context
+ * @param cfg Riak Configuration
  * @return Riak Pair
  */
 riak_pair*
-riak_pair_new(riak_context *ctx);
+riak_pair_new(riak_config *cfg);
 
 /**
  * @brief Allocate an array of `riak_pairs` pointers
- * @param ctx Riak Context
+ * @param cfg Riak Configuration
  * @param array Returned array of pointers to `riak_pairs`s
  * @param len Number of elements to allocate
  *
  * @returns Error Code
  */
 riak_error
-riak_pair_new_array(riak_context  *ctx,
+riak_pair_new_array(riak_config  *cfg,
                     riak_pair   ***array,
                     riak_size_t    len);
 
 /**
  * @brief Release memory claimed by Pairs
- * @param ctx Riak Context
+ * @param cfg Riak Configuration
  * @param pairs Pointer to array of pairs to be freed
  * @param num_pairs Number of pairs in array
  */
 void
-riak_pairs_free(riak_context *ctx,
+riak_pairs_free(riak_config *cfg,
                 riak_pair  ***pair_target,
                 int           num_pairs);
 

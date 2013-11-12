@@ -24,8 +24,8 @@
 #include "riak_binary-internal.h"
 #include "riak_messages-internal.h"
 #include "riak_utils-internal.h"
-#include "riak_context-internal.h"
-#include "riak_event-internal.h"
+#include "riak_config-internal.h"
+#include "riak_connection-internal.h"
 
 size_t
 riak_strlcpy(char       *dst,
@@ -60,36 +60,37 @@ riak_strlcat(char       *dst,
 }
 
 void**
-riak_array_realloc(riak_context *ctx,
+riak_array_realloc(riak_config *cfg,
                    void       ***from,
                    riak_size_t   size,
                    riak_uint32_t oldnum,
                    riak_uint32_t newnum) {
-    void** new_array = (void**)(ctx->malloc_fn)(newnum*size);
+    void** new_array = (void**)(cfg->malloc_fn)(newnum*size);
     if (new_array == NULL) {
         return NULL;
     }
     // Just for good measure, clear out memory
     memset((void*)new_array, '\0', newnum*size);
     memcpy((void*)new_array, (void*)(*from), oldnum*size);
-    riak_free(ctx, from);
+    riak_free(cfg, from);
     *from = new_array;
     return (*from);
 }
 
 
 void
-riak_free_internal(riak_context *ctx, void **pp) {
+riak_free_internal(riak_config *cfg,
+                   void       **pp) {
     if(pp != NULL && *pp != NULL) {
-        (ctx->free_fn)(*pp);
+        (cfg->free_fn)(*pp);
         *pp = NULL;
     }
 }
 
 riak_error
-riak_send_req(riak_event      *rev,
+riak_send_req(riak_connection *cxn,
               riak_pb_message *req) {
-    riak_bufferevent *bev    = rev->bevent;
+    riak_bufferevent *bev    = cxn->bevent;
     riak_uint8_t      reqid  = req->msgid;
     riak_uint8_t     *msgbuf = req->data;
     riak_size_t       len    = req->len;
@@ -103,7 +104,7 @@ riak_send_req(riak_event      *rev,
         result = bufferevent_write(bev, (void*)msgbuf, len);
         if (result != 0) return ERIAK_WRITE;
     }
-    riak_log_debug(rev, "Wrote %d bytes\n", (int)len);
+    riak_log_debug(cxn, "Wrote %d bytes\n", (int)len);
 #ifdef _RIAK_DEBUG
     char buffer[10240];
     riak_size_t buflen = sizeof(buffer);

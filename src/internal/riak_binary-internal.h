@@ -38,31 +38,31 @@ struct _riak_binary {
  * @returns pointer to newly created `riak_binary` struct
  */
 riak_binary*
-riak_binary_populate_from_pb(riak_context *ctx,
+riak_binary_populate_from_pb(riak_config *cfg,
                              ProtobufCBinaryData  *bin);
 
 void
 riak_binary_to_pb_copy(ProtobufCBinaryData *to,
                        riak_binary         *from);
 riak_error
-riak_binary_to_pb_deep_copy(riak_context        *ctx,
+riak_binary_to_pb_deep_copy(riak_config        *cfg,
                             ProtobufCBinaryData *to,
                             riak_binary         *from);
 void
 riak_binary_from_pb_copy(riak_binary        *to,
                          ProtobufCBinaryData *from);
 riak_error
-riak_binary_from_pb_deep_copy(riak_context        *ctx,
+riak_binary_from_pb_deep_copy(riak_config        *cfg,
                               riak_binary         *to,
                               ProtobufCBinaryData *from);
 
 /**
  * @brief Clean up deeply allocated PB binary
- * @param ctx Riak Context
+ * @param cfg Riak Configuration
  * @param b Protocol Buffer
  */
 void
-riak_binary_deep_free_pb(riak_context        *ctx,
+riak_binary_deep_free_pb(riak_config        *cfg,
                          ProtobufCBinaryData *b);
 
 #endif /* RIAK_BINARY_H_ */

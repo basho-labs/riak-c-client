@@ -24,8 +24,8 @@
 #include "riak.h"
 #include "riak_log.h"
 #include "riak_messages-internal.h"
-#include "riak_context-internal.h"
-#include "riak_event-internal.h"
+#include "riak_config-internal.h"
+#include "riak_connection-internal.h"
 
 
 const zlog_level map_level_to_priority[] = {
@@ -40,7 +40,7 @@ const zlog_level map_level_to_priority[] = {
 
 // TODO: Create an async queue of log messages to make threadsafe(r)
 void
-riak_log_internal(riak_context    *ctx,
+riak_log_internal(riak_config     *cfg,
                   riak_log_level_t level,
                   const char      *file,
                   size_t           filelen,
@@ -54,8 +54,8 @@ riak_log_internal(riak_context    *ctx,
     zlog_level priority = map_level_to_priority[(int)level];
     riak_boolean_t has_logging = RIAK_FALSE;
     zlog_category_t *category;
-    if (ctx->logging_category[0] != '\0') {
-        category = zlog_get_category(ctx->logging_category);
+    if (cfg->logging_category[0] != '\0') {
+        category = zlog_get_category(cfg->logging_category);
         has_logging = RIAK_TRUE;
     }
 

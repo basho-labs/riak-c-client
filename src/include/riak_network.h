@@ -25,7 +25,7 @@
 
 /**
  * @brief Turns ASCII host/port into addrinfo struct
- * @param ctx Riak Context
+ * @param cfg Riak Configuration
  * @param resolver Function to resolve IP addresses
  * @param host String name of host (or IP)
  * @param portnum Port number or service name
@@ -33,7 +33,7 @@
  * @returns Error on DNS resolution issues
  */
 riak_error
-riak_resolve_address(riak_context      *ctx,
+riak_resolve_address(riak_config      *cfg,
                      riak_addr_resolver resolver,
                      const char        *host,
                      const char        *portnum,
@@ -41,12 +41,12 @@ riak_resolve_address(riak_context      *ctx,
 
 /**
  * @brief Opens a socket and connects to a host
- * @param ctx Riak Context
+ * @param cfg Riak Configuration
  * @param addrinfo Address of machine to connect to
  * @returns A connect socket file descriptor
  */
 riak_socket_t
-riak_just_open_a_socket(riak_context  *ctx,
+riak_just_open_a_socket(riak_config  *cfg,
                         riak_addrinfo *addrinfo);
 
 /**
