@@ -24,7 +24,7 @@
 #include "riak.h"
 #include "riak_error.h"
 #include "riak_messages-internal.h"
-#include "riak_context-internal.h"
+#include "riak_config-internal.h"
 
 struct _riak_server_error {
     riak_uint32_t errcode;
@@ -32,22 +32,22 @@ struct _riak_server_error {
 };
 
 riak_error
-riak_server_error_new(struct _riak_context *ctx,
+riak_server_error_new(struct _riak_config  *cfg,
                       riak_server_error   **err,
                       riak_uint32_t         errcode,
                       struct _riak_binary  *errmsg) {
-    riak_server_error *error = (riak_server_error*)(ctx->malloc_fn)(sizeof(riak_server_error));
+    riak_server_error *error = (riak_server_error*)(cfg->malloc_fn)(sizeof(riak_server_error));
     if (error == NULL) {
         return ERIAK_OUT_OF_MEMORY;
     }
     *err = error;
     error->errcode = errcode;
-    error->errmsg = riak_binary_deep_new(ctx,
+    error->errmsg = riak_binary_deep_new(cfg,
                                          riak_binary_len(errmsg),
                                          riak_binary_data(errmsg));
 
     if (error->errmsg == NULL) {
-        riak_free(ctx, err);
+        riak_free(cfg, err);
         return ERIAK_OUT_OF_MEMORY;
     }
 
@@ -55,11 +55,11 @@ riak_server_error_new(struct _riak_context *ctx,
 }
 
 void
-riak_server_error_free(struct _riak_context *ctx,
+riak_server_error_free(struct _riak_config  *cfg,
                        riak_server_error   **err) {
     if (err == NULL || *err == NULL) return;
-    riak_binary_deep_free(ctx, &((*err)->errmsg));
-    riak_free(ctx, err);
+    riak_binary_deep_free(cfg, &((*err)->errmsg));
+    riak_free(cfg, err);
 }
 
 

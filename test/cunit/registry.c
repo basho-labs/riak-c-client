@@ -29,7 +29,7 @@
 #include <CUnit/Basic.h>
 #include "riak.h"
 #include "test_binary.h"
-#include "test_context.h"
+#include "test_config.h"
 
 int
 main(int   argc,
@@ -42,7 +42,7 @@ main(int   argc,
     }
     CU_InitializeFunc init_fn = NULL;
     CU_CleanupFunc cleanup_fn = NULL;
-    CU_pSuite context_suite = CU_add_suite("riak_context", init_fn, cleanup_fn);
+    CU_pSuite config_suite = CU_add_suite("riak_config", init_fn, cleanup_fn);
     CU_pSuite binary_suite = CU_add_suite("riak_binary", init_fn, cleanup_fn);
     CU_ADD_TEST(binary_suite, test_build_binary);
     CU_ADD_TEST(binary_suite, test_build_binary_with_null);
@@ -51,10 +51,10 @@ main(int   argc,
     CU_ADD_TEST(binary_suite, test_binary_new_from_string);
     CU_ADD_TEST(binary_suite, test_binary_hex_print);
     CU_ADD_TEST(binary_suite, test_build_binary_from_existing);
-    CU_ADD_TEST(context_suite, test_build_context);
-    CU_ADD_TEST(context_suite, test_context_with_bad_connection);
-    CU_ADD_TEST(context_suite, test_context_with_connection);
-    CU_ADD_TEST(context_suite, test_context_with_logging);
+    CU_ADD_TEST(config_suite, test_build_config);
+    CU_ADD_TEST(config_suite, test_config_with_bad_connection);
+    CU_ADD_TEST(config_suite, test_config_with_connection);
+    CU_ADD_TEST(config_suite, test_config_with_logging);
 
     // Run all tests using the CUnit Basic interface
     CU_basic_set_mode(CU_BRM_VERBOSE);

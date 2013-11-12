@@ -25,13 +25,13 @@
 #include "riak_binary-internal.h"
 #include "riak_messages-internal.h"
 #include "riak_utils-internal.h"
-#include "riak_context-internal.h"
+#include "riak_config-internal.h"
 
 riak_binary*
-riak_binary_new(riak_context *ctx,
+riak_binary_new(riak_config  *cfg,
                 riak_size_t   len,
                 riak_uint8_t *data) {
-    riak_binary *b = (riak_binary*)(ctx->malloc_fn)(sizeof(riak_binary));
+    riak_binary *b = (riak_binary*)(cfg->malloc_fn)(sizeof(riak_binary));
     if (b == NULL) return NULL;
     b->len  = len;
     b->data = data;
@@ -40,13 +40,13 @@ riak_binary_new(riak_context *ctx,
 }
 
 riak_binary*
-riak_binary_deep_new(riak_context *ctx,
-                    riak_size_t    len,
-                    riak_uint8_t  *data) {
+riak_binary_deep_new(riak_config *cfg,
+                    riak_size_t   len,
+                    riak_uint8_t *data) {
 
-    riak_binary *b = riak_binary_new(ctx, len, data);
+    riak_binary *b = riak_binary_new(cfg, len, data);
     if (b) {
-        b->data = (riak_uint8_t*)(ctx->malloc_fn)(len);
+        b->data = (riak_uint8_t*)(cfg->malloc_fn)(len);
         memcpy((void*)b->data, (void*)data, len);
     }
     return b;
@@ -54,15 +54,15 @@ riak_binary_deep_new(riak_context *ctx,
 
 
 riak_binary*
-riak_binary_populate(riak_context *ctx,
-                     riak_binary  *b) {
-    return riak_binary_new(ctx, b->len, b->data);
+riak_binary_populate(riak_config *cfg,
+                     riak_binary *b) {
+    return riak_binary_new(cfg, b->len, b->data);
 }
 
 riak_binary*
-riak_binary_populate_from_pb(riak_context        *ctx,
+riak_binary_populate_from_pb(riak_config         *cfg,
                              ProtobufCBinaryData *b) {
-    return riak_binary_new(ctx, b->len, b->data);
+    return riak_binary_new(cfg, b->len, b->data);
 }
 
 
@@ -77,31 +77,31 @@ riak_binary_data(riak_binary *bin) {
 }
 
 void
-riak_binary_free(riak_context  *ctx,
-                 riak_binary  **b) {
+riak_binary_free(riak_config  *cfg,
+                 riak_binary **b) {
       if (b == NULL) {
           return;
       }
-      riak_free(ctx, b);
+      riak_free(cfg, b);
 }
 
 void
-riak_binary_deep_free(riak_context  *ctx,
-                      riak_binary  **b) {
+riak_binary_deep_free(riak_config  *cfg,
+                      riak_binary **b) {
       if (b == NULL) {
           return;
       }
-      riak_free(ctx, &((*b)->data));
-      riak_free(ctx, b);
+      riak_free(cfg, &((*b)->data));
+      riak_free(cfg, b);
 }
 
 void
-riak_binary_deep_free_pb(riak_context        *ctx,
+riak_binary_deep_free_pb(riak_config        *cfg,
                          ProtobufCBinaryData *b) {
       if (b == NULL) {
           return;
       }
-      riak_free(ctx, &(b->data));
+      riak_free(cfg, &(b->data));
 }
 
 void
@@ -112,11 +112,11 @@ riak_binary_copy(riak_binary* to,
 }
 
 riak_error
-riak_binary_deep_copy(riak_context *ctx,
-                      riak_binary  *to,
-                      riak_binary  *from) {
+riak_binary_deep_copy(riak_config *cfg,
+                      riak_binary *to,
+                      riak_binary *from) {
     to->len  = from->len;
-    to->data = (riak_uint8_t*)(ctx->malloc_fn)(from->len);
+    to->data = (riak_uint8_t*)(cfg->malloc_fn)(from->len);
     if (to->data == NULL) return ERIAK_OUT_OF_MEMORY;
     memcpy((void*)to->data, (void*)from->data, from->len);
     return ERIAK_OK;
@@ -130,11 +130,11 @@ riak_binary_to_pb_copy(ProtobufCBinaryData *to,
 }
 
 riak_error
-riak_binary_to_pb_deep_copy(riak_context        *ctx,
+riak_binary_to_pb_deep_copy(riak_config         *cfg,
                             ProtobufCBinaryData *to,
                             riak_binary         *from) {
     to->len  = from->len;
-    to->data = (riak_uint8_t*)(ctx->malloc_fn)(from->len);
+    to->data = (riak_uint8_t*)(cfg->malloc_fn)(from->len);
     if (to->data == NULL) return ERIAK_OUT_OF_MEMORY;
     memcpy((void*)to->data, (void*)from->data, from->len);
     return ERIAK_OK;
@@ -148,11 +148,11 @@ riak_binary_from_pb_copy(riak_binary         *to,
 }
 
 riak_error
-riak_binary_from_pb_deep_copy(riak_context        *ctx,
+riak_binary_from_pb_deep_copy(riak_config         *cfg,
                               riak_binary         *to,
                               ProtobufCBinaryData *from) {
     to->len  = from->len;
-    to->data = (riak_uint8_t*)(ctx->malloc_fn)(from->len);
+    to->data = (riak_uint8_t*)(cfg->malloc_fn)(from->len);
     if (to->data == NULL) return ERIAK_OUT_OF_MEMORY;
     memcpy((void*)to->data, (void*)from->data, from->len);
     return ERIAK_OK;
@@ -203,21 +203,21 @@ riak_binary_from_string(riak_binary *to,
 }
 
 riak_error
-riak_binary_from_string_deep_copy(riak_context *ctx,
-                                  riak_binary  *to,
-                                  const char   *from) {
+riak_binary_from_string_deep_copy(riak_config *cfg,
+                                  riak_binary *to,
+                                  const char  *from) {
 
     to->len = strlen(from);
-    to->data = (riak_uint8_t*)(ctx->malloc_fn)(to->len);
+    to->data = (riak_uint8_t*)(cfg->malloc_fn)(to->len);
     if (to->data == NULL) return ERIAK_OUT_OF_MEMORY;
     memcpy((void*)to->data, (void*)from, to->len);
     return ERIAK_OK;
 }
 
 riak_binary*
-riak_binary_new_from_string(riak_context *ctx,
+riak_binary_new_from_string(riak_config  *cfg,
                             const char   *from) {
-    riak_binary *b = riak_binary_new(ctx, 0, NULL);
+    riak_binary *b = riak_binary_new(cfg, 0, NULL);
     if (b != NULL) {
         riak_binary_from_string(b, from);
     }

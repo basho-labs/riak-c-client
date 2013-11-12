@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * riak_context.h: Management of the Riak connection context
+ * riak_config.h: Management of the Riak connection config
  *
  * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
  *
@@ -24,7 +24,7 @@
 #define RIAK_CONTEXT_H_
 
 // per-thread
-// do we need a *shared* context to complement?
+// do we need a *shared* config to complement?
 
 typedef void *(*riak_alloc_fn)(size_t sz);
 typedef void *(*riak_realloc_fn)(void *ptr, size_t size);
@@ -32,11 +32,11 @@ typedef void (*riak_free_fn)(void *ptr);
 typedef void *(*riak_pb_alloc_fn)(void *allocator_data, size_t size);
 typedef void (*riak_pb_free_fn)(void *allocator_data, void *pointer);
 
-typedef struct _riak_context riak_context;
+typedef struct _riak_config riak_config;
 
 /**
- * @brief Construct a Riak Context
- * @param context Spanking new `riak_context` struct
+ * @brief Construct a Riak Configuration
+ * @param config Spanking new `riak_config` struct
  * @param alloc Memory allocator function (optional)
  * @param realloc Memory re-allocation function (optional)
  * @param freeme Memory releasing function (optional)
@@ -45,65 +45,65 @@ typedef struct _riak_context riak_context;
  * @return Error code
  */
 riak_error
-riak_context_new(riak_context    **context,
+riak_config_new(riak_config    **config,
                  riak_alloc_fn     alloc,
                  riak_realloc_fn   realloc,
                  riak_free_fn      freeme,
                  riak_pb_alloc_fn  pb_alloc,
                  riak_pb_free_fn   pb_free);
 // By default use system's built-in memory management utilities (malloc/free)
-#define riak_context_new_default(C) riak_context_new((C),NULL,NULL,NULL,NULL,NULL)
+#define riak_config_new_default(C) riak_config_new((C),NULL,NULL,NULL,NULL,NULL)
 
 /**
- * @brief Construct a Riak Context
- * @param context Existing Riak Context
+ * @brief Construct a Riak Configuration
+ * @param config Existing Riak Configuration
  * @param resolver IP Address resolving function
  * @param hostname Name of Riak server
  * @param portnum Riak PBC port number
  * @return Error code
  */
 riak_error
-riak_context_add_connection(riak_context      *context,
+riak_config_add_connection(riak_config      *config,
                             riak_addr_resolver resolver,
                             const char        *hostname,
                             const char        *portnum);
 // By default use the libevent resolver
-#define riak_context_add_default_connection(C,H,P) riak_context_add_connection((C),NULL,(H),(P))
+#define riak_config_add_default_connection(C,H,P) riak_config_add_connection((C),NULL,(H),(P))
 
 /**
- * @brief Construct a Riak Context
- * @param context Spanking new `riak_context` struct
+ * @brief Construct a Riak Configuration
+ * @param config Spanking new `riak_config` struct
  * @param logging_category logging prefix (optional)
  * @return Error code
  */
 riak_error
-riak_context_add_logging(riak_context *context,
+riak_config_add_logging(riak_config *config,
                          const char   *logging_category);
 
 
 /**
  * @brief Gets the underlying event base
- * @param ctx Riak Context
+ * @param cfg Riak Configuration
  * @return Return event base
  */
-riak_event_base*
-riak_context_get_base(riak_context *ctx);
+riak_connection_base*
+riak_config_get_base(riak_config *cfg);
 
 /**
- * @brief Reclaim memory used by a `riak_context`
- * @param ctx Context struct
+ * @brief Reclaim memory used by a `riak_config`
+ * @param cfg Configuration struct
  */
 void
-riak_context_free(riak_context **ctx);
+riak_config_free(riak_config **cfg);
 
 /**
  * @brief Generic memory de-allocation function
- * @param ctx Riak Context
+ * @param cfg Riak Configuration
  * @param p Pointer to pointer to memory to free
  * @note p is NULLed after it is freed
  */
 void
-riak_free_internal(riak_context *ctx,
+riak_free_internal(riak_config *cfg,
                    void        **p);
 #define riak_free(C,P)  riak_free_internal((C),(void**)(P))
 

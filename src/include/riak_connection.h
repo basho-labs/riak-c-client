@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * riak_event.h: Management of the Riak event
+ * riak_connection.h: Management of the Riak event
  *
  * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
  *
@@ -23,89 +23,89 @@
 #ifndef RIAK_EVENT_H_
 #define RIAK_EVENT_H_
 
-typedef struct _riak_event riak_event;
+typedef struct _riak_connection riak_connection;
 
 // Generic placeholder for message-specific callbacks
 typedef void (*riak_response_callback)(void *response, void *ptr);
 
 /**
  * @brief Construct a Riak event
- * @param ctx Riak context for memory allocation
- * @param rev Riak Event
+ * @param cfg Riak config for memory allocation
+ * @param cxn Riak Connection
  * @param response_cb Reaponse callback function (user-supplied)
  * @param cb_data Pointer passed to `response_cb` when it is called
  * @returns Error code
  */
 riak_error
-riak_event_new(riak_context          *ctx,
-               riak_event             **rev,
+riak_connection_new(riak_config          *cfg,
+               riak_connection             **cxn,
                riak_response_callback response_cb,
                riak_response_callback error_cb,
                void                  *cb_data);
 
 /**
  * @brief Set the event's callback data
- * @param rev Riak Event
+ * @param cxn Riak Connection
  * @param cb_data Pointer to data used in user's callback
  */
 void
-riak_event_set_cb_data(riak_event         *rev,
+riak_connection_set_cb_data(riak_connection         *cxn,
                        void               *cb_data);
 
 /**
  * @brief Set the event's response callback
- * @param rev Riak Event
+ * @param cxn Riak Connection
  * @param cb Function pointer to response callback
  */
 void
-riak_event_set_response_cb(riak_event             *rev,
+riak_connection_set_response_cb(riak_connection             *cxn,
                            riak_response_callback  cb);
 
 /**
  * @brief Set the event's error callback
- * @param rev Riak Event
+ * @param cxn Riak Connection
  * @param cb Function pointer to error callback
  */
 void
-riak_event_set_error_cb(riak_event             *rev,
+riak_connection_set_error_cb(riak_connection             *cxn,
                         riak_response_callback  cb);
 
 /**
- * @brief Cleanup memory used by a Riak Event
- * @param re Riak Event
+ * @brief Cleanup memory used by a Riak Connection
+ * @param re Riak Connection
  */
 void
-riak_event_free(riak_event** re);
+riak_connection_free(riak_connection** re);
 
 /**
  * @brief Fire up an event loop
- * @param ctx Riak Context
+ * @param cfg Riak Configuration
  */
 void
-riak_event_loop(riak_context *ctx);
+riak_connection_loop(riak_config *cfg);
 
 /**
  * @brief Return the underlying socket file descriptor
- * @param rev Riak Event
+ * @param cxn Riak Connection
  * @returns File descriptor
  */
 riak_socket_t
-riak_event_get_fd(riak_event *rev);
+riak_connection_get_fd(riak_connection *cxn);
 
 /**
- * @brief Return the Riak Context
- * @param rev Riak Event
- * @returns The corresponding Riak Context
+ * @brief Return the Riak Configuration
+ * @param cxn Riak Connection
+ * @returns The corresponding Riak Configuration
  */
-riak_context*
-riak_event_get_context(riak_event *rev);
+riak_config*
+riak_connection_get_config(riak_connection *cxn);
 
 /**
  * @brief Get the optional server error
- * @param rev Riak Event
+ * @param cxn Riak Connection
  * @returns Error message sent from the server
  */
 riak_server_error*
-riak_event_get_server_error(riak_event *rev);
+riak_connection_get_server_error(riak_connection *cxn);
 
 #endif

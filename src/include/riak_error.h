@@ -42,7 +42,7 @@ static const char* errmsgs[] = {
     "Problems resolving host name/port number",
     "Out of Memory",
     "Write error",
-    "Riak Event error",
+    "Riak Connection error",
     "Ping failure error",
     "Logging failure",
     "Uninitialized Value",
@@ -52,12 +52,12 @@ static const char* errmsgs[] = {
 #endif
 
 typedef struct _riak_server_error riak_server_error;
-struct _riak_context;
+struct _riak_config;
 struct _riak_binary;
 
 /**
  * @brief Create a new server error structure
- * @param ctx Riak Context
+ * @param cfg Riak Configuration
  * @param err Returned Server Eeeror
  * @param errcode Code returned by the server in the error message
  * @param errmsg Message returned by the server
@@ -65,18 +65,18 @@ struct _riak_binary;
  */
 
 riak_error
-riak_server_error_new(struct _riak_context *ctx,
+riak_server_error_new(struct _riak_config *cfg,
                       riak_server_error   **err,
                       riak_uint32_t         errcode,
                       struct _riak_binary   *errmsg);
 
 /**
  * @brief Free memory used by a server error
- * @param cxt Riak Context
+ * @param cxt Riak Configuration
  * @param err Server error to free
  */
 void
-riak_server_error_free(struct _riak_context *ctx,
+riak_server_error_free(struct _riak_config *cfg,
                        riak_server_error   **err);
 
 /**

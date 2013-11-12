@@ -22,31 +22,31 @@
 
 #include "riak.h"
 #include "riak_call_backs.h"
-#include "riak_event.h"
+#include "riak_connection.h"
 #include "riak_messages-internal.h"
 #include "riak_utils-internal.h"
-#include "riak_event-internal.h"
+#include "riak_connection-internal.h"
 
 static riak_error
-riak_synchronous_request(riak_event **rev_target,
-                         void       **response) {
-    riak_event *rev = *rev_target;
-    riak_event_set_response_cb(rev, (riak_response_callback)riak_sync_cb);
+riak_synchronous_request(riak_connection **cxn_target,
+                         void            **response) {
+    riak_connection *cxn = *cxn_target;
+    riak_connection_set_response_cb(cxn, (riak_response_callback)riak_sync_cb);
     riak_sync_wrapper wrapper = RIAK_INIT_SYNC_WRAPPER;
-    wrapper.rev = rev_target;
-    riak_event_set_cb_data(rev, &wrapper);
+    wrapper.cxn = cxn_target;
+    riak_connection_set_cb_data(cxn, &wrapper);
 
-    riak_error err = riak_send_req(rev, rev->pb_request);
+    riak_error err = riak_send_req(cxn, cxn->pb_request);
     if (err) {
-        riak_log_fatal(rev, "Could not send request", NULL);
+        riak_log_fatal(cxn, "Could not send request", NULL);
         return err;
     }
 
     // Terminates only on error or timeout
-    riak_event_loop(rev->context);
+    riak_connection_loop(cxn->config);
     *response = wrapper.response;
 
-    if (rev->error) {
+    if (cxn->error) {
         return ERIAK_SERVER_ERROR;
     }
 
@@ -54,18 +54,18 @@ riak_synchronous_request(riak_event **rev_target,
 }
 
 riak_error
-riak_ping(riak_context  *ctx) {
-    riak_event *rev = NULL;
-    riak_error err = riak_event_new(ctx, &rev, NULL, NULL, NULL);
+riak_ping(riak_config  *cfg) {
+    riak_connection *cxn = NULL;
+    riak_error err = riak_connection_new(cfg, &cxn, NULL, NULL, NULL);
     if (err) {
         return err;
     }
     riak_ping_response *response = NULL;
-    err = riak_encode_ping_request(rev, &(rev->pb_request));
+    err = riak_encode_ping_request(cxn, &(cxn->pb_request));
     if (err) {
         return err;
     }
-    err = riak_synchronous_request(&rev, (void**)&response);
+    err = riak_synchronous_request(&cxn, (void**)&response);
     if (err) {
         return err;
     }
@@ -76,18 +76,18 @@ riak_ping(riak_context  *ctx) {
 }
 
 riak_error
-riak_serverinfo(riak_context              *ctx,
+riak_serverinfo(riak_config              *cfg,
                 riak_serverinfo_response **response) {
-    riak_event *rev = NULL;
-    riak_error err = riak_event_new(ctx, &rev, NULL, NULL, NULL);
+    riak_connection *cxn = NULL;
+    riak_error err = riak_connection_new(cfg, &cxn, NULL, NULL, NULL);
     if (err) {
         return err;
     }
-    err = riak_encode_serverinfo_request(rev, &(rev->pb_request));
+    err = riak_encode_serverinfo_request(cxn, &(cxn->pb_request));
     if (err) {
         return err;
     }
-    err = riak_synchronous_request(&rev, (void**)response);
+    err = riak_synchronous_request(&cxn, (void**)response);
     if (err) {
         return err;
     }
@@ -97,21 +97,21 @@ riak_serverinfo(riak_context              *ctx,
 
 
 riak_error
-riak_get(riak_context      *ctx,
-         riak_binary       *bucket,
-         riak_binary       *key,
-         riak_get_options  *opts,
+riak_get(riak_config        *cfg,
+         riak_binary        *bucket,
+         riak_binary        *key,
+         riak_get_options   *opts,
          riak_get_response **response) {
-    riak_event *rev = NULL;
-    riak_error err = riak_event_new(ctx, &rev, NULL, NULL, NULL);
+    riak_connection *cxn = NULL;
+    riak_error err = riak_connection_new(cfg, &cxn, NULL, NULL, NULL);
     if (err) {
         return err;
     }
-    err = riak_encode_get_request(rev, bucket, key, opts, &(rev->pb_request));
+    err = riak_encode_get_request(cxn, bucket, key, opts, &(cxn->pb_request));
     if (err) {
         return err;
     }
-    err = riak_synchronous_request(&rev, (void**)response);
+    err = riak_synchronous_request(&cxn, (void**)response);
     if (err) {
         return err;
     }
@@ -120,20 +120,20 @@ riak_get(riak_context      *ctx,
 }
 
 riak_error
-riak_put(riak_context      *ctx,
-         riak_object       *obj,
-         riak_put_options  *opts,
+riak_put(riak_config        *cfg,
+         riak_object        *obj,
+         riak_put_options   *opts,
          riak_put_response **response) {
-    riak_event *rev = NULL;
-    riak_error err = riak_event_new(ctx, &rev, NULL, NULL, NULL);
+    riak_connection *cxn = NULL;
+    riak_error err = riak_connection_new(cfg, &cxn, NULL, NULL, NULL);
     if (err) {
         return err;
     }
-    err = riak_encode_put_request(rev, obj, opts, &(rev->pb_request));
+    err = riak_encode_put_request(cxn, obj, opts, &(cxn->pb_request));
     if (err) {
         return err;
     }
-    err = riak_synchronous_request(&rev, (void**)response);
+    err = riak_synchronous_request(&cxn, (void**)response);
     if (err) {
         return err;
     }
@@ -142,21 +142,21 @@ riak_put(riak_context      *ctx,
 }
 
 riak_error
-riak_delete(riak_context      *ctx,
-         riak_binary          *bucket,
-         riak_binary          *key,
-         riak_delete_options  *opts) {
-    riak_event *rev = NULL;
-    riak_error err = riak_event_new(ctx, &rev, NULL, NULL, NULL);
+riak_delete(riak_config         *cfg,
+           riak_binary          *bucket,
+           riak_binary          *key,
+           riak_delete_options  *opts) {
+    riak_connection *cxn = NULL;
+    riak_error err = riak_connection_new(cfg, &cxn, NULL, NULL, NULL);
     if (err) {
         return err;
     }
-    err = riak_encode_delete_request(rev, bucket, key, opts, &(rev->pb_request));
+    err = riak_encode_delete_request(cxn, bucket, key, opts, &(cxn->pb_request));
     if (err) {
         return err;
     }
     riak_get_response *response = NULL;
-    err = riak_synchronous_request(&rev, (void**)&response);
+    err = riak_synchronous_request(&cxn, (void**)&response);
     if (err) {
         return err;
     }
@@ -165,18 +165,18 @@ riak_delete(riak_context      *ctx,
 }
 
 riak_error
-riak_listbuckets(riak_context               *ctx,
+riak_listbuckets(riak_config                *cfg,
                  riak_listbuckets_response **response) {
-    riak_event *rev = NULL;
-    riak_error err = riak_event_new(ctx, &rev, NULL, NULL, NULL);
+    riak_connection *cxn = NULL;
+    riak_error err = riak_connection_new(cfg, &cxn, NULL, NULL, NULL);
     if (err) {
         return err;
     }
-    err = riak_encode_listbuckets_request(rev, &(rev->pb_request));
+    err = riak_encode_listbuckets_request(cxn, &(cxn->pb_request));
     if (err) {
         return err;
     }
-    err = riak_synchronous_request(&rev, (void**)response);
+    err = riak_synchronous_request(&cxn, (void**)response);
     if (err) {
         return err;
     }
@@ -184,20 +184,20 @@ riak_listbuckets(riak_context               *ctx,
 }
 
 riak_error
-riak_listkeys(riak_context            *ctx,
+riak_listkeys(riak_config             *cfg,
               riak_binary             *bucket,
               riak_uint32_t            timeout,
               riak_listkeys_response **response) {
-    riak_event *rev = NULL;
-    riak_error err = riak_event_new(ctx, &rev, NULL, NULL, NULL);
+    riak_connection *cxn = NULL;
+    riak_error err = riak_connection_new(cfg, &cxn, NULL, NULL, NULL);
     if (err) {
         return err;
     }
-    err = riak_encode_listkeys_request(rev, bucket, timeout, &(rev->pb_request));
+    err = riak_encode_listkeys_request(cxn, bucket, timeout, &(cxn->pb_request));
     if (err) {
         return err;
     }
-    err = riak_synchronous_request(&rev, (void**)response);
+    err = riak_synchronous_request(&cxn, (void**)response);
     if (err) {
         return err;
     }
@@ -205,18 +205,18 @@ riak_listkeys(riak_context            *ctx,
 }
 
 riak_error
-riak_get_clientid(riak_context                *ctx,
+riak_get_clientid(riak_config                 *cfg,
                   riak_get_clientid_response **response) {
-    riak_event *rev = NULL;
-    riak_error err = riak_event_new(ctx, &rev, NULL, NULL, NULL);
+    riak_connection *cxn = NULL;
+    riak_error err = riak_connection_new(cfg, &cxn, NULL, NULL, NULL);
     if (err) {
         return err;
     }
-    err = riak_encode_get_clientid_request(rev, &(rev->pb_request));
+    err = riak_encode_get_clientid_request(cxn, &(cxn->pb_request));
     if (err) {
         return err;
     }
-    err = riak_synchronous_request(&rev, (void**)response);
+    err = riak_synchronous_request(&cxn, (void**)response);
     if (err) {
         return err;
     }
@@ -225,19 +225,19 @@ riak_get_clientid(riak_context                *ctx,
 }
 
 riak_error
-riak_set_clientid(riak_context                *ctx,
+riak_set_clientid(riak_config                 *cfg,
                   riak_binary                 *clientid,
                   riak_set_clientid_response **response) {
-    riak_event *rev = NULL;
-    riak_error err = riak_event_new(ctx, &rev, NULL, NULL, NULL);
+    riak_connection *cxn = NULL;
+    riak_error err = riak_connection_new(cfg, &cxn, NULL, NULL, NULL);
     if (err) {
         return err;
     }
-    err = riak_encode_set_clientid_request(rev, clientid, &(rev->pb_request));
+    err = riak_encode_set_clientid_request(cxn, clientid, &(cxn->pb_request));
     if (err) {
         return err;
     }
-    err = riak_synchronous_request(&rev, (void**)response);
+    err = riak_synchronous_request(&cxn, (void**)response);
     if (err) {
         return err;
     }
@@ -246,19 +246,19 @@ riak_set_clientid(riak_context                *ctx,
 }
 
 riak_error
-riak_get_bucketprops(riak_context                   *ctx,
+riak_get_bucketprops(riak_config                    *cfg,
                      riak_binary                    *bucket,
                      riak_get_bucketprops_response **response) {
-    riak_event *rev = NULL;
-    riak_error err = riak_event_new(ctx, &rev, NULL, NULL, NULL);
+    riak_connection *cxn = NULL;
+    riak_error err = riak_connection_new(cfg, &cxn, NULL, NULL, NULL);
     if (err) {
         return err;
     }
-    err = riak_encode_get_bucketprops_request(rev, bucket, &(rev->pb_request));
+    err = riak_encode_get_bucketprops_request(cxn, bucket, &(cxn->pb_request));
     if (err) {
         return err;
     }
-    err = riak_synchronous_request(&rev, (void**)response);
+    err = riak_synchronous_request(&cxn, (void**)response);
     if (err) {
         return err;
     }
@@ -267,19 +267,19 @@ riak_get_bucketprops(riak_context                   *ctx,
 }
 
 riak_error
-riak_reset_bucketprops(riak_context                     *ctx,
+riak_reset_bucketprops(riak_config                      *cfg,
                        riak_binary                      *bucket,
                        riak_reset_bucketprops_response **response) {
-    riak_event *rev = NULL;
-    riak_error err = riak_event_new(ctx, &rev, NULL, NULL, NULL);
+    riak_connection *cxn = NULL;
+    riak_error err = riak_connection_new(cfg, &cxn, NULL, NULL, NULL);
     if (err) {
         return err;
     }
-    err = riak_encode_reset_bucketprops_request(rev, bucket, &(rev->pb_request));
+    err = riak_encode_reset_bucketprops_request(cxn, bucket, &(cxn->pb_request));
     if (err) {
         return err;
     }
-    err = riak_synchronous_request(&rev, (void**)response);
+    err = riak_synchronous_request(&cxn, (void**)response);
     if (err) {
         return err;
     }
@@ -288,20 +288,20 @@ riak_reset_bucketprops(riak_context                     *ctx,
 }
 
 riak_error
-riak_set_bucketprops(riak_context                   *ctx,
+riak_set_bucketprops(riak_config                    *cfg,
                      riak_binary                    *bucket,
                      riak_bucket_props              *props,
                      riak_set_bucketprops_response **response) {
-    riak_event *rev = NULL;
-    riak_error err = riak_event_new(ctx, &rev, NULL, NULL, NULL);
+    riak_connection *cxn = NULL;
+    riak_error err = riak_connection_new(cfg, &cxn, NULL, NULL, NULL);
     if (err) {
         return err;
     }
-    err = riak_encode_set_bucketprops_request(rev, bucket, props, &(rev->pb_request));
+    err = riak_encode_set_bucketprops_request(cxn, bucket, props, &(cxn->pb_request));
     if (err) {
         return err;
     }
-    err = riak_synchronous_request(&rev, (void**)response);
+    err = riak_synchronous_request(&cxn, (void**)response);
     if (err) {
         return err;
     }

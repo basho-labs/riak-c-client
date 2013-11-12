@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * test_context.h: Riak C Unit testing for riak_context
+ * test_config.h: Riak C Unit testing for riak_config
  *
  * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
  *
@@ -21,13 +21,13 @@
  *********************************************************************/
 
 void
-test_build_context();
+test_build_config();
 
 void
-test_context_with_connection();
+test_config_with_connection();
 
 void
-test_context_with_bad_connection();
+test_config_with_bad_connection();
 
 void
-test_context_with_logging();
+test_config_with_logging();

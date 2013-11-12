@@ -36,9 +36,9 @@
 #include <event2/event.h>
 #include "riak_types.h"
 #include "riak_error.h"
-#include "riak_context.h"
+#include "riak_config.h"
 #include "riak_binary.h"
-#include "riak_event.h"
+#include "riak_connection.h"
 #include "riak_object.h"
 #include "riak_bucket_props.h"
 #include "riak_messages.h"
@@ -51,25 +51,25 @@
 
 /**
  * @brief Send a Ping Request
- * @param ctx Riak Context
+ * @param cfg Riak Configuration
  * @return ERIAK_OK on Pong response
  */
 riak_error
-riak_ping(riak_context *ctx);
+riak_ping(riak_config *cfg);
 
 /**
  * @brief Send a Server Info Request
- * @param ctx Riak Context
+ * @param cfg Riak Configuration
  * @param response Returned Fetched data
  * @returns Error code
  */
 riak_error
-riak_serverinfo(riak_context              *ctx,
+riak_serverinfo(riak_config              *cfg,
                 riak_serverinfo_response **response);
 
 /**
  * @brief Synchronous Fetch request
- * @param ctx Riak Context
+ * @param cfg Riak Configuration
  * @param bucket Name of Riak bucket
  * @param key Name of Riak key
  * @param opts Fetch options
@@ -77,7 +77,7 @@ riak_serverinfo(riak_context              *ctx,
  * @returns Error code
  */
 riak_error
-riak_get(riak_context              *ctx,
+riak_get(riak_config              *cfg,
          riak_binary               *bucket,
          riak_binary               *key,
          riak_get_options          *opts,
@@ -85,199 +85,199 @@ riak_get(riak_context              *ctx,
 
 /**
  * @brief Synchronous Store request
- * @param ctx Riak Context
+ * @param cfg Riak Configuration
  * @param obj Object to be stored in Riak
  * @param opts Store options
  * @param response Returned Fetched data
  * @returns Error code
  */
 riak_error
-riak_put(riak_context       *ctx,
+riak_put(riak_config       *cfg,
          riak_object        *obj,
          riak_put_options   *opts,
          riak_put_response **response);
 
 /**
  * @brief Synchronous Delete request
- * @param ctx Riak Context
+ * @param cfg Riak Configuration
  * @param bucket Name of Riak bucket
  * @param key Name of Riak key
  * @param opts Delete options
  * @returns Error code
  */
 riak_error
-riak_delete(riak_context        *ctx,
+riak_delete(riak_config        *cfg,
             riak_binary         *bucket,
             riak_binary         *key,
             riak_delete_options *opts);
 
 /**
  * @brief List all of the buckets on a server
- * @param ctx Riak Context
+ * @param cfg Riak Configuration
  * @param response Returned collection of bucket names
  * @return ERIAK_OK on Pong response
  */
 riak_error
-riak_listbuckets(riak_context               *ctx,
+riak_listbuckets(riak_config               *cfg,
                  riak_listbuckets_response **repsonse);
 
 /**
  * @brief List all of the keys in a bucket
- * @param ctx Riak Context
+ * @param cfg Riak Configuration
  * @param bucket Name of bucket
  * @param timeout How long to wait for a response
  * @param response Returned collection of key names
  * @return Error code
  */
 riak_error
-riak_listkeys(riak_context            *ctx,
+riak_listkeys(riak_config            *cfg,
               riak_binary             *bucket,
               riak_uint32_t            timeout,
               riak_listkeys_response **repsonse);
 
 /**
  * @brief Synchronous setting of client ID request
- * @param ctx Riak Context
+ * @param cfg Riak Configuration
  * @param response Returned Fetched data
  * @returns Error code
  */
 riak_error
-riak_get_clientid(riak_context                *ctx,
+riak_get_clientid(riak_config                *cfg,
                   riak_get_clientid_response **response);
 
 /**
  * @brief Synchronous fetching of client ID request
- * @param ctx Riak Context
+ * @param cfg Riak Configuration
  * @param clientid Name of client id for current connection
  * @param response Returned Fetched data
  * @returns Error code
  */
 riak_error
-riak_set_clientid(riak_context                *ctx,
+riak_set_clientid(riak_config                *cfg,
                   riak_binary                 *clientid,
                   riak_set_clientid_response **response);
 
 /**
  * @brief List the properties associated with a bucket
- * @param ctx Riak Context
+ * @param cfg Riak Configuration
  * @param bucket Name of bucket
  * @param response Returned bucket properties
  * @return Error code
  */
 riak_error
-riak_get_bucketprops(riak_context                   *ctx,
+riak_get_bucketprops(riak_config                   *cfg,
                      riak_binary                    *bucket,
                      riak_get_bucketprops_response **repsonse);
 
 /**
  * @brief Reset the properties associated with a bucket
- * @param ctx Riak Context
+ * @param cfg Riak Configuration
  * @param bucket Name of bucket
  * @param response Returned bucket properties
  * @return Error code
  */
 riak_error
-riak_reset_bucketprops(riak_context                     *ctx,
+riak_reset_bucketprops(riak_config                     *cfg,
                        riak_binary                      *bucket,
                        riak_reset_bucketprops_response **response);
 
 /**
  * @brief Update the properties associated with a bucket
- * @param ctx Riak Context
+ * @param cfg Riak Configuration
  * @param bucket Name of bucket
  * @param props Properties to set
  * @param response Returned bucket properties
  * @return Error code
  */
 riak_error
-riak_set_bucketprops(riak_context                   *ctx,
+riak_set_bucketprops(riak_config                   *cfg,
                      riak_binary                    *bucket,
                      riak_bucket_props              *props,
                      riak_set_bucketprops_response **response);
 
-void riak_bucket_set_props(riak_context*);
+void riak_bucket_set_props(riak_config*);
 
-void riak_bucket_get_props(riak_context*);
+void riak_bucket_get_props(riak_config*);
 
-void riak_query_2i(riak_context*);
+void riak_query_2i(riak_config*);
 
-void riak_map_reduce(riak_context*);
+void riak_map_reduce(riak_config*);
 
 //
 // A S Y N C H R O N O U S
 //
 
 /**
- * @brief Create a Riak Event for async use
- * @param ctx Riak Context
- * @param rev Riak Event (out)
+ * @brief Create a Riak Connection for async use
+ * @param cfg Riak Configuration
+ * @param cxn Riak Connection (out)
  * @returns Error code
  */
 riak_error
-riak_async_create_event(riak_context *ctx,
-                        riak_event  **rev);
+riak_async_create_event(riak_config *cfg,
+                        riak_connection  **cxn);
 
 riak_error
-riak_async_register_ping(riak_event            *rev,
+riak_async_register_ping(riak_connection            *cxn,
                          riak_response_callback cb);
 
 riak_error
-riak_async_register_serverinfo(riak_event            *rev,
+riak_async_register_serverinfo(riak_connection            *cxn,
                                riak_response_callback cb);
 
 riak_error
-riak_async_register_get(riak_event            *rev,
+riak_async_register_get(riak_connection            *cxn,
                         riak_binary           *bucket,
                         riak_binary           *key,
                         riak_get_options      *get_options,
                         riak_response_callback cb);
 
 riak_error
-riak_async_register_put(riak_event            *rev,
+riak_async_register_put(riak_connection            *cxn,
                         riak_object           *riak_obj,
                         riak_put_options      *options,
                         riak_response_callback cb);
 riak_error
-riak_async_register_delete(riak_event            *rev,
+riak_async_register_delete(riak_connection            *cxn,
                            riak_binary           *bucket,
                            riak_binary           *key,
                            riak_delete_options   *options,
                            riak_response_callback cb);
 
 riak_error
-riak_async_register_listbuckets(riak_event            *rev,
+riak_async_register_listbuckets(riak_connection            *cxn,
                                 riak_response_callback cb);
 
 riak_error
-riak_async_register_listkeys(riak_event            *rev,
+riak_async_register_listkeys(riak_connection            *cxn,
                              riak_binary           *bucket,
                              riak_uint32_t          timeout,
                              riak_response_callback cb );
 
 riak_error
-riak_async_register_get_clientid(riak_event            *rev,
+riak_async_register_get_clientid(riak_connection            *cxn,
                                  riak_response_callback cb);
 
 riak_error
-riak_async_register_set_clientid(riak_event            *rev,
+riak_async_register_set_clientid(riak_connection            *cxn,
                                  riak_binary           *clientid,
                                  riak_response_callback cb);
 
 riak_error
-riak_async_register_get_bucketprops(riak_event            *rev,
+riak_async_register_get_bucketprops(riak_connection            *cxn,
                                     riak_binary           *bucket,
                                     riak_response_callback cb);
 riak_error
-riak_async_register_reset_bucketprops(riak_event            *rev,
+riak_async_register_reset_bucketprops(riak_connection            *cxn,
                                       riak_binary           *bucket,
                                       riak_response_callback cb);
 riak_error
-riak_async_register_set_bucketprops(riak_event            *rev,
+riak_async_register_set_bucketprops(riak_connection            *cxn,
                                     riak_binary           *bucket,
                                     riak_bucket_props     *props,
                                     riak_response_callback cb);
 
 riak_error
-riak_async_send_msg(riak_event *rev);
+riak_async_send_msg(riak_connection *cxn);
 
 #endif

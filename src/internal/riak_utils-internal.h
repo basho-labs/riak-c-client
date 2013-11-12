@@ -46,8 +46,8 @@ riak_strlcat(char       *dst,
              size_t      size);
 
 /**
- * @brief Use Riak Context to reallocate memory
- * @param ctx Riak Context
+ * @brief Use Riak Configuration to reallocate memory
+ * @param cfg Riak Configuration
  * @param from Location of old array pointer to reallocate
  * @param size Size of new unit to allocate
  * @param oldnum Number of old units allocated
@@ -55,7 +55,7 @@ riak_strlcat(char       *dst,
  * @return Address of new location or NULL on failure
  */
 void**
-riak_array_realloc(riak_context *ctx,
+riak_array_realloc(riak_config *cfg,
                    void       ***from,
                    riak_size_t   size,
                    riak_uint32_t oldnum,
@@ -64,13 +64,13 @@ riak_array_realloc(riak_context *ctx,
 // TODO: NOT CHARSET SAFE, need iconv
 
 /**
- * @brief Send PB message via bufferevent
+ * @brief Send PB message via buffecxnent
  * @param event Event related to request
  * @param req Riak PBC message wrapper
  * @return Error code
  */
 riak_error
-riak_send_req(riak_event      *ev,
+riak_send_req(riak_connection      *ev,
               riak_pb_message *req);
 
 #endif
