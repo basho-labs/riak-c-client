@@ -25,6 +25,7 @@
 #include "riak_connection.h"
  // TODO: Move sample callbacks into examples?
 #include "riak_call_backs.h"
+#include <time.h>
 
 void
 example_error_cb(void *resp,
@@ -39,6 +40,52 @@ example_error_cb(void *resp,
     exit(1);
 }
 
+typedef struct {
+    FILE *fp;
+} example_log_data;
+
+riak_int32_t
+example_log_init(void *ptr) {
+    example_log_data* datum = (example_log_data*)ptr;
+    datum->fp = fopen("riak.log", "w+");
+    if (datum->fp == NULL) {
+        return 1;
+    }
+    return 0;
+}
+
+void
+example_log_cleanup(void *ptr) {
+    example_log_data* datum = (example_log_data*)ptr;
+    fclose(datum->fp);
+}
+
+void
+example_log(void            *ptr,
+            riak_log_level_t level,
+            const char      *file,
+            riak_size_t      filelen,
+            const char      *func,
+            riak_size_t      funclen,
+            riak_uint32_t    line,
+            const char      *format,
+            va_list          args) {
+    example_log_data* datum = (example_log_data*)ptr;
+    time_t ltime;
+    struct tm result;
+    char stime[32];
+
+    if (datum->fp == NULL) return;
+
+    ltime = time(NULL);
+    localtime_r(&ltime, &result);
+    strftime(stime, sizeof(stime), "%F %X %Z", &result);
+
+    fprintf(datum->fp, "%s %s ", stime, riak_log_level_description(level));
+    vfprintf(datum->fp, format, args);
+    fprintf(datum->fp, "\n");
+}
+
 int
 main(int   argc,
      char *argv[])
@@ -50,13 +97,18 @@ main(int   argc,
     event_enable_debug_mode();
 #endif
 
-    // if you see an error such as "Could not initialize logging"
-    // make sure you have zlog.conf in the same directory as the
-    // binary (ie ./examples/build/zlog.conf)
-
     // a riak_config serves as your per-thread state to interact with Riak
     riak_config *cfg;
     riak_error err = riak_config_new_default(&cfg);
+    if (err) {
+        exit(1);
+    }
+    example_log_data datum;
+    err = riak_config_set_logging(cfg,
+                                  (void*)&datum,
+                                  example_log,
+                                  example_log_init,
+                                  example_log_cleanup);
     if (err) {
         exit(1);
     }
@@ -64,10 +116,7 @@ main(int   argc,
     if (err) {
         exit(1);
     }
-    err = riak_config_add_logging(cfg, NULL);
-    if (err) {
-        exit(1);
-    }
+
     riak_connection  *cxn = NULL;
     riak_object *obj;
     riak_bucket_props *props;
@@ -141,7 +190,7 @@ main(int   argc,
         case RIAK_COMMAND_PUT:
             obj = riak_object_new(cfg);
             if (obj == NULL) {
-                riak_log_fatal(cxn, "%s","Could not allocate a Riak Object");
+                riak_log_critical(cxn, "%s","Could not allocate a Riak Object");
                 return 1;
             }
             riak_object_set_bucket(obj, riak_binary_new_from_string(cfg, args.bucket)); // Not copied
@@ -157,7 +206,7 @@ main(int   argc,
             }
             riak_put_options *put_options = riak_put_options_new(cfg);
             if (put_options == NULL) {
-                riak_log_fatal(cxn, "%s","Could not allocate a Riak Put Options");
+                riak_log_critical(cxn, "%s","Could not allocate a Riak Put Options");
                 return 1;
             }
             riak_put_options_set_return_head(put_options, RIAK_FALSE);
@@ -287,7 +336,7 @@ main(int   argc,
         case RIAK_COMMAND_SETBUCKET:
             props = riak_bucket_props_new(cfg);
             if (obj == NULL) {
-                riak_log_fatal(cxn, "%s", "Could not allocate a Riak Bucket Properties");
+                riak_log_critical(cxn, "%s", "Could not allocate a Riak Bucket Properties");
                 return 1;
             }
             riak_bucket_props_set_last_write_wins(props, RIAK_FALSE);
@@ -298,7 +347,7 @@ main(int   argc,
                  err = riak_set_bucketprops(cfg, bucket_bin, props, &bucket_response);
             }
             if (err) {
-                fprintf(stderr, "Reset Bucket Properties Problems [%s]\n", riak_strerror(err));
+                fprintf(stderr, "Set Bucket Properties Problems [%s]\n", riak_strerror(err));
                 exit(1);
             }
             break;
@@ -309,7 +358,7 @@ main(int   argc,
         if (args.async) {
             err = riak_async_send_msg(cxn);
             if (err) {
-                riak_log_fatal(cxn, "%s", "Could not send request");
+                riak_log_critical(cxn, "%s", "Could not send request");
                 exit(1);
             }
         }

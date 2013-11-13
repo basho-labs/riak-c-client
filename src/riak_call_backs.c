@@ -186,8 +186,8 @@ riak_connection_callback(riak_bufferevent *bev,
                 riak_log_error(cxn, "DNS error: %s", evutil_gai_strerror(err));
          }
 #ifdef _RIAK_DEBUG
-         struct evbuffer *ev_read  = buffecxnent_get_input(bev);
-         struct evbuffer *ev_write = buffecxnent_get_output(bev);
+         struct evbuffer *ev_read  = bufferevent_get_input(bev);
+         struct evbuffer *ev_write = bufferevent_get_output(bev);
 #endif
          riak_log_debug(cxn, "Closing because of %s [read event=%p, write event=%p]",
                  reason, (void*)ev_read, (void*)ev_write);
@@ -208,9 +208,9 @@ riak_write_callback(riak_bufferevent *bev,
                     void             *ptr)
 {
 #ifdef _RIAK_DEBUG
-    riak_connection   **cxn_target = (riak_connection**)ptr;
-    riak_connection    *cxn = *cxn_target;
-    struct evbuffer *buf = buffecxnent_get_output(bev);
+    riak_connection **cxn_target = (riak_connection**)ptr;
+    riak_connection  *cxn = *cxn_target;
+    struct evbuffer  *buf = bufferevent_get_output(bev);
     riak_log_debug(cxn, "Ready for write with event %p.\n", (void*)buf);
 #endif
 }

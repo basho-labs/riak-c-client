@@ -37,7 +37,7 @@ riak_connection_new(riak_config      *cfg,
 
     riak_connection *cxn = (riak_connection*)(cfg->malloc_fn)(sizeof(riak_connection));
     if (cxn == NULL) {
-        riak_log_fatal_config(cfg, "%s", "Could not allocate a riak_connection");
+        riak_log_critical_config(cfg, "%s", "Could not allocate a riak_connection");
         return ERIAK_OUT_OF_MEMORY;
     }
     *cxn_target = cxn;
@@ -59,19 +59,19 @@ riak_connection_new(riak_config      *cfg,
     // TODO: Implement retry logic
     cxn->fd = riak_just_open_a_socket(cfg, cfg->addrinfo);
     if (cxn->fd < 0) {
-        riak_log_fatal_config(cfg, "%s", "Could not just open a socket");
+        riak_log_critical_config(cfg, "%s", "Could not just open a socket");
         return ERIAK_LOGGING;
     }
 
     // cxn->bevent = buffecxnent_socket_new(base, sock, BEV_OPT_CLOSE_ON_FREE|BEV_OPT_DEFER_CALLBACKS|BEV_OPT_THREADSAFE);
     cxn->bevent = bufferevent_socket_new(cxn->base, cxn->fd, BEV_OPT_CLOSE_ON_FREE|BEV_OPT_DEFER_CALLBACKS);
     if (cxn->bevent == NULL) {
-        riak_log_fatal_config(cfg, "Could not create bufferevent [fd %d]", cxn->fd);
+        riak_log_critical_config(cfg, "Could not create bufferevent [fd %d]", cxn->fd);
         return ERIAK_OUT_OF_MEMORY;
     }
     int enabled = bufferevent_enable(cxn->bevent, EV_READ|EV_WRITE);
     if (enabled != 0) {
-        riak_log_fatal_config(cfg, "Could not enable bufferevent [fd %d]", cxn->fd);
+        riak_log_critical_config(cfg, "Could not enable bufferevent [fd %d]", cxn->fd);
         return ERIAK_EVENT;
     }
 

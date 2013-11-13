@@ -2,14 +2,14 @@ import os
 
 env = Environment(
     ENV = os.environ,
-    CCFLAGS = '-g -Wall -DUSE_DEBUG',
+    CCFLAGS = '-g -Wall -DUSE_DEBUG -D_RIAK_DEBUG',
     # .. Required for proctoc-c full pathname
     CPPPATH=['proto','include','internal','..'],
     LIBPATH=['.'],
     toolpath=['tools'],
     tools=['default', 'protoc'])
-env.ParseConfig("pkg-config --libs libevent libprotobuf-c protobuf zlog")
-env.ParseConfig("pkg-config --cflags libevent libprotobuf-c protobuf zlog")
+env.ParseConfig("pkg-config --libs libevent libprotobuf-c protobuf ")
+env.ParseConfig("pkg-config --cflags libevent libprotobuf-c protobuf")
 
 riak_pb = env.Protoc(
     [],
@@ -42,7 +42,7 @@ riak_yokozuna_pb = env.Protoc(
 lib_files = [riak_pb[0], riak_kv_pb[0], riak_search_pb[0], riak_yokozuna_pb[0], Split('riak.c riak_utils.c riak_binary.c riak_config.c riak_connection.c riak_messages.c riak_log.c riak_error.c riak_network.c riak_object.c riak_bucket_props.c riak_call_backs.c riak_print.c riak_async.c riak_options.c')]
 
 env.Library('riak_c_client', lib_files)
-#env.Program('riak_c_client','main.c', LIBS=['riak_c_client', 'event_core', 'event_extra', 'zlog', 'pthread', 'protobuf', 'protobuf-c'])
+#env.Program('riak_c_client','main.c', LIBS=['riak_c_client', 'event_core', 'event_extra', 'pthread', 'protobuf', 'protobuf-c'])
 
 
 conf = Configure(env)
@@ -65,11 +65,6 @@ if not conf.CheckLib('protobuf-c'):
 if not conf.CheckLib('libevent'):
   print 'Did not find libevent, exiting!'
   Exit(1)
-
-if not conf.CheckLib('zlog'):
-  print 'Did not find zlog, exiting!'
-  Exit(1)
-
 
 env = conf.Finish()
 

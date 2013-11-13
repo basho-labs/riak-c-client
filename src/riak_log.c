@@ -20,59 +20,52 @@
  *
  *********************************************************************/
 
-#include <zlog.h>
+#define _RIAK_LOG_DESCRIPTION
+
 #include "riak.h"
 #include "riak_log.h"
 #include "riak_messages-internal.h"
 #include "riak_config-internal.h"
 #include "riak_connection-internal.h"
 
+static void
+riak_log_default(void            *ptr,
+                 riak_log_level_t level,
+                 const char      *file,
+                 riak_size_t      filelen,
+                 const char      *func,
+                 riak_size_t      funclen,
+                 riak_uint32_t    line,
+                 const char      *format,
+                 va_list          args) {
 
-const zlog_level map_level_to_priority[] = {
-    ZLOG_LEVEL_FATAL,
-    ZLOG_LEVEL_ERROR,
-    ZLOG_LEVEL_WARN,
-    ZLOG_LEVEL_NOTICE,
-    ZLOG_LEVEL_INFO,
-    ZLOG_LEVEL_DEBUG,
-    0
-};
+}
 
-// TODO: Create an async queue of log messages to make threadsafe(r)
 void
-riak_log_internal(riak_config     *cfg,
-                  riak_log_level_t level,
-                  const char      *file,
-                  size_t           filelen,
-                  const char      *func,
-                  size_t           funclen,
-                  long             line,
-                  const char      *format,
+riak_log_internal(riak_config         *cfg,
+                  riak_log_level_t     level,
+                  const char          *file,
+                  riak_size_t          filelen,
+                  const char          *func,
+                  riak_size_t          funclen,
+                  riak_uint32_t        line,
+                  const char          *format,
                   ...) {
-    if (level < RIAK_LOG_FATAL || level > RIAK_LOG_UNKNOWN) level = RIAK_LOG_UNKNOWN;
-    // Map to underlying zlog priorities
-    zlog_level priority = map_level_to_priority[(int)level];
-    riak_boolean_t has_logging = RIAK_FALSE;
-    zlog_category_t *category;
-    if (cfg->logging_category[0] != '\0') {
-        category = zlog_get_category(cfg->logging_category);
-        has_logging = RIAK_TRUE;
+    riak_log_fn log_fn = riak_log_default;
+    if (cfg->log_fn) {
+        log_fn = cfg->log_fn;
     }
 
     va_list va;
     va_start(va, format);
-    if (has_logging) {
-        vzlog(category,
-              file,
-              filelen,
-              func,
-              funclen,
-              line,
-              priority,
-              format,
-              va);
-    } else {
-        vfprintf(stderr, format, va);
-    }
+    (log_fn)((void*)cfg->log_data,
+             level,
+             file,
+             filelen,
+             func,
+             funclen,
+             line,
+             format,
+             va);
     va_end(va);
 }

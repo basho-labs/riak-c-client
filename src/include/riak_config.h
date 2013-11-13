@@ -36,7 +36,7 @@ typedef struct _riak_config riak_config;
 
 /**
  * @brief Construct a Riak Configuration
- * @param config Spanking new `riak_config` struct
+ * @param cfg Spanking new `riak_config` struct
  * @param alloc Memory allocator function (optional)
  * @param realloc Memory re-allocation function (optional)
  * @param freeme Memory releasing function (optional)
@@ -45,25 +45,25 @@ typedef struct _riak_config riak_config;
  * @return Error code
  */
 riak_error
-riak_config_new(riak_config    **config,
-                 riak_alloc_fn     alloc,
-                 riak_realloc_fn   realloc,
-                 riak_free_fn      freeme,
-                 riak_pb_alloc_fn  pb_alloc,
-                 riak_pb_free_fn   pb_free);
+riak_config_new(riak_config     **cfg,
+                riak_alloc_fn     alloc,
+                riak_realloc_fn   realloc,
+                riak_free_fn      freeme,
+                riak_pb_alloc_fn  pb_alloc,
+                riak_pb_free_fn   pb_free);
 // By default use system's built-in memory management utilities (malloc/free)
 #define riak_config_new_default(C) riak_config_new((C),NULL,NULL,NULL,NULL,NULL)
 
 /**
  * @brief Construct a Riak Configuration
- * @param config Existing Riak Configuration
+ * @param cfg Existing Riak Configuration
  * @param resolver IP Address resolving function
  * @param hostname Name of Riak server
  * @param portnum Riak PBC port number
  * @return Error code
  */
 riak_error
-riak_config_add_connection(riak_config      *config,
+riak_config_add_connection(riak_config        *cfg,
                             riak_addr_resolver resolver,
                             const char        *hostname,
                             const char        *portnum);
@@ -71,14 +71,20 @@ riak_config_add_connection(riak_config      *config,
 #define riak_config_add_default_connection(C,H,P) riak_config_add_connection((C),NULL,(H),(P))
 
 /**
- * @brief Construct a Riak Configuration
- * @param config Spanking new `riak_config` struct
- * @param logging_category logging prefix (optional)
+ * @brief Add logging functions
+ * @param config Riak Configuration
+ * @param log_data Pointer passed to all logging functions
+ * @param log_fn Main logging function
+ * @param log_init Function called once at setup
+ * @param log_cleanup Function called at program termination
  * @return Error code
  */
 riak_error
-riak_config_add_logging(riak_config *config,
-                         const char   *logging_category);
+riak_config_set_logging(riak_config        *cfg,
+                        void*               log_data,
+                        riak_log_fn         log_fn,
+                        riak_log_init_fn    log_init,
+                        riak_log_cleanup_fn log_cleanup);
 
 
 /**

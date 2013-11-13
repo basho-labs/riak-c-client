@@ -23,19 +23,6 @@
 #ifndef RIAK_LOG_H_
 #define RIAK_LOG_H_
 
-#include <stdarg.h>
-
-// Pulled from zlog.h but correspond to log levels from syslog(3)
-typedef enum {
-    /** fatal */    RIAK_LOG_FATAL,
-    /** error */    RIAK_LOG_ERROR,
-    /** warn */     RIAK_LOG_WARN,
-    /** notice */   RIAK_LOG_NOTICE,
-    /** info */     RIAK_LOG_INFO,
-    /** debug */    RIAK_LOG_DEBUG,
-    /** unknown */  RIAK_LOG_UNKNOWN
-} riak_log_level_t;
-
 /**
  * @brief Add a record to the Riak log
  * @param cfg Riak Configuration
@@ -50,18 +37,24 @@ typedef enum {
  */
 
 void
-riak_log_internal(riak_config    *cfg,
-                  riak_log_level_t level,
-                  const char      *file,
-                  size_t           filelen,
-                  const char      *func,
-                  size_t           funclen,
-                  long             line,
-                  const char      *format,
+riak_log_internal(riak_config         *cfg,
+                  riak_log_level_t     level,
+                  const char          *file,
+                  riak_size_t          filelen,
+                  const char          *func,
+                  riak_size_t          funclen,
+                  riak_uint32_t        line,
+                  const char          *format,
                   ...);
 
-#define riak_log_fatal(cxn,format, ...) \
-        riak_log_internal(riak_connection_get_config(cxn), RIAK_LOG_FATAL, __FILE__, sizeof(__FILE__)-1, \
+#define riak_log_emergency(cxn,format, ...) \
+        riak_log_internal(riak_connection_get_config(cxn), RIAK_LOG_EMERG, __FILE__, sizeof(__FILE__)-1, \
+        __func__, sizeof(__func__)-1, __LINE__, ("[%d] " format), riak_connection_get_fd(cxn), __VA_ARGS__)
+#define riak_log_alert(cxn,format, ...) \
+        riak_log_internal(riak_connection_get_config(cxn), RIAK_LOG_ALERT, __FILE__, sizeof(__FILE__)-1, \
+        __func__, sizeof(__func__)-1, __LINE__, ("[%d] " format), riak_connection_get_fd(cxn), __VA_ARGS__)
+#define riak_log_critical(cxn,format, ...) \
+        riak_log_internal(riak_connection_get_config(cxn), RIAK_LOG_CRITICAL, __FILE__, sizeof(__FILE__)-1, \
         __func__, sizeof(__func__)-1, __LINE__, ("[%d] " format), riak_connection_get_fd(cxn), __VA_ARGS__)
 #define riak_log_error(cxn,format, ...) \
         riak_log_internal(riak_connection_get_config(cxn), RIAK_LOG_ERROR, __FILE__, sizeof(__FILE__)-1, \
@@ -80,8 +73,14 @@ riak_log_internal(riak_config    *cfg,
 #define riak_log_debug(cxn,format, ...) // No-Op
 #endif
 
-#define riak_log_fatal_config(cfg,format, ...) \
-        riak_log_internal((cfg), RIAK_LOG_FATAL, __FILE__, sizeof(__FILE__)-1, \
+#define riak_log_emergency_config(cfg,format, ...) \
+        riak_log_internal((cfg), RIAK_LOG_EMERG, __FILE__, sizeof(__FILE__)-1, \
+        __func__, sizeof(__func__)-1, __LINE__, (format), __VA_ARGS__)
+#define riak_log_alert_config(cfg,format, ...) \
+        riak_log_internal((cfg), RIAK_LOG_ALERT, __FILE__, sizeof(__FILE__)-1, \
+        __func__, sizeof(__func__)-1, __LINE__, (format), __VA_ARGS__)
+#define riak_log_critical_config(cfg,format, ...) \
+        riak_log_internal((cfg), RIAK_LOG_CRITICAL, __FILE__, sizeof(__FILE__)-1, \
         __func__, sizeof(__func__)-1, __LINE__, (format), __VA_ARGS__)
 #define riak_log_error_config(cxn,format, ...) \
         riak_log_internal((cfg), RIAK_LOG_ERROR, __FILE__, sizeof(__FILE__)-1, \
