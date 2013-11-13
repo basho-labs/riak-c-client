@@ -111,13 +111,13 @@ riak_send_req(riak_connection *cxn,
     char *pos = buffer;
     riak_int32_t wrote = 0;
     int i;
-    for(i = 0; i < buflen; i++) {
+    for(i = 0; buflen > 0 && i < len; i++) {
         wrote = snprintf(pos, buflen, "%02x", msgbuf[i]);
         pos += wrote;
         buflen -= wrote;
     }
     fprintf(stdout, "\n");
-    for(i = 0; i < buflen; i++) {
+    for(i = 0; buflen > 0 && i < len; i++) {
         char c = '.';
         if (msgbuf[i] > 31 && msgbuf[i] < 128) {
             c = msgbuf[i];

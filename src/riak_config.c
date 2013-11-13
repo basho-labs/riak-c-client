@@ -25,7 +25,6 @@
 #include "riak_utils-internal.h"
 #include "riak_network.h"
 #include "riak_config-internal.h"
-#include <zlog.h>
 
 extern ProtobufCAllocator protobuf_c_default_allocator;
 
@@ -40,7 +39,6 @@ riak_config_new(riak_config      **config,
     riak_alloc_fn   alloc_fn   = malloc;
     riak_realloc_fn realloc_fn = realloc;
     riak_free_fn    free_fn    = free;
-
 
     if (alloc != NULL) {
         alloc_fn = alloc;
@@ -66,6 +64,10 @@ riak_config_new(riak_config      **config,
         cfg->pb_allocator->tmp_alloc = pb_alloc;
         cfg->pb_allocator->free = pb_free;
     }
+    cfg->log_data        = NULL;
+    cfg->log_fn          = NULL;
+    cfg->log_init_fn     = NULL;
+    cfg->log_cleanup_fn  = NULL;
 
     cfg->base = event_base_new();
     if (cfg->base == NULL) {
@@ -100,22 +102,25 @@ riak_config_add_connection(riak_config        *cfg,
 }
 
 riak_error
-riak_config_add_logging(riak_config *cfg,
-                         const char *logging_category) {
+riak_config_set_logging(riak_config        *cfg,
+                        void*               log_data,
+                        riak_log_fn         log_fn,
+                        riak_log_init_fn    log_init,
+                        riak_log_cleanup_fn log_cleanup) {
     if (cfg == NULL) {
         return ERIAK_UNINITIALIZED;
     }
-    if (logging_category == NULL) {
-        riak_strlcpy(cfg->logging_category, RIAK_LOGGING_DEFAULT_CATEGORY, sizeof(cfg->logging_category));
-    } else {
-        riak_strlcpy(cfg->logging_category, logging_category, sizeof(cfg->logging_category));
-    }
-    // Since we will likely only have one config, set up non-thread-safe logging here
-    // TODO: Configurable zlog.conf file
-    int result = zlog_init("zlog.conf");
-    if (result != 0) {
-        fprintf(stderr, "Could not initialize logging\n");
-        return ERIAK_LOGGING;
+
+    cfg->log_data = log_data;
+    cfg->log_fn = log_fn;
+    cfg->log_init_fn = log_init;
+    cfg->log_cleanup_fn = log_cleanup;
+
+    if (cfg->log_init_fn) {
+        int result = (cfg->log_init_fn)(cfg->log_data);
+        if (result != 0) {
+            return ERIAK_LOGGING;
+        }
     }
     return ERIAK_OK;
 }
@@ -130,11 +135,13 @@ void
 riak_config_free(riak_config **config) {
     riak_config *cfg = *config;
     riak_free_fn freer = cfg->free_fn;
+
+    // Since we will only clean up one config, let's shut down non-threadsafe logging here, too
+    if (cfg->log_cleanup_fn) {
+        (cfg->log_cleanup_fn)(cfg->log_data);
+    }
     if (cfg->base != NULL) event_base_free(cfg->base);
     if (cfg->addrinfo != NULL) evutil_freeaddrinfo(cfg->addrinfo);
     (freer)(cfg);
     *config = NULL;
-
-    // Since we will only clean up one config, let's shut down non-threadsafe logging here, too
-    zlog_fini();
 }

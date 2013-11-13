@@ -6,12 +6,11 @@ env = Environment(
     CPPPATH=['include','../../src/include','../../src/internal','../../build/proto'],
     LIBPATH=['../../build']
     )
-env.ParseConfig("pkg-config --libs libevent libprotobuf-c protobuf zlog")
-env.ParseConfig("pkg-config --cflags libevent libprotobuf-c protobuf zlog")
+env.ParseConfig("pkg-config --libs libevent libprotobuf-c protobuf")
+env.ParseConfig("pkg-config --cflags libevent libprotobuf-c protobuf")
 files = ['example.c', 'riak_command.c']
 
-example = env.Program('riakc_example', files, LIBS=['riak_c_client', 'event_core', 'event_extra', 'zlog', 'pthread', 'protobuf', 'protobuf-c','cunit'])
-Command("./build/zlog.conf", "zlog.conf", Copy("$TARGET", "$SOURCE"))
+example = env.Program('riakc_example', files, LIBS=['riak_c_client', 'event_core', 'event_extra', 'pthread', 'protobuf', 'protobuf-c','cunit'])
 
 conf = Configure(env)
 if not conf.CheckLib('pthread'):
@@ -28,10 +27,6 @@ if not conf.CheckLib('protobuf-c'):
 
 if not conf.CheckLib('libevent'):
   print 'Did not find libevent, exiting!'
-  Exit(1)
-
-if not conf.CheckLib('zlog'):
-  print 'Did not find zlog, exiting!'
   Exit(1)
 
 if not conf.CheckLib('cunit'):

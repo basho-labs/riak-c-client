@@ -35,6 +35,7 @@
 #include <event2/util.h>
 #include <event2/event.h>
 #include "riak_types.h"
+#include "riak_log_config.h"
 #include "riak_error.h"
 #include "riak_config.h"
 #include "riak_binary.h"

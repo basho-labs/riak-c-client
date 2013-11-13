@@ -38,7 +38,7 @@ riak_synchronous_request(riak_connection **cxn_target,
 
     riak_error err = riak_send_req(cxn, cxn->pb_request);
     if (err) {
-        riak_log_fatal(cxn, "Could not send request", NULL);
+        riak_log_critical(cxn, "Could not send request", NULL);
         return err;
     }
 

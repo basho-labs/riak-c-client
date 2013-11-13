@@ -96,14 +96,40 @@ test_config_with_connection() {
     CU_PASS("test_build_binary passed")
 }
 
+typedef struct {
+    riak_boolean_t init;
+    riak_boolean_t log;
+    riak_boolean_t cleanup;
+} test_log_data;
+
+riak_int32_t
+test_log_init(void *ptr) {
+    return 0;
+}
+
+void
+test_log_cleanup(void *ptr) {
+}
+
+void
+test_log_logger(void            *ptr,
+                riak_log_level_t level,
+                const char      *file,
+                riak_size_t      filelen,
+                const char      *func,
+                riak_size_t      funclen,
+                riak_uint32_t    line,
+                const char      *format,
+                va_list          args) {
+}
+
 void
 test_config_with_logging() {
     riak_config *cfg;
     riak_error err = riak_config_new_default(&cfg);
     CU_ASSERT_FATAL(err == ERIAK_OK)
-    err = riak_config_add_logging(cfg, "test");
+    err = riak_config_set_logging(cfg, (void*)cfg, test_log_logger, test_log_init, test_log_cleanup);
     CU_ASSERT_FATAL(err == ERIAK_OK)
-    CU_ASSERT(strcmp(cfg->logging_category, "test") == 0)
     riak_config_free(&cfg);
     CU_PASS("test_build_binary passed")
 }

@@ -23,9 +23,6 @@
 #ifndef RIAK_CONTEXT_INTERNAL_H_
 #define RIAK_CONTEXT_INTERNAL_H_
 
-// TODO: one day make this configurable?
-// FYI, zlog does not support dots or hyphens in the category
-#define RIAK_LOGGING_DEFAULT_CATEGORY   "riakc"
 #define RIAK_LOGGING_MAX_LEN            256
 #define RIAK_HOST_MAX_LEN               256
 
@@ -34,8 +31,15 @@ struct _riak_config {
     riak_realloc_fn     realloc_fn;
     riak_free_fn        free_fn;
     ProtobufCAllocator *pb_allocator;
-    char                logging_category[RIAK_LOGGING_MAX_LEN];
-    riak_connection_base    *base; // Is this the right location? One per thread, so probably
+
+    // LOGGING
+    void*               log_data;
+    riak_log_fn         log_fn;
+    riak_log_init_fn    log_init_fn;
+    riak_log_cleanup_fn log_cleanup_fn;
+
+    // EVENT LIBRARY
+    riak_connection_base *base; // Is this the right location? One per thread, so probably
     char                hostname[RIAK_HOST_MAX_LEN];
     char                portnum[RIAK_HOST_MAX_LEN]; // Keep as a string for debugging
     riak_addrinfo      *addrinfo;
