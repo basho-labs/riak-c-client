@@ -20,28 +20,24 @@
  *
  *********************************************************************/
 
-#ifndef RIAK_TYPES_H_
-#define RIAK_TYPES_H_
-
-#include <event2/util.h>
+#ifndef _RIAK_TYPES_H
+#define _RIAK_TYPES_H
 
 // protobuf-c maps boolean to an int
 typedef int                 riak_boolean_t;
-typedef ev_uint8_t          riak_uint8_t;
-typedef ev_int8_t           riak_int8_t;
-typedef ev_uint16_t         riak_uint16_t;
-typedef ev_int16_t          riak_int16_t;
-typedef ev_uint32_t         riak_uint32_t;
-typedef ev_int32_t          riak_int32_t;
-typedef ev_uint64_t         riak_uint64_t;
-typedef ev_int64_t          riak_int64_t;
+typedef uint8_t             riak_uint8_t;
+typedef int8_t              riak_int8_t;
+typedef uint16_t            riak_uint16_t;
+typedef int16_t             riak_int16_t;
+typedef uint32_t            riak_uint32_t;
+typedef int32_t             riak_int32_t;
+typedef uint64_t            riak_uint64_t;
+typedef int64_t             riak_int64_t;
 typedef size_t              riak_size_t;
 
-// libevent types
-typedef struct bufferevent     riak_bufferevent;
-typedef struct event_base      riak_connection_base;
-typedef struct evutil_addrinfo riak_addrinfo;
-typedef evutil_socket_t        riak_socket_t;
+// network types
+typedef struct addrinfo     riak_addrinfo;
+typedef int                 riak_socket_t;
 typedef int (*riak_addr_resolver)(const char *nodename,
                                   const char *servname,
                                   const riak_addrinfo *hints_in,
@@ -50,4 +46,4 @@ typedef int (*riak_addr_resolver)(const char *nodename,
 #define RIAK_FALSE          0
 #define RIAK_TRUE           1
 
-#endif /* RIAK_TYPES_H_ */
+#endif // _RIAK_TYPES_H

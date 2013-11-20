@@ -30,6 +30,7 @@
 #include "riak.h"
 #include "riak.pb-c.h"
 #include "riak_config-internal.h"
+#include "riak_connection-internal.h"
 
 void
 test_build_config() {
@@ -73,13 +74,13 @@ test_config_with_bad_connection() {
     riak_config *cfg;
     riak_error err = riak_config_new_default(&cfg);
     CU_ASSERT_FATAL(err == ERIAK_OK)
-    err = riak_config_add_connection(cfg, test_config_bad_resolver, "localhost", "1");
+    riak_connection *cxn = NULL;
+    err = riak_connection_new(cfg, &cxn, "localhost", "1", test_config_bad_resolver);
     CU_ASSERT_FATAL(err == ERIAK_DNS_RESOLUTION)
-    // Clean up the AddrInfo so libevent won't
-    free(cfg->addrinfo);
-    cfg->addrinfo = NULL;
+    riak_free(cfg, &(cxn->addrinfo));
+    riak_connection_free(&cxn);
     riak_config_free(&cfg);
-    CU_PASS("test_build_binary passed")
+    CU_PASS("test_config_with_bad_connection passed")
 }
 
 void
@@ -87,13 +88,13 @@ test_config_with_connection() {
     riak_config *cfg;
     riak_error err = riak_config_new_default(&cfg);
     CU_ASSERT_FATAL(err == ERIAK_OK)
-    err = riak_config_add_connection(cfg, test_config_resolver, "localhost", "1");
-    CU_ASSERT_FATAL(err == ERIAK_OK)
-    // Clean up the AddrInfo so libevent won't
-    free(cfg->addrinfo);
-    cfg->addrinfo = NULL;
+    riak_connection *cxn = NULL;
+    err = riak_connection_new(cfg, &cxn, "localhost", "1", test_config_resolver);
+    CU_ASSERT_FATAL(err == ERIAK_CONNECT)
+    riak_free(cfg, &(cxn->addrinfo));
+    riak_connection_free(&cxn);
     riak_config_free(&cfg);
-    CU_PASS("test_build_binary passed")
+    CU_PASS("test_config_with_connection passed")
 }
 
 typedef struct {

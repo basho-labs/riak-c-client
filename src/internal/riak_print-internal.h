@@ -20,8 +20,8 @@
  *
  *********************************************************************/
 
-#ifndef RIAK_PRINT_INTERNAL_H
-#define RIAK_PRINT_INTERNAL_H
+#ifndef _RIAK_PRINT_INTERNAL_H
+#define _RIAK_PRINT_INTERNAL_H
 
 /**
  * @brief Print an integer value to a string
@@ -73,4 +73,4 @@ riak_print_string(char         *name,
                   riak_int32_t *len,
                   riak_int32_t *total);
 
-#endif
+#endif // _RIAK_PRINT_INTERNAL_H

@@ -23,22 +23,9 @@
 #include "riak.h"
 #include "riak_command.h"
 #include "riak_connection.h"
- // TODO: Move sample callbacks into examples?
-#include "riak_call_backs.h"
+#include "example_call_backs.h"
+#include "../adapters/riak_libevent.h"
 #include <time.h>
-
-void
-example_error_cb(void *resp,
-                 void *ptr) {
-    riak_connection **cxn = (riak_connection**)ptr;
-    char message[1024];
-    riak_server_error *error = riak_connection_get_server_error(*cxn);
-    if (error) {
-        riak_binary_print(riak_server_error_get_errmsg(error), message, sizeof(message));
-        fprintf(stderr, "ERROR: %s\n", message);
-    }
-    exit(1);
-}
 
 typedef struct {
     FILE *fp;
@@ -112,15 +99,16 @@ main(int   argc,
     if (err) {
         exit(1);
     }
-    err = riak_config_add_default_connection(cfg, args.host, args.portnum);
-    if (err) {
-        exit(1);
-    }
 
-    riak_connection  *cxn = NULL;
+
     riak_object *obj;
     riak_bucket_props *props;
     char output[10240];
+    struct event_base *base = event_base_new();
+    if (base == NULL) {
+        riak_log_critical_config(cfg, "%s", "Could not create libevent base");
+        exit(1);
+    }
     int it;
 
     riak_binary *bucket_bin = riak_binary_new_from_string(cfg, args.bucket); // Not copied
@@ -134,21 +122,31 @@ main(int   argc,
     }
 
     for(it = 0; it < args.iterate; it++) {
-        riak_log_debug_config(cfg, "Loop %d", it);
+        riak_connection  *cxn   = NULL;
+        riak_libevent    *event = NULL;
+        riak_operation   *rop   = NULL;
+        // Create a connection with the default address resolver
+        err = riak_connection_new(cfg, &cxn, args.host, args.portnum, NULL);
+        if (err) {
+            exit(1);
+        }
+        riak_log_debug(cxn, "Loop %d", it);
+        err = riak_operation_new(cxn, &rop, NULL, NULL, NULL);
+        // TODO: Operation callbacks?  Needed at construction time?
 
         if (args.async) {
-            err = riak_async_create_event(cfg, &cxn);
+            err = riak_libevent_new(&event, rop, base);
             if (err) {
                 return err;
             }
-            riak_connection_set_error_cb(cxn, example_error_cb);
+            riak_operation_set_error_cb(rop, example_error_cb);
         }
         switch (operation) {
         case RIAK_COMMAND_PING:
             if (args.async) {
-                err = riak_async_register_ping(cxn, (riak_response_callback)ping_cb);
+                err = riak_async_register_ping(rop, (riak_response_callback)example_ping_cb);
             } else {
-                err = riak_ping(cfg);
+                err = riak_ping(cxn);
             }
             if (err) {
                 fprintf(stderr, "No Ping [%s]\n", riak_strerror(err));
@@ -157,10 +155,10 @@ main(int   argc,
             break;
         case RIAK_COMMAND_GETSERVERINFO:
             if (args.async) {
-                err = riak_async_register_serverinfo(cxn, (riak_response_callback)serverinfo_cb);
+                err = riak_async_register_serverinfo(rop, (riak_response_callback)example_serverinfo_cb);
             } else {
                 riak_serverinfo_response *serverinfo_response;
-                err = riak_serverinfo(cfg, &serverinfo_response);
+                err = riak_serverinfo(cxn, &serverinfo_response);
                 riak_print_serverinfo_response(serverinfo_response, output, sizeof(output));
                 printf("%s\n", output);
                 riak_free_serverinfo_response(cfg, &serverinfo_response);
@@ -172,10 +170,10 @@ main(int   argc,
             break;
         case RIAK_COMMAND_GET:
             if (args.async) {
-                err = riak_async_register_get(cxn, bucket_bin, key_bin, NULL, (riak_response_callback)get_cb);
+                err = riak_async_register_get(rop, bucket_bin, key_bin, NULL, (riak_response_callback)example_get_cb);
             } else {
                 riak_get_response *get_response;
-                err = riak_get(cfg, bucket_bin, key_bin, NULL, &get_response);
+                err = riak_get(cxn, bucket_bin, key_bin, NULL, &get_response);
                 if (err == ERIAK_OK) {
                     riak_print_get_response(get_response, output, sizeof(output));
                     printf("%s\n", output);
@@ -213,10 +211,10 @@ main(int   argc,
             riak_put_options_set_return_body(put_options, RIAK_FALSE);
 
             if (args.async) {
-                err = riak_async_register_put(cxn, obj, put_options, (riak_response_callback)put_cb);
+                err = riak_async_register_put(rop, obj, put_options, (riak_response_callback)example_put_cb);
             } else {
                 riak_put_response *put_response;
-                err = riak_put(cfg, obj, put_options, &put_response);
+                err = riak_put(cxn, obj, put_options, &put_response);
                 if (err == ERIAK_OK) {
                     riak_print_put_response(put_response, output, sizeof(output));
                     printf("%s\n", output);
@@ -231,9 +229,9 @@ main(int   argc,
             break;
         case RIAK_COMMAND_DEL:
             if (args.async) {
-                err = riak_async_register_delete(cxn, bucket_bin, key_bin, NULL, (riak_response_callback)delete_cb);
+                err = riak_async_register_delete(rop, bucket_bin, key_bin, NULL, (riak_response_callback)example_delete_cb);
             } else {
-                err = riak_delete(cfg, bucket_bin, key_bin, NULL);
+                err = riak_delete(cxn, bucket_bin, key_bin, NULL);
             }
             if (err) {
                 fprintf(stderr, "Delete Problems [%s]\n", riak_strerror(err));
@@ -242,10 +240,10 @@ main(int   argc,
             break;
         case RIAK_COMMAND_LISTBUCKETS:
             if (args.async) {
-                err = riak_async_register_listbuckets(cxn, (riak_response_callback)listbucket_cb);
+                err = riak_async_register_listbuckets(rop, (riak_response_callback)example_listbucket_cb);
             } else {
                 riak_listbuckets_response *bucket_response;
-                err = riak_listbuckets(cfg, &bucket_response);
+                err = riak_listbuckets(cxn, &bucket_response);
                 if (err == ERIAK_OK) {
                     riak_print_listbuckets_response(bucket_response, output, sizeof(output));
                     riak_log_debug_config(cfg, "%s", output);
@@ -259,10 +257,10 @@ main(int   argc,
             break;
         case RIAK_COMMAND_LISTKEYS:
             if (args.async) {
-                err = riak_async_register_listkeys(cxn, bucket_bin, args.timeout * 1000, (riak_response_callback)listkey_cb);
+                err = riak_async_register_listkeys(rop, bucket_bin, args.timeout * 1000, (riak_response_callback)example_listkey_cb);
             } else {
                 riak_listkeys_response *key_response;
-                err = riak_listkeys(cfg, bucket_bin, args.timeout * 1000, &key_response);
+                err = riak_listkeys(cxn, bucket_bin, args.timeout * 1000, &key_response);
                 if (err == ERIAK_OK) {
                     riak_print_listkeys_response(key_response, output, sizeof(output));
                     riak_log_debug_config(cfg, "%s", output);
@@ -276,10 +274,10 @@ main(int   argc,
             break;
         case RIAK_COMMAND_GETCLIENTID:
             if (args.async) {
-                err = riak_async_register_get_clientid(cxn, (riak_response_callback)getclientid_cb);
+                err = riak_async_register_get_clientid(rop, (riak_response_callback)example_getclientid_cb);
             } else {
                 riak_get_clientid_response *getcli_response;
-                err = riak_get_clientid(cfg, &getcli_response);
+                err = riak_get_clientid(cxn, &getcli_response);
                 if (err == ERIAK_OK) {
                     riak_print_get_clientid_response(getcli_response, output, sizeof(output));
                     printf("%s\n", output);
@@ -293,10 +291,10 @@ main(int   argc,
             break;
         case RIAK_COMMAND_SETCLIENTID:
             if (args.async) {
-                err = riak_async_register_set_clientid(cxn, value_bin, (riak_response_callback)setclientid_cb);
+                err = riak_async_register_set_clientid(rop, value_bin, (riak_response_callback)example_setclientid_cb);
             } else {
                 riak_set_clientid_response *setcli_response;
-                err = riak_set_clientid(cfg, value_bin, &setcli_response);
+                err = riak_set_clientid(cxn, value_bin, &setcli_response);
                 riak_free_set_clientid_response(cfg, &setcli_response);
             }
             if (err) {
@@ -306,10 +304,10 @@ main(int   argc,
             break;
         case RIAK_COMMAND_GETBUCKET:
             if (args.async) {
-                err = riak_async_register_get_bucketprops(cxn, bucket_bin, (riak_response_callback)getbucketprops_cb);
+                err = riak_async_register_get_bucketprops(rop, bucket_bin, (riak_response_callback)example_getbucketprops_cb);
             } else {
                 riak_get_bucketprops_response *bucket_response;
-                err = riak_get_bucketprops(cfg, bucket_bin, &bucket_response);
+                err = riak_get_bucketprops(cxn, bucket_bin, &bucket_response);
                 if (err == ERIAK_OK) {
                     riak_print_get_bucketprops_response(bucket_response, output, sizeof(output));
                     riak_log_debug_config(cfg, "%s", output);
@@ -323,10 +321,10 @@ main(int   argc,
             break;
             case RIAK_COMMAND_RESETBUCKET:
             if (args.async) {
-                err = riak_async_register_reset_bucketprops(cxn, bucket_bin, (riak_response_callback)resetbucketprops_cb);
+                err = riak_async_register_reset_bucketprops(rop, bucket_bin, (riak_response_callback)example_resetbucketprops_cb);
             } else {
                 riak_reset_bucketprops_response *bucket_response;
-                err = riak_reset_bucketprops(cfg, bucket_bin, &bucket_response);
+                err = riak_reset_bucketprops(cxn, bucket_bin, &bucket_response);
             }
             if (err) {
                 fprintf(stderr, "Reset Bucket Properties Problems [%s]\n", riak_strerror(err));
@@ -341,10 +339,10 @@ main(int   argc,
             }
             riak_bucket_props_set_last_write_wins(props, RIAK_FALSE);
             if (args.async) {
-                err = riak_async_register_set_bucketprops(cxn, bucket_bin, props, (riak_response_callback)setbucketprops_cb);
+                err = riak_async_register_set_bucketprops(rop, bucket_bin, props, (riak_response_callback)example_setbucketprops_cb);
             } else {
                 riak_set_bucketprops_response *bucket_response;
-                 err = riak_set_bucketprops(cfg, bucket_bin, props, &bucket_response);
+                 err = riak_set_bucketprops(cxn, bucket_bin, props, &bucket_response);
             }
             if (err) {
                 fprintf(stderr, "Set Bucket Properties Problems [%s]\n", riak_strerror(err));
@@ -356,20 +354,19 @@ main(int   argc,
         }
 
         if (args.async) {
-            err = riak_async_send_msg(cxn);
+            err = riak_libevent_send(rop, base);
             if (err) {
                 riak_log_critical(cxn, "%s", "Could not send request");
                 exit(1);
             }
         }
     }
-    // What has been queued up
-    fflush(stdout);
 
     if (args.async) {
         // Terminates only on error or timeout
-        riak_connection_loop(cfg);
+        event_base_dispatch(base);
     }
+    event_base_free(base);
 
     riak_free(cfg, &bucket_bin);
     riak_free(cfg, &key_bin);

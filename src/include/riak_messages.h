@@ -20,8 +20,8 @@
  *
  *********************************************************************/
 
-#ifndef RIAK_MESSAGES_H
-#define RIAK_MESSAGES_H
+#ifndef _RIAK_MESSAGES_H
+#define _RIAK_MESSAGES_H
 
 typedef struct _riak_serverinfo_response riak_serverinfo_response;
 typedef struct _riak_get_response riak_get_response;
@@ -93,7 +93,7 @@ riak_free_serverinfo_response(riak_config              *cfg,
  * @param resp Ping PBC Response
  */
 void
-riak_free_ping_response(riak_config        *cfg,
+riak_free_ping_response(riak_config         *cfg,
                         riak_ping_response **resp);
 
 /**
@@ -113,7 +113,7 @@ riak_print_get_response(riak_get_response *response,
  * @param resp Get response
  */
 void
-riak_free_get_response(riak_config       *cfg,
+riak_free_get_response(riak_config        *cfg,
                        riak_get_response **resp);
 
 /**
@@ -133,7 +133,7 @@ riak_print_put_response(riak_put_response *response,
  * @param resp Put message to be cleaned up
  */
 void
-riak_free_put_response(riak_config       *cfg,
+riak_free_put_response(riak_config        *cfg,
                        riak_put_response **resp);
 
 /**
@@ -142,7 +142,7 @@ riak_free_put_response(riak_config       *cfg,
  * @param resp Delete PBC Response
  */
 void
-riak_free_delete_response(riak_config          *cfg,
+riak_free_delete_response(riak_config           *cfg,
                           riak_delete_response **resp);
 
 /**
@@ -162,7 +162,7 @@ riak_print_listbuckets_response(riak_listbuckets_response *response,
  * @param resp List buckets message to be cleaned up
  */
 void
-riak_free_listbuckets_response(riak_config               *cfg,
+riak_free_listbuckets_response(riak_config                *cfg,
                                riak_listbuckets_response **resp);
 
 /**
@@ -182,7 +182,7 @@ riak_print_listkeys_response(riak_listkeys_response *response,
  * @param resp List keys message to be cleaned up
  */
 void
-riak_free_listkeys_response(riak_config            *cfg,
+riak_free_listkeys_response(riak_config             *cfg,
                             riak_listkeys_response **resp);
 /**
  * @brief Print a summary of a `riak_get_clientid_response`
@@ -201,7 +201,7 @@ riak_print_get_clientid_response(riak_get_clientid_response *response,
  * @param resp client id PBC Response
  */
 void
-riak_free_get_clientid_response(riak_config              *cfg,
+riak_free_get_clientid_response(riak_config               *cfg,
                               riak_get_clientid_response **resp);
 
 /**
@@ -210,7 +210,7 @@ riak_free_get_clientid_response(riak_config              *cfg,
  * @param resp client id PBC Response
  */
 void
-riak_free_set_clientid_response(riak_config              *cfg,
+riak_free_set_clientid_response(riak_config               *cfg,
                               riak_set_clientid_response **resp);
 
 /**
@@ -231,7 +231,7 @@ riak_print_get_bucketprops_response(riak_get_bucketprops_response *response,
  * @param resp Bucket Properties PBC Response
  */
 void
-riak_free_get_bucketprops_response(riak_config                   *cfg,
+riak_free_get_bucketprops_response(riak_config                    *cfg,
                                    riak_get_bucketprops_response **resp);
 
 /**
@@ -240,7 +240,7 @@ riak_free_get_bucketprops_response(riak_config                   *cfg,
  * @param resp Bucket Properties PBC Response
  */
 void
-riak_free_reset_bucketprops_response(riak_config                     *cfg,
+riak_free_reset_bucketprops_response(riak_config                      *cfg,
                                      riak_reset_bucketprops_response **resp);
 
 /**
@@ -249,7 +249,7 @@ riak_free_reset_bucketprops_response(riak_config                     *cfg,
  * @param resp Bucket Properties PBC Response
  */
 void
-riak_free_set_bucketprops_response(riak_config                   *cfg,
+riak_free_set_bucketprops_response(riak_config                    *cfg,
                                    riak_set_bucketprops_response **resp);
 
-#endif // RIAK_MESSAGES_H
+#endif // _RIAK_MESSAGES_H

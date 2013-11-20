@@ -8,7 +8,7 @@ env = Environment(
     )
 env.ParseConfig("pkg-config --libs libevent libprotobuf-c protobuf")
 env.ParseConfig("pkg-config --cflags libevent libprotobuf-c protobuf")
-files = ['example.c', 'riak_command.c']
+files = ['example.c', 'riak_command.c', 'example_call_backs.c']
 
 example = env.Program('riakc_example', files, LIBS=['riak_c_client', 'event_core', 'event_extra', 'pthread', 'protobuf', 'protobuf-c','cunit'])
 

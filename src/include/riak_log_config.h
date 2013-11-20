@@ -20,8 +20,8 @@
  *
  *********************************************************************/
 
-#ifndef RIAK_LOG_CONFIG_H_
-#define RIAK_LOG_H_CONFIG_H_
+#ifndef _RIAK_LOG_CONFIG_H
+#define _RIAK_LOG_CONFIG_H
 
 #include <stdarg.h>
 
@@ -85,4 +85,4 @@ typedef void (*riak_log_fn)(void            *ptr,
                             const char      *format,
                             va_list          args);
 
-#endif
+#endif // _RIAK_LOG_CONFIG_H

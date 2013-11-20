@@ -20,8 +20,8 @@
  *
  *********************************************************************/
 
-#ifndef RIAK_LOG_H_
-#define RIAK_LOG_H_
+#ifndef _RIAK_LOG_H
+#define _RIAK_LOG_H
 
 /**
  * @brief Add a record to the Riak log
@@ -99,4 +99,4 @@ riak_log_internal(riak_config         *cfg,
 #define riak_log_debug_config(cxn,format, ...)
 #endif
 
-#endif
+#endif //_RIAK_LOG_H

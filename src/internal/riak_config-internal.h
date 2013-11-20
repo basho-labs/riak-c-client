@@ -20,11 +20,8 @@
  *
  *********************************************************************/
 
-#ifndef RIAK_CONTEXT_INTERNAL_H_
-#define RIAK_CONTEXT_INTERNAL_H_
-
-#define RIAK_LOGGING_MAX_LEN            256
-#define RIAK_HOST_MAX_LEN               256
+#ifndef _RIAK_CONFIG_INTERNAL_H
+#define _RIAK_CONFIG_INTERNAL_H
 
 struct _riak_config {
     riak_alloc_fn       malloc_fn;
@@ -37,12 +34,6 @@ struct _riak_config {
     riak_log_fn         log_fn;
     riak_log_init_fn    log_init_fn;
     riak_log_cleanup_fn log_cleanup_fn;
-
-    // EVENT LIBRARY
-    riak_connection_base *base; // Is this the right location? One per thread, so probably
-    char                hostname[RIAK_HOST_MAX_LEN];
-    char                portnum[RIAK_HOST_MAX_LEN]; // Keep as a string for debugging
-    riak_addrinfo      *addrinfo;
 };
 
-#endif /* RIAK_CONTEXT_INTERNAL_H_ */
+#endif // _RIAK_CONFIG_INTERNAL_H

@@ -20,8 +20,8 @@
  *
  *********************************************************************/
 
-#ifndef RIAK_NETWORK_H_
-#define RIAK_NETWORK_H_
+#ifndef _RIAK_NETWORK_H
+#define _RIAK_NETWORK_H
 
 /**
  * @brief Turns ASCII host/port into addrinfo struct
@@ -62,4 +62,4 @@ riak_print_host(riak_addrinfo *addrinfo,
                 int            len,
                 riak_uint16_t *port);
 
-#endif
+#endif // _RIAK_NETWORK_H

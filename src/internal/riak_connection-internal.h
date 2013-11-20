@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * riak_connection-internal.h: Management of the Riak event
+ * riak_connection-internal.h: Management of the Riak Connection
  *
  * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
  *
@@ -20,76 +20,17 @@
  *
  *********************************************************************/
 
-#ifndef RIAK_EVENT_INTERNAL_H_
-#define RIAK_EVENT_INTERNAL_H_
+#ifndef _RIAK_CONNECTION_INTERNAL_H
+#define _RIAK_CONNECTION_INTERNAL_H
 
-typedef riak_error (*riak_response_decoder)(struct _riak_connection      *cxn,
-                                            struct _riak_pb_message *pbresp,
-                                            void                   **response,
-                                            riak_boolean_t          *done);
+#define RIAK_HOST_MAX_LEN   256
 
-// Essentially the state of the current event
 struct _riak_connection {
-    riak_config            *config;
-    riak_connection_base         *base;
-    riak_bufferevent        *bevent;
-    riak_response_decoder    decoder;
-    riak_response_callback   response_cb;
-    riak_response_callback   error_cb;
-    void                    *cb_data;
-    riak_socket_t            fd;
-
-    // Current message being decoded
-    riak_uint32_t            position;
-    riak_uint32_t            msglen;
-    riak_uint8_t            *msgbuf;
-    riak_boolean_t           msglen_complete;
-
-    // Results of message translation
-    struct _riak_pb_message *pb_request;
-    struct _riak_pb_message *pb_response;
-
-    riak_server_error       *error;
-
-    void                    *response;
+    riak_config   *config;
+    char           hostname[RIAK_HOST_MAX_LEN];
+    char           portnum[RIAK_HOST_MAX_LEN]; // Keep as a string for debugging
+    riak_addrinfo *addrinfo;
+    riak_socket_t  fd;
 };
 
-/**
- * @brief Called by libevent when event posts
- * @param bev Riak Buffecxnent (libevent)
- * @param ptr User-supplied pointer (Riak Connection)
- */
-void
-riak_connection_callback(riak_bufferevent *bev,
-                    short             events,
-                    void             *ptr);
-
-/**
- * @brief Called by libevent when event is ready for writing
- * @param bev Riak Buffecxnent (libevent)
- * @param ptr User-supplied pointer (Riak Connection)
- */
-void
-riak_write_callback(riak_bufferevent *bev,
-                    void             *ptr);
-
-/**
- * @brief Called by libevent on a read event
- * @param bev Riak Buffecxnent (libevent)
- * @param ptr User-supplied pointer (Riak Connection)
- */
-void
-riak_read_result_callback(riak_bufferevent *bev,
-                          void             *ptr);
-
-/**
- * @brief Set the event's message decoding function
- * @param cxn Riak Connection
- * @param decoder Function pointer to message translator
- */
-void
-riak_connection_set_response_decoder(riak_connection           *cxn,
-                                riak_response_decoder decoder);
-
-
-#endif
+#endif // _RIAK_CONNECTION_INTERNAL_H

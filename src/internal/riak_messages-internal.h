@@ -22,8 +22,8 @@
 
 #include "riak_binary-internal.h"
 
-#ifndef RIAK_INTERNAL_MESSAGES_H
-#define RIAK_INTERNAL_MESSAGES_H
+#ifndef _RIAK_INTERNAL_MESSAGES_H
+#define _RIAK_INTERNAL_MESSAGES_H
 
 #define MSG_RPBERRORRESP              0
 
@@ -332,38 +332,38 @@ riak_pb_message_free(riak_config     *cfg,
 
 /**
  * @brief Convert PBC error response into user-readable data type
- * @param cxn Riak Connection
+ * @param rop Riak Operation
  * @param pbresp Protocol Buffer response from Riak
  * @param resp Returned error structure
  * @param done Returned flag set to true if finished streaming
  * @return Error if out of memory
  */
 riak_error
-riak_decode_error_response(riak_connection           *cxn,
+riak_decode_error_response(riak_operation       *rop,
                            riak_pb_message      *pbresp,
                            riak_error_response **resp,
                            riak_boolean_t       *done);
 
 /**
  * @brief Build a ping request
- * @param cxn Riak Connection
+ * @param rop Riak Operation
  * @param req Created PB message
  * @return Error if out of memory
  */
 riak_error
-riak_encode_ping_request(riak_connection       *cxn,
+riak_encode_ping_request(riak_operation   *rop,
                          riak_pb_message **req);
 
 /**
  * @brief Convert PBC error response into user-readable data type
- * @param cxn Riak Connection
+ * @param rop Riak Operation
  * @param pbresp Protocol Buffer response from Riak
  * @param resp Returned error structure
  * @param done Returned flag set to true if finished streaming
  * @return Error if out of memory
  */
 riak_error
-riak_decode_ping_response(riak_connection          *cxn,
+riak_decode_ping_response(riak_operation      *rop,
                           riak_pb_message     *pbresp,
                           riak_ping_response **resp,
                           riak_boolean_t      *done);
@@ -371,31 +371,31 @@ riak_decode_ping_response(riak_connection          *cxn,
 
 /**
  * @brief Build a server info request
- * @param cxn Riak Connection
+ * @param rop Riak Operation
  * @param req Created PB message
  * @return Error if out of memory
  */
 riak_error
-riak_encode_serverinfo_request(riak_connection       *cxn,
+riak_encode_serverinfo_request(riak_operation   *rop,
                                riak_pb_message **req);
 
 /**
  * @brief Translate PBC message to Riak message
- * @param cxn Riak Connection
+ * @param rop Riak Operation
  * @param pbresp Protocol Buffer message
  * @param done Returned flag set to true if finished streaming
  * @param resp Returned Get message
  * @return Error if out of memory
  */
 riak_error
-riak_decode_serverinfo_response(riak_connection                *cxn,
+riak_decode_serverinfo_response(riak_operation            *rop,
                                 riak_pb_message           *pbresp,
                                 riak_serverinfo_response **resp,
                                 riak_boolean_t            *done);
 
 /**
  * @brief Create a get/fetch Request
- * @param cxn Riak Connection
+ * @param rop Riak Operation
  * @param bucket Name of Riak bucket
  * @param key Name of Riak key
  * @param options Get request parameters
@@ -403,7 +403,7 @@ riak_decode_serverinfo_response(riak_connection                *cxn,
  * @return Error if out of memory
  */
 riak_error
-riak_encode_get_request(riak_connection       *cxn,
+riak_encode_get_request(riak_operation   *rop,
                         riak_binary      *bucket,
                         riak_binary      *key,
                         riak_get_options *options,
@@ -411,42 +411,42 @@ riak_encode_get_request(riak_connection       *cxn,
 
 /**
  * @brief Translate PBC message to Riak message
- * @param cxn Riak Connection
+ * @param rop Riak Operation
  * @param pbresp Protocol Buffer message
  * @param done Returned flag set to true if finished streaming
  * @param resp Returned Get message
  * @return Error if out of memory
  */
 riak_error
-riak_decode_get_response(riak_connection         *cxn,
+riak_decode_get_response(riak_operation     *rop,
                          riak_pb_message    *pbresp,
                          riak_get_response **resp,
                          riak_boolean_t     *done);
 
 /**
  * @brief Create Put Request
- * @param cxn Riak Connection
+ * @param rop Riak Operation
  * @param riak_obj Riak object to be put
  * @param options Options to the put request
  * @param req Returned request message
  * @return Error if out of memory
  */
 riak_error
-riak_encode_put_request(riak_connection       *cxn,
+riak_encode_put_request(riak_operation   *rop,
                         riak_object      *riak_obj,
                         riak_put_options *options,
                         riak_pb_message **req);
 
 /**
  * @brief Translate PBC put message to a Riak response
- * @param cxn Riak Connection
+ * @param rop Riak Operation
  * @param pbresp Protocol Buffer message
  * @param resp Returned Put message
  * @param done Returned flag set to true if finished streaming
  * @return Error if out of memory
  */
 riak_error
-riak_decode_put_response(riak_connection         *cxn,
+riak_decode_put_response(riak_operation     *rop,
                          riak_pb_message    *pbresp,
                          riak_put_response **resp,
                          riak_boolean_t     *done);
@@ -460,7 +460,7 @@ riak_decode_put_response(riak_connection         *cxn,
  * @return Error if out of memory
  */
 riak_error
-riak_encode_delete_request(riak_connection          *cxn,
+riak_encode_delete_request(riak_operation      *rop,
                            riak_binary         *bucket,
                            riak_binary         *key,
                            riak_delete_options *options,
@@ -468,14 +468,14 @@ riak_encode_delete_request(riak_connection          *cxn,
 
 /**
  * @brief Translate PBC delete message to a Riak response
- * @param cxn Riak Connection
+ * @param rop Riak Operation
  * @param pbresp Protocol Buffer message
  * @param resp Returned Delete message
  * @param done Returned flag set to true if finished streaming
  * @return Error if out of memory
  */
 riak_error
-riak_decode_delete_response(riak_connection            *cxn,
+riak_decode_delete_response(riak_operation        *rop,
                             riak_pb_message       *pbresp,
                             riak_delete_response **resp,
                             riak_boolean_t        *done);
@@ -483,154 +483,154 @@ riak_decode_delete_response(riak_connection            *cxn,
 
 /**
  * @brief Create a request to find all buckets
- * @param cxn Riak Connection
+ * @param rop Riak Operation
  * @param req Returned listbuckets request
  * @return Error if out of memory
  */
 riak_error
-riak_encode_listbuckets_request(riak_connection       *cxn,
+riak_encode_listbuckets_request(riak_operation   *rop,
                                 riak_pb_message **req);
 
 /**
  * @brief Translate PBC listbuckets response into Riak strucuture
- * @param cxn Riak Connection
+ * @param rop Riak Operation
  * @param pbresp PBC response message
  * @param resp Returned Riak response structure
  * @param done Returned flag set to true if finished streaming
  * @return Error if out of memory
  */
 riak_error
-riak_decode_listbuckets_response(riak_connection                 *cxn,
+riak_decode_listbuckets_response(riak_operation             *rop,
                                  riak_pb_message            *pbresp,
                                  riak_listbuckets_response **resp,
                                  riak_boolean_t             *done);
 
 /**
  * @brief Create a request to find all keys in a bucket
- * @param cxn Riak Connection
+ * @param rop Riak Operation
  * @param bucket Name of Riak bucket
  * @param timeout How long to wait for a response
  * @param req Returned listbuckets request
  * @return Error if out of memory
  */
 riak_error
-riak_encode_listkeys_request(riak_connection       *cxn,
+riak_encode_listkeys_request(riak_operation   *rop,
                                  riak_binary  *bucket,
                                  riak_uint32_t timeout,
                                  riak_pb_message **req);
 
 /**
  * @brief Translate PBC listkeys response into Riak structure
- * @param cxn Riak Connection
+ * @param rop Riak Operation
  * @param pbresp PBC response message
  * @param resp Returned Riak response structure
  * @param done Returned flag set to true if finished streaming
  * @return Error if out of memory
  */
 riak_error
-riak_decode_listkeys_response(riak_connection              *cxn,
+riak_decode_listkeys_response(riak_operation          *rop,
                               riak_pb_message         *pbresp,
                               riak_listkeys_response **resp,
                               riak_boolean_t          *done);
 
 /**
  * @brief Build a client id request
- * @param cxn Riak Connection
+ * @param rop Riak Operation
  * @param req Created PB message
  * @return Error if out of memory
  */
 riak_error
-riak_encode_get_clientid_request(riak_connection       *cxn,
+riak_encode_get_clientid_request(riak_operation   *rop,
                                  riak_pb_message **req);
 
 /**
  * @brief Translate PBC message to Riak message
- * @param cxn Riak Connection
+ * @param rop Riak Operation
  * @param pbresp Protocol Buffer message
  * @param done Returned flag set to true if finished streaming
  * @param resp Returned Get message
  * @return Error if out of memory
  */
 riak_error
-riak_decode_get_clientid_response(riak_connection                  *cxn,
+riak_decode_get_clientid_response(riak_operation              *rop,
                                   riak_pb_message             *pbresp,
                                   riak_get_clientid_response **resp,
                                   riak_boolean_t              *done);
 
 /**
  * @brief Build a client id request
- * @param cxn Riak Connection
- * @param clientid Client id for current connection
+ * @param rop Riak Operation
+ * @param clientid Client id for current operation
  * @param req Created PB message
  * @return Error if out of memory
  */
 riak_error
-riak_encode_set_clientid_request(riak_connection       *cxn,
+riak_encode_set_clientid_request(riak_operation   *rop,
                                  riak_binary      *clientid,
                                  riak_pb_message **req);
 
 /**
  * @brief Translate PBC message to Riak message
- * @param cxn Riak Connection
+ * @param rop Riak Operation
  * @param pbresp Protocol Buffer message
  * @param done Returned flag set to true if finished streaming
  * @param resp Returned set message
  * @return Error if out of memory
  */
 riak_error
-riak_decode_set_clientid_response(riak_connection                  *cxn,
+riak_decode_set_clientid_response(riak_operation              *rop,
                                   riak_pb_message             *pbresp,
                                   riak_set_clientid_response **resp,
                                   riak_boolean_t              *done);
 
 /**
  * @brief Create a request to fetch bucket properies
- * @param cxn Riak Connection
+ * @param rop Riak Operation
  * @param bucket Name of Riak bucket
  * @param req Returned bucket properies request
  * @return Error if out of memory
  */
 riak_error
-riak_encode_get_bucketprops_request(riak_connection       *cxn,
+riak_encode_get_bucketprops_request(riak_operation   *rop,
                                     riak_binary      *bucket,
                                     riak_pb_message **req);
 
 /**
  * @brief Translate PBC get_bucketprops response into Riak structure
- * @param cxn Riak Connection
+ * @param rop Riak Operation
  * @param pbresp PBC response message
  * @param resp Returned Riak response structure
  * @param done Returned flag set to true if finished streaming
  * @return Error if out of memory
  */
 riak_error
-riak_decode_get_bucketprops_response(riak_connection                     *cxn,
+riak_decode_get_bucketprops_response(riak_operation                 *rop,
                                      riak_pb_message                *pbresp,
                                      riak_get_bucketprops_response **resp,
                                      riak_boolean_t                 *done);
 
 /**
  * @brief Create a request to reset bucket properties
- * @param cxn Riak Connection
+ * @param rop Riak Operation
  * @param bucket Name of Riak bucket
  * @param req Returned bucket properties request
  * @return Error if out of memory
  */
 riak_error
-riak_encode_reset_bucketprops_request(riak_connection       *cxn,
+riak_encode_reset_bucketprops_request(riak_operation   *rop,
                                       riak_binary      *bucket,
                                       riak_pb_message **req);
 
 /**
  * @brief Translate PBC reset_bucketprops response into Riak structure
- * @param cxn Riak Connection
+ * @param rop Riak Operation
  * @param pbresp PBC response message
  * @param resp Returned Riak response structure
  * @param done Returned flag set to true if finished streaming
  * @return Error if out of memory
  */
 riak_error
-riak_decode_reset_bucketprops_response(riak_connection                       *cxn,
+riak_decode_reset_bucketprops_response(riak_operation                   *rop,
                                        riak_pb_message                  *pbresp,
                                        riak_reset_bucketprops_response **resp,
                                        riak_boolean_t                   *done);
@@ -638,31 +638,30 @@ riak_decode_reset_bucketprops_response(riak_connection                       *cx
 
 /**
  * @brief Create a request to set bucket properties
- * @param cxn Riak Connection
+ * @param rop Riak Operation
  * @param bucket Name of Riak bucket
  * @param props Bucket properties
  * @param req Returned bucket properties request
  * @return Error if out of memory
  */
 riak_error
-riak_encode_set_bucketprops_request(riak_connection        *cxn,
+riak_encode_set_bucketprops_request(riak_operation    *rop,
                                     riak_binary       *bucket,
                                     riak_bucket_props *props,
                                     riak_pb_message  **req);
 
 /**
  * @brief Translate PBC set_bucketprops response into Riak structure
- * @param cxn Riak Connection
+ * @param rop Riak Operation
  * @param pbresp PBC response message
  * @param resp Returned Riak response structure
  * @param done Returned flag set to true if finished streaming
  * @return Error if out of memory
  */
 riak_error
-riak_decode_set_bucketprops_response(riak_connection                     *cxn,
+riak_decode_set_bucketprops_response(riak_operation                 *rop,
                                      riak_pb_message                *pbresp,
                                      riak_set_bucketprops_response **resp,
                                      riak_boolean_t                 *done);
 
-
-#endif
+#endif // _RIAK_EVENT_INTERNAL_H

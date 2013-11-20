@@ -39,7 +39,7 @@ riak_yokozuna_pb = env.Protoc(
     RPROTOCPROTOPATH=['build/proto'],
     PROTOCOUTDIR = '.', # defaults to same directory as .proto
 )
-lib_files = [riak_pb[0], riak_kv_pb[0], riak_search_pb[0], riak_yokozuna_pb[0], Split('riak.c riak_utils.c riak_binary.c riak_config.c riak_connection.c riak_messages.c riak_log.c riak_error.c riak_network.c riak_object.c riak_bucket_props.c riak_call_backs.c riak_print.c riak_async.c riak_options.c')]
+lib_files = [riak_pb[0], riak_kv_pb[0], riak_search_pb[0], riak_yokozuna_pb[0], Split('riak.c riak_utils.c riak_binary.c riak_config.c riak_connection.c riak_messages.c riak_log.c riak_error.c riak_network.c riak_object.c riak_bucket_props.c riak_print.c riak_async.c riak_options.c riak_operation.c')]
 
 env.Library('riak_c_client', lib_files)
 #env.Program('riak_c_client','main.c', LIBS=['riak_c_client', 'event_core', 'event_extra', 'pthread', 'protobuf', 'protobuf-c'])

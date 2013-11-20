@@ -20,8 +20,8 @@
  *
  *********************************************************************/
 
-#ifndef RIAK_OBJECT_INTERNAL_H_
-#define RIAK_OBJECT_INTERNAL_H_
+#ifndef _RIAK_OBJECT_INTERNAL_H
+#define _RIAK_OBJECT_INTERNAL_H
 
 // Based off of RpbLink
 struct _riak_link
@@ -116,4 +116,4 @@ riak_object_free_pb(riak_config *cfg,
                     RpbContent   *obj);
 
 
-#endif /* RIAK_OBJECT_H_ */
+#endif // _RIAK_OBJECT_INTERNAL_H

@@ -22,8 +22,8 @@
 
 #include "riak_binary-internal.h"
 
-#ifndef RIAK_INTERNAL_BUCKET_PROPS_H
-#define RIAK_INTERNAL_BUCKET_PROPS_H
+#ifndef _RIAK_INTERNAL_BUCKET_PROPS_H
+#define _RIAK_INTERNAL_BUCKET_PROPS_H
 
 // Based on RpbModFun
 struct _riak_mod_fun
@@ -103,4 +103,4 @@ riak_bucket_props_to_pb_copy(riak_config      *cfg,
                              RpbBucketProps    *to,
                              riak_bucket_props *from);
 
-#endif //RIAK_INTERNAL_BUCKET_PROPS_H
+#endif // _RIAK_INTERNAL_BUCKET_PROPS_H
