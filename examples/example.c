@@ -71,6 +71,7 @@ example_log(void            *ptr,
     fprintf(datum->fp, "%s %s ", stime, riak_log_level_description(level));
     vfprintf(datum->fp, format, args);
     fprintf(datum->fp, "\n");
+    fflush(datum->fp);
 }
 
 int
@@ -132,6 +133,10 @@ main(int   argc,
         }
         riak_log_debug(cxn, "Loop %d", it);
         err = riak_operation_new(cxn, &rop, NULL, NULL, NULL);
+        if (err) {
+            fprintf(stderr, "Could not allocate operation\n");
+            exit(1);
+        }
         // TODO: Operation callbacks?  Needed at construction time?
 
         if (args.async) {
@@ -140,6 +145,7 @@ main(int   argc,
                 return err;
             }
             riak_operation_set_error_cb(rop, example_error_cb);
+            riak_operation_set_cb_data(rop, rop);
         }
         switch (operation) {
         case RIAK_COMMAND_PING:
@@ -147,12 +153,12 @@ main(int   argc,
                 err = riak_async_register_ping(rop, (riak_response_callback)example_ping_cb);
             } else {
                 err = riak_ping(cxn);
+                printf("PONG\n");
             }
             if (err) {
                 fprintf(stderr, "No Ping [%s]\n", riak_strerror(err));
                 exit(1);
             }
-            printf("PONG\n");
             break;
         case RIAK_COMMAND_GETSERVERINFO:
             if (args.async) {
@@ -355,7 +361,7 @@ main(int   argc,
         }
 
         if (args.async) {
-            err = riak_libevent_send(rop, base);
+            err = riak_libevent_send(rop, event);
             if (err) {
                 riak_log_critical(cxn, "%s", "Could not send request");
                 exit(1);

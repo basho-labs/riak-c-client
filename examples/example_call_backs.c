@@ -40,7 +40,7 @@ example_error_cb(void *resp,
 
 void
 example_ping_cb(riak_ping_response *response,
-                void                *ptr) {
+                void               *ptr) {
     riak_operation  *rop = (riak_operation*)ptr;
     riak_connection *cxn = riak_operation_get_connection(rop);
     riak_config     *cfg = riak_connection_get_config(cxn);
@@ -72,7 +72,6 @@ example_listbucket_cb(riak_listbuckets_response *response,
     char output[10240];
     riak_print_listbuckets_response(response, output, sizeof(output));
     riak_log_debug(cxn, "%s", output);
-    fflush(stdout);
     riak_free_listbuckets_response(cfg, &response);
 }
 

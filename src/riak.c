@@ -467,7 +467,7 @@ riak_write(riak_operation *rop,
     }
 #ifdef _RIAK_DEBUG
     riak_connection *cxn = riak_operation_get_connection(rop);
-    riak_log_debug(cxn, "Wrote %d bytes\n", (int)len);
+    riak_log_debug(cxn, "Wrote %d bytes", (int)len);
     char buffer[10240];
     riak_size_t buflen = sizeof(buffer);
     char *pos = buffer;
@@ -488,6 +488,7 @@ riak_write(riak_operation *rop,
         pos += wrote;
         buflen -= wrote;
     }
+    riak_log_debug(cxn, "%s", buffer);
 #endif
     return ERIAK_OK;
 }

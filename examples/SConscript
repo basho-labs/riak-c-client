@@ -2,7 +2,7 @@ import os
 
 env = Environment(
     ENV = os.environ,
-    CCFLAGS = '-g -Wall -DUSE_DEBUG',
+    CCFLAGS = '-g -Wall -DUSE_DEBUG -D_RIAK_DEBUG',
     CPPPATH=['include','../../src/include','../../src/internal','../../build/proto'],
     LIBPATH=['../../build']
     )
