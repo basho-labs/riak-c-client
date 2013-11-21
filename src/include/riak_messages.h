@@ -101,8 +101,9 @@ riak_free_ping_response(riak_config         *cfg,
  * @param response Result from a Get request
  * @param target Location of string to be formatted
  * @param len Number of free bytes
+ * @returns Number of bytes written
  */
-void
+int
 riak_print_get_response(riak_get_response *response,
                         char              *target,
                         riak_size_t        len);

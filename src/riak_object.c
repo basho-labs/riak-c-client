@@ -327,13 +327,14 @@ riak_object_new_array(riak_config   *cfg,
 
 void
 riak_object_free_array(riak_config   *cfg,
-                       riak_object ***array,
+                       riak_object ***array_target,
                        riak_size_t    len) {
     int i;
+    riak_object **array = *array_target;
     for(i = 0; i < len; i++) {
-        riak_object_free(cfg, array[i]);
+        riak_object_free(cfg, &(array[i]));
     }
-    riak_free(cfg, array);
+    riak_free(cfg, array_target);
 }
 
 int

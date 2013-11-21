@@ -34,6 +34,7 @@ typedef int32_t             riak_int32_t;
 typedef uint64_t            riak_uint64_t;
 typedef int64_t             riak_int64_t;
 typedef size_t              riak_size_t;
+typedef ssize_t             riak_ssize_t;
 
 // network types
 typedef struct addrinfo     riak_addrinfo;

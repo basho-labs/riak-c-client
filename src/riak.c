@@ -20,6 +20,7 @@
  *
  *********************************************************************/
 
+#include <errno.h>
 #include "riak.h"
 #include "riak_connection.h"
 #include "riak_messages-internal.h"
@@ -30,17 +31,24 @@
 // SYNCHRONOUS CALLBACKS
 //
 
-riak_size_t
+riak_ssize_t
 riak_sync_read_cb(void       *ptr,
                   void       *data,
                   riak_size_t size) {
     riak_operation  *rop = (riak_operation*)ptr;
     riak_connection *cxn = riak_operation_get_connection(rop);
-    riak_socket_t    fd  = riak_connection_get_fd(cxn);
-    return read(fd, data, size);
+    riak_socket_t     fd = riak_connection_get_fd(cxn);
+    riak_ssize_t  result = read(fd, data, size);
+    if (result < 0) {
+        char message[256];
+        strerror_r(errno, message, sizeof(message));
+        printf("%s\n", message);
+        abort();
+    }
+    return result;
 }
 
-riak_size_t
+riak_ssize_t
 riak_sync_write_cb(void       *ptr,
                    void       *data,
                    riak_size_t size) {
@@ -66,6 +74,7 @@ riak_sync_request(riak_operation **rop_target,
 
     riak_boolean_t done_streaming;
     err = riak_read(rop, &done_streaming, riak_sync_read_cb, rop);
+    *response = rop->response;
     riak_operation_free(rop_target);
     return err;
 }
@@ -104,7 +113,7 @@ riak_serverinfo(riak_connection           *cxn,
     if (err) {
         return err;
     }
-    err = riak_sync_request(&rop, (void**)&response);
+    err = riak_sync_request(&rop, (void**)response);
     if (err) {
         return err;
     }
@@ -128,7 +137,7 @@ riak_get(riak_connection    *cxn,
     if (err) {
         return err;
     }
-    err = riak_sync_request(&rop, (void**)&response);
+    err = riak_sync_request(&rop, (void**)response);
     if (err) {
         return err;
     }
@@ -335,14 +344,15 @@ riak_read(riak_operation *rop,
     riak_config     *cfg = riak_connection_get_config(cxn);
     riak_size_t      buflen;
     *done_streaming = RIAK_FALSE;
+
     while(RIAK_TRUE) {
         // Are we in the middle of a message already?
         if (rop->msglen_complete == RIAK_FALSE) {
             // Read the first 32-bits which are the message size
             // However, if a few size bytes were included during the last read, add them in
-            riak_uint32_t  inmsglen = rop->msglen;
-            riak_size_t remaining_msg_len = sizeof(inmsglen) - rop->position;
-            riak_uint8_t *target = (riak_uint8_t*)(&inmsglen);
+            riak_uint32_t inmsglen          = rop->msglen;
+            riak_size_t   remaining_msg_len = sizeof(inmsglen) - rop->position;
+            riak_uint8_t *target            = (riak_uint8_t*)(&inmsglen);
             target += rop->position;
             buflen = (read_cb)(read_cb_data, target, remaining_msg_len);
             target = (riak_uint8_t*)(&inmsglen);
@@ -354,10 +364,10 @@ riak_read(riak_operation *rop,
                 // Stuff the partial size into rop->msglen and note the position
                 if (buflen < sizeof(inmsglen)) {
                     rop->position = buflen;
-                    rop->msglen = inmsglen;
+                    rop->msglen   = inmsglen;
                     return ERIAK_OK;
                 }
-                abort();  // Something is hosed here
+                return ERIAK_READ;  // Something is hosed here
             }
 
             rop->msglen_complete = RIAK_TRUE;
@@ -367,7 +377,7 @@ riak_read(riak_operation *rop,
             // TODO: Need to malloc new buffer each time?
             rop->msgbuf = (riak_uint8_t*)riak_config_allocate(cfg, rop->msglen);
             if (rop->msgbuf == NULL) {
-                riak_log_debug(cxn, "%s", "Could not allocate buffer in riak_read_result_callback");
+                riak_log_debug(cxn, "%s", "Could not allocate read buffer");
                 return ERIAK_READ;
             }
         } else {
@@ -418,15 +428,19 @@ riak_read(riak_operation *rop,
         riak_free(cfg, &pbresp);
         riak_free(cfg, &rop->msgbuf);
 
-        // Call the user-defined callback for this message, when finished
-        if (done_streaming && rop->response_cb) {
-            (rop->response_cb)(rop->response, rop->cb_data);
-        }
-
         // Something is amiss
         if (result)
             return ERIAK_READ;
+
+        // Call the user-defined callback for this message, when finished
+        if (*done_streaming) {
+            if (rop->response_cb) {
+                (rop->response_cb)(rop->response, rop->cb_data);
+            }
+            break;  // Done with current message
+        }
     }
+
     return ERIAK_OK;
 }
 
@@ -443,20 +457,21 @@ riak_write(riak_operation *rop,
 
     // Convert len to network byte order
     riak_uint32_t msglen = htonl(len+1);
-    int wrote = (write_cb)(write_cb_data, (void*)&msglen, sizeof(msglen));
+    riak_int32_t wrote = (write_cb)(write_cb_data, (void*)&msglen, sizeof(msglen));
     if (wrote == 0) return ERIAK_WRITE;
     wrote = (write_cb)(write_cb_data, (void*)&reqid, sizeof(reqid));
     if (wrote == 0) return ERIAK_WRITE;
-    if (msglen > 0) {
+    if (len > 0) {
         wrote = (write_cb)(write_cb_data, (void*)msgbuf, len);
         if (wrote == 0) return ERIAK_WRITE;
     }
-    riak_log_debug(cxn, "Wrote %d bytes\n", (int)len);
 #ifdef _RIAK_DEBUG
+    riak_connection *cxn = riak_operation_get_connection(rop);
+    riak_log_debug(cxn, "Wrote %d bytes\n", (int)len);
     char buffer[10240];
     riak_size_t buflen = sizeof(buffer);
     char *pos = buffer;
-    riak_int32_t wrote = 0;
+    wrote = 0;
     int i;
     for(i = 0; buflen > 0 && i < len; i++) {
         wrote = snprintf(pos, buflen, "%02x", msgbuf[i]);

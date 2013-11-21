@@ -280,9 +280,9 @@ riak_async_register_set_bucketprops(riak_operation        *rop,
   @param size the size of the data buffer, in bytes
   @returns The Number of bytes read
  */
-typedef size_t (*riak_io_cb)(void  *ptr,
-                             void  *data,
-                             size_t size);
+typedef riak_ssize_t (*riak_io_cb)(void  *ptr,
+                                   void  *data,
+                                   size_t size);
 
 riak_error
 riak_read(riak_operation   *rop,

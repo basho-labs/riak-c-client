@@ -152,6 +152,7 @@ main(int   argc,
                 fprintf(stderr, "No Ping [%s]\n", riak_strerror(err));
                 exit(1);
             }
+            printf("PONG\n");
             break;
         case RIAK_COMMAND_GETSERVERINFO:
             if (args.async) {
@@ -246,7 +247,7 @@ main(int   argc,
                 err = riak_listbuckets(cxn, &bucket_response);
                 if (err == ERIAK_OK) {
                     riak_print_listbuckets_response(bucket_response, output, sizeof(output));
-                    riak_log_debug_config(cfg, "%s", output);
+                    printf("%s\n", output);
                 }
                 riak_free_listbuckets_response(cfg, &bucket_response);
             }
@@ -263,7 +264,7 @@ main(int   argc,
                 err = riak_listkeys(cxn, bucket_bin, args.timeout * 1000, &key_response);
                 if (err == ERIAK_OK) {
                     riak_print_listkeys_response(key_response, output, sizeof(output));
-                    riak_log_debug_config(cfg, "%s", output);
+                    printf("%s\n", output);
                 }
                 riak_free_listkeys_response(cfg, &key_response);
             }
@@ -310,7 +311,7 @@ main(int   argc,
                 err = riak_get_bucketprops(cxn, bucket_bin, &bucket_response);
                 if (err == ERIAK_OK) {
                     riak_print_get_bucketprops_response(bucket_response, output, sizeof(output));
-                    riak_log_debug_config(cfg, "%s", output);
+                    printf("%s\n", output);
                 }
                 riak_free_get_bucketprops_response(cfg, &bucket_response);
             }

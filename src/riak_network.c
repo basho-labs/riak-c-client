@@ -21,6 +21,7 @@
  *********************************************************************/
 
 #include <errno.h>
+#include <fcntl.h>
 #include "riak.h"
 #include "riak_messages-internal.h"
 #include "riak_utils-internal.h"
@@ -88,6 +89,17 @@ riak_just_open_a_socket(riak_config   *cfg,
         riak_log_critical_config(cfg, "%s", "Could not just open a socket");
         return -1;
     }
+
+#ifdef _RIAK_NON_BLOCKING
+    riak_boolean_t blocking = RIAK_FALSE;
+    int flags = fcntl(sock, F_GETFL, 0);
+    if (flags < 0) return -1;
+    flags = blocking ? (flags&~O_NONBLOCK) : (flags|O_NONBLOCK);
+    if (fcntl(sock, F_SETFL, flags) != 0) {
+       return -1;
+    }
+#endif
+
     int err = connect(sock, addrinfo->ai_addr, addrinfo->ai_addrlen);
     if (err) {
         // Since this is nonblocking, we'll need to treat some errors

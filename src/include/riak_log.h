@@ -70,7 +70,7 @@ riak_log_internal(riak_config         *cfg,
         riak_log_internal(riak_connection_get_config(cxn), RIAK_LOG_DEBUG, __FILE__, sizeof(__FILE__)-1, \
         __func__, sizeof(__func__)-1, __LINE__, ("[%d] " format), riak_connection_get_fd(cxn), __VA_ARGS__)
 #else
-#define riak_log_debug(cxn,format, ...) // No-Op
+#define riak_log_debug(cxn,format, ...) ((void)cxn)// No-Op
 #endif
 
 #define riak_log_emergency_config(cfg,format, ...) \
@@ -96,7 +96,7 @@ riak_log_internal(riak_config         *cfg,
         riak_log_internal((cfg), RIAK_LOG_DEBUG, __FILE__, sizeof(__FILE__)-1, \
         __func__, sizeof(__func__)-1, __LINE__, (format), __VA_ARGS__)
 #else
-#define riak_log_debug_config(cxn,format, ...)
+#define riak_log_debug_config(cxn,format, ...) ((void)cxn)
 #endif
 
 #endif //_RIAK_LOG_H

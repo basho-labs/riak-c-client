@@ -29,6 +29,7 @@
 #include "riak_config-internal.h"
 #include "riak_operation-internal.h"
 #include "riak_bucket_props-internal.h"
+#include "riak_print-internal.h"
 
 riak_pb_message*
 riak_pb_message_new(riak_config  *cfg,
@@ -166,7 +167,8 @@ riak_decode_serverinfo_response(riak_operation            *rop,
     // decode the PB response etc
     riak_config *cfg = riak_operation_get_config(rop);
     RpbGetServerInfoResp *rpbresp = rpb_get_server_info_resp__unpack(cfg->pb_allocator, (pbresp->len)-1, (uint8_t*)((pbresp->data)+1));
-    riak_log_debug(rop, "riak_decode_server_response len=%d/pb unpack = 0x%lx\n", pbresp->len, (long)(rpbresp));
+    riak_connection *cxn = riak_operation_get_connection(rop);
+    riak_log_debug(cxn, "riak_decode_server_response len=%d/pb unpack = 0x%lx\n", pbresp->len, (long)(rpbresp));
     *done = RIAK_TRUE;
     if (rpbresp == NULL) {
         return ERIAK_OUT_OF_MEMORY;
@@ -291,7 +293,8 @@ riak_decode_get_response(riak_operation     *rop,
     // decode the PB response etc
     riak_config *cfg = riak_operation_get_config(rop);
     RpbGetResp *rpbresp = rpb_get_resp__unpack(cfg->pb_allocator, (pbresp->len)-1, (uint8_t*)((pbresp->data)+1));
-    riak_log_debug(rop, "riak_decode_get_response len=%d/pb unpack = 0x%lx\n", pbresp->len, (long)(rpbresp));
+    riak_connection *cxn = riak_operation_get_connection(rop);
+    riak_log_debug(cxn, "riak_decode_get_response len=%d/pb unpack = 0x%lx\n", pbresp->len, (long)(rpbresp));
     *done = RIAK_TRUE;
     if (rpbresp == NULL) {
         return ERIAK_OUT_OF_MEMORY;
@@ -324,7 +327,7 @@ riak_decode_get_response(riak_operation     *rop,
         response->n_content = rpbresp->n_content;
         for(i = 0; i < rpbresp->n_content; i++) {
             err = riak_object_new_from_pb(cfg, &(response->content[i]), rpbresp->content[i]);
-            // If any object allocation fails, clean up all propiously allocated ones
+            // If any object allocation fails, clean up all previously allocated ones
             if (err != ERIAK_OK) {
                 riak_object_free_array(cfg, &(response->content), i);
                 riak_free(cfg, &response);
@@ -337,38 +340,24 @@ riak_decode_get_response(riak_operation     *rop,
     return ERIAK_OK;
 }
 
-void
+int
 riak_print_get_response(riak_get_response *response,
                         char              *target,
                         riak_size_t        len) {
     riak_int32_t left_to_write = len;
     riak_int32_t wrote;
-    char buffer[1024];
-    riak_binary_hex_print(response->vclock, buffer, sizeof(buffer));
-    if (left_to_write > 0) {
-        wrote = snprintf(target, left_to_write, "V-Clock: %s\n", buffer);
-        left_to_write -= wrote;
-        target += wrote;
-    }
-    if (left_to_write > 0) {
-        wrote = snprintf(target, left_to_write, "Unmodified: %s\n", (response->unmodified) ? "true" : "false");
-        left_to_write -= wrote;
-        target += wrote;
-    }
-    if (left_to_write > 0) {
-        wrote = snprintf(target, left_to_write, "Deleted: %s\n", (response->deleted) ? "true" : "false");
-        left_to_write -= wrote;
-        target += wrote;
-    }
-    if (left_to_write > 0) {
-        wrote = snprintf(target, left_to_write, "Objects: %d\n", response->n_content);
-        left_to_write -= wrote;
-        target += wrote;
-    }
+    riak_print_binary_hex("V-Clock", response->vclock, &target, &wrote, &left_to_write);
+    riak_print_bool("Unmodified", response->unmodified, &target, &wrote, &left_to_write);
+    riak_print_bool("Deleted", response->deleted, &target, &wrote, &left_to_write);
+    riak_print_int("Objects", response->n_content, &target, &wrote, &left_to_write);
+
     riak_uint32_t i;
     for(i = 0; (i < response->n_content) && (left_to_write > 0); i++) {
         wrote = riak_object_print(response->content[i], target, left_to_write);
+        left_to_write -= wrote;
+        target += wrote;
     }
+    return len-left_to_write;
 }
 
 void
@@ -494,7 +483,8 @@ riak_decode_put_response(riak_operation     *rop,
     riak_config *cfg = riak_operation_get_config(rop);
     RpbPutResp *rpbresp = rpb_put_resp__unpack(cfg->pb_allocator, (pbresp->len)-1, (uint8_t*)((pbresp->data)+1));
     *done = RIAK_TRUE;
-    riak_log_debug(rop, "riak_decode_put_response len=%d/pb unpack = 0x%lx\n", pbresp->len, (long)(rpbresp));
+    riak_connection *cxn = riak_operation_get_connection(rop);
+    riak_log_debug(cxn, "riak_decode_put_response len=%d/pb unpack = 0x%lx\n", pbresp->len, (long)(rpbresp));
     if (rpbresp == NULL) {
         return ERIAK_OUT_OF_MEMORY;
     }
@@ -703,14 +693,15 @@ riak_decode_listbuckets_response(riak_operation             *rop,
                                  riak_listbuckets_response **resp,
                                  riak_boolean_t             *done) {
     riak_config *cfg = riak_operation_get_config(rop);
-    riak_log_debug(rop, "%s", "riak_decode_listbuckets_response");
+    riak_connection *cxn = riak_operation_get_connection(rop);
+    riak_log_debug(cxn, "%s", "riak_decode_listbuckets_response");
     RpbListBucketsResp *listbucketresp = rpb_list_buckets_resp__unpack(cfg->pb_allocator, (pbresp->len)-1, (uint8_t*)((pbresp->data)+1));
     int i;
     // Initialize from an existing response
     riak_listbuckets_response *response = *resp;
     // If this is NULL, there was no propious message
     if (response == NULL) {
-        riak_log_debug(rop, "%s", "Initializing listbucket response");
+        riak_log_debug(cxn, "%s", "Initializing listbucket response");
         response = (cfg->malloc_fn)(sizeof(riak_listbuckets_response));
         if (response == NULL) {
             return ERIAK_OUT_OF_MEMORY;
@@ -752,9 +743,11 @@ riak_decode_listbuckets_response(riak_operation             *rop,
             return ERIAK_OUT_OF_MEMORY;
         }
     }
+
     response->done = RIAK_FALSE;
     if (listbucketresp->has_done) {
-        riak_log_debug(rop, "%s", "HAS DONE");
+        riak_connection *cxn = riak_operation_get_connection(rop);
+        riak_log_debug(cxn, "%s", "HAS DONE");
         response->done = listbucketresp->done;
     }
     *done = response->done;
@@ -864,14 +857,15 @@ riak_decode_listkeys_response(riak_operation          *rop,
                               riak_listkeys_response **resp,
                               riak_boolean_t          *done) {
     riak_config *cfg = riak_operation_get_config(rop);
-    riak_log_debug(rop, "%s", "riak_decode_listkeys_response");
+    riak_connection *cxn = riak_operation_get_connection(rop);
+    riak_log_debug(cxn, "%s", "riak_decode_listkeys_response");
     RpbListKeysResp *listkeyresp = rpb_list_keys_resp__unpack(cfg->pb_allocator, (pbresp->len)-1, (uint8_t*)((pbresp->data)+1));
     int i;
     // Initialize from an existing response
     riak_listkeys_response *response = *resp;
     // If this is NULL, there was no propious message
     if (response == NULL) {
-        riak_log_debug(rop, "%s", "Initializing listkey response");
+        riak_log_debug(cxn, "%s", "Initializing listkey response");
         response = (cfg->malloc_fn)(sizeof(riak_listkeys_response));
         if (response == NULL) {
             return ERIAK_OUT_OF_MEMORY;
@@ -915,7 +909,8 @@ riak_decode_listkeys_response(riak_operation          *rop,
     }
     response->done = RIAK_FALSE;
     if (listkeyresp->has_done) {
-        riak_log_debug(rop, "%s", "HAS DONE");
+        riak_connection *cxn = riak_operation_get_connection(rop);
+        riak_log_debug(cxn, "%s", "HAS DONE");
         response->done = listkeyresp->done;
     }
     *done = response->done;
@@ -1010,7 +1005,8 @@ riak_decode_get_clientid_response(riak_operation             *rop,
     // decode the PB response etc
     riak_config *cfg = riak_operation_get_config(rop);
     RpbGetClientIdResp *rpbresp = rpb_get_client_id_resp__unpack(cfg->pb_allocator, (pbresp->len)-1, (uint8_t*)((pbresp->data)+1));
-    riak_log_debug(rop, "riak_decode_get_clientid_response len=%d/pb unpack = 0x%lx\n", pbresp->len, (long)(rpbresp));
+    riak_connection *cxn = riak_operation_get_connection(rop);
+    riak_log_debug(cxn, "riak_decode_get_clientid_response len=%d/pb unpack = 0x%lx\n", pbresp->len, (long)(rpbresp));
     *done = RIAK_TRUE;
     if (rpbresp == NULL) {
         return ERIAK_OUT_OF_MEMORY;
@@ -1135,7 +1131,8 @@ riak_decode_get_bucketprops_response(riak_operation                 *rop,
     // decode the PB response etc
     riak_config *cfg = riak_operation_get_config(rop);
     RpbGetBucketResp *rpbresp = rpb_get_bucket_resp__unpack(cfg->pb_allocator, (pbresp->len)-1, (uint8_t*)((pbresp->data)+1));
-    riak_log_debug(rop, "riak_decode_get_bucketprops_response len=%d/pb unpack = 0x%lx\n", pbresp->len, (long)(rpbresp));
+    riak_connection *cxn = riak_operation_get_connection(rop);
+    riak_log_debug(cxn, "riak_decode_get_bucketprops_response len=%d/pb unpack = 0x%lx\n", pbresp->len, (long)(rpbresp));
     *done = RIAK_TRUE;
     if (rpbresp == NULL) {
         return ERIAK_OUT_OF_MEMORY;
