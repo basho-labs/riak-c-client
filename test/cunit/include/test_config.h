@@ -24,10 +24,13 @@ void
 test_build_config();
 
 void
-test_config_with_connection();
-
-void
-test_config_with_bad_connection();
-
-void
 test_config_with_logging();
+
+void
+test_config_allocate();
+
+void
+test_config_allocate_clean();
+
+void
+test_config_free();

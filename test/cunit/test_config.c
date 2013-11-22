@@ -41,62 +41,6 @@ test_build_config() {
     CU_PASS("test_build_binary passed")
 }
 
-static int
-test_config_bad_resolver(const char          *nodename,
-                         const char          *servname,
-                         const riak_addrinfo *hints_in,
-                         riak_addrinfo      **res) {
-    riak_addrinfo *info = (riak_addrinfo*)malloc(sizeof(riak_addrinfo));
-    if (info == NULL) {
-        return 1;
-    }
-    *res = info;
-
-    return 1;
-}
-
-static int
-test_config_resolver(const char          *nodename,
-                     const char          *servname,
-                     const riak_addrinfo *hints_in,
-                     riak_addrinfo      **res) {
-    riak_addrinfo *info = (riak_addrinfo*)malloc(sizeof(riak_addrinfo));
-    if (info == NULL) {
-        return 1;
-    }
-    *res = info;
-
-    return 0;
-}
-
-void
-test_config_with_bad_connection() {
-    riak_config *cfg;
-    riak_error err = riak_config_new_default(&cfg);
-    CU_ASSERT_FATAL(err == ERIAK_OK)
-    riak_connection *cxn = NULL;
-    err = riak_connection_new(cfg, &cxn, "localhost", "1", test_config_bad_resolver);
-    CU_ASSERT_FATAL(err == ERIAK_DNS_RESOLUTION)
-    riak_free(cfg, &(cxn->addrinfo));
-    riak_connection_free(&cxn);
-    riak_config_free(&cfg);
-    CU_PASS("test_config_with_bad_connection passed")
-}
-
-void
-test_config_with_connection() {
-    riak_config *cfg;
-    riak_error err = riak_config_new_default(&cfg);
-    CU_ASSERT_FATAL(err == ERIAK_OK)
-    riak_connection *cxn = NULL;
-    err = riak_connection_new(cfg, &cxn, "localhost", "1", test_config_resolver);
-    CU_ASSERT_FATAL(err == ERIAK_CONNECT)
-    riak_free(cfg, &(cxn->addrinfo));
-    riak_connection_free(&cxn);
-    riak_config_free(&cfg);
-    CU_PASS("test_config_with_connection passed")
-}
-
 typedef struct {
     riak_boolean_t init;
     riak_boolean_t log;
@@ -132,5 +76,63 @@ test_config_with_logging() {
     err = riak_config_set_logging(cfg, (void*)cfg, test_log_logger, test_log_init, test_log_cleanup);
     CU_ASSERT_FATAL(err == ERIAK_OK)
     riak_config_free(&cfg);
-    CU_PASS("test_build_binary passed")
+    CU_PASS("test_config_with_logging passed")
+}
+
+//
+// Internally riak_config_new() uses this allocator
+// to bootstrap itself
+static void*
+test_config_allocator(riak_size_t bytes) {
+    CU_ASSERT_FATAL(bytes == sizeof(riak_config))
+    return malloc(bytes);
+}
+
+static void
+test_config_freer(void* ptr) {
+    riak_boolean_t *passes = (riak_boolean_t*)ptr;
+    *passes = RIAK_TRUE;
+}
+
+void
+test_config_allocate() {
+    riak_config *cfg;
+    riak_error err = riak_config_new(&cfg,
+                                     test_config_allocator,
+                                     NULL,
+                                     NULL,
+                                     NULL,
+                                     NULL);
+    CU_ASSERT_FATAL(err == ERIAK_OK)
+    CU_ASSERT_PTR_EQUAL_FATAL(cfg->malloc_fn, test_config_allocator)
+    CU_PASS("test_config_allocate passed")
+}
+
+void
+test_config_allocate_clean() {
+    riak_config *cfg;
+    riak_error err = riak_config_new_default(&cfg);
+    CU_ASSERT_FATAL(err == ERIAK_OK)
+    void *ptr = riak_config_clean_allocate(cfg, 10);
+    CU_ASSERT_PTR_NOT_EQUAL_FATAL(ptr, NULL)
+    int result = memcmp(ptr, "\0\0\0\0\0\0\0\0\0\0", 10);
+    free(ptr);
+    CU_ASSERT_FATAL(result == 0)
+    CU_PASS("test_config_allocate_clean passed")
+}
+
+void
+test_config_free() {
+    riak_config *cfg;
+    riak_error err = riak_config_new(&cfg,
+                                     NULL,
+                                     NULL,
+                                     test_config_freer,
+                                     NULL,
+                                     NULL);
+    CU_ASSERT_FATAL(err == ERIAK_OK)
+    riak_boolean_t passes = RIAK_FALSE;
+    (cfg->free_fn)((void*)&passes);
+    CU_ASSERT_FATAL(passes == RIAK_TRUE)
+    CU_PASS("test_config_free passed")
 }

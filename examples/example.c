@@ -22,7 +22,6 @@
 
 #include "riak.h"
 #include "riak_command.h"
-#include "riak_connection.h"
 #include "example_call_backs.h"
 #include "../adapters/riak_libevent.h"
 #include <time.h>

@@ -30,6 +30,8 @@
 #include "riak.h"
 #include "test_binary.h"
 #include "test_config.h"
+#include "test_connection.h"
+#include "test_operation.h"
 
 int
 main(int   argc,
@@ -42,8 +44,10 @@ main(int   argc,
     }
     CU_InitializeFunc init_fn = NULL;
     CU_CleanupFunc cleanup_fn = NULL;
-    CU_pSuite config_suite = CU_add_suite("riak_config", init_fn, cleanup_fn);
     CU_pSuite binary_suite = CU_add_suite("riak_binary", init_fn, cleanup_fn);
+    CU_pSuite config_suite = CU_add_suite("riak_config", init_fn, cleanup_fn);
+    CU_pSuite connection_suite = CU_add_suite("riak_connection", init_fn, cleanup_fn);
+    CU_pSuite operation_suite = CU_add_suite("riak_operation", init_fn, cleanup_fn);
     CU_ADD_TEST(binary_suite, test_build_binary);
     CU_ADD_TEST(binary_suite, test_build_binary_with_null);
     CU_ADD_TEST(binary_suite, test_build_binary_from_pb);
@@ -52,9 +56,14 @@ main(int   argc,
     CU_ADD_TEST(binary_suite, test_binary_hex_print);
     CU_ADD_TEST(binary_suite, test_build_binary_from_existing);
     CU_ADD_TEST(config_suite, test_build_config);
-    CU_ADD_TEST(config_suite, test_config_with_bad_connection);
-    CU_ADD_TEST(config_suite, test_config_with_connection);
+    CU_ADD_TEST(connection_suite, test_connection_with_bad_resolver);
+    CU_ADD_TEST(connection_suite, test_connection_with_good_resolver);
     CU_ADD_TEST(config_suite, test_config_with_logging);
+    CU_ADD_TEST(config_suite, test_config_allocate);
+    CU_ADD_TEST(config_suite, test_config_allocate_clean);
+    CU_ADD_TEST(config_suite, test_config_free);
+    CU_ADD_TEST(operation_suite, test_operation_new);
+    CU_ADD_TEST(operation_suite, test_operation_callbacks);
 
     // Run all tests using the CUnit Basic interface
     CU_basic_set_mode(CU_BRM_VERBOSE);
