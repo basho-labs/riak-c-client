@@ -101,4 +101,38 @@ riak_operation_get_connection(riak_operation *rop);
 riak_server_error*
 riak_operation_get_server_error(riak_operation *rop);
 
+/**
+ * @brief Set the bucket on the current operation
+ * @param rop Riak Operation
+ * @param bucket Name of bucket in Riak
+ */
+void
+riak_operation_set_bucket(riak_operation *rop,
+                          riak_binary    *bucket);
+
+/**
+ * @brief Set the bucket on the current operation
+ * @param rop Riak Operation
+ * @param key Name of key in Riak bucket
+ */
+void
+riak_operation_set_key(riak_operation *rop,
+                       riak_binary    *key);
+
+/**
+ * @brief Gets the bucket on the current operation
+ * @param rop Riak Operation
+ * @returns Name of bucket in Riak
+ */
+riak_binary*
+riak_operation_get_bucket(riak_operation *rop);
+
+/**
+ * @brief Gets the key on the current operation
+ * @param rop Riak Operation
+ * @returns Name of key in Riak bucket
+ */
+riak_binary*
+riak_operation_get_key(riak_operation *rop);
+
 #endif

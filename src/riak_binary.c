@@ -25,13 +25,12 @@
 #include "riak_binary-internal.h"
 #include "riak_messages-internal.h"
 #include "riak_utils-internal.h"
-#include "riak_config-internal.h"
 
 riak_binary*
 riak_binary_new(riak_config  *cfg,
                 riak_size_t   len,
                 riak_uint8_t *data) {
-    riak_binary *b = (riak_binary*)(cfg->malloc_fn)(sizeof(riak_binary));
+    riak_binary *b = (riak_binary*)riak_config_allocate(cfg, sizeof(riak_binary));
     if (b == NULL) return NULL;
     b->len  = len;
     b->data = data;
@@ -41,13 +40,12 @@ riak_binary_new(riak_config  *cfg,
 
 riak_binary*
 riak_binary_deep_new(riak_config *cfg,
-                    riak_size_t   len,
-                    riak_uint8_t *data) {
+                     riak_binary *bin) {
 
-    riak_binary *b = riak_binary_new(cfg, len, data);
+    riak_binary *b = riak_binary_new(cfg, bin->len, bin->data);
     if (b) {
-        b->data = (riak_uint8_t*)(cfg->malloc_fn)(len);
-        memcpy((void*)b->data, (void*)data, len);
+        b->data = (riak_uint8_t*)riak_config_allocate(cfg, bin->len);
+        memcpy((void*)b->data, (void*)bin->data, bin->len);
     }
     return b;
 }
@@ -116,7 +114,7 @@ riak_binary_deep_copy(riak_config *cfg,
                       riak_binary *to,
                       riak_binary *from) {
     to->len  = from->len;
-    to->data = (riak_uint8_t*)(cfg->malloc_fn)(from->len);
+    to->data = (riak_uint8_t*)riak_config_allocate(cfg, from->len);
     if (to->data == NULL) return ERIAK_OUT_OF_MEMORY;
     memcpy((void*)to->data, (void*)from->data, from->len);
     return ERIAK_OK;
@@ -134,7 +132,7 @@ riak_binary_to_pb_deep_copy(riak_config         *cfg,
                             ProtobufCBinaryData *to,
                             riak_binary         *from) {
     to->len  = from->len;
-    to->data = (riak_uint8_t*)(cfg->malloc_fn)(from->len);
+    to->data = (riak_uint8_t*)riak_config_allocate(cfg, from->len);
     if (to->data == NULL) return ERIAK_OUT_OF_MEMORY;
     memcpy((void*)to->data, (void*)from->data, from->len);
     return ERIAK_OK;
@@ -152,7 +150,7 @@ riak_binary_from_pb_deep_copy(riak_config         *cfg,
                               riak_binary         *to,
                               ProtobufCBinaryData *from) {
     to->len  = from->len;
-    to->data = (riak_uint8_t*)(cfg->malloc_fn)(from->len);
+    to->data = (riak_uint8_t*)riak_config_allocate(cfg, from->len);
     if (to->data == NULL) return ERIAK_OUT_OF_MEMORY;
     memcpy((void*)to->data, (void*)from->data, from->len);
     return ERIAK_OK;
@@ -208,7 +206,7 @@ riak_binary_from_string_deep_copy(riak_config *cfg,
                                   const char  *from) {
 
     to->len = strlen(from);
-    to->data = (riak_uint8_t*)(cfg->malloc_fn)(to->len);
+    to->data = (riak_uint8_t*)riak_config_allocate(cfg, to->len);
     if (to->data == NULL) return ERIAK_OUT_OF_MEMORY;
     memcpy((void*)to->data, (void*)from, to->len);
     return ERIAK_OK;

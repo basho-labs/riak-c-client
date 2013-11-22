@@ -94,3 +94,29 @@ riak_operation_set_response_decoder(riak_operation       *rop,
     rop->decoder = decoder;
 }
 
+void
+riak_operation_set_bucket(riak_operation *rop,
+                          riak_binary    *bucket) {
+    riak_connection *cxn = riak_operation_get_connection(rop);
+    riak_config     *cfg = riak_connection_get_config(cxn);
+    rop->request.bucket = riak_binary_deep_new(cfg, bucket);
+}
+
+void
+riak_operation_set_key(riak_operation *rop,
+                       riak_binary    *key) {
+    riak_connection *cxn = riak_operation_get_connection(rop);
+    riak_config     *cfg = riak_connection_get_config(cxn);
+    rop->request.key = riak_binary_deep_new(cfg, key);
+}
+
+riak_binary*
+riak_operation_get_bucket(riak_operation *rop) {
+    return rop->request.bucket;
+}
+
+riak_binary*
+riak_operation_get_key(riak_operation *rop) {
+    return rop->request.key;
+}
+

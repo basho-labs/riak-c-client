@@ -40,14 +40,12 @@ riak_binary_new(riak_config *cfg,
 
 /**
  * @brief Allocate a new `riak_binary` struct
- * @param len Length of binary in bytes
- * @param data Pointer to binary data (shallow copy)
+ * @param bin Original Riak Binary
  * @returns pointer to newly created `riak_binary` struct
  */
 riak_binary*
 riak_binary_deep_new(riak_config *cfg,
-                     riak_size_t   len,
-                     riak_uint8_t *data);
+                     riak_binary *bin);
 
 /**
  * @brief Allocate a new riak_binary and populate from data pointer

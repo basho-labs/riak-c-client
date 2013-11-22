@@ -49,6 +49,12 @@ struct _riak_operation {
     riak_server_error       *error;
 
     void                    *response;
+
+    // Cache of request data
+    struct {
+        riak_binary *bucket;
+        riak_binary *key;
+    } request;
 };
 
 /**
