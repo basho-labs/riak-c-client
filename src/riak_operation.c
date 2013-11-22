@@ -53,6 +53,8 @@ riak_operation_free(riak_operation **rop_target) {
     if (rop->pb_request) {
         riak_pb_message_free(cfg, &(rop->pb_request));
     }
+    riak_free(cfg, &(rop->request.bucket));
+    riak_free(cfg, &(rop->request.key));
     riak_free(cfg, rop_target);
 }
 
