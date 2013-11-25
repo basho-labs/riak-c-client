@@ -518,7 +518,7 @@ riak_decode_put_response(riak_operation     *rop,
         response->n_content = rpbresp->n_content;
         for(i = 0; i < rpbresp->n_content; i++) {
             err = riak_object_new_from_pb(cfg, &(response->content[i]), rpbresp->content[i]);
-            // If any object allocation fails, clean up all propiously allocated ones
+            // If any object allocation fails, clean up all previously allocated ones
             if (err != ERIAK_OK) {
                 riak_object_free_array(cfg, &(response->content), i);
                 riak_free(cfg, &response);

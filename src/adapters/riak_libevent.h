@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * riak_event_libevent.h: Management of the Riak Libevent Framework
+ * riak_libevent.h: Management of the Riak Libevent Framework
  *
  * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
  *
