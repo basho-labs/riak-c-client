@@ -21,8 +21,8 @@
  *********************************************************************/
 
 
-#ifndef RIAK_BINARY_H_
-#define RIAK_BINARY_H_
+#ifndef _RIAK_BINARY_H
+#define _RIAK_BINARY_H
 
 typedef struct _riak_binary riak_binary;
 
@@ -110,4 +110,4 @@ riak_binary*
 riak_binary_new_from_string(riak_config *cfg,
                             const char   *from);
 
-#endif /* RIAK_BINARY_H_ */
+#endif // _RIAK_BINARY_H

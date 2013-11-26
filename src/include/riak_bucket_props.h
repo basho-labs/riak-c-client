@@ -20,8 +20,8 @@
  *
  *********************************************************************/
 
-#ifndef RIAK_BUCKET_PROPS_H
-#define RIAK_BUCKET_PROPS_H
+#ifndef _RIAK_BUCKET_PROPS_H
+#define _RIAK_BUCKET_PROPS_H
 
 typedef enum _riak_bucket_repl_mode {
     RIAK_BUCKET_PROPS_REPL_FALSE = 0,
@@ -193,4 +193,4 @@ riak_binary *riak_mod_fun_get_function(riak_mod_fun *mod_fun);
 void riak_mod_fun_set_module(riak_mod_fun *mod_fun, riak_binary *value);
 void riak_mod_fun_set_function(riak_mod_fun *mod_fun, riak_binary *value);
 
-#endif // RIAK_BUCKET_PROPS_H
+#endif // _RIAK_BUCKET_PROPS_H

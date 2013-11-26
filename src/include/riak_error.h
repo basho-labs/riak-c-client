@@ -20,13 +20,15 @@
  *
  *********************************************************************/
 
-#ifndef RIAK_ERROR_H_
-#define RIAK_ERROR_H_
+#ifndef _RIAK_ERROR_H
+#define _RIAK_ERROR_H
 
 typedef enum riak_error_enum {
     ERIAK_OK = 0,
     ERIAK_DNS_RESOLUTION,
+    ERIAK_CONNECT,
     ERIAK_OUT_OF_MEMORY,
+    ERIAK_READ,
     ERIAK_WRITE,
     ERIAK_EVENT,
     ERIAK_NO_PING,
@@ -40,7 +42,9 @@ typedef enum riak_error_enum {
 static const char* errmsgs[] = {
     "No Error",
     "Problems resolving host name/port number",
+    "Connection Error",
     "Out of Memory",
+    "Read error",
     "Write error",
     "Riak Connection error",
     "Ping failure error",
@@ -96,4 +100,4 @@ riak_server_error_get_errmsg(riak_server_error *err);
 const char*
 riak_strerror(riak_error err);
 
-#endif
+#endif // _RIAK_ERROR_H

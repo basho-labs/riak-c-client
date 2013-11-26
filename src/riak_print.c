@@ -77,6 +77,24 @@ riak_print_binary(char         *name,
 }
 
 riak_int32_t
+riak_print_binary_hex(char         *name,
+                      riak_binary  *value,
+                      char        **target,
+                      riak_int32_t *len,
+                      riak_int32_t *total) {
+    char buffer[2048];
+    riak_int32_t wrote = 0;
+    if (*len > 0) {
+        riak_binary_hex_print(value, buffer, sizeof(buffer));
+        wrote = snprintf(*target, *len, "%s: %s\n", name, buffer);
+        *len -= wrote;
+        *target += wrote;
+        *total += wrote;
+    }
+    return wrote;
+}
+
+riak_int32_t
 riak_print_label(char         *value,
                  char        **target,
                  riak_int32_t *len,

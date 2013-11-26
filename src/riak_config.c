@@ -69,35 +69,7 @@ riak_config_new(riak_config      **config,
     cfg->log_init_fn     = NULL;
     cfg->log_cleanup_fn  = NULL;
 
-    cfg->base = event_base_new();
-    if (cfg->base == NULL) {
-        riak_config_free(&cfg);
-        return ERIAK_EVENT;
-    }
-
     *config = cfg;
-    return ERIAK_OK;
-}
-
-riak_error
-riak_config_add_connection(riak_config        *cfg,
-                            riak_addr_resolver resolver,
-                            const char        *hostname,
-                            const char        *portnum) {
-    if (cfg == NULL) {
-        return ERIAK_UNINITIALIZED;
-    }
-    if (resolver == NULL) {
-        resolver = evutil_getaddrinfo;
-    }
-
-    riak_strlcpy(cfg->hostname, hostname, sizeof(cfg->hostname));
-    riak_strlcpy(cfg->portnum, portnum, sizeof(cfg->hostname));
-
-    riak_error err = riak_resolve_address(cfg, resolver, hostname, portnum, &(cfg->addrinfo));
-    if (err) {
-        return ERIAK_DNS_RESOLUTION;
-    }
     return ERIAK_OK;
 }
 
@@ -125,11 +97,29 @@ riak_config_set_logging(riak_config        *cfg,
     return ERIAK_OK;
 }
 
-
-riak_connection_base*
-riak_config_get_base(riak_config *cfg) {
-    return cfg->base;
+void*
+riak_config_allocate(riak_config *cfg,
+                     riak_size_t  bytes) {
+    void *memory = NULL;
+    if (cfg && cfg->malloc_fn) {
+        memory = (cfg->malloc_fn)(bytes);
+    }
+    return memory;
 }
+
+void*
+riak_config_clean_allocate(riak_config *cfg,
+                           riak_size_t  bytes) {
+    void *memory = NULL;
+    if (cfg && cfg->malloc_fn) {
+        memory = (cfg->malloc_fn)(bytes);
+        if (memory) {
+            memset(memory, '\0', bytes);
+        }
+    }
+    return memory;
+}
+
 
 void
 riak_config_free(riak_config **config) {
@@ -140,8 +130,6 @@ riak_config_free(riak_config **config) {
     if (cfg->log_cleanup_fn) {
         (cfg->log_cleanup_fn)(cfg->log_data);
     }
-    if (cfg->base != NULL) event_base_free(cfg->base);
-    if (cfg->addrinfo != NULL) evutil_freeaddrinfo(cfg->addrinfo);
     (freer)(cfg);
     *config = NULL;
 }

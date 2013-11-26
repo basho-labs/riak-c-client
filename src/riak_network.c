@@ -21,6 +21,7 @@
  *********************************************************************/
 
 #include <errno.h>
+#include <fcntl.h>
 #include "riak.h"
 #include "riak_messages-internal.h"
 #include "riak_utils-internal.h"
@@ -40,13 +41,13 @@ riak_resolve_address(riak_config       *cfg,
     addrhints.ai_socktype = SOCK_STREAM;
     addrhints.ai_protocol = IPPROTO_TCP; // We want a TCP socket
     /* Only return addresses we can use. */
-    addrhints.ai_flags = EVUTIL_AI_ADDRCONFIG;
+    addrhints.ai_flags = AI_ADDRCONFIG;
 
     // Use nice, platform agnostic DNS lookup and return an array of results
     int err = resolver(host, portnum, &addrhints, addrinfo);
     if (err != 0) {
         riak_log_critical_config(cfg, "Error while resolving '%s:%s': %s",
-                 host, portnum, evutil_gai_strerror(err));
+                 host, portnum, gai_strerror(err));
         return ERIAK_DNS_RESOLUTION;
     }
 
@@ -63,12 +64,12 @@ riak_print_host(riak_addrinfo *addrinfo,
     switch (addrinfo->ai_addr->sa_family) {
     case AF_INET:
         ipv4 = (struct sockaddr_in*)addrinfo->ai_addr;
-        evutil_inet_ntop(ipv4->sin_family, &(ipv4->sin_addr), target, len);
+        inet_ntop(ipv4->sin_family, &(ipv4->sin_addr), target, len);
         *port = ntohs(ipv4->sin_port);
         break;
     case AF_INET6:
         ipv6 = (struct sockaddr_in6*)addrinfo->ai_addr;
-        evutil_inet_ntop(ipv6->sin6_family, &(ipv6->sin6_addr), target, len);
+        inet_ntop(ipv6->sin6_family, &(ipv6->sin6_addr), target, len);
         *port = ntohs(ipv6->sin6_port);
         break;
     default:
@@ -88,6 +89,17 @@ riak_just_open_a_socket(riak_config   *cfg,
         riak_log_critical_config(cfg, "%s", "Could not just open a socket");
         return -1;
     }
+
+#ifdef _RIAK_NON_BLOCKING
+    riak_boolean_t blocking = RIAK_FALSE;
+    int flags = fcntl(sock, F_GETFL, 0);
+    if (flags < 0) return -1;
+    flags = blocking ? (flags&~O_NONBLOCK) : (flags|O_NONBLOCK);
+    if (fcntl(sock, F_SETFL, flags) != 0) {
+       return -1;
+    }
+#endif
+
     int err = connect(sock, addrinfo->ai_addr, addrinfo->ai_addrlen);
     if (err) {
         // Since this is nonblocking, we'll need to treat some errors
@@ -96,7 +108,7 @@ riak_just_open_a_socket(riak_config   *cfg,
             char ip[INET6_ADDRSTRLEN];
             riak_uint16_t port;
             riak_print_host(addrinfo, ip, sizeof(ip), &port);
-            EVUTIL_CLOSESOCKET(sock);
+            close(sock);
             riak_log_critical_config(cfg, "Could not connect a socket to host %s:%d [%s]\n", ip, port, strerror(errno));
             return -1;
         }

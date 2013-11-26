@@ -20,8 +20,8 @@
  *
  *********************************************************************/
 
-#ifndef RIAK_OPTIONS_H_
-#define RIAK_OPTIONS_H_
+#ifndef _RIAK_OPTIONS_H
+#define _RIAK_OPTIONS_H
 
 /**
  * @brief Construct a new Riak Put Options object
@@ -89,4 +89,4 @@ void riak_put_options_set_asis(riak_put_options *opt, riak_boolean_t value);
 void riak_put_options_set_sloppy_quorum(riak_put_options *opt, riak_boolean_t value);
 void riak_put_options_set_n_val(riak_put_options *opt, riak_uint32_t value);
 
-#endif /* RIAK_OPTIONS_H_ */
+#endif // _RIAK_OPTIONS_H

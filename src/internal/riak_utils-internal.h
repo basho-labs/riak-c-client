@@ -20,8 +20,8 @@
  *
  *********************************************************************/
 
-#ifndef RIAK_UTILS_INTERNAL_H
-#define RIAK_UTILS_INTERNAL_H
+#ifndef _RIAK_UTILS_INTERNAL_H
+#define _RIAK_UTILS_INTERNAL_H
 
 /**
  * @brief Since strlcpy is not standard everywhere, write our own
@@ -61,16 +61,4 @@ riak_array_realloc(riak_config *cfg,
                    riak_uint32_t oldnum,
                    riak_uint32_t newnum);
 
-// TODO: NOT CHARSET SAFE, need iconv
-
-/**
- * @brief Send PB message via buffecxnent
- * @param event Event related to request
- * @param req Riak PBC message wrapper
- * @return Error code
- */
-riak_error
-riak_send_req(riak_connection      *ev,
-              riak_pb_message *req);
-
-#endif
+#endif // _RIAK_UTILS_INTERNAL_H

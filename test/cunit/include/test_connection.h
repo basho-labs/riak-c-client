@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * test_config.h: Riak C Unit testing for riak_config
+ * test_connection.h: Riak C Unit testing for riak_connection
  *
  * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
  *
@@ -21,16 +21,8 @@
  *********************************************************************/
 
 void
-test_build_config();
+test_connection_with_good_resolver();
 
 void
-test_config_with_logging();
+test_connection_with_bad_resolver();
 
-void
-test_config_allocate();
-
-void
-test_config_allocate_clean();
-
-void
-test_config_free();

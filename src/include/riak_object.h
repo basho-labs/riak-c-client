@@ -20,8 +20,8 @@
  *
  *********************************************************************/
 
-#ifndef RIAK_OBJECT_H_
-#define RIAK_OBJECT_H_
+#ifndef _RIAK_OBJECT_H
+#define _RIAK_OBJECT_H
 
 typedef struct _riak_pair riak_pair;
 typedef struct _riak_link riak_link;
@@ -202,4 +202,4 @@ riak_binary   *riak_pair_get_value(riak_pair *pair);
 void riak_pair_set_key(riak_pair *pair, riak_binary *value);
 void riak_pair_set_value(riak_pair *pair, riak_binary *value);
 
-#endif /* RIAK_OBJECT_H_ */
+#endif // _RIAK_OBJECT_H

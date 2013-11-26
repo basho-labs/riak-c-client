@@ -23,8 +23,8 @@
 #include "riak_kv.pb-c.h"
 #include "riak.pb-c.h"
 
-#ifndef RIAK_BINARY_INTERNAL_H_
-#define RIAK_BINARY_INTERNAL_H_
+#ifndef _RIAK_BINARY_INTERNAL_H
+#define _RIAK_BINARY_INTERNAL_H
 
 // Based off of ProtobufCBinaryData
 struct _riak_binary {
@@ -65,4 +65,4 @@ void
 riak_binary_deep_free_pb(riak_config        *cfg,
                          ProtobufCBinaryData *b);
 
-#endif /* RIAK_BINARY_H_ */
+#endif // _RIAK_BINARY_H

@@ -20,8 +20,8 @@
  *
  *********************************************************************/
 
-#ifndef RIAK_CONTEXT_H_
-#define RIAK_CONTEXT_H_
+#ifndef _RIAK_CONFIG_H
+#define _RIAK_CONFIG_H
 
 // per-thread
 // do we need a *shared* config to complement?
@@ -55,22 +55,6 @@ riak_config_new(riak_config     **cfg,
 #define riak_config_new_default(C) riak_config_new((C),NULL,NULL,NULL,NULL,NULL)
 
 /**
- * @brief Construct a Riak Configuration
- * @param cfg Existing Riak Configuration
- * @param resolver IP Address resolving function
- * @param hostname Name of Riak server
- * @param portnum Riak PBC port number
- * @return Error code
- */
-riak_error
-riak_config_add_connection(riak_config        *cfg,
-                            riak_addr_resolver resolver,
-                            const char        *hostname,
-                            const char        *portnum);
-// By default use the libevent resolver
-#define riak_config_add_default_connection(C,H,P) riak_config_add_connection((C),NULL,(H),(P))
-
-/**
  * @brief Add logging functions
  * @param config Riak Configuration
  * @param log_data Pointer passed to all logging functions
@@ -86,14 +70,25 @@ riak_config_set_logging(riak_config        *cfg,
                         riak_log_init_fn    log_init,
                         riak_log_cleanup_fn log_cleanup);
 
+/**
+ * @brief Use the default allocator to claim some memory
+ * @param cfg Riak Config
+ * @param bytes Number of bytes to allocate
+ * @returns Pointer to allocated memory (or NULL)
+ */
+void*
+riak_config_allocate(riak_config *cfg,
+                     riak_size_t  bytes);
 
 /**
- * @brief Gets the underlying event base
- * @param cfg Riak Configuration
- * @return Return event base
+ * @brief Use the default allocator to claim some memory
+ * @param cfg Riak Config
+ * @param bytes Number of bytes to allocate
+ * @returns Pointer to zeroed out memory (or NULL)
  */
-riak_connection_base*
-riak_config_get_base(riak_config *cfg);
+void*
+riak_config_clean_allocate(riak_config *cfg,
+                           riak_size_t  bytes);
 
 /**
  * @brief Reclaim memory used by a `riak_config`
@@ -109,8 +104,8 @@ riak_config_free(riak_config **cfg);
  * @note p is NULLed after it is freed
  */
 void
-riak_free_internal(riak_config *cfg,
+riak_free_internal(riak_config  *cfg,
                    void        **p);
 #define riak_free(C,P)  riak_free_internal((C),(void**)(P))
 
-#endif /* RIAK_CONTEXT_H_ */
+#endif // _RIAK_CONFIG_H

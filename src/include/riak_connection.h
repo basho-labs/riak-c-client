@@ -20,56 +20,26 @@
  *
  *********************************************************************/
 
-#ifndef RIAK_EVENT_H_
-#define RIAK_EVENT_H_
+#ifndef _RIAK_CONNECTION_H
+#define _RIAK_CONNECTION_H
 
 typedef struct _riak_connection riak_connection;
-
-// Generic placeholder for message-specific callbacks
-typedef void (*riak_response_callback)(void *response, void *ptr);
 
 /**
  * @brief Construct a Riak event
  * @param cfg Riak config for memory allocation
- * @param cxn Riak Connection
- * @param response_cb Reaponse callback function (user-supplied)
- * @param cb_data Pointer passed to `response_cb` when it is called
+ * @param cxn Riak Connection (out)
+ * @param hostname Name of Riak server
+ * @param portnum Riak PBC port number
+ * @param resolver IP Address resolving function (NULL for default)
  * @returns Error code
  */
 riak_error
-riak_connection_new(riak_config          *cfg,
-                    riak_connection             **cxn,
-                    riak_response_callback response_cb,
-                    riak_response_callback error_cb,
-                    void                  *cb_data);
-
-/**
- * @brief Set the event's callback data
- * @param cxn Riak Connection
- * @param cb_data Pointer to data used in user's callback
- */
-void
-riak_connection_set_cb_data(riak_connection         *cxn,
-                            void               *cb_data);
-
-/**
- * @brief Set the event's response callback
- * @param cxn Riak Connection
- * @param cb Function pointer to response callback
- */
-void
-riak_connection_set_response_cb(riak_connection             *cxn,
-                                riak_response_callback  cb);
-
-/**
- * @brief Set the event's error callback
- * @param cxn Riak Connection
- * @param cb Function pointer to error callback
- */
-void
-riak_connection_set_error_cb(riak_connection             *cxn,
-                        riak_response_callback  cb);
-
+riak_connection_new(riak_config       *cfg,
+                    riak_connection  **cxn,
+                    const char        *hostname,
+                    const char        *portnum,
+                    riak_addr_resolver resolver);
 /**
  * @brief Cleanup memory used by a Riak Connection
  * @param re Riak Connection
@@ -77,35 +47,10 @@ riak_connection_set_error_cb(riak_connection             *cxn,
 void
 riak_connection_free(riak_connection** re);
 
-/**
- * @brief Fire up an event loop
- * @param cfg Riak Configuration
- */
-void
-riak_connection_loop(riak_config *cfg);
-
-/**
- * @brief Return the underlying socket file descriptor
- * @param cxn Riak Connection
- * @returns File descriptor
- */
 riak_socket_t
 riak_connection_get_fd(riak_connection *cxn);
 
-/**
- * @brief Return the Riak Configuration
- * @param cxn Riak Connection
- * @returns The corresponding Riak Configuration
- */
 riak_config*
 riak_connection_get_config(riak_connection *cxn);
 
-/**
- * @brief Get the optional server error
- * @param cxn Riak Connection
- * @returns Error message sent from the server
- */
-riak_server_error*
-riak_connection_get_server_error(riak_connection *cxn);
-
-#endif
+#endif // _RIAK_CONNECTION_H
