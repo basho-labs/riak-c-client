@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * riak_command.h: Riak C Command Parser
+ * riak_command.c: Riak C Command Parser
  *
  * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
  *

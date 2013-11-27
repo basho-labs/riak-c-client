@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * example.h: Riak C Main
+ * example.c: example Riak C Client application
  *
  * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
  *
@@ -26,10 +26,15 @@
 #include "../adapters/riak_libevent.h"
 #include <time.h>
 
+
+//********************************************************************/
+// Logging struct(s)/functions
+//********************************************************************/
 typedef struct {
     FILE *fp;
 } example_log_data;
 
+// log initialization callback, open files here etc.
 riak_int32_t
 example_log_init(void *ptr) {
     example_log_data* datum = (example_log_data*)ptr;
@@ -40,12 +45,14 @@ example_log_init(void *ptr) {
     return 0;
 }
 
+// log cleanup callback, close files here etc.
 void
 example_log_cleanup(void *ptr) {
     example_log_data* datum = (example_log_data*)ptr;
     fclose(datum->fp);
 }
 
+// handle an incoming log message
 void
 example_log(void            *ptr,
             riak_log_level_t level,
@@ -72,6 +79,12 @@ example_log(void            *ptr,
     fflush(datum->fp);
 }
 
+
+
+//********************************************************************/
+// main application
+//********************************************************************/
+
 int
 main(int   argc,
      char *argv[])
@@ -85,11 +98,14 @@ main(int   argc,
 
     // a riak_config serves as your per-thread state to interact with Riak
     riak_config *cfg;
+
+    // use the default configuration
     riak_error err = riak_config_new_default(&cfg);
     if (err) {
         exit(1);
     }
     example_log_data datum;
+    // configurate logging using the callbacks defined above
     err = riak_config_set_logging(cfg,
                                   (void*)&datum,
                                   example_log,
@@ -110,9 +126,12 @@ main(int   argc,
     }
     int it;
 
+    // create some sample binary values to use
     riak_binary *bucket_bin = riak_binary_new_from_string(cfg, args.bucket); // Not copied
     riak_binary *key_bin    = riak_binary_new_from_string(cfg, args.key); // Not copied
     riak_binary *value_bin  = riak_binary_new_from_string(cfg, args.value); // Not copied
+
+    // check for memory allocation problems
     if (bucket_bin == NULL ||
         key_bin    == NULL ||
         value_bin  == NULL) {
@@ -120,6 +139,7 @@ main(int   argc,
         exit(1);
     }
 
+    // iterate through argv
     for(it = 0; it < args.iterate; it++) {
         riak_connection  *cxn   = NULL;
         riak_libevent    *event = NULL;
@@ -129,6 +149,8 @@ main(int   argc,
         if (err) {
             exit(1);
         }
+        // if the application was configured using  -D_RIAK_DEBUG,
+        // it will trace debug level messages
         riak_log_debug(cxn, "Loop %d", it);
         err = riak_operation_new(cxn, &rop, NULL, NULL, NULL);
         if (err) {
@@ -145,6 +167,8 @@ main(int   argc,
             riak_operation_set_error_cb(rop, example_error_cb);
             riak_operation_set_cb_data(rop, rop);
         }
+
+        // handle possible operations from the command line
         switch (operation) {
         case RIAK_COMMAND_PING:
             if (args.async) {
@@ -371,8 +395,9 @@ main(int   argc,
         // Terminates only on error or timeout
         event_base_dispatch(base);
     }
-    event_base_free(base);
 
+    // cleanup
+    event_base_free(base);
     riak_free(cfg, &bucket_bin);
     riak_free(cfg, &key_bin);
     riak_free(cfg, &value_bin);
