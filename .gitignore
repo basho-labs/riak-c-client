@@ -16,3 +16,37 @@
 *.out
 *.app
 /src/tools/pbGenerator/nbproject/private/
+
+# generated protobufs files
+src/*.pb-c.h
+src/*.pb-c.c
+
+# make targets
+libriak_c_client*.la
+riakc_example
+riak_c_cunit
+
+# generated tarballs
+riak_c_client-*.tar.gz
+
+# riakc_example logfile
+riak.log
+
+# autotools
+Makefile.in
+Makefile
+aclocal.m4
+autom4te.cache
+config.*
+configure
+depcomp
+install-sh
+libtool
+ltmain.sh
+missing
+*/.deps
+*/*.l[ao]
+.libs/
+*/.dirstamp
+test/cunit/.deps
+test/cunit/.dirstamp
