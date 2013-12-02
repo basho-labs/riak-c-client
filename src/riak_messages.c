@@ -241,6 +241,8 @@ riak_encode_get_request(riak_operation  *rop,
     riak_config *cfg = riak_operation_get_config(rop);
     RpbGetReq getmsg = RPB_GET_REQ__INIT;
 
+    riak_operation_set_bucket(rop, bucket);
+    riak_operation_set_key(rop, key);
     riak_binary_to_pb_copy(&getmsg.bucket, bucket);
     riak_binary_to_pb_copy(&getmsg.key, key);
 
@@ -333,6 +335,9 @@ riak_decode_get_response(riak_operation     *rop,
                 riak_free(cfg, &response);
                 return err;
             }
+            response->content[i]->bucket  = riak_binary_deep_new(cfg, riak_operation_get_bucket(rop));
+            response->content[i]->key     = riak_binary_deep_new(cfg, riak_operation_get_key(rop));
+            response->content[i]->has_key = RIAK_TRUE;
         }
     }
     *resp = response;

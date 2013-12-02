@@ -42,9 +42,7 @@ riak_server_error_new(struct _riak_config  *cfg,
     }
     *err = error;
     error->errcode = errcode;
-    error->errmsg = riak_binary_deep_new(cfg,
-                                         riak_binary_len(errmsg),
-                                         riak_binary_data(errmsg));
+    error->errmsg = riak_binary_deep_new(cfg, errmsg);
 
     if (error->errmsg == NULL) {
         riak_free(cfg, err);

@@ -73,7 +73,6 @@ example_log(void            *ptr,
     ltime = time(NULL);
     localtime_r(&ltime, &result);
     strftime(stime, sizeof(stime), "%F %X %Z", &result);
-
     fprintf(datum->fp, "%s %s ", stime, riak_log_level_description(level));
     vfprintf(datum->fp, format, args);
     fprintf(datum->fp, "\n");
