@@ -162,9 +162,6 @@ struct _riak_put_response {
 
 // Based on RpbPutReq
 struct _riak_put_options {
-    // KEY is in riak_object, so is this copy needed?
-    //riak_boolean_t has_key;
-    //riak_binary    key;
     riak_boolean_t has_vclock;
     riak_binary   *vclock;
     //RpbContent *content;
@@ -192,7 +189,6 @@ struct _riak_put_options {
     riak_boolean_t has_n_val;
     riak_uint32_t  n_val;
 };
-
 
 // Based on RpbListBucketsResp
 struct _riak_listbuckets_response {

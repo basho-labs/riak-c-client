@@ -435,9 +435,9 @@ riak_bucket_props_to_pb_copy(riak_config       *cfg,
         to->has_repl = RIAK_TRUE;
         to->repl = (RpbBucketProps__RpbReplMode)from->repl;
     }
-    if (from->has_yz_index) {
-        to->has_yz_index = RIAK_TRUE;
-        riak_binary_to_pb_copy(&(to->yz_index), from->yz_index);
+    if (from->has_search_index) {
+        to->has_search_index = RIAK_TRUE;
+        riak_binary_to_pb_copy(&(to->search_index), from->search_index);
     }
 
     riak_error err = riak_mod_fun_copy_to_pb(cfg, &(to->chash_keyfun), from->chash_keyfun);
@@ -566,10 +566,10 @@ riak_bucket_props_new_from_pb(riak_config        *cfg,
         to->has_repl = RIAK_TRUE;
         to->repl = (riak_bucket_repl_mode)from->repl;
     }
-    if (from->has_yz_index) {
-        to->has_yz_index = RIAK_TRUE;
-        to->yz_index = riak_binary_populate_from_pb(cfg, &(from->yz_index));
-        if (to->yz_index == NULL) {
+    if (from->has_search_index) {
+        to->has_search_index = RIAK_TRUE;
+        to->search_index = riak_binary_populate_from_pb(cfg, &(from->search_index));
+        if (to->search_index == NULL) {
             riak_free(cfg, target);
             return ERIAK_OUT_OF_MEMORY;
         }
@@ -700,8 +700,8 @@ riak_bucket_props_print(riak_bucket_props *prop,
                           &len,
                           &total);
     }
-    if (prop->has_yz_index) {
-        riak_print_binary("YZ Index", prop->yz_index, &target, &len, &total);
+    if (prop->has_search_index) {
+        riak_print_binary("YZ Index", prop->search_index, &target, &len, &total);
     }
     riak_mod_fun_print_internal("C Hash Key Fun", prop->chash_keyfun, &target, &len, &total);
     riak_mod_fun_print_internal("Link Fun", prop->linkfun, &target, &len, &total);
@@ -717,7 +717,7 @@ riak_bucket_props_free(riak_config          *cfg,
     riak_mod_fun_free(cfg, &(prop->linkfun));
     riak_commit_hooks_free(cfg, &(prop->precommit), prop->n_precommit);
     riak_commit_hooks_free(cfg, &(prop->postcommit), prop->n_postcommit);
-    riak_free(cfg, &(prop->yz_index));
+    riak_free(cfg, &(prop->search_index));
     riak_free(cfg, props);
 }
 
@@ -912,12 +912,12 @@ riak_bucket_props_get_repl(riak_bucket_props *prop) {
     return prop->repl;
 }
 riak_boolean_t
-riak_bucket_props_get_has_yz_index(riak_bucket_props *prop) {
-    return prop->has_yz_index;
+riak_bucket_props_get_has_search_index(riak_bucket_props *prop) {
+    return prop->has_search_index;
 }
 riak_binary*
-riak_bucket_props_get_yz_index(riak_bucket_props *prop) {
-    return prop->yz_index;
+riak_bucket_props_get_search_index(riak_bucket_props *prop) {
+    return prop->search_index;
 }
 void
 riak_bucket_props_set_n_val(riak_bucket_props *prop,
@@ -1056,8 +1056,8 @@ riak_bucket_props_set_repl(riak_bucket_props    *prop,
     prop->repl = value;
 }
 void
-riak_bucket_props_set_yz_index(riak_bucket_props *prop,
+riak_bucket_props_set_search_index(riak_bucket_props *prop,
                                riak_binary       *value) {
-    prop->has_yz_index = RIAK_TRUE;
-    prop->yz_index = value;
+    prop->has_search_index = RIAK_TRUE;
+    prop->search_index = value;
 }

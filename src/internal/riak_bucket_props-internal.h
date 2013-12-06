@@ -89,8 +89,8 @@ struct _riak_bucket_props
     riak_boolean_t            search;
     riak_boolean_t            has_repl;
     riak_bucket_repl_mode     repl;
-    riak_boolean_t            has_yz_index;
-    riak_binary              *yz_index;
+    riak_boolean_t            has_search_index;
+    riak_binary              *search_index;
 };
 
 riak_error

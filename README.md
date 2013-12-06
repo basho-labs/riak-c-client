@@ -7,7 +7,7 @@
 significant changes to the API.**
 
 ## Current tasks:
-* abstracting out an events layer
+* completing Riak 1.4.x API
 * cleanup around libevent threading (currently broken)
 * support Riak 2.0 messages
    * CRDTs (riak_dt)
@@ -22,11 +22,11 @@ significant changes to the API.**
 
 # Dependencies
 
+* autotools
 * libevent
 * protobuf
 * protobuf-c
 * pthreads
-* [zlog](https://github.com/basho/zlog/tree/feature/add-pkgconfig) 
 * doxygen (if you are building docs)
 
 
@@ -44,16 +44,17 @@ significant changes to the API.**
 	make PREFIX=/usr/local/
 	sudo make PREFIX=/usr/local/ install
 	
-	brew install protobuf protobuf-c scons libevent
+	brew install protobuf protobuf-c libevent
 	git clone git@github.com:/basho/riak-c-client.git
 	cd riak-c-client
-	scons
+	./autogen.sh
+	make
 
 
 ### Ubuntu 13.04 build
 
 ```
-sudo apt-get install scons libevent-dev protobuf-c-compiler dev-libprotobuf dev-libprotoc libcunit1 libcunit1-ncurses-dev
+sudo apt-get install libevent-dev protobuf-c-compiler dev-libprotobuf dev-libprotoc libcunit1 libcunit1-ncurses-dev
  
 git clone https://github.com/basho/zlog.git
 cd zlog

@@ -29,8 +29,7 @@
 
 riak_put_options*
 riak_put_options_new(riak_config *cfg) {
-    riak_put_options *o = (riak_put_options*)(cfg->malloc_fn)(sizeof(riak_put_options));
-    if (o) memset(o, '\0', sizeof(riak_put_options));
+    riak_put_options *o = (riak_put_options*)riak_config_clean_allocate(cfg, sizeof(riak_put_options));
     return o;
 }
 
@@ -185,10 +184,14 @@ riak_put_options_get_n_val(riak_put_options *opt) {
     return opt->n_val;
 }
 void
-riak_put_options_set_vclock(riak_put_options *opt,
+riak_put_options_set_vclock(riak_config      *cfg,
+                            riak_put_options *opt,
                             riak_binary      *value) {
     opt->has_vclock = RIAK_TRUE;
-    opt->vclock = value;
+    if (opt->vclock) {
+        riak_free(cfg, &opt->vclock);
+    }
+    opt->vclock = riak_binary_deep_new(cfg, value);
 }
 void
 riak_put_options_set_w(riak_put_options *opt,
@@ -252,6 +255,202 @@ riak_put_options_set_sloppy_quorum(riak_put_options *opt,
 }
 void
 riak_put_options_set_n_val(riak_put_options *opt,
+                           riak_uint32_t     value) {
+    opt->has_n_val = RIAK_TRUE;
+    opt->n_val = value;
+}
+
+riak_get_options*
+riak_get_options_new(riak_config *cfg) {
+    riak_get_options *o = (riak_get_options*)riak_config_clean_allocate(cfg, sizeof(riak_get_options));
+    return o;
+}
+
+void
+riak_get_options_free(riak_config       *cfg,
+                      riak_get_options **opt) {
+    riak_free(cfg, opt);
+}
+
+int
+riak_get_options_print(riak_get_options *opt,
+                       char             *target,
+                       riak_int32_t      len) {
+    riak_int32_t total = 0;
+    if (opt->has_r) {
+        riak_print_int("R", opt->r, &target, &len, &total);
+    }
+    if (opt->has_pr) {
+        riak_print_int("PR", opt->pr, &target, &len, &total);
+    }
+    if (opt->has_basic_quorum) {
+        riak_print_bool("Basic Quorum", opt->basic_quorum, &target, &len, &total);
+    }
+    if (opt->has_notfound_ok) {
+        riak_print_bool("Not Found OK", opt->notfound_ok, &target, &len, &total);
+    }
+    if (opt->has_if_modified) {
+        riak_print_binary("If Modified", opt->if_modified, &target, &len, &total);
+    }
+    if (opt->has_head) {
+        riak_print_bool("Head", opt->head, &target, &len, &total);
+    }
+    if (opt->has_deletedvclock) {
+        riak_print_bool("Deleted VClock", opt->deletedvclock, &target, &len, &total);
+    }
+    if (opt->has_timeout) {
+        riak_print_int("Timeout", opt->timeout, &target, &len, &total);
+    }
+    if (opt->has_sloppy_quorum) {
+        riak_print_bool("Sloppy Quorum", opt->sloppy_quorum, &target, &len, &total);
+    }
+    if (opt->has_n_val) {
+        riak_print_int("N Val", opt->n_val, &target, &len, &total);
+    }
+
+    return total;
+}
+
+riak_boolean_t
+riak_get_options_get_has_r(riak_get_options *opt) {
+    return opt->has_r;
+}
+riak_uint32_t
+riak_get_options_get_r(riak_get_options *opt) {
+    return opt->r;
+}
+riak_boolean_t
+riak_get_options_get_has_pr(riak_get_options *opt) {
+    return opt->has_pr;
+}
+riak_uint32_t
+riak_get_options_get_pr(riak_get_options *opt) {
+    return opt->pr;
+}
+riak_boolean_t
+riak_get_options_get_has_basic_quorum(riak_get_options *opt) {
+    return opt->has_basic_quorum;
+}
+riak_boolean_t
+riak_get_options_get_basic_quorum(riak_get_options *opt) {
+    return opt->basic_quorum;
+}
+riak_boolean_t
+riak_get_options_get_has_notfound_ok(riak_get_options *opt) {
+    return opt->has_notfound_ok;
+}
+riak_boolean_t
+riak_get_options_get_notfound_ok(riak_get_options *opt) {
+    return opt->notfound_ok;
+}
+riak_boolean_t
+riak_get_options_get_has_if_modified(riak_get_options *opt) {
+    return opt->has_if_modified;
+}
+riak_binary*
+riak_get_options_get_if_modified(riak_get_options *opt) {
+    return opt->if_modified;
+}
+riak_boolean_t
+riak_get_options_get_has_head(riak_get_options *opt) {
+    return opt->has_head;
+}
+riak_boolean_t
+riak_get_options_get_head(riak_get_options *opt) {
+    return opt->head;
+}
+riak_boolean_t
+riak_get_options_get_has_deletedvclock(riak_get_options *opt) {
+    return opt->has_deletedvclock;
+}
+riak_boolean_t
+riak_get_options_get_deletedvclock(riak_get_options *opt) {
+    return opt->deletedvclock;
+}
+riak_boolean_t
+riak_get_options_get_has_timeout(riak_get_options *opt) {
+    return opt->has_timeout;
+}
+riak_uint32_t
+riak_get_options_get_timeout(riak_get_options *opt) {
+    return opt->timeout;
+}
+riak_boolean_t
+riak_get_options_get_has_sloppy_quorum(riak_get_options *opt) {
+    return opt->has_sloppy_quorum;
+}
+riak_boolean_t
+riak_get_options_get_sloppy_quorum(riak_get_options *opt) {
+    return opt->sloppy_quorum;
+}
+riak_boolean_t
+riak_get_options_get_has_n_val(riak_get_options *opt) {
+    return opt->has_n_val;
+}
+riak_uint32_t
+riak_get_options_get_n_val(riak_get_options *opt) {
+    return opt->n_val;
+}
+void
+riak_get_options_set_r(riak_get_options *opt,
+                       riak_uint32_t value) {
+    opt->has_r = RIAK_TRUE;
+    opt->r = value;
+}
+void
+riak_get_options_set_pr(riak_get_options *opt,
+                        riak_uint32_t value) {
+    opt->has_pr = RIAK_TRUE;
+    opt->pr = value;
+}
+void
+riak_get_options_set_basic_quorum(riak_get_options *opt,
+                                  riak_boolean_t    value) {
+    opt->has_basic_quorum = RIAK_TRUE;
+    opt->basic_quorum = value;
+}
+void
+riak_get_options_set_notfound_ok(riak_get_options *opt,
+                                 riak_boolean_t    value) {
+    opt->has_notfound_ok = RIAK_TRUE;
+    opt->notfound_ok = value;
+}
+void
+riak_get_options_set_if_modified(riak_config      *cfg,
+                                 riak_get_options *opt,
+                                 riak_binary      *value) {
+    opt->has_if_modified = RIAK_TRUE;
+    if (opt->if_modified) {
+        riak_free(cfg, &opt->if_modified);
+    }
+    opt->if_modified =  riak_binary_deep_new(cfg, value);
+}
+void
+riak_get_options_set_head(riak_get_options *opt,
+                          riak_boolean_t    value) {
+    opt->has_head = RIAK_TRUE;
+    opt->head = value;
+}
+void
+riak_get_options_set_deletedvclock(riak_get_options *opt,
+                                   riak_boolean_t    value) {
+    opt->has_deletedvclock = RIAK_TRUE;
+    opt->deletedvclock = value;
+}
+void
+riak_get_options_set_timeout(riak_get_options *opt,
+                             riak_uint32_t     value) {
+    opt->has_timeout = RIAK_TRUE;
+    opt->timeout = value;
+}
+void
+riak_get_options_set_sloppy_quorum(riak_get_options *opt,
+                                   riak_boolean_t    value) {
+    opt->has_sloppy_quorum = RIAK_TRUE;
+    opt->sloppy_quorum = value;
+}
+void
+riak_get_options_set_n_val(riak_get_options *opt,
                            riak_uint32_t     value) {
     opt->has_n_val = RIAK_TRUE;
     opt->n_val = value;

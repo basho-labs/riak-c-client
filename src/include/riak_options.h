@@ -38,7 +38,7 @@ riak_put_options_new(riak_config *cfg);
  */
 void
 riak_put_options_free(riak_config *cfg,
-                 riak_put_options **opt);
+                      riak_put_options **opt);
 
 /**
  * @brief Print contents of a Riak Put Options to a string
@@ -52,41 +52,191 @@ riak_put_options_print(riak_put_options *opt,
                        char             *target,
                        riak_int32_t      len);
 
-riak_boolean_t riak_put_options_get_has_vclock(riak_put_options *opt);
-riak_binary   *riak_put_options_get_vclock(riak_put_options *opt);
-riak_boolean_t riak_put_options_get_has_w(riak_put_options *opt);
-riak_uint32_t  riak_put_options_get_w(riak_put_options *opt);
-riak_boolean_t riak_put_options_get_has_dw(riak_put_options *opt);
-riak_uint32_t  riak_put_options_get_dw(riak_put_options *opt);
-riak_boolean_t riak_put_options_get_has_return_body(riak_put_options *opt);
-riak_boolean_t riak_put_options_get_return_body(riak_put_options *opt);
-riak_boolean_t riak_put_options_get_has_pw(riak_put_options *opt);
-riak_uint32_t  riak_put_options_get_pw(riak_put_options *opt);
-riak_boolean_t riak_put_options_get_has_if_not_modified(riak_put_options *opt);
-riak_boolean_t riak_put_options_get_if_not_modified(riak_put_options *opt);
-riak_boolean_t riak_put_options_get_has_if_none_match(riak_put_options *opt);
-riak_boolean_t riak_put_options_get_if_none_match(riak_put_options *opt);
-riak_boolean_t riak_put_options_get_has_return_head(riak_put_options *opt);
-riak_boolean_t riak_put_options_get_return_head(riak_put_options *opt);
-riak_boolean_t riak_put_options_get_has_timeout(riak_put_options *opt);
-riak_uint32_t  riak_put_options_get_timeout(riak_put_options *opt);
-riak_boolean_t riak_put_options_get_has_asis(riak_put_options *opt);
-riak_boolean_t riak_put_options_get_asis(riak_put_options *opt);
-riak_boolean_t riak_put_options_get_has_sloppy_quorum(riak_put_options *opt);
-riak_boolean_t riak_put_options_get_sloppy_quorum(riak_put_options *opt);
-riak_boolean_t riak_put_options_get_has_n_val(riak_put_options *opt);
-riak_uint32_t  riak_put_options_get_n_val(riak_put_options *opt);
-void riak_put_options_set_vclock(riak_put_options *opt, riak_binary *value);
-void riak_put_options_set_w(riak_put_options *opt, riak_uint32_t value);
-void riak_put_options_set_dw(riak_put_options *opt, riak_uint32_t value);
-void riak_put_options_set_return_body(riak_put_options *opt, riak_boolean_t value);
-void riak_put_options_set_pw(riak_put_options *opt, riak_uint32_t value);
-void riak_put_options_set_if_not_modified(riak_put_options *opt, riak_boolean_t value);
-void riak_put_options_set_if_none_match(riak_put_options *opt, riak_boolean_t value);
-void riak_put_options_set_return_head(riak_put_options *opt, riak_boolean_t value);
-void riak_put_options_set_timeout(riak_put_options *opt, riak_uint32_t value);
-void riak_put_options_set_asis(riak_put_options *opt, riak_boolean_t value);
-void riak_put_options_set_sloppy_quorum(riak_put_options *opt, riak_boolean_t value);
-void riak_put_options_set_n_val(riak_put_options *opt, riak_uint32_t value);
+riak_boolean_t
+riak_put_options_get_has_vclock(riak_put_options *opt);
+riak_binary*
+riak_put_options_get_vclock(riak_put_options *opt);
+riak_boolean_t
+riak_put_options_get_has_w(riak_put_options *opt);
+riak_uint32_t
+riak_put_options_get_w(riak_put_options *opt);
+riak_boolean_t
+riak_put_options_get_has_dw(riak_put_options *opt);
+riak_uint32_t
+riak_put_options_get_dw(riak_put_options *opt);
+riak_boolean_t
+riak_put_options_get_has_return_body(riak_put_options *opt);
+riak_boolean_t
+riak_put_options_get_return_body(riak_put_options *opt);
+riak_boolean_t
+riak_put_options_get_has_pw(riak_put_options *opt);
+riak_uint32_t
+riak_put_options_get_pw(riak_put_options *opt);
+riak_boolean_t
+riak_put_options_get_has_if_not_modified(riak_put_options *opt);
+riak_boolean_t
+riak_put_options_get_if_not_modified(riak_put_options *opt);
+riak_boolean_t
+riak_put_options_get_has_if_none_match(riak_put_options *opt);
+riak_boolean_t
+riak_put_options_get_if_none_match(riak_put_options *opt);
+riak_boolean_t
+riak_put_options_get_has_return_head(riak_put_options *opt);
+riak_boolean_t
+riak_put_options_get_return_head(riak_put_options *opt);
+riak_boolean_t
+riak_put_options_get_has_timeout(riak_put_options *opt);
+riak_uint32_t
+riak_put_options_get_timeout(riak_put_options *opt);
+riak_boolean_t
+riak_put_options_get_has_asis(riak_put_options *opt);
+riak_boolean_t
+riak_put_options_get_asis(riak_put_options *opt);
+riak_boolean_t
+riak_put_options_get_has_sloppy_quorum(riak_put_options *opt);
+riak_boolean_t
+riak_put_options_get_sloppy_quorum(riak_put_options *opt);
+riak_boolean_t
+riak_put_options_get_has_n_val(riak_put_options *opt);
+riak_uint32_t
+riak_put_options_get_n_val(riak_put_options *opt);
+void
+riak_put_options_set_vclock(riak_config      *cfg,
+                            riak_put_options *opt,
+                            riak_binary      *value);
+void
+riak_put_options_set_w(riak_put_options *opt,
+                       riak_uint32_t     value);
+void
+riak_put_options_set_dw(riak_put_options *opt,
+                        riak_uint32_t     value);
+void
+riak_put_options_set_return_body(riak_put_options *opt,
+                                 riak_boolean_t    value);
+void
+riak_put_options_set_pw(riak_put_options *opt,
+                        riak_uint32_t     value);
+void
+riak_put_options_set_if_not_modified(riak_put_options *opt,
+                                     riak_boolean_t    value);
+void
+riak_put_options_set_if_none_match(riak_put_options *opt,
+                                   riak_boolean_t    value);
+void
+riak_put_options_set_return_head(riak_put_options *opt,
+                                 riak_boolean_t    value);
+void
+riak_put_options_set_timeout(riak_put_options *opt,
+                             riak_uint32_t     value);
+void
+riak_put_options_set_asis(riak_put_options *opt,
+                          riak_boolean_t    value);
+void
+riak_put_options_set_sloppy_quorum(riak_put_options *opt,
+                                   riak_boolean_t    value);
+void
+riak_put_options_set_n_val(riak_put_options *opt,
+                           riak_uint32_t     value);
+
+/**
+ * @brief Construct a new Riak Get Options object
+ * @param cfg Riak Configuration
+ * @return Riak Object
+ */
+riak_get_options*
+riak_get_options_new(riak_config *cfg);
+
+/**
+ * @brief Release claimed memory used by Riak Get Options
+ * @param cfg Riak Configuration
+ * @param obj Riak Object to be freed
+ */
+void
+riak_get_options_free(riak_config       *cfg,
+                      riak_get_options **opt);
+
+/**
+ * @brief Print contents of a Riak Get Options to a string
+ * @param obj Object to print
+ * @param target Location to write formatted string
+ * @param len Number of bytes to write
+ * @return Number of bytes written
+ */
+int
+riak_get_options_print(riak_get_options *opt,
+                       char             *target,
+                       riak_int32_t      len);
+
+riak_boolean_t
+riak_get_options_get_has_r(riak_get_options *opt);
+riak_uint32_t
+riak_get_options_get_r(riak_get_options *opt);
+riak_boolean_t
+riak_get_options_get_has_pr(riak_get_options *opt);
+riak_uint32_t
+riak_get_options_get_pr(riak_get_options *opt);
+riak_boolean_t
+riak_get_options_get_has_basic_quorum(riak_get_options *opt);
+riak_boolean_t
+riak_get_options_get_basic_quorum(riak_get_options *opt);
+riak_boolean_t
+riak_get_options_get_has_notfound_ok(riak_get_options *opt);
+riak_boolean_t
+riak_get_options_get_notfound_ok(riak_get_options *opt);
+riak_boolean_t
+riak_get_options_get_has_if_modified(riak_get_options *opt);
+riak_binary*
+riak_get_options_get_if_modified(riak_get_options *opt);
+riak_boolean_t
+riak_get_options_get_has_head(riak_get_options *opt);
+riak_boolean_t
+riak_get_options_get_head(riak_get_options *opt);
+riak_boolean_t
+riak_get_options_get_has_deletedvclock(riak_get_options *opt);
+riak_boolean_t
+riak_get_options_get_deletedvclock(riak_get_options *opt);
+riak_boolean_t
+riak_get_options_get_has_timeout(riak_get_options *opt) ;
+riak_uint32_t
+riak_get_options_get_timeout(riak_get_options *opt) ;
+riak_boolean_t
+riak_get_options_get_has_sloppy_quorum(riak_get_options *opt);
+riak_boolean_t
+riak_get_options_get_sloppy_quorum(riak_get_options *opt);
+riak_boolean_t
+riak_get_options_get_has_n_val(riak_get_options *opt);
+riak_uint32_t
+riak_get_options_get_n_val(riak_get_options *opt);
+void
+riak_get_options_set_r(riak_get_options *opt,
+                       riak_uint32_t value);
+void
+riak_get_options_set_pr(riak_get_options *opt,
+                        riak_uint32_t value);
+void
+riak_get_options_set_basic_quorum(riak_get_options *opt,
+                                  riak_boolean_t    value);
+void
+riak_get_options_set_notfound_ok(riak_get_options *opt,
+                                 riak_boolean_t    value);
+void
+riak_get_options_set_if_modified(riak_config      *cfg,
+                                 riak_get_options *opt,
+                                 riak_binary      *value);
+void
+riak_get_options_set_head(riak_get_options *opt,
+                          riak_boolean_t    value);
+void
+riak_get_options_set_deletedvclock(riak_get_options *opt,
+                                   riak_boolean_t    value);
+void
+riak_get_options_set_timeout(riak_get_options *opt,
+                             riak_uint32_t     value);
+void
+riak_get_options_set_sloppy_quorum(riak_get_options *opt,
+                                   riak_boolean_t    value);
+void
+riak_get_options_set_n_val(riak_get_options *opt,
+                           riak_uint32_t     value) ;
 
 #endif // _RIAK_OPTIONS_H
