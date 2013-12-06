@@ -119,6 +119,7 @@ main(int   argc,
     riak_object *obj;
     riak_bucket_props *props;
     riak_get_options *get_options;
+    riak_delete_options *delete_options;
     char output[10240];
     struct event_base *base = event_base_new();
     if (base == NULL) {
@@ -267,11 +268,19 @@ main(int   argc,
             }
             break;
         case RIAK_COMMAND_DEL:
-            if (args.async) {
-                err = riak_async_register_delete(rop, bucket_bin, key_bin, NULL, (riak_response_callback)example_delete_cb);
-            } else {
-                err = riak_delete(cxn, bucket_bin, key_bin, NULL);
+            delete_options = riak_delete_options_new(cfg);
+            if (delete_options == NULL) {
+                riak_log_critical(cxn, "%s","Could not allocate a Riak Delete Options");
+                return 1;
             }
+            riak_delete_options_set_w(delete_options, 1);
+            riak_delete_options_set_dw(delete_options, 1);
+           if (args.async) {
+                err = riak_async_register_delete(rop, bucket_bin, key_bin, delete_options, (riak_response_callback)example_delete_cb);
+            } else {
+                err = riak_delete(cxn, bucket_bin, key_bin, delete_options);
+            }
+            riak_delete_options_free(cfg, &delete_options);
             if (err) {
                 fprintf(stderr, "Delete Problems [%s]\n", riak_strerror(err));
                 exit(1);

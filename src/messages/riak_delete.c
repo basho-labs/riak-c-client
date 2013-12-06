@@ -116,3 +116,172 @@ riak_free_delete_response(riak_config           *cfg,
                           riak_delete_response **resp) {
     riak_free(cfg, resp);
 }
+
+riak_boolean_t has_vclock;
+riak_binary   *vclock;
+riak_boolean_t has_w;
+riak_uint32_t  w;
+riak_boolean_t has_dw;
+riak_uint32_t  dw;
+riak_boolean_t has_pw;
+riak_uint32_t  pw;
+riak_boolean_t has_timeout;
+riak_uint32_t  timeout;
+riak_boolean_t has_sloppy_quorum;
+riak_boolean_t sloppy_quorum;
+riak_boolean_t has_n_val;
+riak_uint32_t  n_val;
+
+
+
+//
+// D E L E T E   O P T I O N S
+//
+
+riak_delete_options*
+riak_delete_options_new(riak_config *cfg) {
+    riak_delete_options *o = (riak_delete_options*)riak_config_clean_allocate(cfg, sizeof(riak_delete_options));
+    return o;
+}
+
+int
+riak_delete_options_print(riak_delete_options  *opt,
+                       char              *target,
+                       riak_int32_t       len) {
+    riak_int32_t total = 0;
+    if (opt->has_vclock) {
+        riak_print_binary("Vector Clock", opt->vclock, &target, &len, &total);
+    }
+    if (opt->has_w) {
+        riak_print_int("W", opt->w, &target, &len, &total);
+    }
+    if (opt->has_dw) {
+        riak_print_int("DW", opt->dw, &target, &len, &total);
+    }
+    if (opt->has_pw) {
+        riak_print_int("PW", opt->pw, &target, &len, &total);
+    }
+    if (opt->has_timeout) {
+        riak_print_int("Timeout", opt->timeout, &target, &len, &total);
+    }
+    if( opt->sloppy_quorum) {
+        riak_print_bool("Sloppy Quorum", opt->sloppy_quorum, &target, &len, &total);
+    }
+    if (opt->has_n_val) {
+        riak_print_int("N Values", opt->n_val, &target, &len, &total);
+    }
+
+    return total;
+}
+
+void
+riak_delete_options_free(riak_config  *cfg,
+                 riak_delete_options **opt) {
+    riak_free(cfg, opt);
+}
+
+//
+// ACCESSORS
+//
+riak_boolean_t
+riak_delete_options_get_has_vclock(riak_delete_options *opt) {
+    return opt->has_vclock;
+}
+riak_binary*
+riak_delete_options_get_vclock(riak_delete_options *opt) {
+    return opt->vclock;
+}
+riak_boolean_t
+riak_delete_options_get_has_w(riak_delete_options *opt) {
+    return opt->has_w;
+}
+riak_uint32_t
+riak_delete_options_get_w(riak_delete_options *opt) {
+    return opt->w;
+}
+riak_boolean_t
+riak_delete_options_get_has_dw(riak_delete_options *opt) {
+    return opt->has_dw;
+}
+riak_uint32_t
+riak_delete_options_get_dw(riak_delete_options *opt) {
+    return opt->dw;
+}
+riak_boolean_t
+riak_delete_options_get_has_pw(riak_delete_options *opt) {
+    return opt->has_pw;
+}
+riak_uint32_t
+riak_delete_options_get_pw(riak_delete_options *opt) {
+    return opt->pw;
+}
+riak_boolean_t
+riak_delete_options_get_has_timeout(riak_delete_options *opt) {
+    return opt->has_timeout;
+}
+riak_uint32_t
+riak_delete_options_get_timeout(riak_delete_options *opt) {
+    return opt->timeout;
+}
+riak_boolean_t
+riak_delete_options_get_has_sloppy_quorum(riak_delete_options *opt) {
+    return opt->has_sloppy_quorum;
+}
+riak_boolean_t
+riak_delete_options_get_sloppy_quorum(riak_delete_options *opt) {
+    return opt->sloppy_quorum;
+}
+riak_boolean_t
+riak_delete_options_get_has_n_val(riak_delete_options *opt) {
+    return opt->has_n_val;
+}
+riak_uint32_t
+riak_delete_options_get_n_val(riak_delete_options *opt) {
+    return opt->n_val;
+}
+void
+riak_delete_options_set_vclock(riak_config      *cfg,
+                            riak_delete_options *opt,
+                            riak_binary      *value) {
+    opt->has_vclock = RIAK_TRUE;
+    if (opt->vclock) {
+        riak_free(cfg, &opt->vclock);
+    }
+    opt->vclock = riak_binary_deep_new(cfg, value);
+}
+void
+riak_delete_options_set_w(riak_delete_options *opt,
+                       riak_uint32_t     value) {
+    opt->has_w = RIAK_TRUE;
+    opt->w = value;
+}
+void
+riak_delete_options_set_dw(riak_delete_options *opt,
+                        riak_uint32_t     value) {
+    opt->has_dw = RIAK_TRUE;
+    opt->dw = value;
+}
+void
+riak_delete_options_set_pw(riak_delete_options *opt,
+                        riak_uint32_t     value) {
+    opt->has_pw = RIAK_TRUE;
+    opt->pw = value;
+}
+void
+riak_delete_options_set_timeout(riak_delete_options *opt,
+                             riak_uint32_t     value) {
+    opt->has_timeout = RIAK_TRUE;
+    opt->timeout = value;
+}
+void
+riak_delete_options_set_sloppy_quorum(riak_delete_options *opt,
+                                   riak_boolean_t    value) {
+    opt->has_sloppy_quorum = RIAK_TRUE;
+    opt->sloppy_quorum = value;
+}
+void
+riak_delete_options_set_n_val(riak_delete_options *opt,
+                           riak_uint32_t     value) {
+    opt->has_n_val = RIAK_TRUE;
+    opt->n_val = value;
+}

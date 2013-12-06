@@ -36,4 +36,55 @@ void
 riak_free_delete_response(riak_config           *cfg,
                           riak_delete_response **resp);
 
+/**
+ * @brief Construct a new Riak Delete Options object
+ * @param cfg Riak Configuration
+ * @return Riak Object
+ */
+riak_delete_options*
+riak_delete_options_new(riak_config *cfg);
+
+/**
+ * @brief Release claimed memory used by Riak Delete Options
+ * @param cfg Riak Configuration
+ * @param obj Riak Object to be freed
+ */
+void
+riak_delete_options_free(riak_config *cfg,
+                         riak_delete_options **opt);
+
+/**
+ * @brief Print contents of a Riak Delete Options to a string
+ * @param obj Object to print
+ * @param target Location to write formatted string
+ * @param len Number of bytes to write
+ * @return Number of bytes written
+ */
+int
+riak_delete_options_print(riak_delete_options *opt,
+                          char                *target,
+                          riak_int32_t         len);
+
+void
+riak_delete_options_set_vclock(riak_config         *cfg,
+                               riak_delete_options *opt,
+                               riak_binary         *value);
+void
+riak_delete_options_set_w(riak_delete_options *opt,
+                          riak_uint32_t        value);
+void
+riak_delete_options_set_dw(riak_delete_options *opt,
+                           riak_uint32_t        value);
+void
+riak_delete_options_set_pw(riak_delete_options *opt,
+                           riak_uint32_t        value);
+void
+riak_delete_options_set_timeout(riak_delete_options *opt,
+                                riak_uint32_t        value);
+void
+riak_delete_options_set_sloppy_quorum(riak_delete_options *opt,
+                                      riak_boolean_t       value);
+void
+riak_delete_options_set_n_val(riak_delete_options *opt,
+                              riak_uint32_t        value);
 #endif
