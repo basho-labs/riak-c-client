@@ -42,7 +42,6 @@
 #include "riak_object.h"
 #include "riak_bucket_props.h"
 #include "riak_messages.h"
-#include "riak_options.h"
 #include "riak_log.h"
 
 //

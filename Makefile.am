@@ -16,7 +16,6 @@ include_HEADERS =	src/include/riak.h \
 			src/include/riak_network.h \
 			src/include/riak_object.h \
 			src/include/riak_operation.h \
-			src/include/riak_options.h \
 			src/include/riak_types.h
 
 lib_LTLIBRARIES =	libriak_c_client-0.1.la
@@ -33,7 +32,6 @@ libriak_c_client_0_1_la_SOURCES = \
 			src/riak_network.c \
 			src/riak_object.c \
 			src/riak_operation.c \
-			src/riak_options.c \
 			src/riak_print.c \
 			src/riak_utils.c \
 			src/riak.pb-c.c src/riak_kv.pb-c.c \
