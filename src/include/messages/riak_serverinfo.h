@@ -1,0 +1,49 @@
+/*********************************************************************
+ *
+ * riak_messages.h: Riak C Client Server Information Message
+ *
+ * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
+ *
+ * This file is provided to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file
+ * except in compliance with the License.  You may obtain
+ * a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ *
+ *********************************************************************/
+
+#ifndef _RIAK_SERVERINFO_MESSAGE_H
+#define _RIAK_SERVERINFO_MESSAGE_H
+
+typedef struct _riak_serverinfo_response riak_serverinfo_response;
+typedef void (*riak_serverinfo_response_callback)(riak_serverinfo_response *response, void *ptr);
+
+/**
+ * @brief Print a summary of a `riak_serverinfo_response`
+ * @param response Result from a Server Info request
+ * @param target Location of string to be formatted
+ * @param len Number of free bytes
+ */
+void
+riak_print_serverinfo_response(riak_serverinfo_response *response,
+                               char                     *target,
+                               riak_size_t               len);
+
+/**
+ * @brief Free memory from response
+ * @param cfg Riak Configuration
+ * @param resp Server Info PBC Response
+ */
+void
+riak_free_serverinfo_response(riak_config               *cfg,
+                              riak_serverinfo_response **resp);
+
+#endif

@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * riak_messages.h: Riak C Client External Messages
+ * riak_messages.h: Riak C Client Set Client ID Message
  *
  * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
  *
@@ -20,21 +20,20 @@
  *
  *********************************************************************/
 
-#include "messages/riak_delete.h"
-#include "messages/riak_error.h"
-#include "messages/riak_get.h"
-#include "messages/riak_get_bucketprops.h"
-#include "messages/riak_get_clientid.h"
-#include "messages/riak_listbuckets.h"
-#include "messages/riak_listkeys.h"
-#include "messages/riak_ping.h"
-#include "messages/riak_put.h"
-#include "messages/riak_reset_bucketprops.h"
-#include "messages/riak_serverinfo.h"
-#include "messages/riak_set_bucketprops.h"
-#include "messages/riak_set_clientid.h"
+#ifndef _RIAK_SET_CLIENTID_MESSAGE_H
+#define _RIAK_SET_CLIENTID_MESSAGE_H
 
-#ifndef _RIAK_MESSAGES_H
-#define _RIAK_MESSAGES_H
+typedef struct _riak_set_clientid_response riak_set_clientid_response;
+typedef void (*riak_set_clientid_response_callback)(riak_set_clientid_response *response, void *ptr);
 
-#endif // _RIAK_MESSAGES_H
+/**
+ * @brief Free memory from response
+ * @param cfg Riak Configuration
+ * @param resp client id PBC Response
+ */
+void
+riak_free_set_clientid_response(riak_config                 *cfg,
+                                riak_set_clientid_response **resp);
+
+
+#endif

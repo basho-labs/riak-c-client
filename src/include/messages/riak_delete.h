@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * riak_messages.h: Riak C Client External Messages
+ * riak_messages.h: Riak C Client Delete Message
  *
  * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
  *
@@ -20,21 +20,20 @@
  *
  *********************************************************************/
 
-#include "messages/riak_delete.h"
-#include "messages/riak_error.h"
-#include "messages/riak_get.h"
-#include "messages/riak_get_bucketprops.h"
-#include "messages/riak_get_clientid.h"
-#include "messages/riak_listbuckets.h"
-#include "messages/riak_listkeys.h"
-#include "messages/riak_ping.h"
-#include "messages/riak_put.h"
-#include "messages/riak_reset_bucketprops.h"
-#include "messages/riak_serverinfo.h"
-#include "messages/riak_set_bucketprops.h"
-#include "messages/riak_set_clientid.h"
+#ifndef _RIAK_DELETE_MESSAGE_H
+#define _RIAK_DELETE_MESSAGE_H
 
-#ifndef _RIAK_MESSAGES_H
-#define _RIAK_MESSAGES_H
+typedef struct _riak_delete_options riak_delete_options;
+typedef struct _riak_delete_response riak_delete_response;
+typedef void (*riak_delete_response_callback)(riak_delete_response *response, void *ptr);
 
-#endif // _RIAK_MESSAGES_H
+/**
+ * @brief Free memory from response
+ * @param cfg Riak Configuration
+ * @param resp Delete PBC Response
+ */
+void
+riak_free_delete_response(riak_config           *cfg,
+                          riak_delete_response **resp);
+
+#endif
