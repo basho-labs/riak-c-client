@@ -118,6 +118,7 @@ main(int   argc,
 
     riak_object *obj;
     riak_bucket_props *props;
+    riak_get_options *get_options;
     char output[10240];
     struct event_base *base = event_base_new();
     if (base == NULL) {
@@ -198,17 +199,25 @@ main(int   argc,
             }
             break;
         case RIAK_COMMAND_GET:
+            get_options = riak_get_options_new(cfg);
+            if (get_options == NULL) {
+                riak_log_critical(cxn, "%s","Could not allocate a Riak Get Options");
+                return 1;
+            }
+            riak_get_options_set_basic_quorum(get_options, RIAK_TRUE);
+            riak_get_options_set_r(get_options, 2);
             if (args.async) {
-                err = riak_async_register_get(rop, bucket_bin, key_bin, NULL, (riak_response_callback)example_get_cb);
+                err = riak_async_register_get(rop, bucket_bin, key_bin, get_options, (riak_response_callback)example_get_cb);
             } else {
                 riak_get_response *get_response;
-                err = riak_get(cxn, bucket_bin, key_bin, NULL, &get_response);
+                err = riak_get(cxn, bucket_bin, key_bin, get_options, &get_response);
                 if (err == ERIAK_OK) {
                     riak_print_get_response(get_response, output, sizeof(output));
                     printf("%s\n", output);
                 }
                 riak_free_get_response(cfg, &get_response);
             }
+            riak_get_options_free(cfg, &get_options);
             if (err) {
                 fprintf(stderr, "Get Problems [%s]\n", riak_strerror(err));
                 exit(1);
@@ -236,8 +245,8 @@ main(int   argc,
                 riak_log_critical(cxn, "%s","Could not allocate a Riak Put Options");
                 return 1;
             }
-            riak_put_options_set_return_head(put_options, RIAK_FALSE);
-            riak_put_options_set_return_body(put_options, RIAK_FALSE);
+            riak_put_options_set_return_head(put_options, RIAK_TRUE);
+            riak_put_options_set_return_body(put_options, RIAK_TRUE);
 
             if (args.async) {
                 err = riak_async_register_put(rop, obj, put_options, (riak_response_callback)example_put_cb);
@@ -251,6 +260,7 @@ main(int   argc,
                 riak_free_put_response(cfg, &put_response);
             }
             riak_object_free(cfg, &obj);
+            riak_put_options_free(cfg, &put_options);
             if (err) {
                 fprintf(stderr, "Put Problems [%s]\n", riak_strerror(err));
                 exit(1);

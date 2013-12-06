@@ -37,7 +37,20 @@ libriak_c_client_0_1_la_SOURCES = \
 			src/riak_print.c \
 			src/riak_utils.c \
 			src/riak.pb-c.c src/riak_kv.pb-c.c \
-			src/riak_search.pb-c.c src/riak_yokozuna.pb-c.c
+			src/riak_search.pb-c.c src/riak_yokozuna.pb-c.c \
+			src/messages/riak_delete.c \
+			src/messages/riak_error.c \
+			src/messages/riak_get.c \
+			src/messages/riak_get_bucketprops.c \
+			src/messages/riak_get_clientid.c \
+			src/messages/riak_listbuckets.c \
+			src/messages/riak_listkeys.c \
+			src/messages/riak_ping.c \
+			src/messages/riak_put.c \
+			src/messages/riak_reset_bucketprops.c \
+			src/messages/riak_serverinfo.c \
+			src/messages/riak_set_bucketprops.c \
+			src/messages/riak_set_clientid.c
 
 BUILT_SOURCES =		src/riak.pb-c.h src/riak.pb-c.c \
 			src/riak_kv.pb-c.h src/riak_kv.pb-c.c \
