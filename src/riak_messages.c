@@ -36,9 +36,8 @@ riak_pb_message_new(riak_config  *cfg,
                     riak_uint8_t  msgtype,
                     riak_size_t   msglen,
                     riak_uint8_t *buffer) {
-    riak_pb_message *pb = (riak_pb_message*)(cfg->malloc_fn)(sizeof(riak_pb_message));
+    riak_pb_message *pb = (riak_pb_message*)riak_config_clean_allocate(cfg, sizeof(riak_pb_message));
     if (pb != NULL) {
-        memset((void*)pb, '\0', sizeof(riak_pb_message));
         pb->msgid   = msgtype;
         pb->len     = msglen;
         pb->data    = buffer;

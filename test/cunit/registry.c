@@ -32,6 +32,7 @@
 #include "test_config.h"
 #include "test_connection.h"
 #include "test_operation.h"
+#include "test_serverinfo.h"
 
 int
 main(int   argc,
@@ -48,6 +49,7 @@ main(int   argc,
     CU_pSuite config_suite = CU_add_suite("riak_config", init_fn, cleanup_fn);
     CU_pSuite connection_suite = CU_add_suite("riak_connection", init_fn, cleanup_fn);
     CU_pSuite operation_suite = CU_add_suite("riak_operation", init_fn, cleanup_fn);
+    CU_pSuite messages_suite = CU_add_suite("riak_messages", init_fn, cleanup_fn);
     CU_ADD_TEST(binary_suite, test_build_binary);
     CU_ADD_TEST(binary_suite, test_build_binary_with_null);
     CU_ADD_TEST(binary_suite, test_build_binary_from_pb);
@@ -64,6 +66,9 @@ main(int   argc,
     CU_ADD_TEST(config_suite, test_config_free);
     CU_ADD_TEST(operation_suite, test_operation_new);
     CU_ADD_TEST(operation_suite, test_operation_callbacks);
+    CU_ADD_TEST(messages_suite, test_server_info_encode_request);
+    CU_ADD_TEST(messages_suite, test_server_info_decode_good_response);
+    CU_ADD_TEST(messages_suite, test_server_info_decode_bad_response);
 
     // Run all tests using the CUnit Basic interface
     CU_basic_set_mode(CU_BRM_VERBOSE);

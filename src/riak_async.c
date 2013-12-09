@@ -37,7 +37,7 @@ riak_error
 riak_async_register_serverinfo(riak_operation        *rop,
                                riak_response_callback cb) {
     riak_operation_set_response_cb(rop, cb);
-    return riak_encode_serverinfo_request(rop, &(rop->pb_request));
+    return riak_serverinfo_request_encode(rop, &(rop->pb_request));
 }
 
 riak_error

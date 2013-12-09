@@ -57,9 +57,9 @@ example_serverinfo_cb(riak_serverinfo_response *response,
     riak_config     *cfg = riak_connection_get_config(cxn);
     riak_log_debug(cxn, "%s", "example_serverinfo_cb");
     char output[10240];
-    riak_print_serverinfo_response(response, output, sizeof(output));
+    riak_serverinfo_response_print(response, output, sizeof(output));
     riak_log_debug(cxn, "%s", output);
-    riak_free_serverinfo_response(cfg, &response);
+    riak_serverinfo_response_free(cfg, &response);
 }
 
 void

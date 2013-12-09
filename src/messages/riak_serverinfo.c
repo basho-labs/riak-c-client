@@ -32,7 +32,7 @@
 #include "riak_print-internal.h"
 
 riak_error
-riak_encode_serverinfo_request(riak_operation   *rop,
+riak_serverinfo_request_encode(riak_operation   *rop,
                                riak_pb_message **req) {
     riak_config *cfg = riak_operation_get_config(rop);
     riak_pb_message* request = riak_pb_message_new(cfg, MSG_RPBGETSERVERINFOREQ, 0, NULL);
@@ -40,13 +40,13 @@ riak_encode_serverinfo_request(riak_operation   *rop,
         return ERIAK_OUT_OF_MEMORY;
     }
     *req = request;
-    riak_operation_set_response_decoder(rop, (riak_response_decoder)riak_decode_serverinfo_response);
+    riak_operation_set_response_decoder(rop, (riak_response_decoder)riak_serverinfo_response_decode);
 
     return ERIAK_OK;
 }
 
 riak_error
-riak_decode_serverinfo_response(riak_operation            *rop,
+riak_serverinfo_response_decode(riak_operation            *rop,
                                 riak_pb_message           *pbresp,
                                 riak_serverinfo_response **resp,
                                 riak_boolean_t            *done) {
@@ -86,7 +86,7 @@ riak_decode_serverinfo_response(riak_operation            *rop,
 }
 
 void
-riak_print_serverinfo_response(riak_serverinfo_response *response,
+riak_serverinfo_response_print(riak_serverinfo_response *response,
                                char                     *target,
                                riak_size_t               len) {
     riak_int32_t left_to_write = len;
@@ -107,7 +107,7 @@ riak_print_serverinfo_response(riak_serverinfo_response *response,
 }
 
 void
-riak_free_serverinfo_response(riak_config               *cfg,
+riak_serverinfo_response_free(riak_config               *cfg,
                               riak_serverinfo_response **resp) {
     riak_serverinfo_response *response = *resp;
     if (response == NULL) return;
@@ -116,3 +116,24 @@ riak_free_serverinfo_response(riak_config               *cfg,
     riak_free(cfg, &(response->server_version));
     riak_free(cfg, resp);
 }
+
+riak_boolean_t
+riak_serverinfo_get_has_node(riak_serverinfo_response *resp) {
+    return resp->has_node;
+}
+
+riak_binary*
+riak_serverinfo_get_node(riak_serverinfo_response *resp) {
+    return resp->node;
+}
+
+riak_boolean_t
+riak_serverinfo_get_has_server_version(riak_serverinfo_response *resp) {
+    return resp->has_server_version;
+}
+
+riak_binary*
+riak_serverinfo_get_server_version(riak_serverinfo_response *resp) {
+    return resp->server_version;
+}
+

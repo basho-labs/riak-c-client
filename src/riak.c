@@ -109,7 +109,7 @@ riak_serverinfo(riak_connection           *cxn,
     if (err) {
         return err;
     }
-    err = riak_encode_serverinfo_request(rop, &(rop->pb_request));
+    err = riak_serverinfo_request_encode(rop, &(rop->pb_request));
     if (err) {
         return err;
     }

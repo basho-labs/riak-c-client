@@ -33,7 +33,7 @@ typedef void (*riak_serverinfo_response_callback)(riak_serverinfo_response *resp
  * @param len Number of free bytes
  */
 void
-riak_print_serverinfo_response(riak_serverinfo_response *response,
+riak_serverinfo_response_print(riak_serverinfo_response *response,
                                char                     *target,
                                riak_size_t               len);
 
@@ -43,7 +43,39 @@ riak_print_serverinfo_response(riak_serverinfo_response *response,
  * @param resp Server Info PBC Response
  */
 void
-riak_free_serverinfo_response(riak_config               *cfg,
+riak_serverinfo_response_free(riak_config               *cfg,
                               riak_serverinfo_response **resp);
+
+/**
+ * @brief Determine if a node is present in the response
+ * @param resp Riak Server Info Response
+ * @returns True if node is returned
+ */
+riak_boolean_t
+riak_serverinfo_get_has_node(riak_serverinfo_response *resp);
+
+/**
+ * @brief Return the server node name
+ * @param resp Riak Server Info Response
+ * @returns Node name sting (e.g. dev1@127.0.0.1)
+ */
+riak_binary*
+riak_serverinfo_get_node(riak_serverinfo_response *resp);
+
+/**
+ * @brief Determine if a server version is present in the response
+ * @param resp Riak Server Info Response
+ * @returns True if server version is returned
+ */
+riak_boolean_t
+riak_serverinfo_get_has_server_version(riak_serverinfo_response *resp);
+
+/**
+ * @brief Get the
+ * @param resp Riak Server Info Response
+ * @returns Server version string (e.g. 2.0.0pre4)
+ */
+riak_binary*
+riak_serverinfo_get_server_version(riak_serverinfo_response *resp);
 
 #endif

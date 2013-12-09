@@ -94,6 +94,46 @@ riak_print_binary_hex(char         *name,
     return wrote;
 }
 
+
+static inline int
+riak_print_convert_byte(riak_uint8_t  b,
+                        char        **target,
+                        riak_int32_t *len) {
+
+    if (*len < 6) return 0;
+
+    static char hex[] = "0123456789abcdef";
+    int nibble = (b & 0xf0) >> 4;
+    **target   = '0';
+    (*target)++;
+    **target   = 'x';
+    (*target)++;
+    **target   = hex[nibble];
+    (*target)++;
+    nibble     = (b & 0x0f);
+    **target   = hex[nibble];
+    (*target)++;
+    **target   = ',';
+    (*target)++;
+    **target   = '\0';
+
+    return 5;
+}
+
+riak_int32_t
+riak_print_raw_hex_array(riak_uint8_t *value,
+                         riak_int32_t  value_len,
+                         char        **target,
+                         riak_int32_t *len,
+                         riak_int32_t *total) {
+    riak_int32_t bytes = 0;
+    riak_int32_t wrote = 0;
+    for (; *len > 0 && bytes < value_len; bytes++) {
+        wrote += riak_print_convert_byte(value[bytes], target, len);
+    }
+    return wrote;
+}
+
 riak_int32_t
 riak_print_label(char         *value,
                  char        **target,

@@ -78,12 +78,12 @@ EXTRA_DIST = $(BUILT_SOURCES) \
 		$(EXAMPLESDIR)/riak_command.h \
 		$(TESTCUNITDIR)/include
 
-bin_PROGRAMS = riakc_example
-riakc_example_SOURCES = examples/example.c \
+bin_PROGRAMS = riak_c_example
+riak_c_example_SOURCES = examples/example.c \
 			examples/example_call_backs.c \
 			examples/riak_command.c
 
-riakc_example_CPPFLAGS = \
+riak_c_example_CPPFLAGS = \
 			-DUSE_DEBUG -D_RIAK_DEBUG \
 			-I$(SRCDIR)/include \
 			-I$(SRCDIR)/internal \
@@ -91,19 +91,20 @@ riakc_example_CPPFLAGS = \
 			-I$(SRCDIR) \
 			-Iexamples
 
-riakc_example_LDADD = \
+riak_c_example_LDADD = \
 		-lriak_c_client-0.1 \
 		$(PROTOBUFC_LIBS) $(PROTOBUF_LIBS) $(EVENT_LIBS) \
 		-lcunit -lpthread
 
-riakc_example_DEPENDENCIES = libriak_c_client-0.1.la
+riak_c_example_DEPENDENCIES = libriak_c_client-0.1.la
 
 check_PROGRAMS = riak_c_cunit
 riak_c_cunit_SOURCES = 	test/cunit/registry.c \
 			test/cunit/test_binary.c \
 			test/cunit/test_config.c \
 			test/cunit/test_connection.c \
-			test/cunit/test_operation.c
+			test/cunit/test_operation.c \
+			test/cunit/test_serverinfo.c
 
 riak_c_cunit_CPPFLAGS = -I$(SRCDIR)/include \
 			-I$(SRCDIR)/internal \

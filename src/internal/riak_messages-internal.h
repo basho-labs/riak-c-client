@@ -100,16 +100,22 @@
 #define MSG_RPBAUTHRESP               254
 #define MSG_RPBSTARTTLS               255
 
-// Based on RpbGetServerInfoResp
-struct _riak_serverinfo_response
-{
-    riak_boolean_t  has_node;
-    riak_binary    *node;
-    riak_boolean_t  has_server_version;
-    riak_binary    *server_version;
+typedef struct _riak_pb_message {
+    riak_uint32_t len;
+    riak_uint8_t  msgid;
+    riak_uint8_t *data;
+} riak_pb_message;
 
-    RpbGetServerInfoResp *_internal;
-};
+riak_pb_message*
+riak_pb_message_new(riak_config *cfg,
+                    riak_uint8_t  msgtype,
+                    riak_size_t   msglen,
+                    riak_uint8_t *buffer);
+void
+riak_pb_message_free(riak_config     *cfg,
+                     riak_pb_message **pb);
+
+#include "messages/riak_serverinfo-internal.h"
 
 // Based on RpbGetResp
 struct _riak_get_response {
@@ -311,20 +317,6 @@ struct _riak_reset_bucketprops_response
 };
 
 
-typedef struct _riak_pb_message {
-    riak_uint32_t len;
-    riak_uint8_t  msgid;
-    riak_uint8_t *data;
-} riak_pb_message;
-
-riak_pb_message*
-riak_pb_message_new(riak_config *cfg,
-                    riak_uint8_t  msgtype,
-                    riak_size_t   msglen,
-                    riak_uint8_t *buffer);
-void
-riak_pb_message_free(riak_config     *cfg,
-                     riak_pb_message **pb);
 
 /**
  * @brief Convert PBC error response into user-readable data type
@@ -364,30 +356,6 @@ riak_decode_ping_response(riak_operation      *rop,
                           riak_ping_response **resp,
                           riak_boolean_t      *done);
 
-
-/**
- * @brief Build a server info request
- * @param rop Riak Operation
- * @param req Created PB message
- * @return Error if out of memory
- */
-riak_error
-riak_encode_serverinfo_request(riak_operation   *rop,
-                               riak_pb_message **req);
-
-/**
- * @brief Translate PBC message to Riak message
- * @param rop Riak Operation
- * @param pbresp Protocol Buffer message
- * @param done Returned flag set to true if finished streaming
- * @param resp Returned Get message
- * @return Error if out of memory
- */
-riak_error
-riak_decode_serverinfo_response(riak_operation            *rop,
-                                riak_pb_message           *pbresp,
-                                riak_serverinfo_response **resp,
-                                riak_boolean_t            *done);
 
 /**
  * @brief Create a get/fetch Request

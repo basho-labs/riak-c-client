@@ -190,9 +190,9 @@ main(int   argc,
             } else {
                 riak_serverinfo_response *serverinfo_response;
                 err = riak_serverinfo(cxn, &serverinfo_response);
-                riak_print_serverinfo_response(serverinfo_response, output, sizeof(output));
+                riak_serverinfo_response_print(serverinfo_response, output, sizeof(output));
                 printf("%s\n", output);
-                riak_free_serverinfo_response(cfg, &serverinfo_response);
+                riak_serverinfo_response_free(cfg, &serverinfo_response);
             }
             if (err) {
                 fprintf(stderr, "Server Info Problems [%s]\n", riak_strerror(err));
