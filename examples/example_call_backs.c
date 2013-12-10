@@ -122,7 +122,7 @@ example_delete_cb(riak_delete_response *response,
     riak_connection *cxn = riak_operation_get_connection(rop);
     riak_config     *cfg = riak_connection_get_config(cxn);
     riak_log_debug(cxn, "%s", "example_delete_cb");
-    riak_free_delete_response(cfg, &response);
+    riak_delete_response_free(cfg, &response);
 }
 
 void

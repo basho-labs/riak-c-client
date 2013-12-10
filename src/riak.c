@@ -177,7 +177,7 @@ riak_delete(riak_connection    *cxn,
     if (err) {
         return err;
     }
-    err = riak_encode_delete_request(rop, bucket, key, opts, &(rop->pb_request));
+    err = riak_delete_request_encode(rop, bucket, key, opts, &(rop->pb_request));
     if (err) {
         return err;
     }

@@ -33,7 +33,7 @@ typedef void (*riak_delete_response_callback)(riak_delete_response *response, vo
  * @param resp Delete PBC Response
  */
 void
-riak_free_delete_response(riak_config           *cfg,
+riak_delete_response_free(riak_config           *cfg,
                           riak_delete_response **resp);
 
 /**
@@ -65,25 +65,67 @@ riak_delete_options_print(riak_delete_options *opt,
                           char                *target,
                           riak_int32_t         len);
 
+/**
+ * @brief Set the Vector Clock on a delete operation
+ * @param cfg Riak Configuration
+ * @param opt Delete options
+ * @param value Value of Vector Clock
+ */
 void
 riak_delete_options_set_vclock(riak_config         *cfg,
                                riak_delete_options *opt,
                                riak_binary         *value);
+/**
+ * @brief Set the Write Quorum on a delete operation
+ * @param cfg Riak Configuration
+ * @param opt Delete options
+ * @param value Value of Write Quorum
+ */
 void
 riak_delete_options_set_w(riak_delete_options *opt,
                           riak_uint32_t        value);
+/**
+ * @brief Set the Durable Write Quorum on a delete operation
+ * @param cfg Riak Configuration
+ * @param opt Delete options
+ * @param value Value of Durable Write Quorum
+ */
 void
 riak_delete_options_set_dw(riak_delete_options *opt,
                            riak_uint32_t        value);
+/**
+ * @brief Set the Primary Write Quorum on a delete operation
+ * @param cfg Riak Configuration
+ * @param opt Delete options
+ * @param value Value of Primary Write Quorum
+ */
 void
 riak_delete_options_set_pw(riak_delete_options *opt,
                            riak_uint32_t        value);
+/**
+ * @brief Set the Time out on a delete operation
+ * @param cfg Riak Configuration
+ * @param opt Delete options
+ * @param value Value of Time Out (in ms)
+ */
 void
 riak_delete_options_set_timeout(riak_delete_options *opt,
                                 riak_uint32_t        value);
+/**
+ * @brief Allow a Sloppy Quorum on a delete operation
+ * @param cfg Riak Configuration
+ * @param opt Delete options
+ * @param value True or False
+ */
 void
 riak_delete_options_set_sloppy_quorum(riak_delete_options *opt,
                                       riak_boolean_t       value);
+/**
+ * @brief Set the N Value on a delete operation
+ * @param cfg Riak Configuration
+ * @param opt Delete options
+ * @param value N Value
+ */
 void
 riak_delete_options_set_n_val(riak_delete_options *opt,
                               riak_uint32_t        value);

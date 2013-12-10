@@ -101,11 +101,12 @@ riak_c_example_DEPENDENCIES = libriak_c_client-0.1.la
 check_PROGRAMS = riak_c_cunit
 riak_c_cunit_SOURCES = 	test/cunit/registry.c \
 			test/cunit/test_binary.c \
+			test/cunit/test_clientid.c \
 			test/cunit/test_config.c \
 			test/cunit/test_connection.c \
+			test/cunit/test_delete.c \
 			test/cunit/test_operation.c \
-			test/cunit/test_serverinfo.c \
-			test/cunit/test_clientid.c
+			test/cunit/test_serverinfo.c
 
 riak_c_cunit_CPPFLAGS = -I$(SRCDIR)/include \
 			-I$(SRCDIR)/internal \
