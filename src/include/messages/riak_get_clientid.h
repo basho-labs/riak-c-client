@@ -33,7 +33,7 @@ typedef void (*riak_get_clientid_response_callback)(riak_get_clientid_response *
  * @param len Number of free bytes
  */
 void
-riak_print_get_clientid_response(riak_get_clientid_response *response,
+riak_get_clientid_response_print(riak_get_clientid_response *response,
                                  char                       *target,
                                  riak_size_t                 len);
 
@@ -43,7 +43,7 @@ riak_print_get_clientid_response(riak_get_clientid_response *response,
  * @param resp client id PBC Response
  */
 void
-riak_free_get_clientid_response(riak_config                 *cfg,
+riak_get_clientid_response_free(riak_config                 *cfg,
                                 riak_get_clientid_response **resp);
 
 #endif

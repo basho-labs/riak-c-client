@@ -90,7 +90,7 @@ riak_error
 riak_async_register_get_clientid(riak_operation       *rop,
                                  riak_response_callback cb) {
     riak_operation_set_response_cb(rop, cb);
-    return riak_encode_get_clientid_request(rop, &(rop->pb_request));
+    return riak_get_clientid_request_encode(rop, &(rop->pb_request));
 }
 
 riak_error
@@ -98,7 +98,7 @@ riak_async_register_set_clientid(riak_operation  *rop,
                                  riak_binary     *clientid,
                                  riak_response_callback cb) {
     riak_operation_set_response_cb(rop, cb);
-    return riak_encode_set_clientid_request(rop, clientid, &(rop->pb_request));
+    return riak_set_clientid_request_encode(rop, clientid, &(rop->pb_request));
 }
 
 riak_error

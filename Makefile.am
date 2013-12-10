@@ -104,7 +104,8 @@ riak_c_cunit_SOURCES = 	test/cunit/registry.c \
 			test/cunit/test_config.c \
 			test/cunit/test_connection.c \
 			test/cunit/test_operation.c \
-			test/cunit/test_serverinfo.c
+			test/cunit/test_serverinfo.c \
+			test/cunit/test_clientid.c
 
 riak_c_cunit_CPPFLAGS = -I$(SRCDIR)/include \
 			-I$(SRCDIR)/internal \

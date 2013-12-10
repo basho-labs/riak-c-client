@@ -32,7 +32,7 @@
 #include "riak_print-internal.h"
 
 riak_error
-riak_encode_get_clientid_request(riak_operation   *rop,
+riak_get_clientid_request_encode(riak_operation   *rop,
                                  riak_pb_message **req) {
     riak_config *cfg = riak_operation_get_config(rop);
     riak_pb_message* request = riak_pb_message_new(cfg, MSG_RPBGETCLIENTIDREQ, 0, NULL);
@@ -40,14 +40,14 @@ riak_encode_get_clientid_request(riak_operation   *rop,
         return ERIAK_OUT_OF_MEMORY;
     }
     *req = request;
-    riak_operation_set_response_decoder(rop, (riak_response_decoder)riak_decode_get_clientid_response);
+    riak_operation_set_response_decoder(rop, (riak_response_decoder)riak_get_clientid_response_decode);
 
     return ERIAK_OK;
 }
 
 
 riak_error
-riak_decode_get_clientid_response(riak_operation             *rop,
+riak_get_clientid_response_decode(riak_operation              *rop,
                                   riak_pb_message             *pbresp,
                                   riak_get_clientid_response **resp,
                                   riak_boolean_t              *done) {
@@ -77,7 +77,7 @@ riak_decode_get_clientid_response(riak_operation             *rop,
 }
 
 void
-riak_print_get_clientid_response(riak_get_clientid_response *response,
+riak_get_clientid_response_print(riak_get_clientid_response *response,
                                  char                       *target,
                                  riak_size_t                 len) {
     char buffer[2048];
@@ -88,7 +88,7 @@ riak_print_get_clientid_response(riak_get_clientid_response *response,
 }
 
 void
-riak_free_get_clientid_response(riak_config                 *cfg,
+riak_get_clientid_response_free(riak_config                 *cfg,
                                 riak_get_clientid_response **resp) {
     riak_get_clientid_response *response = *resp;
     if (response == NULL) return;

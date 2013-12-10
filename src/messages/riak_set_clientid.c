@@ -32,7 +32,7 @@
 #include "riak_print-internal.h"
 
 riak_error
-riak_decode_set_clientid_response(riak_operation              *rop,
+riak_set_clientid_response_decode(riak_operation              *rop,
                                   riak_pb_message             *pbresp,
                                   riak_set_clientid_response **resp,
                                   riak_boolean_t              *done) {
@@ -48,7 +48,7 @@ riak_decode_set_clientid_response(riak_operation              *rop,
 }
 
 riak_error
-riak_encode_set_clientid_request(riak_operation  *rop,
+riak_set_clientid_request_encode(riak_operation  *rop,
                                  riak_binary      *clientid,
                                  riak_pb_message **req) {
 
@@ -68,7 +68,7 @@ riak_encode_set_clientid_request(riak_operation  *rop,
         return ERIAK_OUT_OF_MEMORY;
     }
     *req = request;
-    riak_operation_set_response_decoder(rop, (riak_response_decoder)riak_decode_set_clientid_response);
+    riak_operation_set_response_decoder(rop, (riak_response_decoder)riak_set_clientid_response_decode);
 
     return ERIAK_OK;
 }

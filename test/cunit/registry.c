@@ -33,6 +33,7 @@
 #include "test_connection.h"
 #include "test_operation.h"
 #include "test_serverinfo.h"
+#include "test_clientid.h"
 
 int
 main(int   argc,
@@ -69,6 +70,8 @@ main(int   argc,
     CU_ADD_TEST(messages_suite, test_server_info_encode_request);
     CU_ADD_TEST(messages_suite, test_server_info_decode_good_response);
     CU_ADD_TEST(messages_suite, test_server_info_decode_bad_response);
+    CU_ADD_TEST(messages_suite, test_set_clientid);
+    CU_ADD_TEST(messages_suite, test_get_clientid);
 
     // Run all tests using the CUnit Basic interface
     CU_basic_set_mode(CU_BRM_VERBOSE);

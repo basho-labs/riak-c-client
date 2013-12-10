@@ -116,6 +116,8 @@ riak_pb_message_free(riak_config     *cfg,
                      riak_pb_message **pb);
 
 #include "messages/riak_serverinfo-internal.h"
+#include "messages/riak_get_clientid-internal.h"
+#include "messages/riak_set_clientid-internal.h"
 
 // Based on RpbGetResp
 struct _riak_get_response {
@@ -251,25 +253,6 @@ struct _riak_delete_response {
 // Nothing to see here
 };
 
-// Based on RpbGetClientIdResp
-struct _riak_get_clientid_response
-{
-    riak_binary *client_id;
-
-    RpbGetClientIdResp *_internal;
-};
-
-// Based on RpbSetClientIdReq
-struct _riak_get_clientid_request
-{
-    riak_binary *client_id;
-};
-
-// Placeholder
-struct _riak_set_clientid_response
-{
-// Empty
-};
 
 // Based on RpbGetBucketReq
 struct _riak_get_bucketprops_request
@@ -496,56 +479,6 @@ riak_decode_listkeys_response(riak_operation          *rop,
                               riak_pb_message         *pbresp,
                               riak_listkeys_response **resp,
                               riak_boolean_t          *done);
-
-/**
- * @brief Build a client id request
- * @param rop Riak Operation
- * @param req Created PB message
- * @return Error if out of memory
- */
-riak_error
-riak_encode_get_clientid_request(riak_operation   *rop,
-                                 riak_pb_message **req);
-
-/**
- * @brief Translate PBC message to Riak message
- * @param rop Riak Operation
- * @param pbresp Protocol Buffer message
- * @param done Returned flag set to true if finished streaming
- * @param resp Returned Get message
- * @return Error if out of memory
- */
-riak_error
-riak_decode_get_clientid_response(riak_operation              *rop,
-                                  riak_pb_message             *pbresp,
-                                  riak_get_clientid_response **resp,
-                                  riak_boolean_t              *done);
-
-/**
- * @brief Build a client id request
- * @param rop Riak Operation
- * @param clientid Client id for current operation
- * @param req Created PB message
- * @return Error if out of memory
- */
-riak_error
-riak_encode_set_clientid_request(riak_operation   *rop,
-                                 riak_binary      *clientid,
-                                 riak_pb_message **req);
-
-/**
- * @brief Translate PBC message to Riak message
- * @param rop Riak Operation
- * @param pbresp Protocol Buffer message
- * @param done Returned flag set to true if finished streaming
- * @param resp Returned set message
- * @return Error if out of memory
- */
-riak_error
-riak_decode_set_clientid_response(riak_operation              *rop,
-                                  riak_pb_message             *pbresp,
-                                  riak_set_clientid_response **resp,
-                                  riak_boolean_t              *done);
 
 /**
  * @brief Create a request to fetch bucket properies

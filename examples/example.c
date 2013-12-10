@@ -327,10 +327,10 @@ main(int   argc,
                 riak_get_clientid_response *getcli_response;
                 err = riak_get_clientid(cxn, &getcli_response);
                 if (err == ERIAK_OK) {
-                    riak_print_get_clientid_response(getcli_response, output, sizeof(output));
+                    riak_get_clientid_response_print(getcli_response, output, sizeof(output));
                     printf("%s\n", output);
                 }
-                riak_free_get_clientid_response(cfg, &getcli_response);
+                riak_get_clientid_response_free(cfg, &getcli_response);
             }
             if (err) {
                 fprintf(stderr, "Get ClientID Problems [%s]\n", riak_strerror(err));

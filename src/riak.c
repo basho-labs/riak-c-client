@@ -238,7 +238,7 @@ riak_get_clientid(riak_connection             *cxn,
     if (err) {
         return err;
     }
-    err = riak_encode_get_clientid_request(rop, &(rop->pb_request));
+    err = riak_get_clientid_request_encode(rop, &(rop->pb_request));
     if (err) {
         return err;
     }
@@ -259,7 +259,7 @@ riak_set_clientid(riak_connection             *cxn,
     if (err) {
         return err;
     }
-    err = riak_encode_set_clientid_request(rop, clientid, &(rop->pb_request));
+    err = riak_set_clientid_request_encode(rop, clientid, &(rop->pb_request));
     if (err) {
         return err;
     }

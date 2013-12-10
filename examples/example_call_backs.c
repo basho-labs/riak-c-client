@@ -133,9 +133,9 @@ example_getclientid_cb(riak_get_clientid_response *response,
     riak_config     *cfg = riak_connection_get_config(cxn);
     riak_log_debug(cxn, "%s", "example_getclientid_cb");
     char output[10240];
-    riak_print_get_clientid_response(response, output, sizeof(output));
+    riak_get_clientid_response_print(response, output, sizeof(output));
     riak_log_debug(cxn, "%s", output);
-    riak_free_get_clientid_response(cfg, &response);
+    riak_get_clientid_response_free(cfg, &response);
 }
 
 void
