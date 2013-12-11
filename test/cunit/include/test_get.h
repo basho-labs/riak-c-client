@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * riak_ping.h: Riak C Client Ping Message
+ * test_get.h:  Riak C Unit testing for Get Message
  *
  * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
  *
@@ -20,19 +20,25 @@
  *
  *********************************************************************/
 
-#ifndef _RIAK_PING_MESSAGE_H
-#define _RIAK_PING_MESSAGE_H
-
-typedef struct _riak_ping_response riak_ping_response;
-typedef void (*riak_ping_response_callback)(riak_ping_response *response, void *ptr);
-
-/**
- * @brief Free memory from response
- * @param cfg Riak Configuration
- * @param resp Ping PBC Response
- */
 void
-riak_free_ping_response(riak_config         *cfg,
-                        riak_ping_response **resp);
-
-#endif
+test_get_options_r();
+void
+test_get_options_pr();
+void
+test_get_options_basic_quorum();
+void
+test_get_options_notfound_ok();
+void
+test_get_options_if_modified();
+void
+test_get_options_head();
+void
+test_get_options_deletedvclock();
+void
+test_get_options_timeout();
+void
+test_get_options_sloppy_quorum();
+void
+test_get_options_n_val();
+void
+test_get_decode_response();

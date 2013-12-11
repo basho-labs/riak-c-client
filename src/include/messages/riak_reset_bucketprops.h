@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * riak_messages.h: Riak C Client Reset Bucket Properites Message
+ * riak_reset_bucketprops.h: Riak C Client Reset Bucket Properites Message
  *
  * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
  *

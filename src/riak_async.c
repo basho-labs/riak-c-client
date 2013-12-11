@@ -48,7 +48,7 @@ riak_async_register_get(riak_operation        *rop,
                         riak_response_callback cb) {
 
     riak_operation_set_response_cb(rop, cb);
-    return riak_encode_get_request(rop, bucket, key, get_options, &(rop->pb_request));
+    return riak_get_request_encode(rop, bucket, key, get_options, &(rop->pb_request));
 }
 
 riak_error

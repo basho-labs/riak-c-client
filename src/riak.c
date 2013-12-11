@@ -133,7 +133,7 @@ riak_get(riak_connection    *cxn,
     if (err) {
         return err;
     }
-    err = riak_encode_get_request(rop, bucket, key, opts, &(rop->pb_request));
+    err = riak_get_request_encode(rop, bucket, key, opts, &(rop->pb_request));
     if (err) {
         return err;
     }

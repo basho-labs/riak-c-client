@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * riak_messages.h: Riak C Client Set Bucket Properties Message
+ * riak_set_bucketprops.h: Riak C Client Set Bucket Properties Message
  *
  * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
  *

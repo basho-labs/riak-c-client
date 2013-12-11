@@ -99,7 +99,7 @@ example_get_cb(riak_get_response *response,
     char output[10240];
     riak_print_get_response(response, output, sizeof(output));
     riak_log_debug(cxn, "%s", output);
-    riak_free_get_response(cfg, &response);
+    riak_get_response_free(cfg, &response);
 }
 
 void

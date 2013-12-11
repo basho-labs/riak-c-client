@@ -96,3 +96,9 @@ riak_get_clientid_response_free(riak_config                 *cfg,
     rpb_get_client_id_resp__free_unpacked(response->_internal, cfg->pb_allocator);
     riak_free(cfg, resp);
 }
+
+riak_binary*
+riak_get_clientid_get_clientid(riak_get_clientid_response *resp) {
+    return resp->client_id;
+}
+

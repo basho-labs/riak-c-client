@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * riak_messages.h: Riak C Client Get Bucket Properties Message
+ * riak_get_bucketprops.h: Riak C Client Get Bucket Properties Message
  *
  * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
  *

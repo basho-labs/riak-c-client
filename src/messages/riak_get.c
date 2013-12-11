@@ -32,7 +32,7 @@
 #include "riak_print-internal.h"
 
 riak_error
-riak_encode_get_request(riak_operation  *rop,
+riak_get_request_encode(riak_operation  *rop,
                         riak_binary      *bucket,
                         riak_binary      *key,
                         riak_get_options *get_options,
@@ -82,13 +82,13 @@ riak_encode_get_request(riak_operation  *rop,
         return ERIAK_OUT_OF_MEMORY;
     }
     *req = request;
-    riak_operation_set_response_decoder(rop, (riak_response_decoder)riak_decode_get_response);
+    riak_operation_set_response_decoder(rop, (riak_response_decoder)riak_get_response_decode);
 
     return ERIAK_OK;
 }
 
 riak_error
-riak_decode_get_response(riak_operation     *rop,
+riak_get_response_decode(riak_operation     *rop,
                          riak_pb_message    *pbresp,
                          riak_get_response **resp,
                          riak_boolean_t     *done) {
@@ -166,7 +166,7 @@ riak_print_get_response(riak_get_response *response,
 }
 
 void
-riak_free_get_response(riak_config        *cfg,
+riak_get_response_free(riak_config        *cfg,
                        riak_get_response **resp) {
     riak_get_response *response = *resp;
     if (response == NULL) return;
@@ -227,6 +227,61 @@ riak_get_options_print(riak_get_options *opt,
     }
 
     return total;
+}
+
+riak_boolean_t
+riak_get_get_has_vclock(riak_get_response *response) {
+    return response->has_vclock;
+}
+
+riak_binary*
+riak_get_get_vclock(riak_get_response *response) {
+    return response->vclock;
+}
+
+riak_boolean_t
+riak_get_get_has_unmodified(riak_get_response *response) {
+    return response->has_unmodified;
+}
+
+/**
+ * @brief Access the Unmodified flag in a Get response
+ * @param response Riak Get Response
+ * @returns Unmodified flag
+ */
+riak_boolean_t
+riak_get_get_unmodified(riak_get_response *response) {
+    return response->unmodified;
+}
+
+/**
+ * @brief Access the Deleted flag in a Get response
+ * @param response Riak Get Response
+ * @returns Deleted flag
+ */
+riak_boolean_t
+riak_get_get_deleted(riak_get_response *response) {
+    return response->deleted;
+}
+
+/**
+ * @brief Access the Number of Riak Objects in a Get response
+ * @param response Riak Get Response
+ * @returns Number of Riak Objects
+ */
+riak_int32_t
+riak_get_get_n_content(riak_get_response *response) {
+    return response->n_content;
+}
+
+/**
+ * @brief Access an array of Riak Objects in a Get response
+ * @param response Riak Get Response
+ * @returns Array of Riak Objects (siblings)
+ */
+riak_object**
+riak_get_get_content(riak_get_response *response) {
+    return response->content;
 }
 
 riak_boolean_t

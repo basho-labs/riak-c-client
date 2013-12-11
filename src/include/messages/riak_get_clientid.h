@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * riak_messages.h: Riak C Client Get Client ID Message
+ * riak_get_clientid.h: Riak C Client Get Client ID Message
  *
  * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
  *
@@ -45,5 +45,13 @@ riak_get_clientid_response_print(riak_get_clientid_response *response,
 void
 riak_get_clientid_response_free(riak_config                 *cfg,
                                 riak_get_clientid_response **resp);
+
+/**
+ * @brief Access the Client ID
+ * @param resp Response from server
+ * @returns Client Identifier
+ */
+riak_binary*
+riak_get_clientid_get_clientid(riak_get_clientid_response *resp);
 
 #endif

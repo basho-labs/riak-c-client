@@ -35,6 +35,7 @@
 #include "test_serverinfo.h"
 #include "test_clientid.h"
 #include "test_delete.h"
+#include "test_get.h"
 
 int
 main(int   argc,
@@ -74,6 +75,17 @@ main(int   argc,
     CU_ADD_TEST(messages_suite, test_set_clientid);
     CU_ADD_TEST(messages_suite, test_get_clientid);
     CU_ADD_TEST(messages_suite, test_delete_encode_request);
+    CU_ADD_TEST(messages_suite, test_get_options_r);
+    CU_ADD_TEST(messages_suite, test_get_options_pr);
+    CU_ADD_TEST(messages_suite, test_get_options_basic_quorum);
+    CU_ADD_TEST(messages_suite, test_get_options_notfound_ok);
+    CU_ADD_TEST(messages_suite, test_get_options_if_modified);
+    CU_ADD_TEST(messages_suite, test_get_options_head);
+    CU_ADD_TEST(messages_suite, test_get_options_deletedvclock);
+    CU_ADD_TEST(messages_suite, test_get_options_timeout);
+    CU_ADD_TEST(messages_suite, test_get_options_sloppy_quorum);
+    CU_ADD_TEST(messages_suite, test_get_options_n_val);
+    CU_ADD_TEST(messages_suite, test_get_decode_response);
 
     // Run all tests using the CUnit Basic interface
     CU_basic_set_mode(CU_BRM_VERBOSE);

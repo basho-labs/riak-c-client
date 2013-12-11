@@ -216,7 +216,7 @@ main(int   argc,
                     riak_print_get_response(get_response, output, sizeof(output));
                     printf("%s\n", output);
                 }
-                riak_free_get_response(cfg, &get_response);
+                riak_get_response_free(cfg, &get_response);
             }
             riak_get_options_free(cfg, &get_options);
             if (err) {
