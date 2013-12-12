@@ -155,7 +155,7 @@ riak_put(riak_connection    *cxn,
     if (err) {
         return err;
     }
-    err = riak_encode_put_request(rop, obj, opts, &(rop->pb_request));
+    err = riak_put_request_encode(rop, obj, opts, &(rop->pb_request));
     if (err) {
         return err;
     }

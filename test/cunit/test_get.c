@@ -42,6 +42,7 @@ test_get_options_r() {
     CU_ASSERT_FATAL(opt != NULL)
 
     riak_get_options_set_r(opt, 5);
+    CU_ASSERT_EQUAL(riak_get_options_get_has_r(opt), RIAK_TRUE)
     CU_ASSERT_EQUAL(riak_get_options_get_r(opt), 5)
 
     riak_get_options_free(cfg, &opt);
@@ -60,6 +61,7 @@ test_get_options_pr() {
     CU_ASSERT_FATAL(opt != NULL)
 
     riak_get_options_set_pr(opt, 5);
+    CU_ASSERT_EQUAL(riak_get_options_get_has_pr(opt), RIAK_TRUE)
     CU_ASSERT_EQUAL(riak_get_options_get_pr(opt), 5)
 
     riak_get_options_free(cfg, &opt);
@@ -78,6 +80,7 @@ test_get_options_basic_quorum() {
     CU_ASSERT_FATAL(opt != NULL)
 
     riak_get_options_set_basic_quorum(opt, RIAK_TRUE);
+    CU_ASSERT_EQUAL(riak_get_options_get_has_basic_quorum(opt), RIAK_TRUE)
     CU_ASSERT_EQUAL(riak_get_options_get_basic_quorum(opt), RIAK_TRUE)
 
     riak_get_options_free(cfg, &opt);
@@ -96,6 +99,7 @@ test_get_options_notfound_ok() {
     CU_ASSERT_FATAL(opt != NULL)
 
     riak_get_options_set_notfound_ok(opt, RIAK_TRUE);
+    CU_ASSERT_EQUAL(riak_get_options_get_has_notfound_ok(opt), RIAK_TRUE)
     CU_ASSERT_EQUAL(riak_get_options_get_notfound_ok(opt), RIAK_TRUE)
 
     riak_get_options_free(cfg, &opt);
@@ -118,8 +122,9 @@ test_get_options_if_modified() {
     alt.len  = 5;
 
     riak_get_options_set_if_modified(cfg, opt, &alt);
-    CU_ASSERT_EQUAL(riak_get_options_get_if_modified(opt)->len, 5)
-    CU_ASSERT_EQUAL(memcmp(riak_get_options_get_if_modified(opt)->data, "12345", 5), 0)
+    CU_ASSERT_EQUAL(riak_get_options_get_has_if_modified(opt), RIAK_TRUE)
+    CU_ASSERT_EQUAL(riak_binary_len(riak_get_options_get_if_modified(opt)), 5)
+    CU_ASSERT_EQUAL(memcmp(riak_binary_data(riak_get_options_get_if_modified(opt)), "12345", 5), 0)
 
     riak_get_options_free(cfg, &opt);
     riak_config_free(&cfg);
@@ -137,6 +142,7 @@ test_get_options_head() {
     CU_ASSERT_FATAL(opt != NULL)
 
     riak_get_options_set_head(opt, RIAK_TRUE);
+    CU_ASSERT_EQUAL(riak_get_options_get_has_head(opt), RIAK_TRUE)
     CU_ASSERT_EQUAL(riak_get_options_get_head(opt), RIAK_TRUE)
 
     riak_get_options_free(cfg, &opt);
@@ -155,6 +161,7 @@ test_get_options_deletedvclock() {
     CU_ASSERT_FATAL(opt != NULL)
 
     riak_get_options_set_deletedvclock(opt, RIAK_TRUE);
+    CU_ASSERT_EQUAL(riak_get_options_get_has_deletedvclock(opt), RIAK_TRUE)
     CU_ASSERT_EQUAL(riak_get_options_get_deletedvclock(opt), RIAK_TRUE)
 
     riak_get_options_free(cfg, &opt);
@@ -173,6 +180,7 @@ test_get_options_timeout() {
     CU_ASSERT_FATAL(opt != NULL)
 
     riak_get_options_set_timeout(opt, 5);
+    CU_ASSERT_EQUAL(riak_get_options_get_has_timeout(opt), RIAK_TRUE)
     CU_ASSERT_EQUAL(riak_get_options_get_timeout(opt), 5)
 
     riak_get_options_free(cfg, &opt);
@@ -191,6 +199,7 @@ test_get_options_sloppy_quorum() {
     CU_ASSERT_FATAL(opt != NULL)
 
     riak_get_options_set_sloppy_quorum(opt, RIAK_TRUE);
+    CU_ASSERT_EQUAL(riak_get_options_get_has_sloppy_quorum(opt), RIAK_TRUE)
     CU_ASSERT_EQUAL(riak_get_options_get_sloppy_quorum(opt), RIAK_TRUE)
 
     riak_get_options_free(cfg, &opt);
@@ -209,6 +218,7 @@ test_get_options_n_val() {
     CU_ASSERT_FATAL(opt != NULL)
 
     riak_get_options_set_n_val(opt, 5);
+    CU_ASSERT_EQUAL(riak_get_options_get_has_n_val(opt), RIAK_TRUE)
     CU_ASSERT_EQUAL(riak_get_options_get_n_val(opt), 5)
 
     riak_get_options_free(cfg, &opt);

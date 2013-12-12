@@ -65,4 +65,11 @@ void
 riak_binary_deep_free_pb(riak_config        *cfg,
                          ProtobufCBinaryData *b);
 
+#define _RIAK_DUMP_BINARY_HEX(B) { char buffer[10240]; \
+    char *dest = buffer; \
+    riak_int32_t len   = sizeof(buffer); \
+    riak_int32_t total = 0; \
+    riak_print_raw_hex_array((B)->data, (B)->len, &dest, &len, &total); \
+    printf("%s\n", buffer); }
+
 #endif // _RIAK_BINARY_H

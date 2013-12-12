@@ -32,7 +32,7 @@
 #include "riak_print-internal.h"
 
 riak_error
-riak_encode_put_request(riak_operation   *rop,
+riak_put_request_encode(riak_operation   *rop,
                         riak_object      *riak_obj,
                         riak_put_options *options,
                         riak_pb_message **req) {
@@ -117,7 +117,7 @@ riak_encode_put_request(riak_operation   *rop,
         return ERIAK_OUT_OF_MEMORY;
     }
     *req = request;
-    riak_operation_set_response_decoder(rop, (riak_response_decoder)riak_decode_put_response);
+    riak_operation_set_response_decoder(rop, (riak_response_decoder)riak_put_response_decode);
 
     return ERIAK_OK;
 }
@@ -132,7 +132,7 @@ riak_free_put_request(riak_config        *cfg,
 }
 
 riak_error
-riak_decode_put_response(riak_operation     *rop,
+riak_put_response_decode(riak_operation     *rop,
                          riak_pb_message    *pbresp,
                          riak_put_response **resp,
                          riak_boolean_t     *done) {
@@ -189,7 +189,7 @@ riak_decode_put_response(riak_operation     *rop,
 }
 
 void
-riak_print_put_response(riak_put_response *response,
+riak_put_response_print(riak_put_response *response,
                         char              *target,
                         riak_size_t        len) {
 
@@ -220,7 +220,7 @@ riak_print_put_response(riak_put_response *response,
 }
 
 void
-riak_free_put_response(riak_config        *cfg,
+riak_put_response_free(riak_config        *cfg,
                        riak_put_response **resp) {
     riak_put_response *response = *resp;
     if (response == NULL) return;
@@ -233,6 +233,35 @@ riak_free_put_response(riak_config        *cfg,
     riak_free(cfg, resp);
 }
 
+riak_boolean_t
+riak_put_get_has_vclock(riak_put_response *response) {
+    return response->has_vclock;
+}
+
+riak_binary*
+riak_put_get_vclock(riak_put_response *response) {
+    return response->vclock;
+}
+
+riak_boolean_t
+riak_put_get_has_key(riak_put_response *response) {
+    return response->has_key;
+}
+
+riak_binary*
+riak_put_get_key(riak_put_response *response) {
+    return response->key;
+}
+
+riak_int32_t
+riak_put_get_n_content(riak_put_response *response) {
+    return response->n_content;
+}
+
+riak_object**
+riak_put_get_content(riak_put_response *response) {
+    return response->content;
+}
 
 //
 // P U T    O P T I O N S

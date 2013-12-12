@@ -36,6 +36,7 @@
 #include "test_clientid.h"
 #include "test_delete.h"
 #include "test_get.h"
+#include "test_put.h"
 
 int
 main(int   argc,
@@ -86,6 +87,19 @@ main(int   argc,
     CU_ADD_TEST(messages_suite, test_get_options_sloppy_quorum);
     CU_ADD_TEST(messages_suite, test_get_options_n_val);
     CU_ADD_TEST(messages_suite, test_get_decode_response);
+    CU_ADD_TEST(messages_suite, test_put_options_vclock);
+    CU_ADD_TEST(messages_suite, test_put_options_w);
+    CU_ADD_TEST(messages_suite, test_put_options_dw);
+    CU_ADD_TEST(messages_suite, test_put_options_return_body);
+    CU_ADD_TEST(messages_suite, test_put_options_pw);
+    CU_ADD_TEST(messages_suite, test_put_options_if_not_modified);
+    CU_ADD_TEST(messages_suite, test_put_options_if_none_match);
+    CU_ADD_TEST(messages_suite, test_put_options_return_head);
+    CU_ADD_TEST(messages_suite, test_put_options_timeout);
+    CU_ADD_TEST(messages_suite, test_put_options_asis);
+    CU_ADD_TEST(messages_suite, test_put_options_sloppy_quorum);
+    CU_ADD_TEST(messages_suite, test_put_options_n_val);
+    CU_ADD_TEST(messages_suite, test_put_decode_response);
 
     // Run all tests using the CUnit Basic interface
     CU_basic_set_mode(CU_BRM_VERBOSE);

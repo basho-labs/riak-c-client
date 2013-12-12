@@ -110,9 +110,9 @@ example_put_cb(riak_put_response *response,
     riak_config     *cfg = riak_connection_get_config(cxn);
     riak_log_debug(cxn, "%s", "example_put_cb");
     char output[10240];
-    riak_print_put_response(response, output, sizeof(output));
+    riak_put_response_print(response, output, sizeof(output));
     riak_log_debug(cxn, "%s", output);
-    riak_free_put_response(cfg, &response);
+    riak_put_response_free(cfg, &response);
 }
 
 void

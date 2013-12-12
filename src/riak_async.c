@@ -57,7 +57,7 @@ riak_async_register_put(riak_operation        *rop,
                         riak_put_options      *options,
                         riak_response_callback cb) {
     riak_operation_set_response_cb(rop, cb);
-    return riak_encode_put_request(rop, riak_obj, options, &(rop->pb_request));
+    return riak_put_request_encode(rop, riak_obj, options, &(rop->pb_request));
 }
 
 riak_error

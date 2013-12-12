@@ -255,10 +255,10 @@ main(int   argc,
                 riak_put_response *put_response;
                 err = riak_put(cxn, obj, put_options, &put_response);
                 if (err == ERIAK_OK) {
-                    riak_print_put_response(put_response, output, sizeof(output));
+                    riak_put_response_print(put_response, output, sizeof(output));
                     printf("%s\n", output);
                 }
-                riak_free_put_response(cfg, &put_response);
+                riak_put_response_free(cfg, &put_response);
             }
             riak_object_free(cfg, &obj);
             riak_put_options_free(cfg, &put_options);
