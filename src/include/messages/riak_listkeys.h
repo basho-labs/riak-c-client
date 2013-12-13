@@ -33,7 +33,7 @@ typedef void (*riak_listkeys_response_callback)(riak_listkeys_response *response
  * @param len Number of free bytes
  */
 void
-riak_print_listkeys_response(riak_listkeys_response *response,
+riak_listkeys_response_print(riak_listkeys_response *response,
                              char                   *target,
                              riak_size_t             len);
 
@@ -43,7 +43,23 @@ riak_print_listkeys_response(riak_listkeys_response *response,
  * @param resp List keys message to be cleaned up
  */
 void
-riak_free_listkeys_response(riak_config             *cfg,
+riak_listkeys_response_free(riak_config             *cfg,
                             riak_listkeys_response **resp);
+
+/**
+ * @brief Access the number of keys in a bucket
+ * @param response List Keys response message
+ * @returns The number of keys in a bucket
+ */
+riak_uint32_t
+riak_listkeys_get_n_keys(riak_listkeys_response *response);
+
+/**
+ * @brief Access the list of keys in a bucket
+ * @param response List Keys response message
+ * @returns An array of keys in a bucket
+ */
+riak_binary**
+riak_listkeys_get_keys(riak_listkeys_response *response);
 
 #endif

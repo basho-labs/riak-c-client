@@ -83,10 +83,10 @@ example_listkey_cb(riak_listkeys_response *response,
     riak_config     *cfg = riak_connection_get_config(cxn);
     riak_log_debug(cxn, "%s", "listkey_cb");
     char output[10240];
-    riak_print_listkeys_response(response, output, sizeof(output));
+    riak_listkeys_response_print(response, output, sizeof(output));
     riak_log_debug(cxn, "%s", output);
     fflush(stdout);
-    riak_free_listkeys_response(cfg, (riak_listkeys_response**)&(response));
+    riak_listkeys_response_free(cfg, (riak_listkeys_response**)&(response));
 }
 
 void

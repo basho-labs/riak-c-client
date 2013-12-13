@@ -310,10 +310,10 @@ main(int   argc,
                 riak_listkeys_response *key_response;
                 err = riak_listkeys(cxn, bucket_bin, args.timeout * 1000, &key_response);
                 if (err == ERIAK_OK) {
-                    riak_print_listkeys_response(key_response, output, sizeof(output));
+                    riak_listkeys_response_print(key_response, output, sizeof(output));
                     printf("%s\n", output);
                 }
-                riak_free_listkeys_response(cfg, &key_response);
+                riak_listkeys_response_free(cfg, &key_response);
             }
             if (err) {
                 fprintf(stderr, "List Keys Problems [%s]\n", riak_strerror(err));

@@ -32,7 +32,7 @@
 #include "riak_print-internal.h"
 
 riak_error
-riak_encode_listkeys_request(riak_operation   *rop,
+riak_listkeys_request_encode(riak_operation   *rop,
                              riak_binary      *bucket,
                              riak_uint32_t     timeout,
                              riak_pb_message **req) {
@@ -56,7 +56,7 @@ riak_encode_listkeys_request(riak_operation   *rop,
         return ERIAK_OUT_OF_MEMORY;
     }
     *req = request;
-    riak_operation_set_response_decoder(rop, (riak_response_decoder)riak_decode_listkeys_response);
+    riak_operation_set_response_decoder(rop, (riak_response_decoder)riak_listkeys_response_decode);
 
     return ERIAK_OK;
 
@@ -64,13 +64,11 @@ riak_encode_listkeys_request(riak_operation   *rop,
 
 // STREAMING MESSAGE
 riak_error
-riak_decode_listkeys_response(riak_operation          *rop,
+riak_listkeys_response_decode(riak_operation          *rop,
                               riak_pb_message         *pbresp,
                               riak_listkeys_response **resp,
                               riak_boolean_t          *done) {
     riak_config *cfg = riak_operation_get_config(rop);
-    riak_connection *cxn = riak_operation_get_connection(rop);
-    riak_log_debug(cxn, "%s", "riak_decode_listkeys_response");
     RpbListKeysResp *listkeyresp = rpb_list_keys_resp__unpack(cfg->pb_allocator, (pbresp->len)-1, (uint8_t*)((pbresp->data)+1));
     if (listkeyresp == NULL) {
         return ERIAK_MESSAGE_FORMAT;
@@ -78,9 +76,8 @@ riak_decode_listkeys_response(riak_operation          *rop,
     int i;
     // Initialize from an existing response
     riak_listkeys_response *response = *resp;
-    // If this is NULL, there was no propious message
+    // If this is NULL, there was no previous message
     if (response == NULL) {
-        riak_log_debug(cxn, "%s", "Initializing listkey response");
         response = (cfg->malloc_fn)(sizeof(riak_listkeys_response));
         if (response == NULL) {
             return ERIAK_OUT_OF_MEMORY;
@@ -154,7 +151,7 @@ riak_decode_listkeys_response(riak_operation          *rop,
 }
 
 void
-riak_print_listkeys_response(riak_listkeys_response *response,
+riak_listkeys_response_print(riak_listkeys_response *response,
                              char                   *target,
                              riak_size_t             len) {
     int i;
@@ -178,7 +175,7 @@ riak_print_listkeys_response(riak_listkeys_response *response,
 }
 
 void
-riak_free_listkeys_response(riak_config             *cfg,
+riak_listkeys_response_free(riak_config             *cfg,
                             riak_listkeys_response **resp) {
     riak_listkeys_response *response = *resp;
     if (response == NULL) return;
@@ -195,3 +192,19 @@ riak_free_listkeys_response(riak_config             *cfg,
     }
     riak_free(cfg, resp);
 }
+
+riak_uint32_t
+riak_listkeys_get_n_keys(riak_listkeys_response *response) {
+    return response->n_keys;
+}
+
+/**
+ * @brief Access the list of keys in a bucket
+ * @param response List Keys response message
+ * @returns An array of keys in a bucket
+ */
+riak_binary**
+riak_listkeys_get_keys(riak_listkeys_response *response) {
+    return response->keys;
+}
+

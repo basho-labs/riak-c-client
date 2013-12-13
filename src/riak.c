@@ -219,7 +219,7 @@ riak_listkeys(riak_connection         *cxn,
     if (err) {
         return err;
     }
-    err = riak_encode_listkeys_request(rop, bucket, timeout, &(rop->pb_request));
+    err = riak_listkeys_request_encode(rop, bucket, timeout, &(rop->pb_request));
     if (err) {
         return err;
     }
