@@ -33,7 +33,7 @@ typedef void (*riak_listbuckets_response_callback)(riak_listbuckets_response *re
  * @param len Number of free bytes
  */
 void
-riak_print_listbuckets_response(riak_listbuckets_response *response,
+riak_listbuckets_response_print(riak_listbuckets_response *response,
                                 char                      *target,
                                 riak_size_t                len);
 
@@ -43,7 +43,23 @@ riak_print_listbuckets_response(riak_listbuckets_response *response,
  * @param resp List buckets message to be cleaned up
  */
 void
-riak_free_listbuckets_response(riak_config                *cfg,
+riak_listbuckets_response_free(riak_config                *cfg,
                                riak_listbuckets_response **resp);
+
+/**
+ * @brief Access the number of buckets on a node
+ * @param response List buckets response message
+ * @returns The number of buckets on a node
+ */
+riak_uint32_t
+riak_listbuckets_get_n_buckets(riak_listbuckets_response *response);
+
+/**
+ * @brief Access the list of buckets on a node
+ * @param response List buckets response message
+ * @returns An array of buckets on a node
+ */
+riak_binary**
+riak_listbuckets_get_buckets(riak_listbuckets_response *response);
 
 #endif

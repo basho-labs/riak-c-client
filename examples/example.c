@@ -293,10 +293,10 @@ main(int   argc,
                 riak_listbuckets_response *bucket_response;
                 err = riak_listbuckets(cxn, &bucket_response);
                 if (err == ERIAK_OK) {
-                    riak_print_listbuckets_response(bucket_response, output, sizeof(output));
+                    riak_listbuckets_response_print(bucket_response, output, sizeof(output));
                     printf("%s\n", output);
                 }
-                riak_free_listbuckets_response(cfg, &bucket_response);
+                riak_listbuckets_response_free(cfg, &bucket_response);
             }
             if (err) {
                 fprintf(stderr, "List Buckets Problems [%s]\n", riak_strerror(err));

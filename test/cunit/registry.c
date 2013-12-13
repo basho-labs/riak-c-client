@@ -37,6 +37,7 @@
 #include "test_delete.h"
 #include "test_get.h"
 #include "test_put.h"
+#include "test_listbuckets.h"
 
 int
 main(int   argc,
@@ -100,6 +101,7 @@ main(int   argc,
     CU_ADD_TEST(messages_suite, test_put_options_sloppy_quorum);
     CU_ADD_TEST(messages_suite, test_put_options_n_val);
     CU_ADD_TEST(messages_suite, test_put_decode_response);
+    CU_ADD_TEST(messages_suite, test_listbuckets_response_decode);
 
     // Run all tests using the CUnit Basic interface
     CU_basic_set_mode(CU_BRM_VERBOSE);

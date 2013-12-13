@@ -139,6 +139,9 @@ riak_put_response_decode(riak_operation     *rop,
     // decode the PB response etc
     riak_config *cfg = riak_operation_get_config(rop);
     RpbPutResp *rpbresp = rpb_put_resp__unpack(cfg->pb_allocator, (pbresp->len)-1, (uint8_t*)((pbresp->data)+1));
+    if (rpbresp == NULL) {
+        return ERIAK_MESSAGE_FORMAT;
+    }
     *done = RIAK_TRUE;
     riak_connection *cxn = riak_operation_get_connection(rop);
     riak_log_debug(cxn, "riak_decode_put_response len=%d/pb unpack = 0x%lx\n", pbresp->len, (long)(rpbresp));

@@ -32,7 +32,7 @@
 #include "riak_print-internal.h"
 
 riak_error
-riak_encode_listbuckets_request(riak_operation   *rop,
+riak_listbuckets_request_encode(riak_operation   *rop,
                                 riak_pb_message **req) {
     riak_config *cfg = riak_operation_get_config(rop);
     RpbListBucketsReq listbucketsreq = RPB_LIST_BUCKETS_REQ__INIT;
@@ -50,14 +50,14 @@ riak_encode_listbuckets_request(riak_operation   *rop,
         return ERIAK_OUT_OF_MEMORY;
     }
     *req = request;
-    riak_operation_set_response_decoder(rop, (riak_response_decoder)riak_decode_listbuckets_response);
+    riak_operation_set_response_decoder(rop, (riak_response_decoder)riak_listbuckets_response_decode);
 
     return ERIAK_OK;
 }
 
 
 riak_error
-riak_decode_listbuckets_response(riak_operation             *rop,
+riak_listbuckets_response_decode(riak_operation             *rop,
                                  riak_pb_message            *pbresp,
                                  riak_listbuckets_response **resp,
                                  riak_boolean_t             *done) {
@@ -65,6 +65,9 @@ riak_decode_listbuckets_response(riak_operation             *rop,
     riak_connection *cxn = riak_operation_get_connection(rop);
     riak_log_debug(cxn, "%s", "riak_decode_listbuckets_response");
     RpbListBucketsResp *listbucketresp = rpb_list_buckets_resp__unpack(cfg->pb_allocator, (pbresp->len)-1, (uint8_t*)((pbresp->data)+1));
+    if (listbucketresp == NULL) {
+        return ERIAK_MESSAGE_FORMAT;
+    }
     int i;
     // Initialize from an existing response
     riak_listbuckets_response *response = *resp;
@@ -145,7 +148,7 @@ riak_decode_listbuckets_response(riak_operation             *rop,
 }
 
 void
-riak_print_listbuckets_response(riak_listbuckets_response *response,
+riak_listbuckets_response_print(riak_listbuckets_response *response,
                                 char                      *target,
                                 riak_size_t                len) {
     int i;
@@ -169,7 +172,7 @@ riak_print_listbuckets_response(riak_listbuckets_response *response,
 }
 
 void
-riak_free_listbuckets_response(riak_config                *cfg,
+riak_listbuckets_response_free(riak_config                *cfg,
                                riak_listbuckets_response **resp) {
     riak_listbuckets_response *response = *resp;
     if (response == NULL) return;
@@ -185,4 +188,14 @@ riak_free_listbuckets_response(riak_config                *cfg,
         riak_free(cfg, &(response->_internal));
     }
     riak_free(cfg, resp);
+}
+
+riak_uint32_t
+riak_listbuckets_get_n_buckets(riak_listbuckets_response *response) {
+    return response->n_buckets;
+}
+
+riak_binary**
+riak_listbuckets_get_buckets(riak_listbuckets_response *response) {
+    return response->buckets;
 }

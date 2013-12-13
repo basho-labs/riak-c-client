@@ -121,16 +121,7 @@ riak_pb_message_free(riak_config     *cfg,
 #include "messages/riak_delete-internal.h"
 #include "messages/riak_get-internal.h"
 #include "messages/riak_put-internal.h"
-
-// Based on RpbListBucketsResp
-struct _riak_listbuckets_response {
-    riak_uint32_t        n_buckets;
-    riak_binary        **buckets; // Array of pointers to allow growth
-    riak_boolean_t       done;
-
-    riak_uint32_t        n_responses;
-    RpbListBucketsResp **_internal; // Array for many responses
-};
+#include "messages/riak_listbuckets-internal.h"
 
 // Based on RpbListKeysResp
 struct _riak_listkeys_response {
@@ -238,30 +229,6 @@ riak_decode_ping_response(riak_operation      *rop,
                           riak_pb_message     *pbresp,
                           riak_ping_response **resp,
                           riak_boolean_t      *done);
-
-/**
- * @brief Create a request to find all buckets
- * @param rop Riak Operation
- * @param req Returned listbuckets request
- * @return Error if out of memory
- */
-riak_error
-riak_encode_listbuckets_request(riak_operation   *rop,
-                                riak_pb_message **req);
-
-/**
- * @brief Translate PBC listbuckets response into Riak strucuture
- * @param rop Riak Operation
- * @param pbresp PBC response message
- * @param resp Returned Riak response structure
- * @param done Returned flag set to true if finished streaming
- * @return Error if out of memory
- */
-riak_error
-riak_decode_listbuckets_response(riak_operation             *rop,
-                                 riak_pb_message            *pbresp,
-                                 riak_listbuckets_response **resp,
-                                 riak_boolean_t             *done);
 
 /**
  * @brief Create a request to find all keys in a bucket

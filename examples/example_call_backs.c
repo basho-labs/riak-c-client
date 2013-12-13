@@ -70,9 +70,9 @@ example_listbucket_cb(riak_listbuckets_response *response,
     riak_config     *cfg = riak_connection_get_config(cxn);
     riak_log_debug(cxn, "%s", "example_listbucket_cb");
     char output[10240];
-    riak_print_listbuckets_response(response, output, sizeof(output));
+    riak_listbuckets_response_print(response, output, sizeof(output));
     riak_log_debug(cxn, "%s", output);
-    riak_free_listbuckets_response(cfg, &response);
+    riak_listbuckets_response_free(cfg, &response);
 }
 
 void

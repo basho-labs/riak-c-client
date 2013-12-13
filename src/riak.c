@@ -198,7 +198,7 @@ riak_listbuckets(riak_connection            *cxn,
     if (err) {
         return err;
     }
-    err = riak_encode_listbuckets_request(rop, &(rop->pb_request));
+    err = riak_listbuckets_request_encode(rop, &(rop->pb_request));
     if (err) {
         return err;
     }

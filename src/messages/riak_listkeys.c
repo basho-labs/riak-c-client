@@ -72,6 +72,9 @@ riak_decode_listkeys_response(riak_operation          *rop,
     riak_connection *cxn = riak_operation_get_connection(rop);
     riak_log_debug(cxn, "%s", "riak_decode_listkeys_response");
     RpbListKeysResp *listkeyresp = rpb_list_keys_resp__unpack(cfg->pb_allocator, (pbresp->len)-1, (uint8_t*)((pbresp->data)+1));
+    if (listkeyresp == NULL) {
+        return ERIAK_MESSAGE_FORMAT;
+    }
     int i;
     // Initialize from an existing response
     riak_listkeys_response *response = *resp;
