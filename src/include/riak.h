@@ -40,7 +40,7 @@
 #include "riak_connection.h"
 #include "riak_operation.h"
 #include "riak_object.h"
-#include "riak_bucket_props.h"
+#include "riak_bucketprops.h"
 #include "riak_messages.h"
 #include "riak_log.h"
 
@@ -191,7 +191,7 @@ riak_reset_bucketprops(riak_connection                  *cxn,
 riak_error
 riak_set_bucketprops(riak_connection                *cxn,
                      riak_binary                    *bucket,
-                     riak_bucket_props              *props,
+                     riak_bucketprops               *props,
                      riak_set_bucketprops_response **response);
 
 void riak_bucket_set_props(riak_connection*);
@@ -270,7 +270,7 @@ riak_async_register_reset_bucketprops(riak_operation        *rop,
 riak_error
 riak_async_register_set_bucketprops(riak_operation        *rop,
                                     riak_binary           *bucket,
-                                    riak_bucket_props     *props,
+                                    riak_bucketprops      *props,
                                     riak_response_callback cb);
 
 /**

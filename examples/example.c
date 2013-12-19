@@ -117,7 +117,7 @@ main(int   argc,
 
 
     riak_object *obj;
-    riak_bucket_props *props;
+    riak_bucketprops *props;
     riak_get_options *get_options;
     riak_delete_options *delete_options;
     char output[10240];
@@ -343,7 +343,7 @@ main(int   argc,
             } else {
                 riak_set_clientid_response *setcli_response;
                 err = riak_set_clientid(cxn, value_bin, &setcli_response);
-                riak_free_set_clientid_response(cfg, &setcli_response);
+                riak_set_clientid_response_free(cfg, &setcli_response);
             }
             if (err) {
                 fprintf(stderr, "Set ClientID Problems [%s]\n", riak_strerror(err));
@@ -357,10 +357,10 @@ main(int   argc,
                 riak_get_bucketprops_response *bucket_response;
                 err = riak_get_bucketprops(cxn, bucket_bin, &bucket_response);
                 if (err == ERIAK_OK) {
-                    riak_print_get_bucketprops_response(bucket_response, output, sizeof(output));
+                    riak_get_bucketprops_response_print(bucket_response, output, sizeof(output));
                     printf("%s\n", output);
                 }
-                riak_free_get_bucketprops_response(cfg, &bucket_response);
+                riak_get_bucketprops_response_free(cfg, &bucket_response);
             }
             if (err) {
                 fprintf(stderr, "Get Bucket Properties Problems [%s]\n", riak_strerror(err));
@@ -380,12 +380,12 @@ main(int   argc,
             }
             break;
         case RIAK_COMMAND_SETBUCKET:
-            props = riak_bucket_props_new(cfg);
+            props = riak_bucketprops_new(cfg);
             if (obj == NULL) {
                 riak_log_critical(cxn, "%s", "Could not allocate a Riak Bucket Properties");
                 return 1;
             }
-            riak_bucket_props_set_last_write_wins(props, RIAK_FALSE);
+            riak_bucketprops_set_last_write_wins(props, RIAK_FALSE);
             if (args.async) {
                 err = riak_async_register_set_bucketprops(rop, bucket_bin, props, (riak_response_callback)example_setbucketprops_cb);
             } else {

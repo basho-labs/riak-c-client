@@ -32,7 +32,7 @@ typedef void (*riak_set_clientid_response_callback)(riak_set_clientid_response *
  * @param resp client id PBC Response
  */
 void
-riak_free_set_clientid_response(riak_config                 *cfg,
+riak_set_clientid_response_free(riak_config                 *cfg,
                                 riak_set_clientid_response **resp);
 
 

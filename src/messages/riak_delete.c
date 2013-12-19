@@ -28,7 +28,7 @@
 #include "riak_utils-internal.h"
 #include "riak_config-internal.h"
 #include "riak_operation-internal.h"
-#include "riak_bucket_props-internal.h"
+#include "riak_bucketprops-internal.h"
 #include "riak_print-internal.h"
 
 riak_error

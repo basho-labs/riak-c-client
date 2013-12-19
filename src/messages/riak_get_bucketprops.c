@@ -28,11 +28,11 @@
 #include "riak_utils-internal.h"
 #include "riak_config-internal.h"
 #include "riak_operation-internal.h"
-#include "riak_bucket_props-internal.h"
+#include "riak_bucketprops-internal.h"
 #include "riak_print-internal.h"
 
 riak_error
-riak_encode_get_bucketprops_request(riak_operation   *rop,
+riak_get_bucketprops_request_encode(riak_operation   *rop,
                                     riak_binary      *bucket,
                                     riak_pb_message **req) {
     riak_config *cfg = riak_operation_get_config(rop);
@@ -52,14 +52,14 @@ riak_encode_get_bucketprops_request(riak_operation   *rop,
         return ERIAK_OUT_OF_MEMORY;
     }
     *req = request;
-    riak_operation_set_response_decoder(rop, (riak_response_decoder)riak_decode_get_bucketprops_response);
+    riak_operation_set_response_decoder(rop, (riak_response_decoder)riak_get_bucketprops_response_decode);
 
     return ERIAK_OK;
 
 }
 
 riak_error
-riak_decode_get_bucketprops_response(riak_operation                 *rop,
+riak_get_bucketprops_response_decode(riak_operation                 *rop,
                                      riak_pb_message                *pbresp,
                                      riak_get_bucketprops_response **resp,
                                      riak_boolean_t                 *done) {
@@ -82,7 +82,7 @@ riak_decode_get_bucketprops_response(riak_operation                 *rop,
     memset(response, '\0', sizeof(riak_get_bucketprops_response));
     response->_internal = rpbresp;
 
-    riak_error err = riak_bucket_props_new_from_pb(cfg, &(response->props), rpbresp->props);
+    riak_error err = riak_bucketprops_new_from_pb(cfg, &(response->props), rpbresp->props);
     if (err) {
         rpb_get_bucket_resp__free_unpacked(rpbresp, cfg->pb_allocator);
         riak_free(cfg, &response);
@@ -93,17 +93,17 @@ riak_decode_get_bucketprops_response(riak_operation                 *rop,
 }
 
 void
-riak_free_get_bucketprops_response(riak_config                    *cfg,
+riak_get_bucketprops_response_free(riak_config                    *cfg,
                                    riak_get_bucketprops_response **resp) {
     riak_get_bucketprops_response *response = *resp;
     if (response == NULL) return;
-    riak_bucket_props_free(cfg, &(response->props));
+    riak_bucketprops_free(cfg, &(response->props));
     riak_free(cfg, resp);
 }
 
 void
-riak_print_get_bucketprops_response(riak_get_bucketprops_response *response,
+riak_get_bucketprops_response_print(riak_get_bucketprops_response *response,
                                     char                          *target,
                                     riak_size_t                    len) {
-    riak_bucket_props_print(response->props, target, len);
+    riak_bucketprops_print(response->props, target, len);
 }

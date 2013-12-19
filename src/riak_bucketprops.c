@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * riak_bucket_props.c: Riak C Bucket Properties
+ * riak_bucketprops.c: Riak C Bucket Properties
  *
  * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
  *
@@ -24,11 +24,11 @@
 #include "riak_messages-internal.h"
 #include "riak_utils-internal.h"
 #include "riak_binary-internal.h"
-#include "riak_bucket_props-internal.h"
+#include "riak_bucketprops-internal.h"
 #include "riak_config-internal.h"
 #include "riak_print-internal.h"
 
-static const char* riak_bucket_props_repl[] = {
+static const char* riak_bucketprops_repl[] = {
     "False",
     "Real time",
     "Full-Sync",
@@ -39,17 +39,39 @@ static const char* riak_bucket_props_repl[] = {
 // M O D   F U N S
 //
 
-riak_mod_fun*
-riak_mod_fun_new(riak_config *cfg) {
-    riak_mod_fun *fun = (riak_mod_fun*)(cfg->malloc_fn)(sizeof(riak_mod_fun));
-    if (fun) memset(fun, '\0', sizeof(riak_mod_fun));
+riak_modfun*
+riak_modfun_new(riak_config *cfg) {
+    riak_modfun *fun = (riak_modfun*)(cfg->malloc_fn)(sizeof(riak_modfun));
+    if (fun) memset(fun, '\0', sizeof(riak_modfun));
+    return fun;
+}
+
+riak_modfun*
+riak_modfun_deep_new(riak_config *cfg,
+                     riak_modfun *from) {
+    riak_modfun *fun = riak_modfun_new(cfg);
+    if (fun == NULL) {
+        return NULL;
+    }
+    fun->module = riak_binary_deep_new(cfg, from->module);
+    if (fun->module == NULL) {
+        riak_free(cfg, &fun);
+        return NULL;
+    }
+    fun->function = riak_binary_deep_new(cfg, from->function);
+    if (fun->function == NULL) {
+        riak_binary_free(cfg, &(fun->module));
+        riak_free(cfg, &fun);
+        return NULL;
+    }
+
     return fun;
 }
 
 static riak_error
-riak_mod_fun_copy_to_pb(riak_config   *cfg,
-                        RpbModFun    **pbmod_fun_target,
-                        riak_mod_fun  *mod_fun) {
+riak_modfun_copy_to_pb(riak_config   *cfg,
+                       RpbModFun    **pbmod_fun_target,
+                       riak_modfun  *mod_fun) {
     if (mod_fun == NULL) {
         return ERIAK_OK;
     }
@@ -66,10 +88,10 @@ riak_mod_fun_copy_to_pb(riak_config   *cfg,
 }
 
 static riak_error
-riak_mod_fun_copy_from_pb(riak_config    *cfg,
-                          riak_mod_fun **mod_fun_target,
-                          RpbModFun     *pbmod_fun) {
-    riak_mod_fun *mod_fun = (riak_mod_fun*)(cfg->malloc_fn)(sizeof(riak_mod_fun));
+riak_modfun_copy_from_pb(riak_config   *cfg,
+                         riak_modfun **mod_fun_target,
+                         RpbModFun     *pbmod_fun) {
+    riak_modfun *mod_fun = (riak_modfun*)(cfg->malloc_fn)(sizeof(riak_modfun));
     if (pbmod_fun == NULL) {
         return ERIAK_OUT_OF_MEMORY;
     }
@@ -89,26 +111,26 @@ riak_mod_fun_copy_from_pb(riak_config    *cfg,
 }
 
 void
-riak_mod_fun_free_pb(riak_config  *cfg,
-                     RpbModFun   **pbmod_fun_target) {
+riak_modfun_free_pb(riak_config  *cfg,
+                    RpbModFun   **pbmod_fun_target) {
     riak_free(cfg, pbmod_fun_target);
 }
 
 void
-riak_mod_fun_free(riak_config   *cfg,
-                  riak_mod_fun **mod_fun_target) {
-    riak_mod_fun *mod_fun = *mod_fun_target;
+riak_modfun_free(riak_config   *cfg,
+                  riak_modfun **mod_fun_target) {
+    riak_modfun *mod_fun = *mod_fun_target;
     riak_free(cfg, &(mod_fun->module));
     riak_free(cfg, &(mod_fun->function));
     riak_free(cfg, mod_fun_target);
 }
 
 riak_int32_t
-riak_mod_fun_print_internal(char           *name,
-                            riak_mod_fun   *mod_fun,
-                            char          **target,
-                            riak_int32_t   *len,
-                            riak_int32_t   *total) {
+riak_modfun_print_internal(char           *name,
+                           riak_modfun   *mod_fun,
+                           char          **target,
+                           riak_int32_t   *len,
+                           riak_int32_t   *total) {
 
     riak_int32_t wrote = 0;
     wrote += riak_print_label(name, target, len, total);
@@ -118,11 +140,11 @@ riak_mod_fun_print_internal(char           *name,
 }
 
 riak_int32_t
-riak_mod_fun_print(riak_mod_fun  *mod_fun,
-                   char          *target,
-                   riak_int32_t   len) {
+riak_modfun_print(riak_modfun  *mod_fun,
+                  char         *target,
+                  riak_int32_t  len) {
     riak_int32_t total = 0;
-    return riak_mod_fun_print_internal("Mod Fun",
+    return riak_modfun_print_internal("Mod Fun",
                                        mod_fun,
                                        &target,
                                        &len,
@@ -130,22 +152,35 @@ riak_mod_fun_print(riak_mod_fun  *mod_fun,
 }
 
 riak_binary*
-riak_mod_fun_get_module(riak_mod_fun *mod_fun) {
+riak_modfun_get_module(riak_modfun *mod_fun) {
     return mod_fun->module;
 }
 riak_binary*
-riak_mod_fun_get_function(riak_mod_fun *mod_fun) {
+riak_modfun_get_function(riak_modfun *mod_fun) {
     return mod_fun->function;
 }
-void
-riak_mod_fun_set_module(riak_mod_fun *mod_fun,
-                        riak_binary  *value) {
-    mod_fun->module = value;
+
+riak_error
+riak_modfun_set_module(riak_config  *cfg,
+                        riak_modfun *mod_fun,
+                        riak_binary *value) {
+    mod_fun->module = riak_binary_deep_new(cfg, value);
+    if (mod_fun->module == NULL) {
+        return ERIAK_OUT_OF_MEMORY;
+    }
+
+    return ERIAK_OK;
 }
-void
-riak_mod_fun_set_function(riak_mod_fun *mod_fun,
+riak_error
+riak_modfun_set_function(riak_config  *cfg,
+                          riak_modfun *mod_fun,
                           riak_binary  *value) {
-    mod_fun->function = value;
+    mod_fun->function = riak_binary_deep_new(cfg, value);
+    if (mod_fun->function == NULL) {
+        return ERIAK_OUT_OF_MEMORY;
+    }
+
+    return ERIAK_OK;
 }
 
 //
@@ -196,7 +231,7 @@ riak_commit_hooks_copy_to_pb(riak_config       *cfg,
             pbhook[i]->has_name = RIAK_TRUE;
             riak_binary_to_pb_copy(&(pbhook[i]->name), hook[i]->name);
         }
-        riak_error err = riak_mod_fun_copy_to_pb(cfg, &(pbhook[i]->modfun), hook[i]->modfun);
+        riak_error err = riak_modfun_copy_to_pb(cfg, &(pbhook[i]->modfun), hook[i]->modfun);
         if (err) {
             return err;
         }
@@ -230,7 +265,7 @@ riak_commit_hooks_copy_from_pb(riak_config         *cfg,
                 return ERIAK_OUT_OF_MEMORY;
             }
         }
-        riak_error err = riak_mod_fun_copy_from_pb(cfg, &(hook[i]->modfun), pbhook[i]->modfun);
+        riak_error err = riak_modfun_copy_from_pb(cfg, &(hook[i]->modfun), pbhook[i]->modfun);
         if (err) {
             return err;
         }
@@ -258,7 +293,7 @@ riak_commit_hooks_print_internal(char              *name,
         if (hooks[i]->has_name) {
             wrote += riak_print_binary("Name", hooks[i]->name, target, len, total);
         }
-        wrote += riak_mod_fun_print_internal("Mod Fun", hooks[i]->modfun, target, len, total);
+        wrote += riak_modfun_print_internal("Mod Fun", hooks[i]->modfun, target, len, total);
     }
     return wrote;
 }
@@ -270,7 +305,7 @@ riak_commit_hooks_free_pb(riak_config     *cfg,
     RpbCommitHook **pbhook = *pbhook_target;
     int i;
     for(i = 0; i < num_hooks; i++) {
-        riak_mod_fun_free_pb(cfg, &(pbhook[i]->modfun));
+        riak_modfun_free_pb(cfg, &(pbhook[i]->modfun));
         riak_free(cfg, &(pbhook[i]));
     }
     riak_free(cfg, pbhook_target);
@@ -285,13 +320,13 @@ riak_commit_hooks_free(riak_config        *cfg,
     int i;
     for(i = 0; i < num_hooks; i++) {
         riak_free(cfg, &(hook[i]->name));
-        riak_mod_fun_free(cfg, &(hook[i]->modfun));
+        riak_modfun_free(cfg, &(hook[i]->modfun));
         riak_free(cfg, &(hook[i]));
     }
     riak_free(cfg, hook_target);
 }
 
-riak_mod_fun*
+riak_modfun*
 riak_commit_hook_get_modfun(riak_commit_hook *hook) {
     return hook->modfun;
 }
@@ -303,34 +338,47 @@ riak_binary*
 riak_commit_hook_get_name(riak_commit_hook *hook) {
     return hook->name;
 }
-void
-riak_commit_hook_set_modfun(riak_commit_hook *hook,
-                            riak_mod_fun     *value) {
-    hook->modfun = value;
+riak_error
+riak_commit_hook_set_modfun(riak_config      *cfg,
+                            riak_commit_hook *hook,
+                            riak_modfun     *value) {
+
+    hook->modfun = riak_modfun_deep_new(cfg, value);
+    if (hook->modfun == NULL) {
+        return ERIAK_OUT_OF_MEMORY;
+    }
+    return ERIAK_OK;
 }
-void
-riak_commit_hook_set_backend(riak_commit_hook *hook,
-                             riak_binary      *value) {
+
+riak_error
+riak_commit_hook_set_name(riak_config      *cfg,
+                          riak_commit_hook *hook,
+                          riak_binary      *value) {
     hook->has_name = RIAK_TRUE;
-    hook->name = value;
+    hook->name = riak_binary_deep_new(cfg, value);
+    if (hook->name == NULL) {
+        return ERIAK_OUT_OF_MEMORY;
+    }
+
+    return ERIAK_OK;
 }
 
 
 //
 // R I A K   B U C K E T   P R O P E R T I E S
 //
-riak_bucket_props*
-riak_bucket_props_new(riak_config *cfg) {
-    riak_bucket_props *pty = (riak_bucket_props*)(cfg->malloc_fn)(sizeof(riak_bucket_props));
-    if (pty) memset(pty, '\0', sizeof(riak_bucket_props));
+riak_bucketprops*
+riak_bucketprops_new(riak_config *cfg) {
+    riak_bucketprops *pty = (riak_bucketprops*)(cfg->malloc_fn)(sizeof(riak_bucketprops));
+    if (pty) memset(pty, '\0', sizeof(riak_bucketprops));
     return pty;
 }
 
 
 riak_error
-riak_bucket_props_to_pb_copy(riak_config       *cfg,
-                             RpbBucketProps    *to,
-                             riak_bucket_props *from) {
+riak_bucketprops_to_pb_copy(riak_config       *cfg,
+                             RpbBucketProps   *to,
+                             riak_bucketprops *from) {
 
     rpb_bucket_props__init(to);
 
@@ -440,11 +488,11 @@ riak_bucket_props_to_pb_copy(riak_config       *cfg,
         riak_binary_to_pb_copy(&(to->search_index), from->search_index);
     }
 
-    riak_error err = riak_mod_fun_copy_to_pb(cfg, &(to->chash_keyfun), from->chash_keyfun);
+    riak_error err = riak_modfun_copy_to_pb(cfg, &(to->chash_keyfun), from->chash_keyfun);
     if (err) {
         return err;
     }
-    err = riak_mod_fun_copy_to_pb(cfg, &(to->linkfun), from->linkfun);
+    err = riak_modfun_copy_to_pb(cfg, &(to->linkfun), from->linkfun);
     if (err) {
         return err;
     }
@@ -454,14 +502,14 @@ riak_bucket_props_to_pb_copy(riak_config       *cfg,
 
 
 riak_error
-riak_bucket_props_new_from_pb(riak_config        *cfg,
-                              riak_bucket_props **target,
-                              RpbBucketProps     *from) {
-    *target = riak_bucket_props_new(cfg);
+riak_bucketprops_new_from_pb(riak_config        *cfg,
+                             riak_bucketprops **target,
+                             RpbBucketProps     *from) {
+    *target = riak_bucketprops_new(cfg);
     if (*target == NULL) {
         return ERIAK_OUT_OF_MEMORY;
     }
-    riak_bucket_props *to = *target;
+    riak_bucketprops *to = *target;
 
     if (from->has_n_val) {
         to->has_n_val = RIAK_TRUE;
@@ -575,11 +623,11 @@ riak_bucket_props_new_from_pb(riak_config        *cfg,
         }
     }
 
-    riak_error err = riak_mod_fun_copy_from_pb(cfg, &(to->chash_keyfun), from->chash_keyfun);
+    riak_error err = riak_modfun_copy_from_pb(cfg, &(to->chash_keyfun), from->chash_keyfun);
     if (err) {
         return err;
     }
-    err = riak_mod_fun_copy_from_pb(cfg, &(to->linkfun), from->linkfun);
+    err = riak_modfun_copy_from_pb(cfg, &(to->linkfun), from->linkfun);
     if (err) {
         return err;
     }
@@ -601,7 +649,7 @@ riak_bucket_props_new_from_pb(riak_config        *cfg,
 
 #define RIAK_MAX_QUORUM     4
 
-static const char* riak_bucket_props_quorum_decoder[] = {
+static const char* riak_bucketprops_quorum_decoder[] = {
     "unknown",
     "one",
     "quorum",
@@ -610,16 +658,16 @@ static const char* riak_bucket_props_quorum_decoder[] = {
 };
 
 char*
-riak_bucket_props_quorum(riak_uint32_t q) {
+riak_bucketprops_quorum(riak_uint32_t q) {
      riak_int32_t offset = UINT32_MAX - q;
      if ((offset < 0) || (offset >= RIAK_MAX_QUORUM)) offset = 0;
-     return (char*)riak_bucket_props_quorum_decoder[offset];
+     return (char*)riak_bucketprops_quorum_decoder[offset];
 }
 
 riak_int32_t
-riak_bucket_props_print(riak_bucket_props *prop,
-                        char              *target,
-                        riak_int32_t       len) {
+riak_bucketprops_print(riak_bucketprops *prop,
+                        char            *target,
+                        riak_int32_t     len) {
     riak_int32_t total = 0;
 
     if (prop->has_n_val) {
@@ -664,22 +712,22 @@ riak_bucket_props_print(riak_bucket_props *prop,
         riak_print_int("Small Vclock", prop->small_vclock, &target, &len, &total);
     }
     if (prop->has_pr) {
-        riak_print_string("PR", riak_bucket_props_quorum(prop->pr), &target, &len, &total);
+        riak_print_string("PR", riak_bucketprops_quorum(prop->pr), &target, &len, &total);
     }
     if (prop->has_r) {
-        riak_print_string("R", riak_bucket_props_quorum(prop->r), &target, &len, &total);
+        riak_print_string("R", riak_bucketprops_quorum(prop->r), &target, &len, &total);
     }
     if (prop->has_w) {
-        riak_print_string("W", riak_bucket_props_quorum(prop->w), &target, &len, &total);
+        riak_print_string("W", riak_bucketprops_quorum(prop->w), &target, &len, &total);
     }
     if (prop->has_pw) {
-        riak_print_string("PW", riak_bucket_props_quorum(prop->pw), &target, &len, &total);
+        riak_print_string("PW", riak_bucketprops_quorum(prop->pw), &target, &len, &total);
     }
     if (prop->has_dw) {
-        riak_print_string("DW", riak_bucket_props_quorum(prop->dw), &target, &len, &total);
+        riak_print_string("DW", riak_bucketprops_quorum(prop->dw), &target, &len, &total);
     }
     if (prop->has_rw) {
-        riak_print_string("RW", riak_bucket_props_quorum(prop->rw), &target, &len, &total);
+        riak_print_string("RW", riak_bucketprops_quorum(prop->rw), &target, &len, &total);
     }
     if (prop->has_basic_quorum) {
         riak_print_bool("Basic Quorum", prop->basic_quorum, &target, &len, &total);
@@ -693,9 +741,9 @@ riak_bucket_props_print(riak_bucket_props *prop,
     if (prop->has_search) {
         riak_print_bool("Search", prop->search, &target, &len, &total);
     }
-    if (prop->repl >= RIAK_BUCKET_PROPS_REPL_FALSE &&
-        prop->repl <= RIAK_BUCKET_PROPS_REPL_TRUE) {
-        riak_print_string("Repl: ", (char*)riak_bucket_props_repl[prop->repl],
+    if (prop->repl >= RIAK_BUCKETPROPS_REPL_FALSE &&
+        prop->repl <= RIAK_BUCKETPROPS_REPL_TRUE) {
+        riak_print_string("Repl: ", (char*)riak_bucketprops_repl[prop->repl],
                           &target,
                           &len,
                           &total);
@@ -703,18 +751,19 @@ riak_bucket_props_print(riak_bucket_props *prop,
     if (prop->has_search_index) {
         riak_print_binary("YZ Index", prop->search_index, &target, &len, &total);
     }
-    riak_mod_fun_print_internal("C Hash Key Fun", prop->chash_keyfun, &target, &len, &total);
-    riak_mod_fun_print_internal("Link Fun", prop->linkfun, &target, &len, &total);
+    riak_modfun_print_internal("C Hash Key Fun", prop->chash_keyfun, &target, &len, &total);
+    riak_modfun_print_internal("Link Fun", prop->linkfun, &target, &len, &total);
 
     return total;
 }
 
 void
-riak_bucket_props_free(riak_config          *cfg,
-                         riak_bucket_props **props) {
-    riak_bucket_props* prop = *props;
+riak_bucketprops_free(riak_config       *cfg,
+                      riak_bucketprops **props) {
+    riak_bucketprops* prop = *props;
     riak_free(cfg, &(prop->backend));
-    riak_mod_fun_free(cfg, &(prop->linkfun));
+    riak_modfun_free(cfg, &(prop->chash_keyfun));
+    riak_modfun_free(cfg, &(prop->linkfun));
     riak_commit_hooks_free(cfg, &(prop->precommit), prop->n_precommit);
     riak_commit_hooks_free(cfg, &(prop->postcommit), prop->n_postcommit);
     riak_free(cfg, &(prop->search_index));
@@ -722,11 +771,11 @@ riak_bucket_props_free(riak_config          *cfg,
 }
 
 void
-riak_bucket_props_free_pb(riak_config     *cfg,
-                          RpbBucketProps **props) {
+riak_bucketprops_free_pb(riak_config     *cfg,
+                         RpbBucketProps **props) {
     RpbBucketProps *prop = *props;
-    riak_mod_fun_free_pb(cfg, &(prop->chash_keyfun));
-    riak_mod_fun_free_pb(cfg, &(prop->linkfun));
+    riak_modfun_free_pb(cfg, &(prop->chash_keyfun));
+    riak_modfun_free_pb(cfg, &(prop->linkfun));
     riak_commit_hooks_free_pb(cfg, &(prop->precommit), prop->n_precommit);
     riak_commit_hooks_free_pb(cfg, &(prop->postcommit), prop->n_postcommit);
     riak_free(cfg, props);
@@ -736,328 +785,340 @@ riak_bucket_props_free_pb(riak_config     *cfg,
 // ACCESSORS
 //
 riak_boolean_t
-riak_bucket_props_get_has_n_val(riak_bucket_props *prop) {
+riak_bucketprops_get_has_n_val(riak_bucketprops *prop) {
     return prop->has_n_val;
 }
 riak_uint32_t
-riak_bucket_props_get_n_val(riak_bucket_props *prop) {
+riak_bucketprops_get_n_val(riak_bucketprops *prop) {
     return prop->n_val;
 }
 riak_boolean_t
-riak_bucket_props_get_has_allow_mult(riak_bucket_props *prop) {
+riak_bucketprops_get_has_allow_mult(riak_bucketprops *prop) {
     return prop->has_allow_mult;
 }
 riak_boolean_t
-riak_bucket_props_get_allow_mult(riak_bucket_props *prop) {
+riak_bucketprops_get_allow_mult(riak_bucketprops *prop) {
     return prop->allow_mult;
 }
 riak_boolean_t
-riak_bucket_props_get_has_last_write_wins(riak_bucket_props *prop) {
+riak_bucketprops_get_has_last_write_wins(riak_bucketprops *prop) {
     return prop->has_last_write_wins;
 }
 riak_boolean_t
-riak_bucket_props_get_last_write_wins(riak_bucket_props *prop) {
+riak_bucketprops_get_last_write_wins(riak_bucketprops *prop) {
     return prop->last_write_wins;
 }
 riak_size_t
-riak_bucket_props_get_n_precommit(riak_bucket_props *prop) {
+riak_bucketprops_get_n_precommit(riak_bucketprops *prop) {
     return prop->n_precommit;
 }
 riak_commit_hook**
-riak_bucket_props_get_precommit(riak_bucket_props *prop) {
+riak_bucketprops_get_precommit(riak_bucketprops *prop) {
     return prop->precommit;
 }
 riak_boolean_t
-riak_bucket_props_get_has_precommit(riak_bucket_props *prop) {
+riak_bucketprops_get_has_precommit(riak_bucketprops *prop) {
     return prop->has_has_precommit && prop->has_precommit;
 }
 riak_size_t
-riak_bucket_props_get_n_postcommit(riak_bucket_props *prop) {
+riak_bucketprops_get_n_postcommit(riak_bucketprops *prop) {
     return prop->n_postcommit;
 }
 riak_commit_hook**
-riak_bucket_props_get_postcommit(riak_bucket_props *prop) {
+riak_bucketprops_get_postcommit(riak_bucketprops *prop) {
     return prop->postcommit;
 }
 riak_boolean_t
-riak_bucket_props_get_has_postcommit(riak_bucket_props *prop) {
+riak_bucketprops_get_has_postcommit(riak_bucketprops *prop) {
     return prop->has_has_postcommit && prop->has_postcommit;
 }
-riak_mod_fun*
-riak_bucket_props_get_chash_keyfun(riak_bucket_props *prop) {
+riak_modfun*
+riak_bucketprops_get_chash_keyfun(riak_bucketprops *prop) {
     return prop->chash_keyfun;
 }
-riak_mod_fun*
-riak_bucket_props_get_linkfun(riak_bucket_props *prop) {
+riak_modfun*
+riak_bucketprops_get_linkfun(riak_bucketprops *prop) {
     return prop->linkfun;
 }
 riak_boolean_t
-riak_bucket_props_get_has_old_vclock(riak_bucket_props *prop) {
+riak_bucketprops_get_has_old_vclock(riak_bucketprops *prop) {
     return prop->has_old_vclock;
 }
 riak_uint32_t
-riak_bucket_props_get_old_vclock(riak_bucket_props *prop) {
+riak_bucketprops_get_old_vclock(riak_bucketprops *prop) {
     return prop->old_vclock;
 }
 riak_boolean_t
-riak_bucket_props_get_has_young_vclock(riak_bucket_props *prop) {
+riak_bucketprops_get_has_young_vclock(riak_bucketprops *prop) {
     return prop->has_young_vclock;
 }
 riak_uint32_t
-riak_bucket_props_get_young_vclock(riak_bucket_props *prop) {
+riak_bucketprops_get_young_vclock(riak_bucketprops *prop) {
     return prop->young_vclock;
 }
 riak_boolean_t
-riak_bucket_props_get_has_big_vclock(riak_bucket_props *prop) {
+riak_bucketprops_get_has_big_vclock(riak_bucketprops *prop) {
     return prop->has_big_vclock;
 }
 riak_uint32_t
-riak_bucket_props_get_big_vclock(riak_bucket_props *prop) {
+riak_bucketprops_get_big_vclock(riak_bucketprops *prop) {
     return prop->big_vclock;
 }
 riak_boolean_t
-riak_bucket_props_get_has_small_vclock(riak_bucket_props *prop) {
+riak_bucketprops_get_has_small_vclock(riak_bucketprops *prop) {
     return prop->has_small_vclock;
 }
 riak_uint32_t
-riak_bucket_props_get_small_vclock(riak_bucket_props *prop) {
+riak_bucketprops_get_small_vclock(riak_bucketprops *prop) {
     return prop->small_vclock;
 }
 riak_boolean_t
-riak_bucket_props_get_has_pr(riak_bucket_props *prop) {
+riak_bucketprops_get_has_pr(riak_bucketprops *prop) {
     return prop->has_pr;
 }
 riak_uint32_t
-riak_bucket_props_get_pr(riak_bucket_props *prop) {
+riak_bucketprops_get_pr(riak_bucketprops *prop) {
     return prop->pr;
 }
 riak_boolean_t
-riak_bucket_props_get_has_r(riak_bucket_props *prop) {
+riak_bucketprops_get_has_r(riak_bucketprops *prop) {
     return prop->has_r;
 }
 riak_uint32_t
-riak_bucket_props_get_r(riak_bucket_props *prop) {
+riak_bucketprops_get_r(riak_bucketprops *prop) {
     return prop->r;
 }
 riak_boolean_t
-riak_bucket_props_get_has_w(riak_bucket_props *prop) {
+riak_bucketprops_get_has_w(riak_bucketprops *prop) {
     return prop->has_w;
 }
 riak_uint32_t
-riak_bucket_props_get_w(riak_bucket_props *prop) {
+riak_bucketprops_get_w(riak_bucketprops *prop) {
     return prop->w;
 }
 riak_boolean_t
-riak_bucket_props_get_has_pw(riak_bucket_props *prop) {
+riak_bucketprops_get_has_pw(riak_bucketprops *prop) {
     return prop->has_pw;
 }
 riak_uint32_t
-riak_bucket_props_get_pw(riak_bucket_props *prop) {
+riak_bucketprops_get_pw(riak_bucketprops *prop) {
     return prop->pw;
 }
 riak_boolean_t
-riak_bucket_props_get_has_dw(riak_bucket_props *prop) {
+riak_bucketprops_get_has_dw(riak_bucketprops *prop) {
     return prop->has_dw;
 }
 riak_uint32_t
-riak_bucket_props_get_dw(riak_bucket_props *prop) {
+riak_bucketprops_get_dw(riak_bucketprops *prop) {
     return prop->dw;
 }
 riak_boolean_t
-riak_bucket_props_get_has_rw(riak_bucket_props *prop) {
+riak_bucketprops_get_has_rw(riak_bucketprops *prop) {
     return prop->has_rw;
 }
 riak_uint32_t
-riak_bucket_props_get_rw(riak_bucket_props *prop) {
+riak_bucketprops_get_rw(riak_bucketprops *prop) {
     return prop->rw;
 }
 riak_boolean_t
-riak_bucket_props_get_has_basic_quorum(riak_bucket_props *prop) {
+riak_bucketprops_get_has_basic_quorum(riak_bucketprops *prop) {
     return prop->has_basic_quorum;
 }
 riak_boolean_t
-riak_bucket_props_get_basic_quorum(riak_bucket_props *prop) {
+riak_bucketprops_get_basic_quorum(riak_bucketprops *prop) {
     return prop->basic_quorum;
 }
 riak_boolean_t
-riak_bucket_props_get_has_notfound_ok(riak_bucket_props *prop) {
+riak_bucketprops_get_has_notfound_ok(riak_bucketprops *prop) {
     return prop->has_notfound_ok;
 }
 riak_boolean_t
-riak_bucket_props_get_notfound_ok(riak_bucket_props *prop) {
+riak_bucketprops_get_notfound_ok(riak_bucketprops *prop) {
     return prop->notfound_ok;
 }
 riak_boolean_t
-riak_bucket_props_get_has_backend(riak_bucket_props *prop) {
+riak_bucketprops_get_has_backend(riak_bucketprops *prop) {
     return prop->has_backend;
 }
 riak_binary*
-riak_bucket_props_get_backend(riak_bucket_props *prop) {
+riak_bucketprops_get_backend(riak_bucketprops *prop) {
     return prop->backend;
 }
 riak_boolean_t
-riak_bucket_props_get_has_search(riak_bucket_props *prop) {
+riak_bucketprops_get_has_search(riak_bucketprops *prop) {
     return prop->has_search;
 }
 riak_boolean_t
-riak_bucket_props_get_search(riak_bucket_props *prop) {
+riak_bucketprops_get_search(riak_bucketprops *prop) {
     return prop->search;
 }
 riak_boolean_t
-riak_bucket_props_get_has_repl(riak_bucket_props *prop) {
+riak_bucketprops_get_has_repl(riak_bucketprops *prop) {
     return prop->has_repl;
 }
 riak_bucket_repl_mode
-riak_bucket_props_get_repl(riak_bucket_props *prop) {
+riak_bucketprops_get_repl(riak_bucketprops *prop) {
     return prop->repl;
 }
 riak_boolean_t
-riak_bucket_props_get_has_search_index(riak_bucket_props *prop) {
+riak_bucketprops_get_has_search_index(riak_bucketprops *prop) {
     return prop->has_search_index;
 }
 riak_binary*
-riak_bucket_props_get_search_index(riak_bucket_props *prop) {
+riak_bucketprops_get_search_index(riak_bucketprops *prop) {
     return prop->search_index;
 }
 void
-riak_bucket_props_set_n_val(riak_bucket_props *prop,
-                            riak_uint32_t      value) {
+riak_bucketprops_set_n_val(riak_bucketprops *prop,
+                           riak_uint32_t     value) {
     prop->has_n_val = RIAK_TRUE;
     prop->n_val = value;
 }
 void
-riak_bucket_props_set_allow_mult(riak_bucket_props *prop,
-                                 riak_boolean_t     value) {
+riak_bucketprops_set_allow_mult(riak_bucketprops *prop,
+                                riak_boolean_t    value) {
     prop->has_allow_mult = RIAK_TRUE;
     prop->allow_mult = value;
 }
 void
-riak_bucket_props_set_last_write_wins(riak_bucket_props *prop,
-                                      riak_boolean_t     value) {
+riak_bucketprops_set_last_write_wins(riak_bucketprops *prop,
+                                     riak_boolean_t    value) {
     prop->has_last_write_wins = RIAK_TRUE;
     prop->last_write_wins = value;
 }
 void
-riak_bucket_props_set_precommits(riak_bucket_props *prop,
-                                 riak_commit_hook **precommit,
-                                 riak_size_t        num) {
+riak_bucketprops_set_precommits(riak_bucketprops  *prop,
+                                riak_commit_hook **precommit,
+                                riak_size_t        num) {
     prop->has_has_precommit = RIAK_TRUE;
     prop->has_precommit = RIAK_TRUE;
     prop->n_precommit = num;
     prop->precommit = precommit;
 }
 void
-riak_bucket_props_set_postcommits(riak_bucket_props *prop,
-                                  riak_commit_hook **postcommit,
-                                  riak_size_t        num) {
+riak_bucketprops_set_postcommits(riak_bucketprops  *prop,
+                                 riak_commit_hook **postcommit,
+                                 riak_size_t        num) {
     prop->has_has_postcommit = RIAK_TRUE;
     prop->has_postcommit = RIAK_TRUE;
     prop->n_postcommit = num;
     prop->postcommit = postcommit;
 }
-void
-riak_bucket_props_set_chash_keyfun(riak_bucket_props *prop,
-                                   riak_mod_fun      *value) {
-    prop->chash_keyfun = value;
+riak_error
+riak_bucketprops_set_chash_keyfun(riak_config      *cfg,
+                                  riak_bucketprops *prop,
+                                  riak_modfun      *value) {
+    prop->chash_keyfun = riak_modfun_deep_new(cfg, value);
+    if (prop->chash_keyfun) {
+        return ERIAK_OUT_OF_MEMORY;
+    }
+
+    return ERIAK_OK;
+}
+riak_error
+riak_bucketprops_set_linkfun(riak_config      *cfg,
+                             riak_bucketprops *prop,
+                             riak_modfun      *value) {
+    prop->linkfun = riak_modfun_deep_new(cfg, value);
+    if (prop->linkfun) {
+        return ERIAK_OUT_OF_MEMORY;
+    }
+
+    return ERIAK_OK;
 }
 void
-riak_bucket_props_set_linkfun(riak_bucket_props *prop,
-                              riak_mod_fun      *value) {
-    prop->linkfun = value;
-}
-void
-riak_bucket_props_set_old_vclock(riak_bucket_props *prop,
-                                 riak_uint32_t      value) {
+riak_bucketprops_set_old_vclock(riak_bucketprops *prop,
+                                riak_uint32_t     value) {
     prop->has_old_vclock = RIAK_TRUE;
     prop->old_vclock = value;
 }
 void
-riak_bucket_props_set_young_vclock(riak_bucket_props *prop,
-                                   riak_uint32_t      value) {
+riak_bucketprops_set_young_vclock(riak_bucketprops *prop,
+                                  riak_uint32_t     value) {
     prop->has_young_vclock = RIAK_TRUE;
     prop->young_vclock = value;
 }
 void
-riak_bucket_props_set_big_vclock(riak_bucket_props *prop,
-                                 riak_uint32_t      value) {
+riak_bucketprops_set_big_vclock(riak_bucketprops *prop,
+                                riak_uint32_t     value) {
     prop->has_big_vclock = RIAK_TRUE;
     prop->big_vclock = value;
 }
 void
-riak_bucket_props_set_small_vclock(riak_bucket_props *prop,
-                                   riak_uint32_t      value) {
+riak_bucketprops_set_small_vclock(riak_bucketprops *prop,
+                                  riak_uint32_t     value) {
     prop->has_small_vclock = RIAK_TRUE;
     prop->small_vclock = value;
 }
 void
-riak_bucket_props_set_pr(riak_bucket_props *prop,
-                         riak_uint32_t      value) {
+riak_bucketprops_set_pr(riak_bucketprops *prop,
+                        riak_uint32_t     value) {
     prop->has_pr = RIAK_TRUE;
     prop->pr = value;
 }
 void
-riak_bucket_props_set_r(riak_bucket_props *prop,
-                        riak_uint32_t      value) {
+riak_bucketprops_set_r(riak_bucketprops *prop,
+                       riak_uint32_t     value) {
     prop->has_r = RIAK_TRUE;
     prop->r = value;
 }
 void
-riak_bucket_props_set_w(riak_bucket_props *prop,
-                        riak_uint32_t      value) {
+riak_bucketprops_set_w(riak_bucketprops *prop,
+                       riak_uint32_t     value) {
     prop->has_w = RIAK_TRUE;
     prop->w = value;
 }
 void
-riak_bucket_props_set_pw(riak_bucket_props *prop,
-                         riak_uint32_t      value) {
+riak_bucketprops_set_pw(riak_bucketprops *prop,
+                        riak_uint32_t     value) {
     prop->has_pw = RIAK_TRUE;
     prop->pw = value;
 }
 void
-riak_bucket_props_set_dw(riak_bucket_props *prop,
-                         riak_uint32_t      value) {
+riak_bucketprops_set_dw(riak_bucketprops *prop,
+                        riak_uint32_t     value) {
     prop->has_dw = RIAK_TRUE;
     prop->dw = value;
 }
 void
-riak_bucket_props_set_rw(riak_bucket_props *prop,
-                         riak_uint32_t      value) {
+riak_bucketprops_set_rw(riak_bucketprops *prop,
+                        riak_uint32_t     value) {
     prop->has_rw = RIAK_TRUE;
     prop->rw = value;
 }
 void
-riak_bucket_props_set_basic_quorum(riak_bucket_props *prop,
-                                   riak_boolean_t     value) {
+riak_bucketprops_set_basic_quorum(riak_bucketprops *prop,
+                                  riak_boolean_t    value) {
     prop->has_basic_quorum = RIAK_TRUE;
     prop->basic_quorum = value;
 }
 void
-riak_bucket_props_set_notfound_ok(riak_bucket_props *prop,
-                                  riak_boolean_t     value) {
+riak_bucketprops_set_notfound_ok(riak_bucketprops *prop,
+                                 riak_boolean_t    value) {
     prop->has_notfound_ok = RIAK_TRUE;
     prop->notfound_ok = value;
 }
 void
-riak_bucket_props_set_backend(riak_bucket_props *prop,
-                              riak_binary       *value) {
+riak_bucketprops_set_backend(riak_bucketprops *prop,
+                             riak_binary      *value) {
     prop->has_backend = RIAK_TRUE;
     prop->backend = value;
 }
 void
-riak_bucket_props_set_search(riak_bucket_props *prop,
-                            riak_boolean_t      value) {
+riak_bucketprops_set_search(riak_bucketprops *prop,
+                            riak_boolean_t    value) {
     prop->has_search = RIAK_TRUE;
     prop->search = value;
 }
 void
-riak_bucket_props_set_repl(riak_bucket_props    *prop,
-                           riak_bucket_repl_mode value) {
+riak_bucketprops_set_repl(riak_bucketprops     *prop,
+                          riak_bucket_repl_mode value) {
     prop->has_repl = RIAK_TRUE;
     prop->repl = value;
 }
 void
-riak_bucket_props_set_search_index(riak_bucket_props *prop,
-                               riak_binary       *value) {
+riak_bucketprops_set_search_index(riak_bucketprops *prop,
+                                  riak_binary      *value) {
     prop->has_search_index = RIAK_TRUE;
     prop->search_index = value;
 }

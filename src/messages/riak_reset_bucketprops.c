@@ -28,11 +28,11 @@
 #include "riak_utils-internal.h"
 #include "riak_config-internal.h"
 #include "riak_operation-internal.h"
-#include "riak_bucket_props-internal.h"
+#include "riak_bucketprops-internal.h"
 #include "riak_print-internal.h"
 
 riak_error
-riak_encode_reset_bucketprops_request(riak_operation      *rop,
+riak_reset_bucketprops_request_encode(riak_operation      *rop,
                                       riak_binary         *bucket,
                                       riak_pb_message    **req) {
 
@@ -54,13 +54,13 @@ riak_encode_reset_bucketprops_request(riak_operation      *rop,
         return ERIAK_OUT_OF_MEMORY;
     }
     *req = request;
-    riak_operation_set_response_decoder(rop, (riak_response_decoder)riak_decode_reset_bucketprops_response);
+    riak_operation_set_response_decoder(rop, (riak_response_decoder)riak_reset_bucketprops_response_decode);
 
     return ERIAK_OK;
 }
 
 riak_error
-riak_decode_reset_bucketprops_response(riak_operation                   *rop,
+riak_reset_bucketprops_response_decode(riak_operation                   *rop,
                                        riak_pb_message                  *pbresp,
                                        riak_reset_bucketprops_response **resp,
                                        riak_boolean_t                   *done) {
@@ -76,7 +76,7 @@ riak_decode_reset_bucketprops_response(riak_operation                   *rop,
 }
 
 void
-riak_free_reset_bucketprops_response(riak_config                      *cfg,
+riak_reset_bucketprops_response_free(riak_config                      *cfg,
                                      riak_reset_bucketprops_response **resp) {
     riak_free(cfg, resp);
 }

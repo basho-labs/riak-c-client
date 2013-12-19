@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * riak_set_bucketprops.h: Riak C Client Set Bucket Properties Message
+ * test_bucketprops.h:  Riak C Unit testing for Bucket Properties Messages
  *
  * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
  *
@@ -20,19 +20,5 @@
  *
  *********************************************************************/
 
-#ifndef _RIAK_SET_BUCKETPROPS_MESSAGE_H
-#define _RIAK_SET_BUCKETPROPS_MESSAGE_H
-
-typedef struct _riak_set_bucketprops_response riak_set_bucketprops_response;
-typedef void (*riak_set_bucketprops_response_callback)(riak_set_bucketprops_response *response, void *ptr);
-
-/**
- * @brief Free memory from response
- * @param cfg Riak Configuration
- * @param resp Bucket Properties PBC Response
- */
 void
-riak_set_bucketprops_response_free(riak_config                    *cfg,
-                                   riak_set_bucketprops_response **resp);
-
-#endif
+test_bucketprops();

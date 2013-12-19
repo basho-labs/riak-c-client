@@ -28,7 +28,6 @@
 #include "riak_utils-internal.h"
 #include "riak_config-internal.h"
 #include "riak_operation-internal.h"
-#include "riak_bucket_props-internal.h"
 #include "riak_print-internal.h"
 
 riak_error
@@ -74,7 +73,7 @@ riak_set_clientid_request_encode(riak_operation  *rop,
 }
 
 void
-riak_free_set_clientid_response(riak_config                 *cfg,
+riak_set_clientid_response_free(riak_config                 *cfg,
                                 riak_set_clientid_response **resp) {
     riak_free(cfg, resp);
 }

@@ -39,6 +39,7 @@
 #include "test_put.h"
 #include "test_listbuckets.h"
 #include "test_listkeys.h"
+#include "test_bucketprops.h"
 
 int
 main(int   argc,
@@ -104,6 +105,7 @@ main(int   argc,
     CU_ADD_TEST(messages_suite, test_put_decode_response);
     CU_ADD_TEST(messages_suite, test_listbuckets_response_decode);
     CU_ADD_TEST(messages_suite, test_listkeys_response_decode);
+    CU_ADD_TEST(messages_suite, test_bucketprops);
 
     // Run all tests using the CUnit Basic interface
     CU_basic_set_mode(CU_BRM_VERBOSE);

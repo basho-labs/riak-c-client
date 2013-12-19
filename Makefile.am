@@ -6,7 +6,7 @@ TESTCUNITDIR = $(top_srcdir)/test/cunit
 
 include_HEADERS =	src/include/riak.h \
 			src/include/riak_binary.h \
-			src/include/riak_bucket_props.h \
+			src/include/riak_bucketprops.h \
 			src/include/riak_config.h \
 			src/include/riak_connection.h \
 			src/include/riak_error.h \
@@ -23,7 +23,7 @@ libriak_c_client_0_1_la_SOURCES = \
 			src/riak.c \
 			src/riak_async.c \
 			src/riak_binary.c \
-			src/riak_bucket_props.c \
+			src/riak_bucketprops.c \
 			src/riak_config.c \
 			src/riak_connection.c \
 			src/riak_error.c \
@@ -101,6 +101,7 @@ riak_c_example_DEPENDENCIES = libriak_c_client-0.1.la
 check_PROGRAMS = riak_c_cunit
 riak_c_cunit_SOURCES = 	test/cunit/registry.c \
 			test/cunit/test_binary.c \
+			test/cunit/test_bucketprops.c \
 			test/cunit/test_clientid.c \
 			test/cunit/test_config.c \
 			test/cunit/test_connection.c \

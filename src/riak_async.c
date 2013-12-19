@@ -106,7 +106,7 @@ riak_async_register_get_bucketprops(riak_operation  *rop,
                                     riak_binary     *bucket,
                                     riak_response_callback cb) {
     riak_operation_set_response_cb(rop, cb);
-    return riak_encode_get_bucketprops_request(rop, bucket, &(rop->pb_request));
+    return riak_get_bucketprops_request_encode(rop, bucket, &(rop->pb_request));
 }
 
 riak_error
@@ -114,16 +114,16 @@ riak_async_register_reset_bucketprops(riak_operation  *rop,
                                       riak_binary     *bucket,
                                       riak_response_callback cb) {
     riak_operation_set_response_cb(rop, cb);
-    return riak_encode_reset_bucketprops_request(rop, bucket, &(rop->pb_request));
+    return riak_reset_bucketprops_request_encode(rop, bucket, &(rop->pb_request));
 }
 
 riak_error
 riak_async_register_set_bucketprops(riak_operation        *rop,
                                     riak_binary           *bucket,
-                                    riak_bucket_props     *props,
+                                    riak_bucketprops      *props,
                                     riak_response_callback cb) {
     riak_operation_set_response_cb(rop, cb);
-    return riak_encode_set_bucketprops_request(rop, bucket, props, &(rop->pb_request));
+    return riak_set_bucketprops_request_encode(rop, bucket, props, &(rop->pb_request));
 }
 
 

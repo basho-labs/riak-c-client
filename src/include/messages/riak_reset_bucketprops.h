@@ -32,7 +32,7 @@ typedef void (*riak_reset_bucketprops_response_callback)(riak_reset_bucketprops_
  * @param resp Bucket Properties PBC Response
  */
 void
-riak_free_reset_bucketprops_response(riak_config                      *cfg,
+riak_reset_bucketprops_response_free(riak_config                      *cfg,
                                      riak_reset_bucketprops_response **resp);
 
 #endif

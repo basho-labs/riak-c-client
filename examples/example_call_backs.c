@@ -145,7 +145,7 @@ example_setclientid_cb(riak_set_clientid_response *response,
     riak_connection *cxn = riak_operation_get_connection(rop);
     riak_config     *cfg = riak_connection_get_config(cxn);
     riak_log_debug(cxn, "%s", "example_setclientid_cb");
-    riak_free_set_clientid_response(cfg, &response);
+    riak_set_clientid_response_free(cfg, &response);
 }
 
 void
@@ -156,10 +156,10 @@ example_getbucketprops_cb(riak_get_bucketprops_response *response,
     riak_config     *cfg = riak_connection_get_config(cxn);
     riak_log_debug(cxn, "%s", "example_getbucketprops_cb");
     char output[10240];
-    riak_print_get_bucketprops_response(response, output, sizeof(output));
+    riak_get_bucketprops_response_print(response, output, sizeof(output));
     riak_log_debug(cxn, "%s", output);
     fflush(stdout);
-    riak_free_get_bucketprops_response(cfg, (riak_get_bucketprops_response**)&(response));
+    riak_get_bucketprops_response_free(cfg, (riak_get_bucketprops_response**)&(response));
 }
 
 void
@@ -169,7 +169,7 @@ example_resetbucketprops_cb(riak_reset_bucketprops_response *response,
     riak_connection *cxn = riak_operation_get_connection(rop);
     riak_config     *cfg = riak_connection_get_config(cxn);
     riak_log_debug(cxn, "%s", "example_resetbucketprops_cb");
-    riak_free_reset_bucketprops_response(cfg, (riak_reset_bucketprops_response**)&(response));
+    riak_reset_bucketprops_response_free(cfg, (riak_reset_bucketprops_response**)&(response));
 }
 
 void
@@ -179,6 +179,6 @@ example_setbucketprops_cb(riak_set_bucketprops_response *response,
     riak_connection *cxn = riak_operation_get_connection(rop);
     riak_config     *cfg = riak_connection_get_config(cxn);
     riak_log_debug(cxn, "%s", "example_setbucketprops_cb");
-    riak_free_set_bucketprops_response(cfg, (riak_set_bucketprops_response**)&(response));
+    riak_set_bucketprops_response_free(cfg, (riak_set_bucketprops_response**)&(response));
 }
 

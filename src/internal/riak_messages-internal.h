@@ -123,6 +123,9 @@ riak_pb_message_free(riak_config     *cfg,
 #include "messages/riak_put-internal.h"
 #include "messages/riak_listbuckets-internal.h"
 #include "messages/riak_listkeys-internal.h"
+#include "messages/riak_get_bucketprops-internal.h"
+#include "messages/riak_set_bucketprops-internal.h"
+#include "messages/riak_reset_bucketprops-internal.h"
 
 // Based on RpbErrorResp
 struct _riak_error_response {
@@ -135,52 +138,6 @@ struct _riak_error_response {
 struct _riak_ping_response {
     riak_boolean_t success;
 };
-
-// Based on RpbGetBucketReq
-struct _riak_get_bucketprops_request
-{
-    riak_binary   *bucket;
-    riak_boolean_t has_type;
-    riak_binary   *type;
-};
-
-// Based on RpbGetBucketResp
-struct _riak_get_bucketprops_response
-{
-    riak_bucket_props *props;
-
-    RpbGetBucketResp *_internal;
-};
-
-// Based on RpbSetBucketReq
-struct _riak_set_bucketprops_request
-{
-    riak_binary       *bucket;
-    riak_bucket_props *props;
-    riak_boolean_t     has_type;
-    riak_binary       *type;
-};
-
-// Placeholder
-struct _riak_set_bucketprops_response
-{
-// Empty
-};
-
-// Based on RpbResetBucketReq
-struct _riak_reset_bucketprops_request
-{
-    riak_binary   *bucket;
-    riak_boolean_t has_type;
-    riak_binary   *type;
-};
-
-// Placeholder
-struct _riak_reset_bucketprops_response
-{
-// Empty
-};
-
 
 
 /**
@@ -220,86 +177,5 @@ riak_decode_ping_response(riak_operation      *rop,
                           riak_pb_message     *pbresp,
                           riak_ping_response **resp,
                           riak_boolean_t      *done);
-
-/**
- * @brief Create a request to fetch bucket properies
- * @param rop Riak Operation
- * @param bucket Name of Riak bucket
- * @param req Returned bucket properies request
- * @return Error if out of memory
- */
-riak_error
-riak_encode_get_bucketprops_request(riak_operation   *rop,
-                                    riak_binary      *bucket,
-                                    riak_pb_message **req);
-
-/**
- * @brief Translate PBC get_bucketprops response into Riak structure
- * @param rop Riak Operation
- * @param pbresp PBC response message
- * @param resp Returned Riak response structure
- * @param done Returned flag set to true if finished streaming
- * @return Error if out of memory
- */
-riak_error
-riak_decode_get_bucketprops_response(riak_operation                 *rop,
-                                     riak_pb_message                *pbresp,
-                                     riak_get_bucketprops_response **resp,
-                                     riak_boolean_t                 *done);
-
-/**
- * @brief Create a request to reset bucket properties
- * @param rop Riak Operation
- * @param bucket Name of Riak bucket
- * @param req Returned bucket properties request
- * @return Error if out of memory
- */
-riak_error
-riak_encode_reset_bucketprops_request(riak_operation   *rop,
-                                      riak_binary      *bucket,
-                                      riak_pb_message **req);
-
-/**
- * @brief Translate PBC reset_bucketprops response into Riak structure
- * @param rop Riak Operation
- * @param pbresp PBC response message
- * @param resp Returned Riak response structure
- * @param done Returned flag set to true if finished streaming
- * @return Error if out of memory
- */
-riak_error
-riak_decode_reset_bucketprops_response(riak_operation                   *rop,
-                                       riak_pb_message                  *pbresp,
-                                       riak_reset_bucketprops_response **resp,
-                                       riak_boolean_t                   *done);
-
-
-/**
- * @brief Create a request to set bucket properties
- * @param rop Riak Operation
- * @param bucket Name of Riak bucket
- * @param props Bucket properties
- * @param req Returned bucket properties request
- * @return Error if out of memory
- */
-riak_error
-riak_encode_set_bucketprops_request(riak_operation    *rop,
-                                    riak_binary       *bucket,
-                                    riak_bucket_props *props,
-                                    riak_pb_message  **req);
-
-/**
- * @brief Translate PBC set_bucketprops response into Riak structure
- * @param rop Riak Operation
- * @param pbresp PBC response message
- * @param resp Returned Riak response structure
- * @param done Returned flag set to true if finished streaming
- * @return Error if out of memory
- */
-riak_error
-riak_decode_set_bucketprops_response(riak_operation                 *rop,
-                                     riak_pb_message                *pbresp,
-                                     riak_set_bucketprops_response **resp,
-                                     riak_boolean_t                 *done);
 
 #endif // _RIAK_EVENT_INTERNAL_H

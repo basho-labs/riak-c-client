@@ -33,7 +33,7 @@ typedef void (*riak_get_bucketprops_response_callback)(riak_get_bucketprops_resp
  * @param len Number of free bytes
  */
 void
-riak_print_get_bucketprops_response(riak_get_bucketprops_response *response,
+riak_get_bucketprops_response_print(riak_get_bucketprops_response *response,
                                     char                          *target,
                                     riak_size_t                    len);
 
@@ -43,7 +43,7 @@ riak_print_get_bucketprops_response(riak_get_bucketprops_response *response,
  * @param resp Bucket Properties PBC Response
  */
 void
-riak_free_get_bucketprops_response(riak_config                    *cfg,
+riak_get_bucketprops_response_free(riak_config                    *cfg,
                                    riak_get_bucketprops_response **resp);
 
 #endif
