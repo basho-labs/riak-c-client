@@ -69,4 +69,8 @@ void
 example_setbucketprops_cb(riak_set_bucketprops_response *response,
                           void                          *ptr);
 
+void
+example_mapreduce_cb(riak_mapreduce_response *response,
+                     void                    *ptr);
+
 #endif // _RIAK_CALL_BACKS_H

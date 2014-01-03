@@ -126,4 +126,14 @@ riak_async_register_set_bucketprops(riak_operation        *rop,
     return riak_set_bucketprops_request_encode(rop, bucket, props, &(rop->pb_request));
 }
 
+riak_error
+riak_async_register_mapreduce(riak_operation        *rop,
+                              riak_binary           *content_type,
+                              riak_binary           *map_request,
+                              riak_boolean_t         streaming,
+                              riak_response_callback cb) {
+    riak_operation_set_response_cb(rop, cb);
+    return riak_mapreduce_request_encode(rop, content_type, map_request, &(rop->pb_request));
+}
+
 

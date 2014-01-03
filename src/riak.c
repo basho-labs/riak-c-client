@@ -74,6 +74,7 @@ riak_sync_request(riak_operation **rop_target,
 
     riak_boolean_t done_streaming;
     err = riak_read(rop, &done_streaming, riak_sync_read_cb, rop);
+
     *response = rop->response;
     riak_operation_free(rop_target);
     return err;
@@ -336,6 +337,28 @@ riak_set_bucketprops(riak_connection                *cxn,
 }
 
 riak_error
+riak_mapreduce(riak_connection          *cxn,
+               riak_binary              *content_type,
+               riak_binary              *map_request,
+               riak_mapreduce_response **response) {
+    riak_operation *rop = NULL;
+    riak_error err = riak_operation_new(cxn, &rop, NULL, NULL, NULL);
+    if (err) {
+        return err;
+    }
+    err = riak_mapreduce_request_encode(rop, content_type, map_request, &(rop->pb_request));
+    if (err) {
+        return err;
+    }
+    err = riak_sync_request(&rop, (void**)response);
+    if (err) {
+        return err;
+    }
+
+    return ERIAK_OK;
+}
+
+riak_error
 riak_read(riak_operation *rop,
           riak_boolean_t *done_streaming,
           riak_io_cb      read_cb,
@@ -425,6 +448,7 @@ riak_read(riak_operation *rop,
         }
         // Decode the message from Protocol Buffers
         result = (rop->decoder)(rop, pbresp, &(rop->response), done_streaming);
+
         riak_free(cfg, &pbresp);
         riak_free(cfg, &rop->msgbuf);
 

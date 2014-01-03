@@ -32,7 +32,7 @@
 #include "riak_print-internal.h"
 
 riak_error
-riak_encode_set_bucketprops_request(riak_operation      *rop,
+riak_set_bucketprops_request_encode(riak_operation      *rop,
                                     riak_binary         *bucket,
                                     riak_bucketprops    *props,
                                     riak_pb_message    **req) {

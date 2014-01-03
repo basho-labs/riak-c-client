@@ -41,6 +41,7 @@ struct _riak_operation {
     riak_uint32_t            msglen;
     riak_uint8_t            *msgbuf;
     riak_boolean_t           msglen_complete;
+    riak_boolean_t           streaming;
 
     // Results of message translation
     struct _riak_pb_message *pb_request;

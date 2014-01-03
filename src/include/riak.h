@@ -200,7 +200,18 @@ void riak_bucket_get_props(riak_connection*);
 
 void riak_query_2i(riak_connection*);
 
-void riak_map_reduce(riak_connection*);
+/**
+ * @brief Synchronous Fetch request
+ * @param cxn Riak Connection
+ * @param map_request Erlang or JS Map Reduce job
+ * @param response Returned Fetched data
+ * @returns Error code
+ */
+riak_error
+riak_mapreduce(riak_connection          *cxn,
+               riak_binary              *content_type,
+               riak_binary              *map_request,
+               riak_mapreduce_response **response);
 
 //
 // A S Y N C H R O N O U S
@@ -272,6 +283,22 @@ riak_async_register_set_bucketprops(riak_operation        *rop,
                                     riak_binary           *bucket,
                                     riak_bucketprops      *props,
                                     riak_response_callback cb);
+
+/**
+ * @brief Register an asynchronous Map/Reduce job
+ * @param rop Riak Operation
+ * @param content_type MIME content encoding string
+ * @param map_request Erlang or JS Map/Reduce job
+ * @param streaming True if partial results should be returned
+ * @param cb User-defined callback for results
+ * @returns Error Code
+ */
+riak_error
+riak_async_register_mapreduce(riak_operation        *rop,
+                              riak_binary           *content_type,
+                              riak_binary           *map_request,
+                              riak_boolean_t         streaming,
+                              riak_response_callback cb);
 
 /**
   @param ptr Private data for user
