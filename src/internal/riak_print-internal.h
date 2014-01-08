@@ -61,6 +61,12 @@ riak_print_binary_hex(char         *name,
                       riak_int32_t *total);
 
 riak_int32_t
+riak_print_raw_hex_array(riak_uint8_t *value,
+                         riak_int32_t  value_len,
+                         char        **target,
+                         riak_int32_t *len,
+                         riak_int32_t *total);
+riak_int32_t
 riak_print_time(char         *name,
                 riak_int32_t  value,
                 char        **target,

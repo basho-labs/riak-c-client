@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * riak_bucket_props-internal.h: Riak C Client Bucket Properties
+ * riak_bucketprops-internal.h: Riak C Client Bucket Properties
  *
  * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
  *
@@ -22,11 +22,11 @@
 
 #include "riak_binary-internal.h"
 
-#ifndef _RIAK_INTERNAL_BUCKET_PROPS_H
-#define _RIAK_INTERNAL_BUCKET_PROPS_H
+#ifndef _RIAK_INTERNAL_BUCKETPROPS_H
+#define _RIAK_INTERNAL_BUCKETPROPS_H
 
 // Based on RpbModFun
-struct _riak_mod_fun
+struct _riak_modfun
 {
     riak_binary *module;
     riak_binary *function;
@@ -35,13 +35,13 @@ struct _riak_mod_fun
 // Based on RpbCommitHook
 struct _riak_commit_hook
 {
-    riak_mod_fun   *modfun;
+    riak_modfun   *modfun;
     riak_boolean_t  has_name;
     riak_binary    *name;
 };
 
 // Based on RpbBucketProps
-struct _riak_bucket_props
+struct _riak_bucketprops
 {
     riak_boolean_t            has_n_val;
     riak_uint32_t             n_val;
@@ -57,8 +57,8 @@ struct _riak_bucket_props
     riak_commit_hook        **postcommit;
     riak_boolean_t            has_has_postcommit;
     riak_boolean_t            has_postcommit;
-    riak_mod_fun             *chash_keyfun;
-    riak_mod_fun             *linkfun;
+    riak_modfun             *chash_keyfun;
+    riak_modfun             *linkfun;
     riak_boolean_t            has_old_vclock;
     riak_uint32_t             old_vclock;
     riak_boolean_t            has_young_vclock;
@@ -89,18 +89,18 @@ struct _riak_bucket_props
     riak_boolean_t            search;
     riak_boolean_t            has_repl;
     riak_bucket_repl_mode     repl;
-    riak_boolean_t            has_yz_index;
-    riak_binary              *yz_index;
+    riak_boolean_t            has_search_index;
+    riak_binary              *search_index;
 };
 
 riak_error
-riak_bucket_props_new_from_pb(riak_config       *cfg,
-                              riak_bucket_props **target,
+riak_bucketprops_new_from_pb(riak_config       *cfg,
+                              riak_bucketprops **target,
                               RpbBucketProps     *from);
 
 riak_error
-riak_bucket_props_to_pb_copy(riak_config      *cfg,
+riak_bucketprops_to_pb_copy(riak_config      *cfg,
                              RpbBucketProps    *to,
-                             riak_bucket_props *from);
+                             riak_bucketprops *from);
 
-#endif // _RIAK_INTERNAL_BUCKET_PROPS_H
+#endif // _RIAK_INTERNAL_BUCKETPROPS_H

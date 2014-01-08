@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * riak_messages.h: Riak C Client External Messages
+ * test_put.h:  Riak C Unit testing for Put Message
  *
  * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
  *
@@ -20,16 +20,44 @@
  *
  *********************************************************************/
 
-#include "messages/riak_delete.h"
-#include "messages/riak_error.h"
-#include "messages/riak_get.h"
-#include "messages/riak_get_bucketprops.h"
-#include "messages/riak_get_clientid.h"
-#include "messages/riak_listbuckets.h"
-#include "messages/riak_listkeys.h"
-#include "messages/riak_ping.h"
-#include "messages/riak_put.h"
-#include "messages/riak_reset_bucketprops.h"
-#include "messages/riak_serverinfo.h"
-#include "messages/riak_set_bucketprops.h"
-#include "messages/riak_set_clientid.h"
+void
+test_put_options_vclock();
+
+void
+test_put_options_w();
+
+void
+test_put_options_dw();
+
+void
+test_put_options_return_body();
+
+void
+test_put_options_pw();
+
+void
+test_put_options_if_not_modified();
+
+void
+test_put_options_if_none_match();
+
+void
+test_put_options_return_head();
+
+void
+test_put_options_timeout();
+
+void
+test_put_options_asis();
+
+void
+test_put_options_sloppy_quorum();
+
+void
+test_put_options_n_val();
+
+void
+test_put_decode_response();
+
+void
+test_put_decode_response();

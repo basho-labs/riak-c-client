@@ -109,7 +109,7 @@ riak_serverinfo(riak_connection           *cxn,
     if (err) {
         return err;
     }
-    err = riak_encode_serverinfo_request(rop, &(rop->pb_request));
+    err = riak_serverinfo_request_encode(rop, &(rop->pb_request));
     if (err) {
         return err;
     }
@@ -133,7 +133,7 @@ riak_get(riak_connection    *cxn,
     if (err) {
         return err;
     }
-    err = riak_encode_get_request(rop, bucket, key, opts, &(rop->pb_request));
+    err = riak_get_request_encode(rop, bucket, key, opts, &(rop->pb_request));
     if (err) {
         return err;
     }
@@ -155,7 +155,7 @@ riak_put(riak_connection    *cxn,
     if (err) {
         return err;
     }
-    err = riak_encode_put_request(rop, obj, opts, &(rop->pb_request));
+    err = riak_put_request_encode(rop, obj, opts, &(rop->pb_request));
     if (err) {
         return err;
     }
@@ -177,7 +177,7 @@ riak_delete(riak_connection    *cxn,
     if (err) {
         return err;
     }
-    err = riak_encode_delete_request(rop, bucket, key, opts, &(rop->pb_request));
+    err = riak_delete_request_encode(rop, bucket, key, opts, &(rop->pb_request));
     if (err) {
         return err;
     }
@@ -198,7 +198,7 @@ riak_listbuckets(riak_connection            *cxn,
     if (err) {
         return err;
     }
-    err = riak_encode_listbuckets_request(rop, &(rop->pb_request));
+    err = riak_listbuckets_request_encode(rop, &(rop->pb_request));
     if (err) {
         return err;
     }
@@ -219,7 +219,7 @@ riak_listkeys(riak_connection         *cxn,
     if (err) {
         return err;
     }
-    err = riak_encode_listkeys_request(rop, bucket, timeout, &(rop->pb_request));
+    err = riak_listkeys_request_encode(rop, bucket, timeout, &(rop->pb_request));
     if (err) {
         return err;
     }
@@ -238,7 +238,7 @@ riak_get_clientid(riak_connection             *cxn,
     if (err) {
         return err;
     }
-    err = riak_encode_get_clientid_request(rop, &(rop->pb_request));
+    err = riak_get_clientid_request_encode(rop, &(rop->pb_request));
     if (err) {
         return err;
     }
@@ -259,7 +259,7 @@ riak_set_clientid(riak_connection             *cxn,
     if (err) {
         return err;
     }
-    err = riak_encode_set_clientid_request(rop, clientid, &(rop->pb_request));
+    err = riak_set_clientid_request_encode(rop, clientid, &(rop->pb_request));
     if (err) {
         return err;
     }
@@ -280,7 +280,7 @@ riak_get_bucketprops(riak_connection                *cxn,
     if (err) {
         return err;
     }
-    err = riak_encode_get_bucketprops_request(rop, bucket, &(rop->pb_request));
+    err = riak_get_bucketprops_request_encode(rop, bucket, &(rop->pb_request));
     if (err) {
         return err;
     }
@@ -301,7 +301,7 @@ riak_reset_bucketprops(riak_connection                  *cxn,
     if (err) {
         return err;
     }
-    err = riak_encode_reset_bucketprops_request(rop, bucket, &(rop->pb_request));
+    err = riak_reset_bucketprops_request_encode(rop, bucket, &(rop->pb_request));
     if (err) {
         return err;
     }
@@ -316,14 +316,14 @@ riak_reset_bucketprops(riak_connection                  *cxn,
 riak_error
 riak_set_bucketprops(riak_connection                *cxn,
                      riak_binary                    *bucket,
-                     riak_bucket_props              *props,
+                     riak_bucketprops               *props,
                      riak_set_bucketprops_response **response) {
     riak_operation *rop = NULL;
     riak_error err = riak_operation_new(cxn, &rop, NULL, NULL, NULL);
     if (err) {
         return err;
     }
-    err = riak_encode_set_bucketprops_request(rop, bucket, props, &(rop->pb_request));
+    err = riak_set_bucketprops_request_encode(rop, bucket, props, &(rop->pb_request));
     if (err) {
         return err;
     }

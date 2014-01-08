@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * riak_messages.h: Riak C Client External Messages
+ * test_bucketprops.h:  Riak C Unit testing for Bucket Properties Messages
  *
  * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
  *
@@ -20,16 +20,5 @@
  *
  *********************************************************************/
 
-#include "messages/riak_delete.h"
-#include "messages/riak_error.h"
-#include "messages/riak_get.h"
-#include "messages/riak_get_bucketprops.h"
-#include "messages/riak_get_clientid.h"
-#include "messages/riak_listbuckets.h"
-#include "messages/riak_listkeys.h"
-#include "messages/riak_ping.h"
-#include "messages/riak_put.h"
-#include "messages/riak_reset_bucketprops.h"
-#include "messages/riak_serverinfo.h"
-#include "messages/riak_set_bucketprops.h"
-#include "messages/riak_set_clientid.h"
+void
+test_bucketprops();

@@ -32,6 +32,14 @@
 #include "test_config.h"
 #include "test_connection.h"
 #include "test_operation.h"
+#include "test_serverinfo.h"
+#include "test_clientid.h"
+#include "test_delete.h"
+#include "test_get.h"
+#include "test_put.h"
+#include "test_listbuckets.h"
+#include "test_listkeys.h"
+#include "test_bucketprops.h"
 
 int
 main(int   argc,
@@ -48,6 +56,7 @@ main(int   argc,
     CU_pSuite config_suite = CU_add_suite("riak_config", init_fn, cleanup_fn);
     CU_pSuite connection_suite = CU_add_suite("riak_connection", init_fn, cleanup_fn);
     CU_pSuite operation_suite = CU_add_suite("riak_operation", init_fn, cleanup_fn);
+    CU_pSuite messages_suite = CU_add_suite("riak_messages", init_fn, cleanup_fn);
     CU_ADD_TEST(binary_suite, test_build_binary);
     CU_ADD_TEST(binary_suite, test_build_binary_with_null);
     CU_ADD_TEST(binary_suite, test_build_binary_from_pb);
@@ -64,6 +73,39 @@ main(int   argc,
     CU_ADD_TEST(config_suite, test_config_free);
     CU_ADD_TEST(operation_suite, test_operation_new);
     CU_ADD_TEST(operation_suite, test_operation_callbacks);
+    CU_ADD_TEST(messages_suite, test_server_info_encode_request);
+    CU_ADD_TEST(messages_suite, test_server_info_decode_good_response);
+    CU_ADD_TEST(messages_suite, test_server_info_decode_bad_response);
+    CU_ADD_TEST(messages_suite, test_set_clientid);
+    CU_ADD_TEST(messages_suite, test_get_clientid);
+    CU_ADD_TEST(messages_suite, test_delete_encode_request);
+    CU_ADD_TEST(messages_suite, test_get_options_r);
+    CU_ADD_TEST(messages_suite, test_get_options_pr);
+    CU_ADD_TEST(messages_suite, test_get_options_basic_quorum);
+    CU_ADD_TEST(messages_suite, test_get_options_notfound_ok);
+    CU_ADD_TEST(messages_suite, test_get_options_if_modified);
+    CU_ADD_TEST(messages_suite, test_get_options_head);
+    CU_ADD_TEST(messages_suite, test_get_options_deletedvclock);
+    CU_ADD_TEST(messages_suite, test_get_options_timeout);
+    CU_ADD_TEST(messages_suite, test_get_options_sloppy_quorum);
+    CU_ADD_TEST(messages_suite, test_get_options_n_val);
+    CU_ADD_TEST(messages_suite, test_get_decode_response);
+    CU_ADD_TEST(messages_suite, test_put_options_vclock);
+    CU_ADD_TEST(messages_suite, test_put_options_w);
+    CU_ADD_TEST(messages_suite, test_put_options_dw);
+    CU_ADD_TEST(messages_suite, test_put_options_return_body);
+    CU_ADD_TEST(messages_suite, test_put_options_pw);
+    CU_ADD_TEST(messages_suite, test_put_options_if_not_modified);
+    CU_ADD_TEST(messages_suite, test_put_options_if_none_match);
+    CU_ADD_TEST(messages_suite, test_put_options_return_head);
+    CU_ADD_TEST(messages_suite, test_put_options_timeout);
+    CU_ADD_TEST(messages_suite, test_put_options_asis);
+    CU_ADD_TEST(messages_suite, test_put_options_sloppy_quorum);
+    CU_ADD_TEST(messages_suite, test_put_options_n_val);
+    CU_ADD_TEST(messages_suite, test_put_decode_response);
+    CU_ADD_TEST(messages_suite, test_listbuckets_response_decode);
+    CU_ADD_TEST(messages_suite, test_listkeys_response_decode);
+    CU_ADD_TEST(messages_suite, test_bucketprops);
 
     // Run all tests using the CUnit Basic interface
     CU_basic_set_mode(CU_BRM_VERBOSE);

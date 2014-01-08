@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * riak_messages.h: Riak C Client External Messages
+ * test_get.h:  Riak C Unit testing for Get Message
  *
  * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
  *
@@ -20,16 +20,25 @@
  *
  *********************************************************************/
 
-#include "messages/riak_delete.h"
-#include "messages/riak_error.h"
-#include "messages/riak_get.h"
-#include "messages/riak_get_bucketprops.h"
-#include "messages/riak_get_clientid.h"
-#include "messages/riak_listbuckets.h"
-#include "messages/riak_listkeys.h"
-#include "messages/riak_ping.h"
-#include "messages/riak_put.h"
-#include "messages/riak_reset_bucketprops.h"
-#include "messages/riak_serverinfo.h"
-#include "messages/riak_set_bucketprops.h"
-#include "messages/riak_set_clientid.h"
+void
+test_get_options_r();
+void
+test_get_options_pr();
+void
+test_get_options_basic_quorum();
+void
+test_get_options_notfound_ok();
+void
+test_get_options_if_modified();
+void
+test_get_options_head();
+void
+test_get_options_deletedvclock();
+void
+test_get_options_timeout();
+void
+test_get_options_sloppy_quorum();
+void
+test_get_options_n_val();
+void
+test_get_decode_response();

@@ -117,7 +117,9 @@ main(int   argc,
 
 
     riak_object *obj;
-    riak_bucket_props *props;
+    riak_bucketprops *props;
+    riak_get_options *get_options;
+    riak_delete_options *delete_options;
     char output[10240];
     struct event_base *base = event_base_new();
     if (base == NULL) {
@@ -188,9 +190,9 @@ main(int   argc,
             } else {
                 riak_serverinfo_response *serverinfo_response;
                 err = riak_serverinfo(cxn, &serverinfo_response);
-                riak_print_serverinfo_response(serverinfo_response, output, sizeof(output));
+                riak_serverinfo_response_print(serverinfo_response, output, sizeof(output));
                 printf("%s\n", output);
-                riak_free_serverinfo_response(cfg, &serverinfo_response);
+                riak_serverinfo_response_free(cfg, &serverinfo_response);
             }
             if (err) {
                 fprintf(stderr, "Server Info Problems [%s]\n", riak_strerror(err));
@@ -198,17 +200,25 @@ main(int   argc,
             }
             break;
         case RIAK_COMMAND_GET:
+            get_options = riak_get_options_new(cfg);
+            if (get_options == NULL) {
+                riak_log_critical(cxn, "%s","Could not allocate a Riak Get Options");
+                return 1;
+            }
+            riak_get_options_set_basic_quorum(get_options, RIAK_TRUE);
+            riak_get_options_set_r(get_options, 2);
             if (args.async) {
-                err = riak_async_register_get(rop, bucket_bin, key_bin, NULL, (riak_response_callback)example_get_cb);
+                err = riak_async_register_get(rop, bucket_bin, key_bin, get_options, (riak_response_callback)example_get_cb);
             } else {
                 riak_get_response *get_response;
-                err = riak_get(cxn, bucket_bin, key_bin, NULL, &get_response);
+                err = riak_get(cxn, bucket_bin, key_bin, get_options, &get_response);
                 if (err == ERIAK_OK) {
                     riak_print_get_response(get_response, output, sizeof(output));
                     printf("%s\n", output);
                 }
-                riak_free_get_response(cfg, &get_response);
+                riak_get_response_free(cfg, &get_response);
             }
+            riak_get_options_free(cfg, &get_options);
             if (err) {
                 fprintf(stderr, "Get Problems [%s]\n", riak_strerror(err));
                 exit(1);
@@ -236,8 +246,8 @@ main(int   argc,
                 riak_log_critical(cxn, "%s","Could not allocate a Riak Put Options");
                 return 1;
             }
-            riak_put_options_set_return_head(put_options, RIAK_FALSE);
-            riak_put_options_set_return_body(put_options, RIAK_FALSE);
+            riak_put_options_set_return_head(put_options, RIAK_TRUE);
+            riak_put_options_set_return_body(put_options, RIAK_TRUE);
 
             if (args.async) {
                 err = riak_async_register_put(rop, obj, put_options, (riak_response_callback)example_put_cb);
@@ -245,23 +255,32 @@ main(int   argc,
                 riak_put_response *put_response;
                 err = riak_put(cxn, obj, put_options, &put_response);
                 if (err == ERIAK_OK) {
-                    riak_print_put_response(put_response, output, sizeof(output));
+                    riak_put_response_print(put_response, output, sizeof(output));
                     printf("%s\n", output);
                 }
-                riak_free_put_response(cfg, &put_response);
+                riak_put_response_free(cfg, &put_response);
             }
             riak_object_free(cfg, &obj);
+            riak_put_options_free(cfg, &put_options);
             if (err) {
                 fprintf(stderr, "Put Problems [%s]\n", riak_strerror(err));
                 exit(1);
             }
             break;
         case RIAK_COMMAND_DEL:
-            if (args.async) {
-                err = riak_async_register_delete(rop, bucket_bin, key_bin, NULL, (riak_response_callback)example_delete_cb);
-            } else {
-                err = riak_delete(cxn, bucket_bin, key_bin, NULL);
+            delete_options = riak_delete_options_new(cfg);
+            if (delete_options == NULL) {
+                riak_log_critical(cxn, "%s","Could not allocate a Riak Delete Options");
+                return 1;
             }
+            riak_delete_options_set_w(delete_options, 1);
+            riak_delete_options_set_dw(delete_options, 1);
+           if (args.async) {
+                err = riak_async_register_delete(rop, bucket_bin, key_bin, delete_options, (riak_response_callback)example_delete_cb);
+            } else {
+                err = riak_delete(cxn, bucket_bin, key_bin, delete_options);
+            }
+            riak_delete_options_free(cfg, &delete_options);
             if (err) {
                 fprintf(stderr, "Delete Problems [%s]\n", riak_strerror(err));
                 exit(1);
@@ -274,10 +293,10 @@ main(int   argc,
                 riak_listbuckets_response *bucket_response;
                 err = riak_listbuckets(cxn, &bucket_response);
                 if (err == ERIAK_OK) {
-                    riak_print_listbuckets_response(bucket_response, output, sizeof(output));
+                    riak_listbuckets_response_print(bucket_response, output, sizeof(output));
                     printf("%s\n", output);
                 }
-                riak_free_listbuckets_response(cfg, &bucket_response);
+                riak_listbuckets_response_free(cfg, &bucket_response);
             }
             if (err) {
                 fprintf(stderr, "List Buckets Problems [%s]\n", riak_strerror(err));
@@ -291,10 +310,10 @@ main(int   argc,
                 riak_listkeys_response *key_response;
                 err = riak_listkeys(cxn, bucket_bin, args.timeout * 1000, &key_response);
                 if (err == ERIAK_OK) {
-                    riak_print_listkeys_response(key_response, output, sizeof(output));
+                    riak_listkeys_response_print(key_response, output, sizeof(output));
                     printf("%s\n", output);
                 }
-                riak_free_listkeys_response(cfg, &key_response);
+                riak_listkeys_response_free(cfg, &key_response);
             }
             if (err) {
                 fprintf(stderr, "List Keys Problems [%s]\n", riak_strerror(err));
@@ -308,10 +327,10 @@ main(int   argc,
                 riak_get_clientid_response *getcli_response;
                 err = riak_get_clientid(cxn, &getcli_response);
                 if (err == ERIAK_OK) {
-                    riak_print_get_clientid_response(getcli_response, output, sizeof(output));
+                    riak_get_clientid_response_print(getcli_response, output, sizeof(output));
                     printf("%s\n", output);
                 }
-                riak_free_get_clientid_response(cfg, &getcli_response);
+                riak_get_clientid_response_free(cfg, &getcli_response);
             }
             if (err) {
                 fprintf(stderr, "Get ClientID Problems [%s]\n", riak_strerror(err));
@@ -324,7 +343,7 @@ main(int   argc,
             } else {
                 riak_set_clientid_response *setcli_response;
                 err = riak_set_clientid(cxn, value_bin, &setcli_response);
-                riak_free_set_clientid_response(cfg, &setcli_response);
+                riak_set_clientid_response_free(cfg, &setcli_response);
             }
             if (err) {
                 fprintf(stderr, "Set ClientID Problems [%s]\n", riak_strerror(err));
@@ -338,10 +357,10 @@ main(int   argc,
                 riak_get_bucketprops_response *bucket_response;
                 err = riak_get_bucketprops(cxn, bucket_bin, &bucket_response);
                 if (err == ERIAK_OK) {
-                    riak_print_get_bucketprops_response(bucket_response, output, sizeof(output));
+                    riak_get_bucketprops_response_print(bucket_response, output, sizeof(output));
                     printf("%s\n", output);
                 }
-                riak_free_get_bucketprops_response(cfg, &bucket_response);
+                riak_get_bucketprops_response_free(cfg, &bucket_response);
             }
             if (err) {
                 fprintf(stderr, "Get Bucket Properties Problems [%s]\n", riak_strerror(err));
@@ -361,12 +380,12 @@ main(int   argc,
             }
             break;
         case RIAK_COMMAND_SETBUCKET:
-            props = riak_bucket_props_new(cfg);
+            props = riak_bucketprops_new(cfg);
             if (obj == NULL) {
                 riak_log_critical(cxn, "%s", "Could not allocate a Riak Bucket Properties");
                 return 1;
             }
-            riak_bucket_props_set_last_write_wins(props, RIAK_FALSE);
+            riak_bucketprops_set_last_write_wins(props, RIAK_FALSE);
             if (args.async) {
                 err = riak_async_register_set_bucketprops(rop, bucket_bin, props, (riak_response_callback)example_setbucketprops_cb);
             } else {

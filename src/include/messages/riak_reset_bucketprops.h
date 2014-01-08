@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * riak_messages.h: Riak C Client External Messages
+ * riak_reset_bucketprops.h: Riak C Client Reset Bucket Properites Message
  *
  * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
  *
@@ -20,16 +20,19 @@
  *
  *********************************************************************/
 
-#include "messages/riak_delete.h"
-#include "messages/riak_error.h"
-#include "messages/riak_get.h"
-#include "messages/riak_get_bucketprops.h"
-#include "messages/riak_get_clientid.h"
-#include "messages/riak_listbuckets.h"
-#include "messages/riak_listkeys.h"
-#include "messages/riak_ping.h"
-#include "messages/riak_put.h"
-#include "messages/riak_reset_bucketprops.h"
-#include "messages/riak_serverinfo.h"
-#include "messages/riak_set_bucketprops.h"
-#include "messages/riak_set_clientid.h"
+#ifndef _RIAK_RESET_BUCKETPROPS_MESSAGE_H
+#define _RIAK_RESET_BUCKETPROPS_MESSAGE_H
+
+typedef struct _riak_reset_bucketprops_response riak_reset_bucketprops_response;
+typedef void (*riak_reset_bucketprops_response_callback)(riak_reset_bucketprops_response *response, void *ptr);
+
+/**
+ * @brief Free memory from response
+ * @param cfg Riak Configuration
+ * @param resp Bucket Properties PBC Response
+ */
+void
+riak_reset_bucketprops_response_free(riak_config                      *cfg,
+                                     riak_reset_bucketprops_response **resp);
+
+#endif
