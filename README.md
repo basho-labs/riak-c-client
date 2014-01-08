@@ -44,7 +44,7 @@ significant changes to the API.**
 	make PREFIX=/usr/local/
 	sudo make PREFIX=/usr/local/ install
 	
-	brew install protobuf protobuf-c libevent
+	brew install protobuf protobuf-c libevent cunit
 	git clone git@github.com:/basho/riak-c-client.git
 	cd riak-c-client
 	./autogen.sh
@@ -239,4 +239,4 @@ http://www.apache.org/licenses/LICENSE-2.0.html
 
 ---
 
-© 2013 Basho Technologies  
+© 2014 Basho Technologies  
