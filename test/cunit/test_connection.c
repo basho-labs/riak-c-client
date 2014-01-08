@@ -67,7 +67,6 @@ test_connection_resolver(const char          *nodename,
         free(info);
         return 1;
     }
-    info->ai_addr->sa_len    = 16;
     info->ai_addr->sa_family = AF_INET;
     // 127.0.0.1 port 1
     memcpy(info->ai_addr->sa_data, "\000\001\000\000\001\000\000\000\000\000\000\000", 12);
