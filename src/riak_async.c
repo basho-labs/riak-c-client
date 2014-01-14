@@ -2,7 +2,7 @@
  *
  * riak_async.c: Riak Asynchronous Operations
  *
- * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
+ * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.
  *
  * This file is provided to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file
@@ -136,4 +136,13 @@ riak_async_register_mapreduce(riak_operation        *rop,
     return riak_mapreduce_request_encode(rop, content_type, map_request, &(rop->pb_request));
 }
 
+riak_error
+riak_async_register_2index(riak_operation        *rop,
+                           riak_binary           *bucket,
+                           riak_binary           *index,
+                           riak_2index_options   *index_options,
+                           riak_response_callback cb) {
+    riak_operation_set_response_cb(rop, cb);
+    return riak_2index_request_encode(rop, bucket, index, index_options, &(rop->pb_request));
+}
 

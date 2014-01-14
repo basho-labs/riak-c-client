@@ -2,7 +2,7 @@
  *
  * riak_delete-internal.h: Riak C Client Delete Message
  *
- * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
+ * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.
  *
  * This file is provided to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file
@@ -45,6 +45,7 @@ struct _riak_delete_response {
 
 /**
  * @brief Create a deletion request
+ * @param rop Riak Operation
  * @param bucket Name of Riak bucket
  * @param key Name of Riak key
  * @param options Delete request parameters

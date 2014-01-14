@@ -2,7 +2,7 @@
  *
  * test_operation.c: Riak C Unit testing for riak_operation
  *
- * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
+ * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.
  *
  * This file is provided to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file
@@ -72,5 +72,5 @@ test_operation_callbacks() {
     riak_operation_free(&rop);
     riak_connection_free(&cxn);
     riak_config_free(&cfg);
-    CU_PASS("test_operation_new passed")
+    CU_PASS("test_operation_callbacks passed")
 }

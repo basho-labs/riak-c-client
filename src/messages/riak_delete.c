@@ -2,7 +2,7 @@
  *
  * riak_get.c: Riak C Client Delete Message
  *
- * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
+ * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.
  *
  * This file is provided to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file
@@ -116,23 +116,6 @@ riak_delete_response_free(riak_config           *cfg,
                           riak_delete_response **resp) {
     riak_free(cfg, resp);
 }
-
-riak_boolean_t has_vclock;
-riak_binary   *vclock;
-riak_boolean_t has_w;
-riak_uint32_t  w;
-riak_boolean_t has_dw;
-riak_uint32_t  dw;
-riak_boolean_t has_pw;
-riak_uint32_t  pw;
-riak_boolean_t has_timeout;
-riak_uint32_t  timeout;
-riak_boolean_t has_sloppy_quorum;
-riak_boolean_t sloppy_quorum;
-riak_boolean_t has_n_val;
-riak_uint32_t  n_val;
-
-
 
 //
 // D E L E T E   O P T I O N S

@@ -36,6 +36,7 @@ libriak_c_client_0_1_la_SOURCES = \
 			src/riak_utils.c \
 			src/riak.pb-c.c src/riak_kv.pb-c.c \
 			src/riak_search.pb-c.c src/riak_yokozuna.pb-c.c \
+			src/messages/riak_2index.c \
 			src/messages/riak_delete.c \
 			src/messages/riak_error.c \
 			src/messages/riak_get.c \
@@ -101,6 +102,7 @@ riak_c_example_DEPENDENCIES = libriak_c_client-0.1.la
 
 check_PROGRAMS = riak_c_cunit
 riak_c_cunit_SOURCES = 	test/cunit/registry.c \
+			test/cunit/test_2index.c \
 			test/cunit/test_binary.c \
 			test/cunit/test_bucketprops.c \
 			test/cunit/test_clientid.c \

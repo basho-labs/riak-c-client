@@ -2,7 +2,7 @@
  *
  * riak_mapreduce.h: Riak C Client Map Reduce Message
  *
- * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
+ * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.
  *
  * This file is provided to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file
@@ -26,18 +26,6 @@
 typedef struct _riak_mapreduce_response riak_mapreduce_response;
 typedef struct _riak_mapreduce_message riak_mapreduce_message;
 typedef void (*riak_mapreduce_response_callback)(riak_mapreduce_response *response, void *ptr);
-
-/**
- * @brief Print a summary of a `riak_mapreduce_response`
- * @param response Result from a Map/Reduce request
- * @param target Location of string to be formatted
- * @param len Number of free bytes
- * @returns Number of bytes written
- */
-int
-riak_print_mapreduce_response(riak_mapreduce_response *response,
-                              char                    *target,
-                              riak_size_t              len);
 
 /**
  * @brief Free Map/Reduce response

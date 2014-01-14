@@ -2,7 +2,7 @@
  *
  * test_bucketprops.c: Riak C Unit testing for Bucket Properties Messages
  *
- * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
+ * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.
  *
  * This file is provided to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file
@@ -148,26 +148,26 @@ test_bucketprops() {
     CU_ASSERT_EQUAL_FATAL(riak_bucketprops_get_n_precommit(props), 2);
     riak_commit_hook **precommit_hooks = riak_bucketprops_get_precommit(props);
     CU_ASSERT_FATAL(precommit_hooks != NULL);
-    CU_ASSERT_STRING_EQUAL_FATAL(riak_binary_data(riak_commit_hook_get_name(precommit_hooks[0])), "precommit");
-    CU_ASSERT_STRING_EQUAL_FATAL(riak_binary_data(riak_commit_hook_get_name(precommit_hooks[1])), "precommit");
+    CU_ASSERT_EQUAL(memcmp(riak_binary_data(riak_commit_hook_get_name(precommit_hooks[0])), "precommit", 9), 0);
+    CU_ASSERT_EQUAL(memcmp(riak_binary_data(riak_commit_hook_get_name(precommit_hooks[1])), "precommit", 9), 0);
     CU_ASSERT_EQUAL_FATAL(riak_bucketprops_get_has_postcommit(props), RIAK_TRUE);
     CU_ASSERT_EQUAL_FATAL(riak_bucketprops_get_n_postcommit(props), 2);
     riak_commit_hook **postcommit_hooks = riak_bucketprops_get_postcommit(props);
     CU_ASSERT_FATAL(postcommit_hooks != NULL);
-    CU_ASSERT_STRING_EQUAL_FATAL(riak_binary_data(riak_commit_hook_get_name(postcommit_hooks[0])), "postcommit");
-    CU_ASSERT_STRING_EQUAL_FATAL(riak_binary_data(riak_commit_hook_get_name(postcommit_hooks[1])), "postcommit");
+    CU_ASSERT_EQUAL(memcmp(riak_binary_data(riak_commit_hook_get_name(postcommit_hooks[0])), "postcommit", 10), 0);
+    CU_ASSERT_EQUAL(memcmp(riak_binary_data(riak_commit_hook_get_name(postcommit_hooks[1])), "postcommit", 10), 0);
     CU_ASSERT_EQUAL_FATAL(riak_bucketprops_get_has_postcommit(props), RIAK_TRUE);
     CU_ASSERT_EQUAL_FATAL(riak_bucketprops_get_n_postcommit(props), 2);
     riak_modfun *chash_modfun = riak_bucketprops_get_chash_keyfun(props);
     CU_ASSERT_FATAL(chash_modfun  != NULL);
     riak_binary *chash_fn = riak_modfun_get_function(chash_modfun);
     CU_ASSERT_FATAL(chash_fn != NULL);
-    CU_ASSERT_STRING_EQUAL_FATAL(riak_binary_data(chash_fn), "chash");
+    CU_ASSERT_EQUAL(memcmp(riak_binary_data(chash_fn), "chash", 5), 0);
     riak_modfun *link_modfun = riak_bucketprops_get_linkfun(props);
     CU_ASSERT_FATAL(link_modfun  != NULL);
     riak_binary *link_fn = riak_modfun_get_function(link_modfun);
     CU_ASSERT_FATAL(link_fn  != NULL);
-    CU_ASSERT_STRING_EQUAL_FATAL(riak_binary_data(link_fn), "link");
+    CU_ASSERT_EQUAL(memcmp(riak_binary_data(link_fn), "link", 4), 0);
     CU_ASSERT_EQUAL_FATAL(riak_bucketprops_get_has_old_vclock(props), RIAK_TRUE);
     CU_ASSERT_EQUAL_FATAL(riak_bucketprops_get_old_vclock(props), 6);
     CU_ASSERT_EQUAL_FATAL(riak_bucketprops_get_has_young_vclock(props), RIAK_TRUE);
@@ -194,14 +194,14 @@ test_bucketprops() {
     CU_ASSERT_EQUAL_FATAL(riak_bucketprops_get_notfound_ok(props), RIAK_TRUE);
     CU_ASSERT_EQUAL_FATAL(riak_bucketprops_get_has_backend(props), RIAK_TRUE);
     riak_binary *backend_val = riak_bucketprops_get_backend(props);
-    CU_ASSERT_STRING_EQUAL_FATAL(riak_binary_data(backend_val), "bitcask");
+    CU_ASSERT_EQUAL(memcmp(riak_binary_data(backend_val), "bitcask", 7), 0);
     CU_ASSERT_EQUAL_FATAL(riak_bucketprops_get_has_search(props), RIAK_TRUE);
     CU_ASSERT_EQUAL_FATAL(riak_bucketprops_get_search(props), RIAK_TRUE);
     CU_ASSERT_EQUAL_FATAL(riak_bucketprops_get_has_repl(props), RIAK_TRUE);
     CU_ASSERT_EQUAL_FATAL(riak_bucketprops_get_repl(props), RIAK_BUCKETPROPS_REPL_FULLSYNC);
     CU_ASSERT_EQUAL_FATAL(riak_bucketprops_get_has_search_index(props), RIAK_TRUE);
     riak_binary* search_index = riak_bucketprops_get_search_index(props);
-    CU_ASSERT_STRING_EQUAL_FATAL(riak_binary_data(search_index), "index");
+    CU_ASSERT_EQUAL(memcmp(riak_binary_data(search_index), "index", 5), 0);
 
     riak_commit_hooks_free(cfg, &precommits, 2);
     riak_commit_hooks_free(cfg, &postcommits, 2);

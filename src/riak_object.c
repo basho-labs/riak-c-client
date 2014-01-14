@@ -2,7 +2,7 @@
  *
  * riak_object.c: Riak C Object
  *
- * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
+ * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.
  *
  * This file is provided to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file
@@ -26,6 +26,7 @@
 #include "riak_binary-internal.h"
 #include "riak_object-internal.h"
 #include "riak_config-internal.h"
+#include "riak_print-internal.h"
 
 //
 // P A I R S
@@ -42,11 +43,10 @@ riak_error
 riak_pair_new_array(riak_config  *cfg,
                     riak_pair  ***array,
                     riak_size_t   len) {
-    riak_pair **result = (riak_pair**)(cfg->malloc_fn)(sizeof(riak_pair)*len);
+    riak_pair **result = (riak_pair**)riak_config_clean_allocate(cfg, sizeof(riak_pair)*len);
     if (result == NULL) {
         return ERIAK_OUT_OF_MEMORY;
     }
-    memset((void*)result, '\0', sizeof(riak_pair)*len);
     *array = result;
 
     return ERIAK_OK;
@@ -57,17 +57,16 @@ riak_pairs_copy_to_pb(riak_config  *cfg,
                       RpbPair    ***pbpair_target,
                       riak_pair   **pair,
                       int           num_pairs) {
-    RpbPair **pbpair = (RpbPair**)(cfg->malloc_fn)(sizeof(RpbPair*) * num_pairs);
+    RpbPair **pbpair = (RpbPair**)riak_config_clean_allocate(cfg, sizeof(RpbPair*) * num_pairs);
     if (pbpair == NULL) {
         return ERIAK_OUT_OF_MEMORY;
     }
     int i;
     for(i = 0; i < num_pairs; i++) {
-        pbpair[i] = (RpbPair*)(cfg->malloc_fn)(sizeof(RpbPair));
+        pbpair[i] = (RpbPair*)riak_config_clean_allocate(cfg, sizeof(RpbPair));
         if (pbpair[i] == NULL) {
             return ERIAK_OUT_OF_MEMORY;
         }
-        memset(pbpair[i], '\0', sizeof(RpbPair));
         if (pair[i]->has_value) {
             pbpair[i]->has_value = RIAK_TRUE;
             riak_binary_to_pb_copy(&(pbpair[i]->value), pair[i]->value);
@@ -91,38 +90,71 @@ riak_pairs_free_pb(riak_config  *cfg,
     riak_free(cfg, pbpair_target);
 }
 
-static int
-riak_pairs_copy_from_pb(riak_config  *cfg,
-                        riak_pair  ***pair_target,
-                        RpbPair     **pbpair,
-                        int           num_pairs) {
-    riak_pair **pair = (riak_pair**)(cfg->malloc_fn)(sizeof(riak_pair*) * num_pairs);
+riak_error
+riak_pairs_copy_from_pb(riak_config *cfg,
+                        riak_pair  **pair_target,
+                        RpbPair     *pbpair) {
+
+    riak_pair *pair = (riak_pair*)riak_config_clean_allocate(cfg, sizeof(riak_pair));
     if (pair == NULL) {
         return ERIAK_OUT_OF_MEMORY;
     }
-    int i;
-    for(i = 0; i < num_pairs; i++) {
-        pair[i] = (riak_pair*)(cfg->malloc_fn)(sizeof(riak_pair));
-        if (pair[i] == NULL) {
+    pair->key = riak_binary_populate_from_pb(cfg, &(pbpair->key));
+    if (pair->key == NULL) {
+        return ERIAK_OUT_OF_MEMORY;
+    }
+    if (pbpair->has_value) {
+        pair->has_value = RIAK_TRUE;
+        pair->value = riak_binary_populate_from_pb(cfg, &(pbpair->value));
+        if (pair->value == NULL) {
             return ERIAK_OUT_OF_MEMORY;
-        }
-        pair[i]->key = riak_binary_populate_from_pb(cfg, &(pbpair[i]->key));
-        if (pair[i]->key == NULL) {
-            return ERIAK_OUT_OF_MEMORY;
-        }
-        memset(pair[i], '\0', sizeof(riak_pair));
-        if (pbpair[i]->has_value) {
-            pair[i]->has_value = RIAK_TRUE;
-            pair[i]->value = riak_binary_populate_from_pb(cfg, &(pbpair[i]->value));
-            if (pair[i]->value == NULL) {
-                return ERIAK_OUT_OF_MEMORY;
-            }
         }
     }
     // Finally assign the pointer to the list of pair pointers
     *pair_target = pair;
 
     return ERIAK_OK;
+}
+
+riak_error
+riak_pairs_copy_array_from_pb(riak_config  *cfg,
+                              riak_pair  ***pair_target,
+                              RpbPair     **pbpair,
+                              int           num_pairs) {
+    riak_pair **pair = (riak_pair**)riak_config_clean_allocate(cfg, sizeof(riak_pair*) * num_pairs);
+    if (pair == NULL) {
+        return ERIAK_OUT_OF_MEMORY;
+    }
+    int i;
+    for(i = 0; i < num_pairs; i++) {
+        riak_error err = riak_pairs_copy_from_pb(cfg, &(pair[i]), pbpair[i]);
+        if (err != ERIAK_OK) {
+            return err;
+        }
+    }
+    // Finally assign the pointer to the list of pair pointers
+    *pair_target = pair;
+
+    return ERIAK_OK;
+}
+
+riak_int32_t
+riak_pairs_print(riak_pair   **pair,
+                 riak_uint32_t num_pairs,
+                 char        **target,
+                 riak_int32_t *len,
+                 riak_int32_t *total) {
+    riak_int32_t wrote = 0;
+    if (*len > 0) {
+        riak_int32_t i;
+        for(i = 0; i < num_pairs; i++) {
+            wrote += riak_print_binary("key", pair[i]->key, target, len, total);
+            if (pair[i]->has_value) {
+                wrote += riak_print_binary("value", pair[i]->value, target, len, total);
+            }
+        }
+    }
+    return wrote;
 }
 
 void
@@ -468,7 +500,7 @@ riak_object_new_from_pb(riak_config  *cfg,
     // Indexes
     if (from->n_indexes > 0) {
         to->n_indexes = from->n_indexes;
-        int idxresult = riak_pairs_copy_from_pb(cfg, &(to->indexes), from->indexes, to->n_indexes);
+        int idxresult = riak_pairs_copy_array_from_pb(cfg, &(to->indexes), from->indexes, to->n_indexes);
         if (idxresult) {
             return idxresult;
         }
@@ -477,7 +509,7 @@ riak_object_new_from_pb(riak_config  *cfg,
     // User-Metadave
     if (from->n_usermeta > 0) {
         to->n_usermeta = from->n_usermeta;
-        int uresult = riak_pairs_copy_from_pb(cfg, &(to->usermeta), from->usermeta, to->n_usermeta);
+        int uresult = riak_pairs_copy_array_from_pb(cfg, &(to->usermeta), from->usermeta, to->n_usermeta);
         if (uresult) {
             return uresult;
         }

@@ -2,7 +2,7 @@
  *
  * riak_messages.h: Riak C Client External Messages
  *
- * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
+ * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.
  *
  * This file is provided to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file
@@ -20,6 +20,7 @@
  *
  *********************************************************************/
 
+#include "messages/riak_2index.h"
 #include "messages/riak_delete.h"
 #include "messages/riak_error.h"
 #include "messages/riak_get.h"

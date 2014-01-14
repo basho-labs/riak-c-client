@@ -2,7 +2,7 @@
  *
  * riak_messages_internal.h: Riak C Client Implementation-Specific Messages
  *
- * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
+ * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.
  *
  * This file is provided to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file
@@ -115,18 +115,19 @@ void
 riak_pb_message_free(riak_config     *cfg,
                      riak_pb_message **pb);
 
-#include "messages/riak_serverinfo-internal.h"
-#include "messages/riak_get_clientid-internal.h"
-#include "messages/riak_set_clientid-internal.h"
+#include "messages/riak_2index-internal.h"
 #include "messages/riak_delete-internal.h"
+#include "messages/riak_get_bucketprops-internal.h"
+#include "messages/riak_get_clientid-internal.h"
 #include "messages/riak_get-internal.h"
-#include "messages/riak_put-internal.h"
 #include "messages/riak_listbuckets-internal.h"
 #include "messages/riak_listkeys-internal.h"
-#include "messages/riak_get_bucketprops-internal.h"
-#include "messages/riak_set_bucketprops-internal.h"
-#include "messages/riak_reset_bucketprops-internal.h"
 #include "messages/riak_mapreduce-internal.h"
+#include "messages/riak_put-internal.h"
+#include "messages/riak_reset_bucketprops-internal.h"
+#include "messages/riak_serverinfo-internal.h"
+#include "messages/riak_set_bucketprops-internal.h"
+#include "messages/riak_set_clientid-internal.h"
 
 // Based on RpbErrorResp
 struct _riak_error_response {

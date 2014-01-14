@@ -2,7 +2,7 @@
  *
  * example_call_backs.h: Riak C Example Async Callbacks
  *
- * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
+ * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.
  *
  * This file is provided to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file
@@ -72,5 +72,9 @@ example_setbucketprops_cb(riak_set_bucketprops_response *response,
 void
 example_mapreduce_cb(riak_mapreduce_response *response,
                      void                    *ptr);
+
+void
+example_2index_cb(riak_2index_response *response,
+                  void                 *ptr);
 
 #endif // _RIAK_CALL_BACKS_H

@@ -2,7 +2,7 @@
  *
  * riak_get.c: Riak C Client Get Message
  *
- * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
+ * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.
  *
  * This file is provided to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file
@@ -118,7 +118,8 @@ riak_get_response_decode(riak_operation     *rop,
         if (response->vclock == NULL) {
             riak_free(cfg, &response);
             return ERIAK_OUT_OF_MEMORY;
-        }   }
+        }
+    }
     if (rpbresp->has_unchanged) {
         response->has_unmodified = RIAK_TRUE;
         response->unmodified = rpbresp->unchanged;
@@ -183,8 +184,7 @@ riak_get_response_free(riak_config        *cfg,
 
 riak_get_options*
 riak_get_options_new(riak_config *cfg) {
-    riak_get_options *o = (riak_get_options*)riak_config_clean_allocate(cfg, sizeof(riak_get_options));
-    return o;
+    return (riak_get_options*)riak_config_clean_allocate(cfg, sizeof(riak_get_options));
 }
 
 void
