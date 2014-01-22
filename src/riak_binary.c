@@ -196,8 +196,15 @@ riak_binary_hex_print(riak_binary  *bin,
 void
 riak_binary_from_string(riak_binary *to,
                         const char  *from) {
-    to->data = (riak_uint8_t*)from;
-    to->len = strlen(from);
+    riak_binary_from_stringl(to, (riak_size_t)strlen(from), (riak_uint8_t*)from);
+}
+
+void
+riak_binary_from_stringl(riak_binary *to,
+                         riak_size_t len,
+                         riak_uint8_t *data) {
+    to->data = (riak_uint8_t*)data;
+    to->len = len;
 }
 
 riak_error
@@ -222,3 +229,13 @@ riak_binary_new_from_string(riak_config  *cfg,
     return b;
 }
 
+riak_binary*
+riak_binary_new_from_stringl(riak_config *cfg,
+                             riak_size_t len,
+                             riak_uint8_t *data) {
+    riak_binary *b = riak_binary_new(cfg, 0, NULL);
+    if (b != NULL) {
+        riak_binary_from_stringl(b, len, data);
+    }
+    return b;
+}

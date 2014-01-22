@@ -64,6 +64,8 @@ main(int   argc,
     CU_ADD_TEST(binary_suite, test_binary_new_from_string);
     CU_ADD_TEST(binary_suite, test_binary_hex_print);
     CU_ADD_TEST(binary_suite, test_build_binary_from_existing);
+    CU_ADD_TEST(binary_suite, test_riak_binary_from_stringl);
+    CU_ADD_TEST(binary_suite, test_riak_binary_new_from_stringl);
     CU_ADD_TEST(config_suite, test_build_config);
     CU_ADD_TEST(connection_suite, test_connection_with_bad_resolver);
     CU_ADD_TEST(connection_suite, test_connection_with_good_resolver);

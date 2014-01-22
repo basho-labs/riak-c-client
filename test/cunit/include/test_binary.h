@@ -40,3 +40,9 @@ test_binary_hex_print();
 
 void
 test_build_binary_from_existing();
+
+void
+test_riak_binary_from_stringl();
+
+void
+test_riak_binary_new_from_stringl();

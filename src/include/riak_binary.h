@@ -100,6 +100,11 @@ riak_binary_hex_print(riak_binary  *bin,
 void
 riak_binary_from_string(riak_binary *to,
                         const char  *from);
+void
+riak_binary_from_stringl(riak_binary *to,
+                         riak_size_t len,
+                         riak_uint8_t *data);
+
 riak_error
 riak_binary_from_string_deep_copy(riak_config *cfg,
                                   riak_binary  *to,
@@ -107,5 +112,10 @@ riak_binary_from_string_deep_copy(riak_config *cfg,
 riak_binary*
 riak_binary_new_from_string(riak_config *cfg,
                             const char   *from);
+
+riak_binary*
+riak_binary_new_from_stringl(riak_config *cfg,
+                             riak_size_t len,
+                             riak_uint8_t *data);
 
 #endif // _RIAK_BINARY_H
