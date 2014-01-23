@@ -125,6 +125,7 @@ riak_pb_message_free(riak_config     *cfg,
 #include "messages/riak_mapreduce-internal.h"
 #include "messages/riak_put-internal.h"
 #include "messages/riak_reset_bucketprops-internal.h"
+#include "messages/riak_search-internal.h"
 #include "messages/riak_serverinfo-internal.h"
 #include "messages/riak_set_bucketprops-internal.h"
 #include "messages/riak_set_clientid-internal.h"

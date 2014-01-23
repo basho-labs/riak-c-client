@@ -77,7 +77,7 @@ test_get_clientid() {
     riak_pb_message pb_resp;
     pb_resp.data = bytes;
     pb_resp.len = sizeof(bytes);
-    riak_get_clientid_response *response;
+    riak_get_clientid_response *response = NULL;
     riak_boolean_t done = RIAK_FALSE;
     err = riak_get_clientid_response_decode(rop, &pb_resp, &response, &done);
     CU_ASSERT_FATAL(err == ERIAK_OK)

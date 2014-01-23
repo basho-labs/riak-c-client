@@ -77,4 +77,8 @@ void
 example_2index_cb(riak_2index_response *response,
                   void                 *ptr);
 
+void
+example_search_cb(riak_search_response *response,
+                  void                 *ptr);
+
 #endif // _RIAK_CALL_BACKS_H

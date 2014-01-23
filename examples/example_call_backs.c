@@ -215,3 +215,20 @@ example_2index_cb(riak_2index_response *response,
     fflush(stdout);
     riak_2index_response_free(cfg, &response);
 }
+
+void
+example_search_cb(riak_search_response *response,
+                  void                 *ptr) {
+    riak_operation  *rop = (riak_operation*)ptr;
+    riak_connection *cxn = riak_operation_get_connection(rop);
+    riak_config     *cfg = riak_connection_get_config(cxn);
+    riak_log_debug(cxn, "%s", "example_search_cb");
+    char output[10240];
+    riak_int32_t available = sizeof(output);
+    riak_int32_t written = 0;
+    char *target = output;
+    riak_search_response_print(response, &target, &available, &written);
+    riak_log_debug(cxn, "%s", output);
+    fflush(stdout);
+    riak_search_response_free(cfg, &response);
+}

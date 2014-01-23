@@ -22,6 +22,7 @@
 
 #include "riak_kv.pb-c.h"
 #include "riak.pb-c.h"
+#include "riak_search.pb-c.h"
 
 #ifndef _RIAK_BINARY_INTERNAL_H
 #define _RIAK_BINARY_INTERNAL_H

@@ -146,3 +146,14 @@ riak_async_register_2index(riak_operation        *rop,
     return riak_2index_request_encode(rop, bucket, index, index_options, &(rop->pb_request));
 }
 
+riak_error
+riak_async_register_search(riak_operation      *rop,
+                           riak_binary         *bucket,
+                           riak_binary         *query,
+                           riak_search_options *search_options,
+                           riak_response_callback cb) {
+
+    riak_operation_set_response_cb(rop, cb);
+    return riak_search_request_encode(rop, bucket, query, search_options, &(rop->pb_request));
+}
+

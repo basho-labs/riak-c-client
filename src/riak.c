@@ -381,6 +381,28 @@ riak_2index(riak_connection       *cxn,
     return ERIAK_OK;
 }
 
+riak_error
+riak_search(riak_connection       *cxn,
+            riak_binary           *bucket,
+            riak_binary           *query,
+            riak_search_options   *opts,
+            riak_search_response **response) {
+    riak_operation *rop = NULL;
+    riak_error err = riak_operation_new(cxn, &rop, NULL, NULL, NULL);
+    if (err) {
+        return err;
+    }
+    err = riak_search_request_encode(rop, bucket, query, opts, &(rop->pb_request));
+    if (err) {
+        return err;
+    }
+    err = riak_sync_request(&rop, (void**)response);
+    if (err) {
+        return err;
+    }
+
+    return ERIAK_OK;
+}
 
 riak_error
 riak_read(riak_operation *rop,

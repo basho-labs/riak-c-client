@@ -210,7 +210,7 @@ riak_2index(riak_connection       *cxn,
             riak_2index_response **response);
 
 /**
- * @brief Synchronous Fetch request
+ * @brief Synchronous Map/Reduce request
  * @param cxn Riak Connection
  * @param map_request Erlang or JS Map Reduce job
  * @param response Returned Fetched data
@@ -222,6 +222,21 @@ riak_mapreduce(riak_connection          *cxn,
                riak_binary              *map_request,
                riak_mapreduce_response **response);
 
+/**
+ * @brief Synchronous Riak Search request
+ * @param cxn Riak Connection
+ * @param bucket Name of bucket
+ * @param query Riak Search Query string
+ * @param opts Riak Search options
+ * @param response Returned Fetched data
+ * @returns Error code
+ */
+riak_error
+riak_search(riak_connection       *cxn,
+            riak_binary           *bucket,
+            riak_binary           *query,
+            riak_search_options   *opts,
+            riak_search_response **response);
 //
 // A S Y N C H R O N O U S
 //
@@ -323,6 +338,22 @@ riak_async_register_2index(riak_operation        *rop,
                            riak_binary           *bucket,
                            riak_binary           *index,
                            riak_2index_options   *index_options,
+                           riak_response_callback cb);
+
+/**
+ * @brief Register an asynchronous Riak Search job
+ * @param rop Riak Operation
+ * @param bucket Riak bucket name
+ * @param query Riak Search Query string
+ * @param index_options Optional parameters to tweak the Search query
+ * @param cb User-defined callback for results
+ * @returns Error Code
+ */
+riak_error
+riak_async_register_search(riak_operation        *rop,
+                           riak_binary           *bucket,
+                           riak_binary           *query,
+                           riak_search_options   *index_options,
                            riak_response_callback cb);
 
 /**

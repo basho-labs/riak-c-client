@@ -52,6 +52,22 @@ riak_print_int(char         *name,
 }
 
 riak_int32_t
+riak_print_float(char          *name,
+                 riak_float32_t value,
+                 char         **target,
+                 riak_int32_t  *len,
+                 riak_int32_t  *total) {
+    riak_int32_t wrote = 0;
+    if (*len > 0) {
+        wrote = snprintf(*target, *len, "%s: %f\n", name, value);
+        *len -= wrote;
+        *target += wrote;
+        *total += wrote;
+    }
+    return wrote;
+}
+
+riak_int32_t
 riak_print_bool(char           *name,
                 riak_boolean_t  value,
                 char          **target,

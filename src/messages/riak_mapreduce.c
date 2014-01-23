@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * riak_get.c: Riak C Client Get Message
+ * riak_get.c: Riak C Client Map/Reduce Message
  *
  * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.
  *
