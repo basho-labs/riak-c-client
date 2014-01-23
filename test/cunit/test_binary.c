@@ -35,7 +35,7 @@ void
 assert_binary_value_len(riak_binary* bin, const char* expected)  {
     CU_ASSERT_FATAL(bin != NULL)
     riak_int32_t len = riak_binary_len(bin);
-    CU_ASSERT_EQUAL(len,6)
+    CU_ASSERT_EQUAL(len, strlen(expected))
     riak_uint8_t *data = riak_binary_data(bin);
     CU_ASSERT_EQUAL(memcmp(data, expected, strlen(expected)), 0)
 }
