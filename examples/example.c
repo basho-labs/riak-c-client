@@ -416,8 +416,9 @@ main(int   argc,
                      char *target       = output;
                      riak_mapreduce_response_print(mapred_response, &target, &len, &total);
                      printf("%s\n", output);
+                 
+                     riak_mapreduce_response_free(cfg, &mapred_response);
                  }
-                 riak_mapreduce_response_free(cfg, &mapred_response);
             }
             if (err) {
                 fprintf(stderr, "Map/Reduce Problems [%s]\n", riak_strerror(err));
