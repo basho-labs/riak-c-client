@@ -129,9 +129,10 @@ main(int   argc,
     int it;
 
     // create some sample binary values to use
-    riak_binary *bucket_bin = riak_binary_new_from_string(cfg, args.bucket); // Not copied
-    riak_binary *key_bin    = riak_binary_new_from_string(cfg, args.key); // Not copied
-    riak_binary *value_bin  = riak_binary_new_from_string(cfg, args.value); // Not copied
+    riak_binary *bucket_bin   = riak_binary_new_from_string(cfg, args.bucket); // Not copied
+    riak_binary *key_bin      = riak_binary_new_from_string(cfg, args.key); // Not copied
+    riak_binary *value_bin    = riak_binary_new_from_string(cfg, args.value); // Not copied
+    riak_binary *content_type = riak_binary_new_from_string(cfg, "application/json");
 
     // check for memory allocation problems
     if (bucket_bin == NULL ||
@@ -373,6 +374,9 @@ main(int   argc,
             } else {
                 riak_reset_bucketprops_response *bucket_response;
                 err = riak_reset_bucketprops(cxn, bucket_bin, &bucket_response);
+                if (err == ERIAK_OK) {
+                    riak_reset_bucketprops_response_free(cfg, &bucket_response);
+                }
             }
             if (err) {
                 fprintf(stderr, "Reset Bucket Properties Problems [%s]\n", riak_strerror(err));
@@ -391,9 +395,33 @@ main(int   argc,
             } else {
                 riak_set_bucketprops_response *bucket_response;
                  err = riak_set_bucketprops(cxn, bucket_bin, props, &bucket_response);
+                 if (err == ERIAK_OK) {
+                     riak_set_bucketprops_response_free(cfg, &bucket_response);
+                 }
             }
             if (err) {
                 fprintf(stderr, "Set Bucket Properties Problems [%s]\n", riak_strerror(err));
+                exit(1);
+            }
+            break;
+        case RIAK_COMMAND_MAPRED:
+            if (args.async) {
+                err = riak_async_register_mapreduce(rop, content_type, value_bin, RIAK_FALSE, (riak_response_callback)example_mapreduce_cb);
+            } else {
+                riak_mapreduce_response *mapred_response = NULL;
+                 err = riak_mapreduce(cxn, content_type, value_bin, &mapred_response);
+                 if (err == ERIAK_OK) {
+                     riak_int32_t len   = sizeof(output);
+                     riak_int32_t total = 0;
+                     char *target       = output;
+                     riak_mapreduce_response_print(mapred_response, &target, &len, &total);
+                     printf("%s\n", output);
+                 
+                     riak_mapreduce_response_free(cfg, &mapred_response);
+                 }
+            }
+            if (err) {
+                fprintf(stderr, "Map/Reduce Problems [%s]\n", riak_strerror(err));
                 exit(1);
             }
             break;

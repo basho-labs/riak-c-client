@@ -58,19 +58,19 @@ typedef enum {
 typedef struct _riak_command riak_command;
 
 typedef struct {
-    int            operation;
-    riak_boolean_t async;
-    riak_int32_t   iterate;
-    riak_int32_t   port;
-    riak_int32_t   timeout;
-    riak_boolean_t has_bucket;
-    riak_boolean_t has_key;
-    riak_boolean_t has_value;
-    char bucket[1024];
-    char host[256];
-    char portnum[6];
-    char key[1024];
-    char value[1024];
+    int               operation;
+    riak_boolean_t    async;
+    riak_int32_t      iterate;
+    riak_int32_t      port;
+    riak_int32_t      timeout;
+    riak_boolean_t    has_bucket;
+    riak_boolean_t    has_key;
+    riak_boolean_t    has_value;
+    char              bucket[1024];
+    char              host[256];
+    char              portnum[6];
+    char              key[1024];
+    char              value[1024];
 } riak_args;
 
 void

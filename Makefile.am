@@ -43,6 +43,7 @@ libriak_c_client_0_1_la_SOURCES = \
 			src/messages/riak_get_clientid.c \
 			src/messages/riak_listbuckets.c \
 			src/messages/riak_listkeys.c \
+			src/messages/riak_mapreduce.c \
 			src/messages/riak_ping.c \
 			src/messages/riak_put.c \
 			src/messages/riak_reset_bucketprops.c \
@@ -107,6 +108,7 @@ riak_c_cunit_SOURCES = 	test/cunit/registry.c \
 			test/cunit/test_connection.c \
 			test/cunit/test_delete.c \
 			test/cunit/test_get.c \
+			test/cunit/test_mapreduce.c \
 			test/cunit/test_operation.c \
 			test/cunit/test_listbuckets.c \
 			test/cunit/test_listkeys.c \
