@@ -32,16 +32,21 @@
 #include "riak_binary-internal.h"
 
 void
+assert_binary_value_len(riak_binary* bin, const char* expected)  {
+    CU_ASSERT_FATAL(bin != NULL)
+    riak_int32_t len = riak_binary_len(bin);
+    CU_ASSERT_EQUAL(len, strlen(expected))
+    riak_uint8_t *data = riak_binary_data(bin);
+    CU_ASSERT_EQUAL(memcmp(data, expected, strlen(expected)), 0)
+}
+
+void
 test_build_binary() {
     riak_config *cfg;
     riak_error    err = riak_config_new_default(&cfg);
     CU_ASSERT_FATAL(err == ERIAK_OK)
     riak_binary  *bin = riak_binary_new(cfg, 6, (riak_uint8_t*)"abcdef");
-    CU_ASSERT_FATAL(bin != NULL)
-    riak_int32_t  len = riak_binary_len(bin);
-    CU_ASSERT_EQUAL(len,6)
-    riak_uint8_t *data = riak_binary_data(bin);
-    CU_ASSERT_EQUAL(memcmp(data, "abcdef", 6), 0)
+    assert_binary_value_len(bin, "abcdef");
     riak_binary_free(cfg, &bin);
     CU_PASS("test_build_binary passed")
 }
@@ -67,12 +72,9 @@ test_build_binary_from_existing() {
     riak_error    err = riak_config_new_default(&cfg);
     CU_ASSERT_FATAL(err == ERIAK_OK)
     riak_binary *bin = riak_binary_new(cfg, 6, (riak_uint8_t*)"abcdef");
-    CU_ASSERT_FATAL(bin != NULL)
+    assert_binary_value_len(bin, "abcdef");
     riak_binary *bin2 = riak_binary_populate(cfg, bin);
-    riak_int32_t  len = riak_binary_len(bin2);
-    CU_ASSERT_EQUAL(len,6);
-    riak_uint8_t *data = riak_binary_data(bin2);
-    CU_ASSERT_EQUAL(memcmp(data, "abcdef", 6), 0);
+    assert_binary_value_len(bin, "abcdef");
     riak_binary_free(cfg, &bin);
     riak_binary_free(cfg, &bin2);
     CU_PASS("test_build_binary_from_existing passed")
@@ -87,11 +89,7 @@ test_build_binary_from_pb() {
     pb_bin.len  = 6;
     pb_bin.data = (riak_uint8_t *)"abcdef";
     riak_binary *bin = riak_binary_populate_from_pb(cfg, &pb_bin);
-    CU_ASSERT_FATAL(bin != NULL)
-    riak_int32_t len = riak_binary_len(bin);
-    CU_ASSERT_EQUAL(len,6);
-    riak_uint8_t *data = riak_binary_data(bin);
-    CU_ASSERT_EQUAL(memcmp(data, "abcdef", 6), 0);
+    assert_binary_value_len(bin, "abcdef");
     riak_binary_free(cfg, &bin);
     CU_PASS("test_build_binary_from_pb passed")
 }
@@ -118,13 +116,31 @@ test_binary_new_from_string() {
     riak_error    err = riak_config_new_default(&cfg);
     CU_ASSERT_FATAL(err == ERIAK_OK)
     riak_binary  *bin = riak_binary_new_from_string(cfg, "abcdef");
-    CU_ASSERT_FATAL(bin != NULL)
-    riak_int32_t  len = riak_binary_len(bin);
-    CU_ASSERT_EQUAL(len,6);
-    riak_uint8_t *data = riak_binary_data(bin);
-    CU_ASSERT_EQUAL(memcmp(data, "abcdef", 6), 0);
+    assert_binary_value_len(bin, "abcdef");
     riak_binary_free(cfg, &bin);
     CU_PASS("test_build_binary passed")
+}
+
+void
+test_riak_binary_new_from_stringl() {
+    riak_config *cfg;
+    riak_error    err = riak_config_new_default(&cfg);
+    CU_ASSERT_FATAL(err == ERIAK_OK)
+    riak_binary *bin = riak_binary_new_from_stringl(cfg, 6, (riak_uint8_t*)"abcdef");
+    assert_binary_value_len(bin, "abcdef");
+    riak_binary_free(cfg, &bin);
+    CU_PASS("test_build_binary passed")
+}
+
+void
+test_riak_binary_from_stringl() {
+    riak_config *cfg;
+    riak_binary bin;
+    riak_error err;
+    err = riak_config_new_default(&cfg);
+    CU_ASSERT_FATAL(err == ERIAK_OK)
+    riak_binary_from_stringl(&bin, 6, (riak_uint8_t*)"abcdef");
+    assert_binary_value_len(&bin, "abcdef");
 }
 
 void
@@ -139,3 +155,5 @@ test_binary_hex_print() {
     riak_binary_free(cfg, &bin);
     CU_PASS("test_build_binary passed")
 }
+
+
