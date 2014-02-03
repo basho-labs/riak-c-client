@@ -50,7 +50,7 @@ riak_decode_error_response(riak_operation       *rop,
     }
     response->_internal = errresp;
     response->errcode = errresp->errcode;
-    response->errmsg = riak_binary_populate_from_pb(cfg, &(errresp->errmsg));
+    response->errmsg = riak_binary_copy_from_pb(cfg, &(errresp->errmsg));
     if (response->errmsg == NULL) {
         riak_free(cfg, &response);
         rpb_error_resp__free_unpacked(errresp, cfg->pb_allocator);

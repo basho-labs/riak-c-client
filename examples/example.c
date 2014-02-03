@@ -134,11 +134,11 @@ main(int   argc,
     int it;
 
     // create some sample binary values to use
-    riak_binary *bucket_bin   = riak_binary_new_from_string(cfg, args.bucket); // Not copied
-    riak_binary *key_bin      = riak_binary_new_from_string(cfg, args.key);   // Not copied
-    riak_binary *value_bin    = riak_binary_new_from_string(cfg, args.value); // Not copied
-    riak_binary *index_bin    = riak_binary_new_from_string(cfg, args.index); // Not copied
-    riak_binary *content_type = riak_binary_new_from_string(cfg, "application/json");
+    riak_binary *bucket_bin   = riak_binary_copy_from_string(cfg, args.bucket); // Not copied
+    riak_binary *key_bin      = riak_binary_copy_from_string(cfg, args.key);   // Not copied
+    riak_binary *value_bin    = riak_binary_copy_from_string(cfg, args.value); // Not copied
+    riak_binary *index_bin    = riak_binary_copy_from_string(cfg, args.index); // Not copied
+    riak_binary *content_type = riak_binary_copy_from_string(cfg, "application/json");
 
     // check for memory allocation problems
     if (bucket_bin == NULL ||
@@ -237,11 +237,11 @@ main(int   argc,
                 riak_log_critical(cxn, "%s","Could not allocate a Riak Object");
                 return 1;
             }
-            riak_object_set_bucket(obj, riak_binary_new_from_string(cfg, args.bucket)); // Not copied
+            riak_object_set_bucket(obj, riak_binary_copy_from_string(cfg, args.bucket)); // Not copied
             if (args.has_key) {
-                riak_object_set_key(obj, riak_binary_new_from_string(cfg, args.key)); // Not copied
+                riak_object_set_key(obj, riak_binary_copy_from_string(cfg, args.key)); // Not copied
             }
-            riak_object_set_value(obj, riak_binary_new_from_string(cfg, args.value)); // Not copied
+            riak_object_set_value(obj, riak_binary_copy_from_string(cfg, args.value)); // Not copied
             if (riak_object_get_bucket(obj) == NULL ||
                 riak_object_get_value(obj) == NULL) {
                 fprintf(stderr, "Could not allocate bucket/value\n");
@@ -510,6 +510,8 @@ main(int   argc,
     riak_free(cfg, &bucket_bin);
     riak_free(cfg, &key_bin);
     riak_free(cfg, &value_bin);
+    riak_free(cfg, &index_bin);
+    riak_free(cfg, &content_type);
     riak_config_free(&cfg);
 
     return 0;

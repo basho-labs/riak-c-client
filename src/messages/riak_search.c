@@ -42,8 +42,8 @@ riak_search_request_encode(riak_operation      *rop,
     RpbSearchQueryReq srchmsg = RPB_SEARCH_QUERY_REQ__INIT;
 
     riak_operation_set_bucket(rop, bucket);
-    riak_binary_to_pb_copy(&srchmsg.q, query);
-    riak_binary_to_pb_copy(&srchmsg.index, bucket);
+    riak_binary_copy_to_pb(&srchmsg.q, query);
+    riak_binary_copy_to_pb(&srchmsg.index, bucket);
 
     // process get options
     if(search_options != NULL) {
@@ -53,23 +53,23 @@ riak_search_request_encode(riak_operation      *rop,
         srchmsg.start = search_options->start;
         if (search_options->has_sort) {
             srchmsg.has_sort = search_options->has_sort;
-            riak_binary_to_pb_copy(&srchmsg.sort, search_options->sort);
+            riak_binary_copy_to_pb(&srchmsg.sort, search_options->sort);
         }
         if (search_options->has_filter) {
             srchmsg.has_filter = search_options->has_filter;
-            riak_binary_to_pb_copy(&srchmsg.filter, search_options->filter);
+            riak_binary_copy_to_pb(&srchmsg.filter, search_options->filter);
         }
         if (search_options->has_df) {
             srchmsg.has_df = search_options->has_df;
-            riak_binary_to_pb_copy(&srchmsg.df, search_options->df);
+            riak_binary_copy_to_pb(&srchmsg.df, search_options->df);
         }
         if (search_options->has_df) {
             srchmsg.has_op = search_options->has_op;
-            riak_binary_to_pb_copy(&srchmsg.op, search_options->op);
+            riak_binary_copy_to_pb(&srchmsg.op, search_options->op);
         }
         if (search_options->has_presort) {
             srchmsg.has_presort = search_options->has_presort;
-            riak_binary_to_pb_copy(&srchmsg.presort, search_options->presort);
+            riak_binary_copy_to_pb(&srchmsg.presort, search_options->presort);
         }
         if (search_options->n_fl > 0) {
             srchmsg.n_fl = search_options->n_fl;
@@ -78,7 +78,7 @@ riak_search_request_encode(riak_operation      *rop,
                 return ERIAK_OUT_OF_MEMORY;
             }
             for(int i = 0; i < search_options->n_fl; i++) {
-                riak_binary_to_pb_copy(&(srchmsg.fl[i]), search_options->fl[i]);
+                riak_binary_copy_to_pb(&(srchmsg.fl[i]), search_options->fl[i]);
             }
         }
     }
@@ -330,7 +330,7 @@ riak_search_options_set_sort(riak_config                *cfg,
     if (opt->sort) {
         riak_free(cfg, &opt->sort);
     }
-    opt->sort =  riak_binary_deep_new(cfg, value);
+    opt->sort =  riak_binary_copy(cfg, value);
     if (opt->sort == NULL) {
         return ERIAK_OUT_OF_MEMORY;
     }
@@ -345,7 +345,7 @@ riak_search_options_set_filter(riak_config                *cfg,
     if (opt->filter) {
         riak_free(cfg, &opt->filter);
     }
-    opt->filter =  riak_binary_deep_new(cfg, value);
+    opt->filter =  riak_binary_copy(cfg, value);
     if (opt->filter == NULL) {
         return ERIAK_OUT_OF_MEMORY;
     }
@@ -360,7 +360,7 @@ riak_search_options_set_df(riak_config         *cfg,
     if (opt->df) {
         riak_free(cfg, &opt->df);
     }
-    opt->df =  riak_binary_deep_new(cfg, value);
+    opt->df =  riak_binary_copy(cfg, value);
     if (opt->df == NULL) {
         return ERIAK_OUT_OF_MEMORY;
     }
@@ -375,7 +375,7 @@ riak_search_options_set_op(riak_config                *cfg,
     if (opt->op) {
         riak_free(cfg, &opt->op);
     }
-    opt->op =  riak_binary_deep_new(cfg, value);
+    opt->op =  riak_binary_copy(cfg, value);
     if (opt->op == NULL) {
         return ERIAK_OUT_OF_MEMORY;
     }
@@ -398,7 +398,7 @@ riak_search_options_add_fl(riak_config         *cfg,
     if (opt->fl == NULL) {
         return ERIAK_OUT_OF_MEMORY;
     }
-    opt->fl[opt->n_fl] = riak_binary_deep_new(cfg, value);
+    opt->fl[opt->n_fl] = riak_binary_copy(cfg, value);
     if (opt->fl[opt->n_fl] == NULL) {
         return ERIAK_OUT_OF_MEMORY;
     } else {
@@ -416,7 +416,7 @@ riak_search_options_set_presort(riak_config         *cfg,
     if (opt->presort) {
         riak_free(cfg, &opt->presort);
     }
-    opt->presort =  riak_binary_deep_new(cfg, value);
+    opt->presort =  riak_binary_copy(cfg, value);
     if (opt->presort == NULL) {
         return ERIAK_OUT_OF_MEMORY;
     }

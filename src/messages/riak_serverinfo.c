@@ -70,14 +70,14 @@ riak_serverinfo_response_decode(riak_operation            *rop,
 
     if (rpbresp->has_node) {
         response->has_node = RIAK_TRUE;
-        response->node = riak_binary_populate_from_pb(cfg, &(rpbresp->node));
+        response->node = riak_binary_copy_from_pb(cfg, &(rpbresp->node));
         if (response->node == NULL) {
             return ERIAK_OUT_OF_MEMORY;
         }
     }
     if (rpbresp->has_server_version) {
         response->has_server_version = RIAK_TRUE;
-        response->server_version = riak_binary_populate_from_pb(cfg, &(rpbresp->server_version));
+        response->server_version = riak_binary_copy_from_pb(cfg, &(rpbresp->server_version));
         if (response->server_version == NULL) {
             return ERIAK_OUT_OF_MEMORY;
         }

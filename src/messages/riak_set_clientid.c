@@ -53,7 +53,7 @@ riak_set_clientid_request_encode(riak_operation  *rop,
 
     riak_config *cfg = riak_operation_get_config(rop);
     RpbSetClientIdReq clidmsg = RPB_SET_CLIENT_ID_REQ__INIT;
-    riak_binary_to_pb_copy(&(clidmsg.client_id), clientid);
+    riak_binary_copy_to_pb(&(clidmsg.client_id), clientid);
 
     riak_uint32_t msglen = rpb_set_client_id_req__get_packed_size(&clidmsg);
     riak_uint8_t* msgbuf = (riak_uint8_t*)(cfg->malloc_fn)(msglen);

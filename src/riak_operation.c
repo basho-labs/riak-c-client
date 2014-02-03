@@ -101,7 +101,7 @@ riak_operation_set_bucket(riak_operation *rop,
                           riak_binary    *bucket) {
     riak_connection *cxn = riak_operation_get_connection(rop);
     riak_config     *cfg = riak_connection_get_config(cxn);
-    rop->request.bucket = riak_binary_deep_new(cfg, bucket);
+    rop->request.bucket = riak_binary_copy(cfg, bucket);
 }
 
 void
@@ -109,7 +109,7 @@ riak_operation_set_key(riak_operation *rop,
                        riak_binary    *key) {
     riak_connection *cxn = riak_operation_get_connection(rop);
     riak_config     *cfg = riak_connection_get_config(cxn);
-    rop->request.key = riak_binary_deep_new(cfg, key);
+    rop->request.key = riak_binary_copy(cfg, key);
 }
 
 void
@@ -117,7 +117,7 @@ riak_operation_set_index(riak_operation *rop,
                          riak_binary    *key) {
     riak_connection *cxn = riak_operation_get_connection(rop);
     riak_config     *cfg = riak_connection_get_config(cxn);
-    rop->request.index = riak_binary_deep_new(cfg, key);
+    rop->request.index = riak_binary_copy(cfg, key);
 }
 
 riak_binary*

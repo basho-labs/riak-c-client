@@ -38,7 +38,7 @@ riak_listkeys_request_encode(riak_operation   *rop,
     riak_config *cfg = riak_operation_get_config(rop);
     RpbListKeysReq listkeysreq = RPB_LIST_KEYS_REQ__INIT;
 
-    riak_binary_to_pb_copy(&(listkeysreq.bucket), bucket);
+    riak_binary_copy_to_pb(&(listkeysreq.bucket), bucket);
     if (timeout > 0) {
         listkeysreq.has_timeout = RIAK_TRUE;
         listkeysreq.timeout = timeout;

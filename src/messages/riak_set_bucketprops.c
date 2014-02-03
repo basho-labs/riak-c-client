@@ -41,7 +41,7 @@ riak_set_bucketprops_request_encode(riak_operation      *rop,
     RpbSetBucketReq setmsg;
     rpb_set_bucket_req__init(&setmsg);
 
-    riak_binary_to_pb_copy(&setmsg.bucket, bucket);
+    riak_binary_copy_to_pb(&setmsg.bucket, bucket);
     RpbBucketProps pbprops;
     riak_bucketprops_to_pb_copy(cfg, &pbprops, props);
     setmsg.props = &pbprops;

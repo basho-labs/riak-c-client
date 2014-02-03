@@ -39,12 +39,12 @@ riak_put_request_encode(riak_operation   *rop,
     riak_config *cfg = riak_operation_get_config(rop);
     RpbPutReq putmsg = RPB_PUT_REQ__INIT;
 
-    riak_binary_to_pb_copy(&(putmsg.bucket), riak_obj->bucket);
+    riak_binary_copy_to_pb(&(putmsg.bucket), riak_obj->bucket);
 
     // Is the Key provided?
     if (riak_obj->has_key) {
         putmsg.has_key = RIAK_TRUE;
-        riak_binary_to_pb_copy(&(putmsg.key), riak_obj->key);
+        riak_binary_copy_to_pb(&(putmsg.key), riak_obj->key);
     }
 
     // Data content payload
@@ -96,7 +96,7 @@ riak_put_request_encode(riak_operation   *rop,
         }
         if (options->has_vclock) {
             putmsg.has_vclock = RIAK_TRUE;
-            riak_binary_to_pb_copy(&(putmsg.vclock), options->vclock);
+            riak_binary_copy_to_pb(&(putmsg.vclock), options->vclock);
         }
         if (options->has_w) {
             putmsg.has_w = RIAK_TRUE;
@@ -156,14 +156,14 @@ riak_put_response_decode(riak_operation     *rop,
     response->_internal = rpbresp;
     if (rpbresp->has_vclock) {
         response->has_vclock = RIAK_TRUE;
-        response->vclock = riak_binary_populate_from_pb(cfg, &(rpbresp->vclock));
+        response->vclock = riak_binary_copy_from_pb(cfg, &(rpbresp->vclock));
         if (response->vclock == NULL) {
             return ERIAK_OUT_OF_MEMORY;
         }
     }
     if (rpbresp->has_key) {
         response->has_key = RIAK_TRUE;
-        response->key = riak_binary_populate_from_pb(cfg, &(rpbresp->key));
+        response->key = riak_binary_copy_from_pb(cfg, &(rpbresp->key));
         if (response->key == NULL) {
             return ERIAK_OUT_OF_MEMORY;
         }
@@ -432,7 +432,7 @@ riak_put_options_set_vclock(riak_config      *cfg,
     if (opt->vclock) {
         riak_free(cfg, &opt->vclock);
     }
-    opt->vclock = riak_binary_deep_new(cfg, value);
+    opt->vclock = riak_binary_copy(cfg, value);
 }
 void
 riak_put_options_set_w(riak_put_options *opt,
