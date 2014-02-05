@@ -2,7 +2,7 @@
  *
  * riak_command.h: Riak C Parse command-line (and usage)
  *
- * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
+ * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.
  *
  * This file is provided to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file
@@ -66,11 +66,13 @@ typedef struct {
     riak_boolean_t    has_bucket;
     riak_boolean_t    has_key;
     riak_boolean_t    has_value;
+    riak_boolean_t    has_index;
     char              bucket[1024];
     char              host[256];
     char              portnum[6];
     char              key[1024];
     char              value[1024];
+    char              index[1024];
 } riak_args;
 
 void

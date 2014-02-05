@@ -2,7 +2,7 @@
  *
  * riak_operation.h: A single Riak Operation
  *
- * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
+ * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.
  *
  * This file is provided to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file
@@ -120,6 +120,15 @@ riak_operation_set_key(riak_operation *rop,
                        riak_binary    *key);
 
 /**
+ * @brief Set the Seconardary Index on the current operation
+ * @param rop Riak Operation
+ * @param key Name of 2i in Riak bucket
+ */
+void
+riak_operation_set_index(riak_operation *rop,
+                         riak_binary    *key);
+
+/**
  * @brief Gets the bucket on the current operation
  * @param rop Riak Operation
  * @returns Name of bucket in Riak
@@ -134,5 +143,13 @@ riak_operation_get_bucket(riak_operation *rop);
  */
 riak_binary*
 riak_operation_get_key(riak_operation *rop);
+
+/**
+ * @brief Gets the Secondary Index on the current operation
+ * @param rop Riak Operation
+ * @returns Name of 2i in Riak bucket
+ */
+riak_binary*
+riak_operation_get_index(riak_operation *rop);
 
 #endif

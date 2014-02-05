@@ -2,7 +2,7 @@
  *
  * riak_object.h: Riak Object suite
  *
- * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
+ * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.
  *
  * This file is provided to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file
@@ -181,7 +181,7 @@ riak_pair_new(riak_config *cfg);
  * @returns Error Code
  */
 riak_error
-riak_pair_new_array(riak_config  *cfg,
+riak_pair_new_array(riak_config   *cfg,
                     riak_pair   ***array,
                     riak_size_t    len);
 
@@ -192,7 +192,7 @@ riak_pair_new_array(riak_config  *cfg,
  * @param num_pairs Number of pairs in array
  */
 void
-riak_pairs_free(riak_config *cfg,
+riak_pairs_free(riak_config  *cfg,
                 riak_pair  ***pair_target,
                 int           num_pairs);
 

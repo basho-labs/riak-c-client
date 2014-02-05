@@ -2,7 +2,7 @@
  *
  * riak.h: Riak C Client Types
  *
- * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
+ * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.
  *
  * This file is provided to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file
@@ -194,11 +194,20 @@ riak_set_bucketprops(riak_connection                *cxn,
                      riak_bucketprops               *props,
                      riak_set_bucketprops_response **response);
 
-void riak_bucket_set_props(riak_connection*);
-
-void riak_bucket_get_props(riak_connection*);
-
-void riak_query_2i(riak_connection*);
+/**
+ * @brief Query using Secondary Index
+ * @param cxn Riak Connection
+ * @param bucket Name of bucket
+ * @param index Name of Secondary Index
+ * @param opts Secondary Index options
+ * @param response Returned bucket properties
+ * @return Error code */
+riak_error
+riak_2index(riak_connection       *cxn,
+            riak_binary           *bucket,
+            riak_binary           *index,
+            riak_2index_options   *opts,
+            riak_2index_response **response);
 
 /**
  * @brief Synchronous Fetch request
@@ -299,6 +308,22 @@ riak_async_register_mapreduce(riak_operation        *rop,
                               riak_binary           *map_request,
                               riak_boolean_t         streaming,
                               riak_response_callback cb);
+
+/**
+ * @brief Register an asynchronous Secondary Index job
+ * @param rop Riak Operation
+ * @param bucket Riak bucket name
+ * @param index Riak Secondary Index name
+ * @param index_options Optional parameters to tweak the 2i query
+ * @param cb User-defined callback for results
+ * @returns Error Code
+ */
+riak_error
+riak_async_register_2index(riak_operation        *rop,
+                           riak_binary           *bucket,
+                           riak_binary           *index,
+                           riak_2index_options   *index_options,
+                           riak_response_callback cb);
 
 /**
   @param ptr Private data for user

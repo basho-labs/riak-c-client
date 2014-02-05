@@ -2,7 +2,7 @@
  *
  * utils.c: Riak C Client Utilities
  *
- * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
+ * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.
  *
  * This file is provided to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file
@@ -24,6 +24,16 @@
 #include "riak.h"
 #include "riak_binary-internal.h"
 #include "riak_print-internal.h"
+
+void
+riak_print_init(riak_print_state *state,
+                char             *location,
+                riak_int32_t      maxlen) {
+    memset((void*)state, '\0', sizeof(riak_print_state));
+    state->start  = location;
+    state->target = location;
+    state->len    = maxlen;
+}
 
 riak_int32_t
 riak_print_int(char         *name,

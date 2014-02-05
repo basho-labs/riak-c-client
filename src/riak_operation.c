@@ -2,7 +2,7 @@
  *
  * riak_operation.h: A single Riak Operation
  *
- * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
+ * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.
  *
  * This file is provided to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file
@@ -112,6 +112,14 @@ riak_operation_set_key(riak_operation *rop,
     rop->request.key = riak_binary_deep_new(cfg, key);
 }
 
+void
+riak_operation_set_index(riak_operation *rop,
+                         riak_binary    *key) {
+    riak_connection *cxn = riak_operation_get_connection(rop);
+    riak_config     *cfg = riak_connection_get_config(cxn);
+    rop->request.index = riak_binary_deep_new(cfg, key);
+}
+
 riak_binary*
 riak_operation_get_bucket(riak_operation *rop) {
     return rop->request.bucket;
@@ -122,3 +130,7 @@ riak_operation_get_key(riak_operation *rop) {
     return rop->request.key;
 }
 
+riak_binary*
+riak_operation_get_index(riak_operation *rop) {
+    return rop->request.index;
+}

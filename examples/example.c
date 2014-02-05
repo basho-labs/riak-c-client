@@ -2,7 +2,7 @@
  *
  * example.c: example Riak C Client application
  *
- * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
+ * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.
  *
  * This file is provided to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file
@@ -120,6 +120,7 @@ main(int   argc,
     riak_bucketprops *props;
     riak_get_options *get_options;
     riak_delete_options *delete_options;
+    riak_2index_options *index_options;
     char output[10240];
     struct event_base *base = event_base_new();
     if (base == NULL) {
@@ -130,15 +131,16 @@ main(int   argc,
 
     // create some sample binary values to use
     riak_binary *bucket_bin   = riak_binary_new_from_string(cfg, args.bucket); // Not copied
-    riak_binary *key_bin      = riak_binary_new_from_string(cfg, args.key); // Not copied
+    riak_binary *key_bin      = riak_binary_new_from_string(cfg, args.key);   // Not copied
     riak_binary *value_bin    = riak_binary_new_from_string(cfg, args.value); // Not copied
+    riak_binary *index_bin    = riak_binary_new_from_string(cfg, args.index); // Not copied
     riak_binary *content_type = riak_binary_new_from_string(cfg, "application/json");
 
     // check for memory allocation problems
     if (bucket_bin == NULL ||
         key_bin    == NULL ||
         value_bin  == NULL) {
-        fprintf(stderr, "Could not allocate bucket/key/value\n");
+        fprintf(stderr, "Could not allocate bucket/key/value/index\n");
         exit(1);
     }
 
@@ -425,6 +427,36 @@ main(int   argc,
                 exit(1);
             }
             break;
+        case RIAK_COMMAND_INDEX:
+            index_options = riak_2index_options_new(cfg);
+            if (index_options == NULL) {
+                riak_log_critical(cxn, "%s","Could not allocate Riak Secondary Index Options");
+                return 1;
+            }
+            riak_2index_options_set_stream(index_options, RIAK_TRUE);
+            riak_2index_options_set_timeout(index_options, 10000);
+            riak_2index_options_set_key(cfg, index_options, value_bin);
+            if (args.async) {
+                err = riak_async_register_2index(rop, bucket_bin, index_bin, index_options, (riak_response_callback)example_2index_cb);
+            } else {
+                riak_2index_response *index_response = NULL;
+                err = riak_2index(cxn, bucket_bin, index_bin, index_options, &index_response);
+                if (err == ERIAK_OK) {
+                    riak_int32_t len   = sizeof(output);
+                    riak_int32_t total = 0;
+                    char *target       = output;
+                    riak_2index_response_print(index_response, &target, &len, &total);
+                    printf("%s\n", output);
+                }
+                riak_2index_response_free(cfg, &index_response);
+            }
+            riak_2index_options_free(cfg, &index_options);
+            if (err) {
+                fprintf(stderr, "Secondary Index Problems [%s]\n", riak_strerror(err));
+                exit(1);
+            }
+            break;
+        case RIAK_COMMAND_SEARCHQUERY:
         default:
             usage(stderr, argv[0]);
         }

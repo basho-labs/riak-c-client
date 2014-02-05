@@ -2,7 +2,7 @@
  *
  * riak_print.h: Riak C Client Printing Utilities
  *
- * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
+ * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.
  *
  * This file is provided to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file
@@ -22,6 +22,19 @@
 
 #ifndef _RIAK_PRINT_INTERNAL_H
 #define _RIAK_PRINT_INTERNAL_H
+
+typedef struct _riak_print_state {
+    char        *start;
+    char        *target;
+    riak_int32_t len;
+    riak_int32_t total;
+    riak_int32_t wrote;
+} riak_print_state;
+
+void
+riak_print_init(riak_print_state *state,
+                char             *location,
+                riak_int32_t      maxlen);
 
 /**
  * @brief Print an integer value to a string

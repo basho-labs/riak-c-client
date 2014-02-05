@@ -2,7 +2,7 @@
  *
  * riak_get.h: Riak C Client Get Message
  *
- * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
+ * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.
  *
  * This file is provided to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file
@@ -326,6 +326,7 @@ riak_get_options_set_notfound_ok(riak_get_options *opt,
                                  riak_boolean_t    value);
 /**
  * @brief Set the If Modified flag
+ * @param cfg Riak Configuration
  * @param opt Riak Get Option
  * @param value If Modified flag
  */

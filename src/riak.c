@@ -2,7 +2,7 @@
  *
  * riak.c: Riak Operations
  *
- * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
+ * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.
  *
  * This file is provided to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file
@@ -357,6 +357,30 @@ riak_mapreduce(riak_connection          *cxn,
 
     return ERIAK_OK;
 }
+
+riak_error
+riak_2index(riak_connection       *cxn,
+            riak_binary           *bucket,
+            riak_binary           *index,
+            riak_2index_options   *opts,
+            riak_2index_response **response) {
+    riak_operation *rop = NULL;
+    riak_error err = riak_operation_new(cxn, &rop, NULL, NULL, NULL);
+    if (err) {
+        return err;
+    }
+    err = riak_2index_request_encode(rop, bucket, index, opts, &(rop->pb_request));
+    if (err) {
+        return err;
+    }
+    err = riak_sync_request(&rop, (void**)response);
+    if (err) {
+        return err;
+    }
+
+    return ERIAK_OK;
+}
+
 
 riak_error
 riak_read(riak_operation *rop,

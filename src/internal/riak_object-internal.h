@@ -2,7 +2,7 @@
  *
  * riak_object.h: Riak Object suite
  *
- * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
+ * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.
  *
  * This file is provided to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file
@@ -113,7 +113,59 @@ int riak_object_to_pb_copy(riak_config *cfg,
  */
 void
 riak_object_free_pb(riak_config *cfg,
-                    RpbContent   *obj);
+                    RpbContent  *obj);
 
+/**
+ * @brief Copy a key/value pair from a PB to Riak structure
+ * @param cfg Riak Configuration
+ * @param pair_target The newly populated Riak key/value pair (out)
+ * @param pbpair Protocol Buffer version of key/value pair
+ * @returns Any memory allocation error
+ */
+riak_error
+riak_pairs_copy_from_pb(riak_config *cfg,
+                        riak_pair  **pair_target,
+                        RpbPair     *pbpair);
+
+/**
+ * @brief Copy an array of key/value pairs from a PB to Riak structure
+ * @param cfg Riak Configuration
+ * @param pair_target The newly populated Riak key/value pair array (out)
+ * @param pbpair Protocol Buffer version of key/value pair array
+ * @param num_pairs Number of key/value pairs
+ * @returns Any memory allocation error
+ */
+riak_error
+riak_pairs_copy_array_from_pb(riak_config  *cfg,
+                              riak_pair  ***pair_target,
+                              RpbPair     **pbpair,
+                              int           num_pairs);
+
+/**
+ * @brief Print out a series of key/value pairs
+ * @param pair Array of pairs to print
+ * @param num_pairs Number of arrays in `pair`
+ * @param target Where to write the output (out)
+ * @param len Max allowed bytes to write (out)
+ * @param total Running total of bytes written (out)
+ * @returns Number of bytes written
+ */
+riak_int32_t
+riak_pairs_print(riak_pair   **pair,
+                 riak_uint32_t num_pairs,
+                 char        **target,
+                 riak_int32_t *len,
+                 riak_int32_t *total);
+
+/**
+ * @brief Deallocate any claimed memory by riak_pairs
+ * @param cfg Riak Configuration
+ * @param pair_target Pointer to array to be freed
+ * @param num_pairs Number of elements in `pair_target`
+ */
+void
+riak_pairs_free(riak_config  *cfg,
+                riak_pair  ***pair_target,
+                int           num_pairs);
 
 #endif // _RIAK_OBJECT_INTERNAL_H

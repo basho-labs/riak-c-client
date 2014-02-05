@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * test_binary.h: Riak C Unit testing for riak_binary
+ * test_put.h:  Riak C Unit testing for Secondary Index Message
  *
  * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.
  *
@@ -21,22 +21,40 @@
  *********************************************************************/
 
 void
-test_build_binary();
+test_2index_options_qtype();
 
 void
-test_build_binary_with_null();
+test_2index_options_key();
 
 void
-test_build_binary_from_pb();
+test_2index_options_range_min();
 
 void
-test_build_binary_to_pb();
+test_2index_options_range_max();
 
 void
-test_binary_new_from_string();
+test_2index_options_return_terms();
 
 void
-test_binary_hex_print();
+test_2index_options_stream();
 
 void
-test_build_binary_from_existing();
+test_2index_options_max_results();
+
+void
+test_2index_options_continuation();
+
+void
+test_2index_options_timeout();
+
+void
+test_2index_options_type();
+
+void
+test_2index_options_term_regex();
+
+void
+test_2index_options_pagination_sort();
+
+void
+test_2index_response_decode();

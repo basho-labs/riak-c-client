@@ -2,7 +2,7 @@
  *
  * riak_command.c: Riak C Command Parser
  *
- * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
+ * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.
  *
  * This file is provided to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file
@@ -41,36 +41,39 @@ struct _riak_command {
     riak_boolean_t needs_key;
     // True if --value is required
     riak_boolean_t needs_value;
+    // True if --index is required
+    riak_boolean_t needs_index;
 };
 
 static riak_command s_commands[] = {
     // These options set a flag.
-    {"delete",       "Delete a key",                 NULL, RIAK_COMMAND_DEL,           RIAK_TRUE,  RIAK_TRUE,  RIAK_FALSE},
-    {"get-bucket",   "Fetch bucket properties",      NULL, RIAK_COMMAND_GETBUCKET,     RIAK_TRUE,  RIAK_FALSE, RIAK_FALSE},
-    {"get-clientid", "Fetch client identifier",      NULL, RIAK_COMMAND_GETCLIENTID,   RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
-    {"get",          "Fetch a key value",            NULL, RIAK_COMMAND_GET,           RIAK_TRUE,  RIAK_TRUE,  RIAK_FALSE},
-    {"index",        "Index a bucket",               NULL, RIAK_COMMAND_INDEX,         RIAK_TRUE,  RIAK_FALSE, RIAK_FALSE},
-    {"list-buckets", "List all buckets on a server", NULL, RIAK_COMMAND_LISTBUCKETS,   RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
-    {"list-keys",    "List all keys in a bucket",    NULL, RIAK_COMMAND_LISTKEYS,      RIAK_TRUE,  RIAK_FALSE, RIAK_FALSE},
-    {"map-reduce",   "Execute map/reduce",           NULL, RIAK_COMMAND_MAPRED,        RIAK_FALSE,  RIAK_FALSE, RIAK_FALSE},
-    {"ping",         "Look for signs of life",       NULL, RIAK_COMMAND_PING,          RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
-    {"put",          "Store a value in a key",       NULL, RIAK_COMMAND_PUT,           RIAK_TRUE,  RIAK_FALSE, RIAK_TRUE},
-    {"reset-bucket", "Reset bucket properties",      NULL, RIAK_COMMAND_RESETBUCKET,   RIAK_TRUE,  RIAK_FALSE, RIAK_FALSE},
-    {"search",       "Use 2i Search",                NULL, RIAK_COMMAND_SEARCHQUERY,   RIAK_TRUE,  RIAK_FALSE, RIAK_TRUE},
-    {"server-info",  "Return server settings",       NULL, RIAK_COMMAND_GETSERVERINFO, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
-    {"set-bucket",   "Store bucket properties",      NULL, RIAK_COMMAND_SETBUCKET,     RIAK_TRUE,  RIAK_FALSE, RIAK_FALSE},
-    {"set-clientid", "Store client identifier",      NULL, RIAK_COMMAND_SETCLIENTID,   RIAK_FALSE, RIAK_FALSE, RIAK_TRUE},
+    {"2i",           "Secondary index query",        NULL, RIAK_COMMAND_INDEX,         RIAK_TRUE,  RIAK_FALSE, RIAK_TRUE, RIAK_TRUE},
+    {"delete",       "Delete a key",                 NULL, RIAK_COMMAND_DEL,           RIAK_TRUE,  RIAK_TRUE,  RIAK_FALSE, RIAK_FALSE},
+    {"get-bucket",   "Fetch bucket properties",      NULL, RIAK_COMMAND_GETBUCKET,     RIAK_TRUE,  RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
+    {"get-clientid", "Fetch client identifier",      NULL, RIAK_COMMAND_GETCLIENTID,   RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
+    {"get",          "Fetch a key value",            NULL, RIAK_COMMAND_GET,           RIAK_TRUE,  RIAK_TRUE,  RIAK_FALSE, RIAK_FALSE},
+    {"list-buckets", "List all buckets on a server", NULL, RIAK_COMMAND_LISTBUCKETS,   RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
+    {"list-keys",    "List all keys in a bucket",    NULL, RIAK_COMMAND_LISTKEYS,      RIAK_TRUE,  RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
+    {"map-reduce",   "Execute map/reduce",           NULL, RIAK_COMMAND_MAPRED,        RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
+    {"ping",         "Look for signs of life",       NULL, RIAK_COMMAND_PING,          RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
+    {"put",          "Store a value in a key",       NULL, RIAK_COMMAND_PUT,           RIAK_TRUE,  RIAK_FALSE, RIAK_TRUE,  RIAK_FALSE},
+    {"reset-bucket", "Reset bucket properties",      NULL, RIAK_COMMAND_RESETBUCKET,   RIAK_TRUE,  RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
+    {"search",       "Use Riak Search",              NULL, RIAK_COMMAND_SEARCHQUERY,   RIAK_TRUE,  RIAK_FALSE, RIAK_TRUE,  RIAK_FALSE},
+    {"server-info",  "Return server settings",       NULL, RIAK_COMMAND_GETSERVERINFO, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
+    {"set-bucket",   "Store bucket properties",      NULL, RIAK_COMMAND_SETBUCKET,     RIAK_TRUE,  RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
+    {"set-clientid", "Store client identifier",      NULL, RIAK_COMMAND_SETCLIENTID,   RIAK_FALSE, RIAK_FALSE, RIAK_TRUE,  RIAK_FALSE},
 
     // These options don't set a flag.
     // We distinguish them by their indices.
-    {"async",        "Asynchronous messaging", "",       'a', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
-    {"bucket",       "",                       "name",   'b', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
-    {"host",         "",                       "name",   'h', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
-    {"iterate",      "",                       "times",  'i', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
-    {"key",          "",                       "name",   'k', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
-    {"port",         "",                       "number", 'p', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
-    {"timeout",      "",                       "secs",   't', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
-    {"value",        "",                       "val",    'v', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
+    {"async",        "Asynchronous messaging", "",       'a', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
+    {"bucket",       "",                       "name",   'b', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
+    {"host",         "",                       "name",   'h', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
+    {"index",        "",                       "name",   'x', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
+    {"iterate",      "",                       "times",  'i', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
+    {"key",          "",                       "name",   'k', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
+    {"port",         "",                       "number", 'p', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
+    {"timeout",      "",                       "secs",   't', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
+    {"value",        "",                       "val",    'v', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
     {NULL, NULL, NULL, 0, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE}
 };
 
@@ -160,6 +163,10 @@ argument_check(FILE         *fp,
                 fprintf(fp, "--value parameter required\n");
                 ok = RIAK_FALSE;
             }
+            if (commands[i].needs_index && args->has_index != RIAK_TRUE) {
+                fprintf(fp, "--index parameter required\n");
+                ok = RIAK_FALSE;
+            }
             break;
         }
     }
@@ -191,6 +198,7 @@ riak_parse_args(int           argc,
     args->has_bucket = RIAK_FALSE;
     args->has_key    = RIAK_FALSE;
     args->has_value  = RIAK_FALSE;
+    args->has_index  = RIAK_FALSE;
 
     strcpy(args->host, "localhost");
     strcpy(args->portnum, "10017");
@@ -264,6 +272,12 @@ riak_parse_args(int           argc,
                 printf ("option -v with value `%s'\n", optarg);
                 riak_strlcpy(args->value, optarg, sizeof(args->value));
                 args->has_value = RIAK_TRUE;
+                break;
+
+            case 'x':
+                printf ("option -x with value `%s'\n", optarg);
+                riak_strlcpy(args->index, optarg, sizeof(args->index));
+                args->has_index = RIAK_TRUE;
                 break;
 
             case '?':
