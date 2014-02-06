@@ -36,8 +36,9 @@ riak_binary_new(riak_config  *cfg,
         len = 0;
     }
     if (b) {
-        b->len  = len;
-        b->data = riak_config_allocate(cfg, len);
+        b->len     = len;
+        b->data    = riak_config_allocate(cfg, len);
+        b->managed = RIAK_TRUE;
         if (b->data) {
             memcpy((void*)b->data, (void*)data, len);
         } else {
@@ -67,8 +68,18 @@ riak_binary_copy_from_string(riak_config *cfg,
 
 riak_binary*
 riak_binary_copy_from_pb(riak_config         *cfg,
-                         ProtobufCBinaryData *b) {
-    return riak_binary_new(cfg, b->len, b->data);
+                         ProtobufCBinaryData *bin) {
+    riak_size_t  len = bin->len;
+    riak_binary *b   = riak_config_allocate(cfg, sizeof(riak_binary));
+    // In the degenerate case, force the length to be zero
+    if (bin->data == NULL) {
+        len = 0;
+    }
+    if (b) {
+        b->len     = len;
+        b->data    = bin->data;
+        b->managed = RIAK_FALSE;
+    }
 }
 
 riak_size_t
@@ -87,7 +98,9 @@ riak_binary_free(riak_config  *cfg,
       if (b == NULL || *b == NULL) {
           return;
       }
-      riak_free(cfg, &((*b)->data));
+      if ((*b)->managed) {
+          riak_free(cfg, &((*b)->data));
+      }
       riak_free(cfg, b);
 }
 

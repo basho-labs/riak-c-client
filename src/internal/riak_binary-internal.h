@@ -29,8 +29,9 @@
 
 // Based off of ProtobufCBinaryData
 struct _riak_binary {
-    riak_size_t   len;
-    riak_uint8_t *data;
+    riak_size_t    len;
+    riak_uint8_t  *data;
+    riak_boolean_t managed;
 };
 
 /**
