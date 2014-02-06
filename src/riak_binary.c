@@ -80,6 +80,7 @@ riak_binary_copy_from_pb(riak_config         *cfg,
         b->data    = bin->data;
         b->managed = RIAK_FALSE;
     }
+    return b;
 }
 
 riak_size_t
