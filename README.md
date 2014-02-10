@@ -3,17 +3,14 @@
 
 # Status
 
-**This project is currently under heavy development and is NOT ready to use in a production environment. Expect
+**This project is currently under development and is NOT ready to use in a production environment. Expect
 significant changes to the API.**
 
 ## Current tasks:
-* completing Riak 1.4.x API
 * cleanup around libevent threading (currently broken)
 * support Riak 2.0 messages
    * CRDTs (riak_dt)
    * Yokozuna
-* move C headers generation to riak-pb 
-* clean up header files, only require a single riak.h 
 * testing
 * general code cleanup
 * documentation 
@@ -22,75 +19,225 @@ significant changes to the API.**
 
 # Dependencies
 
-* autotools
+* automake
+* autoconf
+* libtool
 * libevent
 * protobuf
 * protobuf-c
+* cunit
+* pkg-config
 * pthreads
 * doxygen (if you are building docs)
 
 
 # Building
 
-### OSX Build
+### OSX 10.8.5 and 10.9.1 Build
 
-	git clone https://github.com/basho/zlog.git
-	cd zlog
-	git checkout feature/add-pkgconfig
-	
-	make
-	sudo make install
-		or 
-	make PREFIX=/usr/local/
-	sudo make PREFIX=/usr/local/ install
-	
-	brew install protobuf protobuf-c libevent cunit
-	git clone git@github.com:/basho/riak-c-client.git
-	cd riak-c-client
-	./autogen.sh
-	make
-
-
-### Ubuntu 13.04 build
+Be sure Xcode, command-line tools and [Home Brew](http://brew.sh/) installed first
 
 ```
-sudo apt-get install libevent-dev protobuf-c-compiler dev-libprotobuf dev-libprotoc libcunit1 libcunit1-ncurses-dev
- 
-git clone https://github.com/basho/zlog.git
-cd zlog
-git checkout feature/add-pkgconfig
-	
-make
-sudo make install
-	or 
-make PREFIX=/usr/local/
-sudo make PREFIX=/usr/local/ install 
- 
-wget https://protobuf-c.googlecode.com/files/protobuf-c-0.15.tar.gz
-cd protobuf-c-0.15
-./configure && make && sudo make install
+brew install git automake autoconf libtool pkg-config protobuf protobuf-c libevent cunit doxygen
+git clone https://github.com/basho/riak_pb
+cd riak_pb
+make C_PREFIX=/usr/local/riak_pb_c c_compile
+sudo make C_PREFIX=/usr/local/riak_pb_c c_release
 cd ..
 
-git clone git@github.com:/basho/riak-c-client.git
+git clone https://github.com/basho/riak-c-client
 cd riak-c-client
-scons
+./autogen.sh
+./configure --with-riak-pb=/usr/local/riak_pb_c
+make
+make check
+doxygen
 ```
 
-### API Documentation
+### Ubuntu 12.04 LTS and 13.10 Build
+
+*Note:* There appears to a conflict between the required version of **libprotobuf** installed on the system by default, so we need to put our version in its own directory.
+
+```
+sudo apt-get update
+sudo apt-get install build-essential git automake libtool libcunit1-dev doxygen
+
+wget https://protobuf.googlecode.com/files/protobuf-2.5.0.tar.gz
+tar fx protobuf-2.5.0.tar.gz
+cd protobuf-2.5.0
+./configure --prefix=/usr/local/protobuf-2.5.0
+make
+make check
+sudo make install
+cd ..
+
+wget https://protobuf-c.googlecode.com/files/protobuf-c-0.15.tar.gz
+tar fx protobuf-c-0.15.tar.gz
+cd protobuf-c-0.15
+./configure CXXFLAGS=-I/usr/local/protobuf-2.5.0/include LDFLAGS=-L/usr/local/protobuf-2.5.0/lib PATH=/usr/local/protobuf-2.5.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+make
+make check
+sudo make install
+cd ..
+
+wget https://github.com/downloads/libevent/libevent/libevent-2.0.21-stable.tar.gz
+tar fx libevent-2.0.21-stable.tar.gz
+cd libevent-2.0.21-stable
+./configure
+make
+LD_LIBRARY_PATH=/usr/local/protobuf-2.5.0/lib:/usr/local/lib make check
+sudo make install
+cd ..
+ 
+git clone https://github.com/basho/riak_pb
+cd riak_pb
+make C_PREFIX=/usr/local/riak_pb_c c_compile
+sudo make C_PREFIX=/usr/local/riak_pb_c c_release
+cd ..
+
+git clone https://github.com/basho/riak-c-client
+cd riak-c-client
+./autogen.sh
+LDFLAGS="-Wl,-rpath=/usr/local/protobuf-2.5.0/lib,--enable-new-dtags" ./configure --with-riak-pb=/usr/local/riak_pb_c PKG_CONFIG_PATH=/usr/local/protobuf-2.5.0/lib/pkgconfig
+make
+make check
+doxygen
+```
+
+### Centos Developer Desktop Build
+
+```
+wget https://github.com/downloads/libevent/libevent/libevent-2.0.21-stable.tar.gz
+tar fx libevent-2.0.21-stable.tar.gz
+cd libevent-2.0.21-stable
+./configure
+make
+make check
+sudo make install
+cd ..
+
+wget https://protobuf.googlecode.com/files/protobuf-2.5.0.tar.gz
+tar fx protobuf-2.5.0.tar.gz
+cd protobuf-2.5.0
+./configure
+make
+make check
+sudo make install
+cd ..
+
+wget https://protobuf-c.googlecode.com/files/protobuf-c-0.15.tar.gz
+tar fx protobuf-c-0.15.tar.gz
+cd protobuf-c-0.15
+./configure LDFLAGS="-L/usr/local/lib"
+make
+make check
+sudo make install
+cd ..
+
+wget http://downloads.sourceforge.net/project/cunit/CUnit/2.1-2/CUnit-2.1-2-src.tar.bz2
+tar fx CUnit-2.1-2-src.tar.bz2
+cd CUnit-2.1-2
+./configure
+make
+make check
+sudo make install
+cd ..
+
+git clone https://github.com/basho/riak_pb
+cd riak_pb
+make C_PREFIX=/usr/local/riak_pb_c c_compile
+sudo PATH=/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin make C_PREFIX=/usr/local/riak_pb_c c_release
+cd ..
+
+git clone https://github.com/basho/riak-c-client
+cd riak-c-client
+./autogen.sh
+./configure --with-riak-pb=/usr/local/riak_pb_c PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
+make
+make check
+doxygen
+```
+
+### Solaris 11
+
+Add to PATH:
+```
+/usr/local/bin
+```
+
+```
+sudo pkg install -v pkg:/developer/gcc-45@4.5.2-0.175.1.0.0.24.0
+sudo pkg install -v pkg:/developer/build/automake-111@1.11.2-0.175.1.0.0.24.0
+sudo pkg install -v pkg:/developer/build/autoconf@2.68-0.175.1.0.0.24.0
+sudo pkg install -v pkg:/developer/versioning/git@1.7.9.2-0.175.1.0.0.24.0
+sudo pkg install -v pkg:/developer/documentation-tool/doxygen@1.7.6.1-0.175.1.0.0.24.0
+
+wget https://github.com/downloads/libevent/libevent/libevent-2.0.21-stable.tar.gz
+tar fx libevent-2.0.21-stable.tar.gz
+cd libevent-2.0.21-stable
+./configure CFLAGS="-m64"
+make
+make check
+sudo make install
+cd ..
+
+wget https://protobuf.googlecode.com/files/protobuf-2.5.0.tar.gz
+tar fx protobuf-2.5.0.tar.gz
+cd protobuf-2.5.0
+./configure CFLAGS="-m64"
+make
+make check
+sudo make install
+cd ..
+
+wget https://protobuf-c.googlecode.com/files/protobuf-c-0.15.tar.gz
+tar fx protobuf-c-0.15.tar.gz
+cd protobuf-c-0.15
+./configure  CFLAGS="-m64" CXXFLAGS="-I/usr/local/include -m64" LDFLAGS="-L/usr/local/lib/amd64" PATH="/usr/local/bin:/usr/bin:/usr/sbin"  LIBS="-lnsl -lsocket -lresolv"
+make
+make check
+sudo make install
+cd ..
+
+wget http://downloads.sourceforge.net/project/cunit/CUnit/2.1-2/CUnit-2.1-2-src.tar.bz2
+tar fx CUnit-2.1-2-src.tar.bz2
+cd CUnit-2.1-2
+./configure CFLAGS="-m64"
+make
+make check
+sudo make install
+cd ..
+
+git clone https://github.com/basho/riak_pb
+cd riak_pb
+gmake C_PREFIX=/usr/local/riak_pb_c c_compile
+sudo gmake C_PREFIX=/usr/local/riak_pb_c c_release
+cd ..
+
+git clone https://github.com/basho/riak-c-client
+cd riak-c-client
+./autogen.sh
+./configure --with-riak-pb=/usr/local/riak_pb_c CFLAGS="-m64" PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib/amd64/pkgconfig
+make
+make check
+doxygen
+```
+
+# API Documentation
 
 [Here](http://basho.github.io/riak-c-client/index.html)
 
 ### Building local API docs
 
 To build API documentation + man pages, you'll need `doxygen` installed. 
-
-	scons docs
-
+```
+	doxygen
+```
 
 # Tutorial (outdated, work in progress)
 
 **Note** 
-Links to documentation below are against the Git *master* branch. 
+Links to documentation below are against the Git *develop* branch. 
 
 **Note** 
 Links to specific line numbers in the html API documentation may not work as some files are not long enough to scroll to a specific line numbers.
@@ -147,9 +294,9 @@ There are several riak_binary utility functions available, please see the [API d
 ####Example
 
 ```
-riak_binary *bucket_bin = riak_binary_new_from_string(ctx, "my_bucket"); // Not copied
-riak_binary *key_bin    = riak_binary_new_from_string(ctx, "my_key"); // Not copied
-riak_binary *value_bin  = riak_binary_new_from_string(ctx, "my_value"); // Not copied
+riak_binary *bucket_bin = riak_binary_copy_from_string(ctx, "my_bucket"); // Not copied
+riak_binary *key_bin    = riak_binary_copy_from_string(ctx, "my_key"); // Not copied
+riak_binary *value_bin  = riak_binary_copy_from_string(ctx, "my_value"); // Not copied
 ```
 
 ## Synchronous communications
