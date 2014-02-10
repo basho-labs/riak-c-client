@@ -17,9 +17,40 @@ include_HEADERS =	src/include/riak.h \
 			src/include/riak_object.h \
 			src/include/riak_operation.h \
 			src/include/riak_types.h
+msgincludedir =		$(includedir)/messages
+dist_msginclude_DATA =	src/include/messages/riak_2index.h \
+			src/include/messages/riak_delete.h \
+			src/include/messages/riak_error.h \
+			src/include/messages/riak_get.h \
+			src/include/messages/riak_get_bucketprops.h \
+			src/include/messages/riak_get_clientid.h \
+			src/include/messages/riak_listbuckets.h \
+			src/include/messages/riak_listkeys.h \
+			src/include/messages/riak_mapreduce.h \
+			src/include/messages/riak_ping.h \
+			src/include/messages/riak_put.h \
+			src/include/messages/riak_reset_bucketprops.h \
+			src/include/messages/riak_search.h \
+			src/include/messages/riak_serverinfo.h \
+			src/include/messages/riak_set_bucketprops.h \
+			src/include/messages/riak_set_clientid.h
 
-lib_LTLIBRARIES =	libriak_c_client-0.1.la
-libriak_c_client_0_1_la_SOURCES = \
+BUILT_SOURCES =		src/proto/riak.pb-c.c \
+			src/proto/riak_dt.pb-c.c \
+			src/proto/riak_kv.pb-c.c \
+			src/proto/riak_search.pb-c.c \
+			src/proto/riak_yokozuna.pb-c.c
+
+BUILT_H =		src/proto/include/riak.pb-c.h \
+			src/proto/include/riak_dt.pb-c.h \
+			src/proto/include/riak_kv.pb-c.h \
+			src/proto/include/riak_search.pb-c.h \
+			src/proto/include/riak_yokozuna.pb-c.h
+
+CLEANFILES = 		$(BUILT_SOURCES) $(BUILT_H)
+
+lib_LTLIBRARIES =	libriak_c_client-1.0.la
+libriak_c_client_1_0_la_SOURCES = \
 			src/riak.c \
 			src/riak_async.c \
 			src/riak_binary.c \
@@ -34,8 +65,6 @@ libriak_c_client_0_1_la_SOURCES = \
 			src/riak_operation.c \
 			src/riak_print.c \
 			src/riak_utils.c \
-			src/riak.pb-c.c src/riak_kv.pb-c.c \
-			src/riak_search.pb-c.c src/riak_yokozuna.pb-c.c \
 			src/messages/riak_2index.c \
 			src/messages/riak_delete.c \
 			src/messages/riak_error.c \
@@ -51,32 +80,35 @@ libriak_c_client_0_1_la_SOURCES = \
 			src/messages/riak_search.c \
 			src/messages/riak_serverinfo.c \
 			src/messages/riak_set_bucketprops.c \
-			src/messages/riak_set_clientid.c
+			src/messages/riak_set_clientid.c \
+			$(BUILT_SOURCES)
 
-BUILT_SOURCES =		src/riak.pb-c.h src/riak.pb-c.c \
-			src/riak_kv.pb-c.h src/riak_kv.pb-c.c \
-			src/riak_search.pb-c.h src/riak_search.pb-c.c \
-			src/riak_yokozuna.pb-c.h src/riak_yokozuna.pb-c.c
-
-CLEANFILES =		$(BUILT_SOURCES)
-
-libriak_c_client_0_1_la_CPPFLAGS = \
+libriak_c_client_1_0_la_CPPFLAGS = \
 			$(PROTOBUFC_INCLUDES) $(PROTOBUF_INCLUDES) \
 			$(EVENT_INCLUDES) \
-			-I$(SRCDIR)/include -I$(SRCDIR)/internal -I$(SRCDIR) \
+			-I$(SRCDIR)/include \
+			-I$(SRCDIR)/internal \
+			-I$(SRCDIR)/proto/include -I$(SRCDIR) \
 			-DUSE_DEBUG
 
-libriak_c_client_0_1_la_LIBADD = \
+libriak_c_client_1_0_la_LIBADD = \
 			$(PROTOBUFC_LIBS) $(PROTOBUF_LIBS) $(EVENT_LIBS) \
 			-lpthread
 
 AM_CFLAGS =		-g -Wall
 
-%.pb-c.c %.pb-c.h: proto/%.proto
-	$(PROTOC_C) --proto_path=src/proto --c_out=src/ $^
+src/proto/%.pb-c.c: $(RIAK_PB)/%.pb-c.c
+	@echo "Copying Protocol Buffer Files"
+	cp $< $@
 
-EXTRA_DIST = $(BUILT_SOURCES) \
-		$(SRCDIR)/include $(SRCDIR)/internal $(SRCDIR)/adapters \
+src/proto/include/%.pb-c.h: $(RIAK_PB)/include/%.pb-c.h
+	@echo "Copying Protocol Buffer Header"
+	mkdir -p src/proto/include
+	cp $< $@
+
+$(BUILT_SOURCES) : $(BUILT_H)
+
+EXTRA_DIST =	$(SRCDIR)/include $(SRCDIR)/internal $(SRCDIR)/adapters \
 		$(EXAMPLESDIR)/example_call_backs.h \
 		$(EXAMPLESDIR)/riak_command.h \
 		$(TESTCUNITDIR)/include
@@ -90,16 +122,17 @@ riak_c_example_CPPFLAGS = \
 			-DUSE_DEBUG -D_RIAK_DEBUG \
 			-I$(SRCDIR)/include \
 			-I$(SRCDIR)/internal \
+			-I$(SRCDIR)/proto/include \
 			-I$(SRCDIR)/adapters \
 			-I$(SRCDIR) \
 			-Iexamples
 
 riak_c_example_LDADD = \
-		-lriak_c_client-0.1 \
+		-lriak_c_client-1.0 \
 		$(PROTOBUFC_LIBS) $(PROTOBUF_LIBS) $(EVENT_LIBS) \
 		-lcunit -lpthread
 
-riak_c_example_DEPENDENCIES = libriak_c_client-0.1.la
+riak_c_example_DEPENDENCIES = libriak_c_client-1.0.la
 
 check_PROGRAMS = riak_c_cunit
 riak_c_cunit_SOURCES = 	test/cunit/registry.c \
@@ -121,13 +154,14 @@ riak_c_cunit_SOURCES = 	test/cunit/registry.c \
 
 riak_c_cunit_CPPFLAGS = -I$(SRCDIR)/include \
 			-I$(SRCDIR)/internal \
+			-I$(SRCDIR)/proto/include \
 			-I$(SRCDIR) \
 			-I$(TESTCUNITDIR)/include
 
-riak_c_cunit_LDADD =	-lriak_c_client-0.1 \
+riak_c_cunit_LDADD =	-lriak_c_client-1.0 \
 			$(PROTOBUFC_LIBS) $(PROTOBUF_LIBS) $(EVENT_LIBS) \
 			-lcunit -lpthread
 
-riak_c_cunit_DEPENDENCIES = libriak_c_client-0.1.la
+riak_c_cunit_DEPENDENCIES = libriak_c_client-1.0.la
 
 TESTS = riak_c_cunit
