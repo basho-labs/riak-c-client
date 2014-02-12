@@ -237,11 +237,11 @@ main(int   argc,
                 riak_log_critical(cxn, "%s","Could not allocate a Riak Object");
                 return 1;
             }
-            riak_object_set_bucket(obj, riak_binary_copy_from_string(cfg, args.bucket)); // Not copied
+            riak_object_set_bucket(cfg, obj, riak_binary_copy_from_string(cfg, args.bucket));
             if (args.has_key) {
-                riak_object_set_key(obj, riak_binary_copy_from_string(cfg, args.key)); // Not copied
+                riak_object_set_key(cfg, obj, riak_binary_copy_from_string(cfg, args.key));
             }
-            riak_object_set_value(obj, riak_binary_copy_from_string(cfg, args.value)); // Not copied
+            riak_object_set_value(cfg, obj, riak_binary_copy_from_string(cfg, args.value));
             if (riak_object_get_bucket(obj) == NULL ||
                 riak_object_get_value(obj) == NULL) {
                 fprintf(stderr, "Could not allocate bucket/value\n");

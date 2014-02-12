@@ -159,9 +159,9 @@ riak_2index_response_decode(riak_operation        *rop,
             return ERIAK_OUT_OF_MEMORY;
         }
         response->n_keys = total_keys;
-        riak_error err = riak_pair_new_array(cfg , &(response->results), total_results);
-        if (err != ERIAK_OK) {
-            return err;
+        response->results = riak_config_clean_allocate(cfg, sizeof(riak_pair*) * total_results);
+        if (response->results == NULL) {
+            return ERIAK_OUT_OF_MEMORY;
         }
         response->n_results = total_results;
 
@@ -181,7 +181,7 @@ riak_2index_response_decode(riak_operation        *rop,
         }
         for(i = 0, j = 0, chunk = 0; i < response->n_results; i++) {
             RpbIndexResp *rpb_response = response->_internal[chunk];
-            err = riak_pairs_copy_from_pb(cfg, &(response->results[i]), rpb_response->results[j]);
+            riak_error err = riak_pairs_copy_from_pb(cfg, &(response->results[i]), rpb_response->results[j]);
             if (err == ERIAK_OK) {
                 riak_free(cfg, &(response->results));
                 return ERIAK_OUT_OF_MEMORY;

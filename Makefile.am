@@ -148,6 +148,7 @@ riak_c_cunit_SOURCES = 	test/cunit/registry.c \
 			test/cunit/test_operation.c \
 			test/cunit/test_listbuckets.c \
 			test/cunit/test_listkeys.c \
+			test/cunit/test_object.c \
 			test/cunit/test_put.c \
 			test/cunit/test_search.c \
 			test/cunit/test_serverinfo.c
