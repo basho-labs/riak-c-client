@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * riak_get.c: Riak C Client Legacy Search Message
+ * riak_search.c: Riak C Client Legacy Search Message
  *
  * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.
  *
@@ -63,7 +63,7 @@ riak_search_request_encode(riak_operation      *rop,
             srchmsg.has_df = search_options->has_df;
             riak_binary_to_pb_copy(&srchmsg.df, search_options->df);
         }
-        if (search_options->has_df) {
+        if (search_options->has_op) {
             srchmsg.has_op = search_options->has_op;
             riak_binary_to_pb_copy(&srchmsg.op, search_options->op);
         }
@@ -161,7 +161,7 @@ riak_search_response_print(riak_search_response *response,
     wrote += riak_print_float("max_score", response->max_score, target, len, total);
     wrote += riak_print_bool("has_num_found", response->has_num_found, target, len, total);
     wrote += riak_print_int("num_found", response->num_found, target, len, total);
-    wrote += riak_print_int("num_docs", response->n_docs, target, len, total);
+    wrote += riak_print_int("n_docs", response->n_docs, target, len, total);
     if (response->docs == NULL) {
         return wrote;
     }
@@ -196,8 +196,12 @@ riak_search_get_n_docs(riak_search_response *response) {
 }
 
 riak_search_doc*
-riak_search_get_docs(riak_search_response *response) {
-    return response->docs;
+riak_search_get_doc(riak_search_response *response,
+                    riak_uint32_t         n) {
+    if (n >= response->n_docs) {
+        return NULL;
+    }
+    return &(response->docs[n]);
 }
 
 riak_boolean_t
@@ -421,4 +425,18 @@ riak_search_options_set_presort(riak_config         *cfg,
         return ERIAK_OUT_OF_MEMORY;
     }
     return ERIAK_OK;
+}
+
+riak_size_t
+riak_search_doc_get_n_fields(riak_search_doc *doc) {
+    return doc->n_fields;
+}
+
+riak_pair*
+riak_search_doc_get_field(riak_search_doc *doc,
+                          riak_uint32_t    n) {
+    if (n >= doc->n_fields) {
+        return NULL;
+    }
+    return doc->fields[n];
 }
