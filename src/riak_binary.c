@@ -49,12 +49,46 @@ riak_binary_new(riak_config  *cfg,
 }
 
 riak_binary*
+riak_binary_new_shallow(riak_config  *cfg,
+                        riak_size_t   len,
+                        riak_uint8_t *data) {
+    riak_binary *b = riak_config_allocate(cfg, sizeof(riak_binary));
+    // In the degenerate case, force the length to be zero
+    if (data == NULL) {
+        len = 0;
+    }
+    if (b) {
+        b->len     = len;
+        b->data    = data;
+        b->managed = RIAK_FALSE;
+    }
+    return b;
+}
+
+riak_binary*
 riak_binary_copy(riak_config *cfg,
                  riak_binary *bin) {
     if (bin == NULL) {
         return NULL;
     }
     return riak_binary_new(cfg, bin->len, bin->data);
+}
+
+riak_binary*
+riak_binary_copy_shallow(riak_config *cfg,
+                         riak_binary *bin) {
+    riak_size_t  len = bin->len;
+    riak_binary *b   = riak_config_allocate(cfg, sizeof(riak_binary));
+    // In the degenerate case, force the length to be zero
+    if (bin->data == NULL) {
+        len = 0;
+    }
+    if (b) {
+        b->len     = len;
+        b->data    = bin->data;
+        b->managed = RIAK_FALSE;
+    }
+    return b;
 }
 
 riak_binary*

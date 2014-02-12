@@ -24,6 +24,9 @@ void
 test_build_binary();
 
 void
+test_build_binary_shallow();
+
+void
 test_build_binary_with_null();
 
 void

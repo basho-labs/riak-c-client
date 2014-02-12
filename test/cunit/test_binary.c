@@ -47,6 +47,32 @@ test_build_binary() {
 }
 
 void
+test_build_binary_shallow() {
+    riak_config *cfg;
+    riak_error    err = riak_config_new_default(&cfg);
+    CU_ASSERT_FATAL(err == ERIAK_OK)
+    riak_uint8_t *ptr = (riak_uint8_t*)"abcdef";
+    riak_binary  *bin = riak_binary_new_shallow(cfg, 6, ptr);
+    CU_ASSERT_FATAL(bin != NULL)
+    riak_int32_t  len = riak_binary_len(bin);
+    CU_ASSERT_EQUAL(len,6)
+    riak_uint8_t *data = riak_binary_data(bin);
+    CU_ASSERT_EQUAL(memcmp(data, "abcdef", 6), 0)
+    // Should point the same memory
+    CU_ASSERT_EQUAL(data, ptr)
+    riak_binary_free(cfg, &bin);
+    riak_binary *shallow = riak_binary_new(cfg, 6, ptr);
+    bin = riak_binary_copy_shallow(cfg, shallow);
+    data = riak_binary_data(bin);
+    CU_ASSERT_EQUAL(data, ptr)
+    data = riak_binary_data(bin);
+    CU_ASSERT_EQUAL(data, ptr)
+    riak_binary_free(cfg, &bin);
+    riak_binary_free(cfg, &shallow);
+    CU_PASS("test_build_binary_shallow passed")
+}
+
+void
 test_build_binary_with_null() {
     riak_config *cfg;
     riak_error    err = riak_config_new_default(&cfg);
