@@ -269,7 +269,7 @@ test_get_decode_response() {
     riak_pb_message    pb_response;
     pb_response.data = bytes;
     pb_response.len  = sizeof(bytes);
-    riak_get_response *response;
+    riak_get_response *response = NULL;
     riak_boolean_t     done;
     err = riak_get_response_decode(rop, &pb_response, &response, &done);
     CU_ASSERT_FATAL(err == ERIAK_OK)

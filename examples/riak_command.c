@@ -47,7 +47,7 @@ struct _riak_command {
 
 static riak_command s_commands[] = {
     // These options set a flag.
-    {"2i",           "Secondary index query",        NULL, RIAK_COMMAND_INDEX,         RIAK_TRUE,  RIAK_FALSE, RIAK_TRUE, RIAK_TRUE},
+    {"2i",           "Secondary index query",        NULL, RIAK_COMMAND_INDEX,         RIAK_TRUE,  RIAK_FALSE, RIAK_TRUE,  RIAK_TRUE},
     {"delete",       "Delete a key",                 NULL, RIAK_COMMAND_DEL,           RIAK_TRUE,  RIAK_TRUE,  RIAK_FALSE, RIAK_FALSE},
     {"get-bucket",   "Fetch bucket properties",      NULL, RIAK_COMMAND_GETBUCKET,     RIAK_TRUE,  RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
     {"get-clientid", "Fetch client identifier",      NULL, RIAK_COMMAND_GETCLIENTID,   RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
@@ -186,7 +186,7 @@ riak_parse_args(int           argc,
                 char         *argv[],
                 riak_args    *args) {
 
-    static int operation;  // static required for getopt
+    static int operation = -1;  // static required for getopt
     int  c;
 
     memset((void*)args, '\0', sizeof(riak_args));

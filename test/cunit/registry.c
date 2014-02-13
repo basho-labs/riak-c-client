@@ -42,6 +42,7 @@
 #include "test_listkeys.h"
 #include "test_bucketprops.h"
 #include "test_mapreduce.h"
+#include "test_search.h"
 
 int
 main(int   argc,
@@ -121,6 +122,15 @@ main(int   argc,
     CU_ADD_TEST(messages_suite, test_2index_options_term_regex);
     CU_ADD_TEST(messages_suite, test_2index_options_pagination_sort);
     CU_ADD_TEST(messages_suite, test_2index_response_decode);
+    CU_ADD_TEST(messages_suite, test_search_options_rows);
+    CU_ADD_TEST(messages_suite, test_search_options_start);
+    CU_ADD_TEST(messages_suite, test_search_options_sort);
+    CU_ADD_TEST(messages_suite, test_search_options_filter);
+    CU_ADD_TEST(messages_suite, test_search_options_df);
+    CU_ADD_TEST(messages_suite, test_search_options_op);
+    CU_ADD_TEST(messages_suite, test_search_options_fl);
+    CU_ADD_TEST(messages_suite, test_search_options_presort);
+    CU_ADD_TEST(messages_suite, test_search_decode_response);
 
     // Run all tests using the CUnit Basic interface
     CU_basic_set_mode(CU_BRM_VERBOSE);

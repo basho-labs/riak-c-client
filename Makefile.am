@@ -48,6 +48,7 @@ libriak_c_client_0_1_la_SOURCES = \
 			src/messages/riak_ping.c \
 			src/messages/riak_put.c \
 			src/messages/riak_reset_bucketprops.c \
+			src/messages/riak_search.c \
 			src/messages/riak_serverinfo.c \
 			src/messages/riak_set_bucketprops.c \
 			src/messages/riak_set_clientid.c
@@ -115,6 +116,7 @@ riak_c_cunit_SOURCES = 	test/cunit/registry.c \
 			test/cunit/test_listbuckets.c \
 			test/cunit/test_listkeys.c \
 			test/cunit/test_put.c \
+			test/cunit/test_search.c \
 			test/cunit/test_serverinfo.c
 
 riak_c_cunit_CPPFLAGS = -I$(SRCDIR)/include \

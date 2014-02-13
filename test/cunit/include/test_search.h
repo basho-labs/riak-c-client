@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * riak_messages.h: Riak C Client External Messages
+ * test_search.h:  Riak C Unit testing for Search Message
  *
  * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.
  *
@@ -20,19 +20,29 @@
  *
  *********************************************************************/
 
-#include "messages/riak_2index.h"
-#include "messages/riak_delete.h"
-#include "messages/riak_error.h"
-#include "messages/riak_get.h"
-#include "messages/riak_get_bucketprops.h"
-#include "messages/riak_get_clientid.h"
-#include "messages/riak_listbuckets.h"
-#include "messages/riak_listkeys.h"
-#include "messages/riak_mapreduce.h"
-#include "messages/riak_ping.h"
-#include "messages/riak_put.h"
-#include "messages/riak_reset_bucketprops.h"
-#include "messages/riak_search.h"
-#include "messages/riak_serverinfo.h"
-#include "messages/riak_set_bucketprops.h"
-#include "messages/riak_set_clientid.h"
+void
+test_search_options_rows();
+
+void
+test_search_options_start();
+
+void
+test_search_options_sort();
+
+void
+test_search_options_filter();
+
+void
+test_search_options_df();
+
+void
+test_search_options_op();
+
+void
+test_search_options_fl();
+
+void
+test_search_options_presort();
+
+void
+test_search_decode_response();
