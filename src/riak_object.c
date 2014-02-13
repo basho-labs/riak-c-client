@@ -70,7 +70,7 @@ riak_pairs_copy_to_pb(riak_config  *cfg,
             return ERIAK_OUT_OF_MEMORY;
         }
         
-        riak_binary_to_pb_copy(&(pbpair[i]->key), pair[i]->key);
+        riak_binary_copy_to_pb(&(pbpair[i]->key), pair[i]->key);
         
         if (pair[i]->has_value) {
             pbpair[i]->has_value = RIAK_TRUE;
