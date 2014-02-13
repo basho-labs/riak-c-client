@@ -52,7 +52,7 @@ riak_search_response_print(riak_search_response *response,
                            riak_int32_t         *total);
 
 /**
- * @brief Access the Number of documents in a Search response
+ * @brief Access the number of documents in a Search response
  * @param response Riak Search Response
  * @returns Number of search result documents
  */
@@ -62,13 +62,15 @@ riak_search_get_n_docs(riak_search_response *response);
 /**
  * @brief Access the search documents in a Search response
  * @param response Riak Search Response
- * @returns An array of key/value pairs as search results
+ * @param n Index of search document
+ * @returns A Riak Key/Value Pair as search results
  */
 riak_search_doc*
-riak_search_get_docs(riak_search_response *response);
+riak_search_get_doc(riak_search_response *response,
+                    riak_uint32_t         n);
 
 /**
- * @brief Determine if the Maximum Score is in Search Response
+ * @brief Determine if the Maximum Score is in Search response
  * @param response Riak Search Response
  * @returns True if Maximum Score is populated
  */
@@ -84,7 +86,7 @@ riak_float32_t
 riak_search_get_max_score(riak_search_response *response);
 
 /**
- * @brief Determine if the Number Found is in Search Response
+ * @brief Determine if the Number Found is in Search response
  * @param response Riak Search Response
  * @returns True if Number Found is populated
  */
@@ -92,12 +94,30 @@ riak_boolean_t
 riak_search_get_has_num_found(riak_search_response *response);
 
 /**
- * @brief Access the Number of matches Found in a Search response
+ * @brief Access the number of matches found in a Search response
  * @param response Riak Search Response
  * @returns Total number of Search results found
  */
 riak_uint32_t
 riak_search_get_num_found(riak_search_response *response);
+
+/**
+ * @brief Access the number of fields in a Search Document
+ * @param doc Search Document
+ * @return Number of fields in document
+ */
+riak_size_t
+riak_search_doc_get_n_fields(riak_search_doc *doc);
+
+/**
+ * @brief Access the nth field in a Search Document
+ * @param doc Search Document
+ * @param n Index in the field array
+ * @returns The nth field in a Search Document
+ */
+riak_pair*
+riak_search_doc_get_field(riak_search_doc *doc,
+                          riak_uint32_t    n);
 
 /**
  * @brief Construct a new Riak Search Options object

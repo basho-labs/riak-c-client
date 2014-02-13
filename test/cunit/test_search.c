@@ -30,6 +30,7 @@
 #include "riak.h"
 #include "riak_messages-internal.h"
 #include "riak_operation-internal.h"
+#include "riak_object-internal.h"
 
 void
 test_search_options_rows() {
@@ -185,7 +186,7 @@ test_search_options_fl() {
     riak_binary **results = riak_search_options_get_fl(opt);
     CU_ASSERT_NOT_EQUAL_FATAL(results, NULL)
     CU_ASSERT_EQUAL(memcmp(riak_binary_data(results[0]), "field_limits1", 12), 0)
-    CU_ASSERT_EQUAL(memcmp(riak_binary_data(results[1]), "field_limits1", 12), 0)
+    CU_ASSERT_EQUAL(memcmp(riak_binary_data(results[1]), "field_limits2", 12), 0)
 
     riak_search_options_free(cfg, &opt);
     riak_config_free(&cfg);
@@ -231,6 +232,7 @@ test_search_decode_response() {
     err = riak_operation_new(cxn, &rop, NULL, NULL, NULL);
     CU_ASSERT_FATAL(err == ERIAK_OK)
 
+    // Canned PBC Riak Search Response
     riak_uint8_t bytes[] = { 0x1c,0x0a,0xda,0x01,0x0a,0x18,0x0a,0x02,0x69,
         0x64,0x12,0x12,0x34,0x32,0x35,0x32,0x33,0x37,0x36,0x36,0x39,0x34,0x38,
         0x30,0x36,0x35,0x32,0x38,0x30,0x30,0x0a,0x1b,0x0a,0x04,0x74,0x69,0x6d,
@@ -267,6 +269,25 @@ test_search_decode_response() {
         0x58,0x15,0xe6,0x04,0xb5,0x3e,0x18,0x02
     };
 
+    // Values of the search result encoded in bytes[] above
+    char *keys[2][4] = {
+        { "id", "time", "tweet", "user" },
+        { "id", "time", "tweet", "user" }
+    };
+    char *values[2][4] = {
+        { "425237669480652800",
+          "2014-01-20T12:05:35",
+          "RT @David_Tennant: David Tennant TV For Today: 11am &amp; 4pm "
+          "Watch Turn Left (repeated an hour later on Watch + 1)\n\n#DoctorWho",
+          "BrandonMHallam" },
+        { "425859585530802176",
+          "2014-01-22T05:16:51",
+          "RT @Who_News: Last Chance to VOTE for David Tennant for National "
+          "Television Award!!!!!: VOTING ends today at... http://t.co/OfL9hmpYaz "
+          "#drw…",
+          "MarkOfTheRedX" }
+    };
+
     riak_pb_message    pb_response;
     pb_response.data = bytes;
     pb_response.len  = sizeof(bytes);
@@ -282,14 +303,17 @@ test_search_decode_response() {
     CU_ASSERT(score < 0.36);
     CU_ASSERT_EQUAL(riak_search_get_has_num_found(response), RIAK_TRUE);
     CU_ASSERT_EQUAL(riak_search_get_num_found(response), 2);
-    riak_search_doc *docs = riak_search_get_docs(response);
-    CU_ASSERT_FATAL(docs != NULL)
     for(int i = 0; i < riak_search_get_n_docs(response); i++) {
-        /*
-        riak_object *obj = objects[i];
-        riak_uint8_t *value = riak_binary_data(riak_object_get_value(obj));
-        CU_ASSERT_EQUAL_FATAL(memcmp(value, "{\"bar\":\"baz\"}", riak_binary_len(riak_object_get_value(obj))), 0)
-        */
+        riak_search_doc *doc = riak_search_get_doc(response, i);
+        for(int j = 0; j < riak_search_doc_get_n_fields(doc); j++) {
+            riak_pair *pair = riak_search_doc_get_field(doc, j);
+            riak_uint8_t *key = riak_binary_data(riak_pair_get_key(pair));
+            riak_size_t   keylen = riak_binary_len(riak_pair_get_key(pair));
+            CU_ASSERT_EQUAL(memcmp(key, keys[i][j], keylen), 0)
+            riak_uint8_t *value = riak_binary_data(riak_pair_get_value(pair));
+            riak_size_t   valuelen = riak_binary_len(riak_pair_get_value(pair));
+            CU_ASSERT_EQUAL(memcmp(value, values[i][j], valuelen), 0)
+        }
     }
 
     riak_operation_free(&rop);
