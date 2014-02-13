@@ -54,6 +54,7 @@ cd ..
 make
 make check
 doxygen
+make install
 ```
 
 ### Ubuntu 12.04 LTS and 13.10 Build
@@ -102,6 +103,7 @@ LDFLAGS="-Wl,-rpath=/usr/local/protobuf-2.5.0/lib,--enable-new-dtags" ./configur
 make
 make check
 doxygen
+make install
 ```
 
 ### Centos Developer Desktop Build
@@ -154,6 +156,7 @@ cd ..
 make
 make check
 doxygen
+make install
 ```
 
 ### Solaris 11
@@ -217,6 +220,7 @@ cd ..
 make
 make check
 doxygen
+make install
 ```
 
 # Questions / Comments
