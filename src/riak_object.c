@@ -57,16 +57,21 @@ riak_pairs_copy_to_pb(riak_config  *cfg,
                       RpbPair    ***pbpair_target,
                       riak_pair   **pair,
                       int           num_pairs) {
-    RpbPair **pbpair = (RpbPair**)riak_config_clean_allocate(cfg, sizeof(RpbPair*) * num_pairs);
+    RpbPair **pbpair = riak_config_clean_allocate(cfg, sizeof(RpbPair*) * num_pairs);
     if (pbpair == NULL) {
         return ERIAK_OUT_OF_MEMORY;
     }
     int i;
     for(i = 0; i < num_pairs; i++) {
-        pbpair[i] = (RpbPair*)riak_config_clean_allocate(cfg, sizeof(RpbPair));
+        pbpair[i] = riak_config_clean_allocate(cfg, sizeof(RpbPair));
+        rpb_pair__init(pbpair[i]);
+        
         if (pbpair[i] == NULL) {
             return ERIAK_OUT_OF_MEMORY;
         }
+        
+        riak_binary_copy_to_pb(&(pbpair[i]->key), pair[i]->key);
+        
         if (pair[i]->has_value) {
             pbpair[i]->has_value = RIAK_TRUE;
             riak_binary_copy_to_pb(&(pbpair[i]->value), pair[i]->value);

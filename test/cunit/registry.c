@@ -61,6 +61,7 @@ main(int   argc,
     CU_pSuite operation_suite = CU_add_suite("riak_operation", init_fn, cleanup_fn);
     CU_pSuite messages_suite = CU_add_suite("riak_messages", init_fn, cleanup_fn);
     CU_ADD_TEST(binary_suite, test_build_binary);
+    CU_ADD_TEST(binary_suite, test_build_binary_shallow);
     CU_ADD_TEST(binary_suite, test_build_binary_with_null);
     CU_ADD_TEST(binary_suite, test_build_binary_from_pb);
     CU_ADD_TEST(binary_suite, test_build_binary_to_pb);

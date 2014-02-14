@@ -27,7 +27,7 @@
 typedef struct _riak_binary riak_binary;
 
 /**
- * @brief Allocate a new `riak_binary` struct (shallow copy)
+ * @brief Allocate a new `riak_binary` struct
  * @param cfg Riak Configuration
  * @param len Length of binary in bytes
  * @param data Pointer to binary data
@@ -39,6 +39,18 @@ riak_binary_new(riak_config  *cfg,
                 riak_uint8_t *data);
 
 /**
+ * @brief Allocate a new `riak_binary` struct (shallow copy)
+ * @param cfg Riak Configuration
+ * @param len Length of binary in bytes
+ * @param data Pointer to binary data
+ * @returns pointer to newly created `riak_binary` struct
+ */
+riak_binary*
+riak_binary_new_shallow(riak_config  *cfg,
+                        riak_size_t   len,
+                        riak_uint8_t *data);
+
+/**
  * @brief Allocate a new `riak_binary` struct
  * @param cfg Riak Configuration
  * @param bin Original Riak Binary
@@ -47,6 +59,16 @@ riak_binary_new(riak_config  *cfg,
 riak_binary*
 riak_binary_copy(riak_config *cfg,
                  riak_binary *bin);
+
+/**
+ * @brief Allocate a new `riak_binary` struct (shallow copy)
+ * @param cfg Riak Configuration
+ * @param bin Original Riak Binary
+ * @returns pointer to newly created `riak_binary` struct
+ */
+riak_binary*
+riak_binary_copy_shallow(riak_config *cfg,
+                         riak_binary *bin);
 
 /**
  * @brief Create a new `riak_binary` from a string
