@@ -27,13 +27,6 @@ AC_CHECK_HEADERS([arpa/inet.h stddef.h stdint.h stdlib.h])
 AC_CHECK_HEADERS([string.h strings.h unistd.h])
 AC_FUNC_MALLOC
 
-AC_ARG_WITH([riak-pb],
-    [AS_HELP_STRING([--with-riak-pb=PATH],
-        [location of the Riak protocol buffer C source, default /usr/local/riak_pb_c])],
-    [RIAK_PB="$withval"],
-    [RIAK_PB='/usr/local/riak_pb_c'])
-AC_SUBST([RIAK_PB])
-
 AC_ARG_WITH([protoc-c],
     [AS_HELP_STRING([--with-protoc-c=PATH],
         [location of the protoc protocol buffer C compiler binary, default protoc-c])],

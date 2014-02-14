@@ -9,8 +9,11 @@ significant changes to the API.**
 ## Current tasks:
 * cleanup around libevent threading (currently broken)
 * support Riak 2.0 messages
+   * Bucket Types
    * CRDTs (riak_dt)
    * Yokozuna
+   * Security
+   * Strong consistency
 * testing
 * general code cleanup
 * documentation 
@@ -22,9 +25,9 @@ significant changes to the API.**
 * automake
 * autoconf
 * libtool
-* libevent
-* protobuf
-* protobuf-c
+* libevent-2.0.21
+* protobuf-2.5.0
+* protobuf-c-0.15
 * cunit
 * pkg-config
 * pthreads
@@ -35,23 +38,23 @@ significant changes to the API.**
 
 ### OSX 10.8.5 and 10.9.1 Build
 
-Be sure Xcode, command-line tools and [Home Brew](http://brew.sh/) installed first
+Be sure Xcode, command-line tools and [Home Brew](http://brew.sh/) installed first.
 
 ```
 brew install git automake autoconf libtool pkg-config protobuf protobuf-c libevent cunit doxygen
-git clone https://github.com/basho/riak_pb
-cd riak_pb
-make C_PREFIX=/usr/local/riak_pb_c c_compile
-sudo make C_PREFIX=/usr/local/riak_pb_c c_release
-cd ..
 
 git clone https://github.com/basho/riak-c-client
 cd riak-c-client
+git clone https://github.com/basho/riak_pb
+cd riak_pb
+make c_compile
+cd ..
 ./autogen.sh
-./configure --with-riak-pb=/usr/local/riak_pb_c
+./configure
 make
 make check
 doxygen
+make install
 ```
 
 ### Ubuntu 12.04 LTS and 13.10 Build
@@ -89,19 +92,18 @@ LD_LIBRARY_PATH=/usr/local/protobuf-2.5.0/lib:/usr/local/lib make check
 sudo make install
 cd ..
  
-git clone https://github.com/basho/riak_pb
-cd riak_pb
-make C_PREFIX=/usr/local/riak_pb_c c_compile
-sudo make C_PREFIX=/usr/local/riak_pb_c c_release
-cd ..
-
 git clone https://github.com/basho/riak-c-client
 cd riak-c-client
+git clone https://github.com/basho/riak_pb
+cd riak_pb
+make c_compile
+cd ..
 ./autogen.sh
-LDFLAGS="-Wl,-rpath=/usr/local/protobuf-2.5.0/lib,--enable-new-dtags" ./configure --with-riak-pb=/usr/local/riak_pb_c PKG_CONFIG_PATH=/usr/local/protobuf-2.5.0/lib/pkgconfig
+LDFLAGS="-Wl,-rpath=/usr/local/protobuf-2.5.0/lib,--enable-new-dtags" ./configure PKG_CONFIG_PATH=/usr/local/protobuf-2.5.0/lib/pkgconfig
 make
 make check
 doxygen
+make install
 ```
 
 ### Centos Developer Desktop Build
@@ -143,19 +145,18 @@ make check
 sudo make install
 cd ..
 
-git clone https://github.com/basho/riak_pb
-cd riak_pb
-make C_PREFIX=/usr/local/riak_pb_c c_compile
-sudo PATH=/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin make C_PREFIX=/usr/local/riak_pb_c c_release
-cd ..
-
 git clone https://github.com/basho/riak-c-client
 cd riak-c-client
+git clone https://github.com/basho/riak_pb
+cd riak_pb
+make c_compile
+cd ..
 ./autogen.sh
-./configure --with-riak-pb=/usr/local/riak_pb_c PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
+./configure PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 make
 make check
 doxygen
+make install
 ```
 
 ### Solaris 11
@@ -208,158 +209,19 @@ make check
 sudo make install
 cd ..
 
-git clone https://github.com/basho/riak_pb
-cd riak_pb
-gmake C_PREFIX=/usr/local/riak_pb_c c_compile
-sudo gmake C_PREFIX=/usr/local/riak_pb_c c_release
-cd ..
-
 git clone https://github.com/basho/riak-c-client
 cd riak-c-client
+git clone https://github.com/basho/riak_pb
+cd riak_pb
+make c_compile
+cd ..
 ./autogen.sh
-./configure --with-riak-pb=/usr/local/riak_pb_c CFLAGS="-m64" PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib/amd64/pkgconfig
+./configure CFLAGS="-m64" PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib/amd64/pkgconfig
 make
 make check
 doxygen
+make install
 ```
-
-# API Documentation
-
-[Here](http://basho.github.io/riak-c-client/index.html)
-
-### Building local API docs
-
-To build API documentation + man pages, you'll need `doxygen` installed. 
-```
-	doxygen
-```
-
-# Tutorial (outdated, work in progress)
-
-**Note** 
-Links to documentation below are against the Git *develop* branch. 
-
-**Note** 
-Links to specific line numbers in the html API documentation may not work as some files are not long enough to scroll to a specific line numbers.
-
-
-## Include files
-
-## 
-
-```
- // TODO: more cleanup around .h files
- #include "riak.h"
- #include "riak_command.h"
- #include "riak_event.h"
- #include "riak_call_backs.h"
-```
-
-## Connecting to Riak
-
-A **riak_context** needs to be created to communicate with Riak.
-
-A convenience macro is available if you wish to specify only host and port.
-
-`#define riak_context_new_default(C,H,P) riak_context_new((C),(H),(P),NULL,NULL,NULL,NULL,NULL,NULL)`
-	* defined in [riak_context.h](http://basho.github.io/riak-c-client/riak__context_8h_source.html#l00055)
-
-To create a full riak_context with custom memory management and logging, see [riak_context_new](http://basho.github.io/riak-c-client/riak__context_8h_source.html#l00048)
-
-#### Example
-```
-char *hostname = "127.0.0.1";
-char *pbport   = "10017";
-riak_context *ctx;
-riak_error err = riak_context_new_default(&ctx, hostname, pbport);
-if (err) {
-	// handle connection error
-}
-```
-
-## Working with binary values
-
-In order to accomodate multiple character sets, all values stored with the Riak C client use a [riak_binary](http://basho.github.io/riak-c-client/riak__binary_8h_source.html). Any character set conversion can be done before a value is stored in a **riak_binary**. 
-
-To allocate a new [riak_binary](http://basho.github.io/riak-c-client/riak__binary_8h_source.html), call the [riak_binary_new](http://basho.github.io/riak-c-client/riak__binary_8h_source.html#l00035) function:
-
-Allocated riak_binaries must be freed with the [riak_binary_free](http://basho.github.io/riak-c-client/riak__binary_8h_source.html#l00064) function.
-
-
-If you are working with **char*** values, use the [riak_binary_new_from_string](http://basho.github.io/riak-c-client/riak__binary_8h_source.html#l00109) function:
-
-
-There are several riak_binary utility functions available, please see the [API docs](http://basho.github.io/riak-c-client/riak__binary_8h_source.html).
-
-####Example
-
-```
-riak_binary *bucket_bin = riak_binary_copy_from_string(ctx, "my_bucket"); // Not copied
-riak_binary *key_bin    = riak_binary_copy_from_string(ctx, "my_key"); // Not copied
-riak_binary *value_bin  = riak_binary_copy_from_string(ctx, "my_value"); // Not copied
-```
-
-## Synchronous communications
-
-### Get
-
-To perform a *get* against Riak, use the [riak_get](http://basho.github.io/riak-c-client/riak_8h_source.html#l00078) function defined in [riak.h](https://github.com/basho/riak-c-client/blob/develop/src/include/riak.h).
-
-A [riak_get_options](http://basho.github.io/riak-c-client/struct__riak__get__options.html) struct needs to be provided to the function. 
-
-If the return value != [ERIAK_OK](http://basho.github.io/riak-c-client/riak__error_8h_source.html#l00027), the get request failed.
-
-Once you are finished with a riak_get_response, it needs to be freed via [riak_free_get_response](http://basho.github.io/riak-c-client/riak__messages-internal_8h_source.html#l00479). This is currently defined in [riak_messages-internal.h](https://github.com/basho/riak-c-client/blob/develop/src/internal/riak_messages-internal.h), but will be moved soon.
-
-```
-riak_error
-riak_get(riak_context              *ctx,
-         riak_binary               *bucket,
-         riak_binary               *key,
-         riak_get_options          *opts,
-         riak_get_response        **response);
-```
-
-#### Example
-```
-riak_get_response *get_response;
-riak_error err = riak_get(ctx, bucket_bin, key_bin, NULL, &get_response);
-if (err) {
-	fprintf(stderr, "Get Problems\n");
-}
-riak_print_get_response(get_response, output, sizeof(output));
-printf("%s\n", output);
-riak_free_get_response(ctx, &get_response);
-```
-
-### Put
-### Delete
-### Ping
-### Server info
-### List buckets
-### List keys
-### Get/set client id
-### Get/set/reset bucket properties
-
-
-
-
-### TODO
-
-## Asynchronous communications
-### Asynch setup
-### Get
-### Put
-### Delete
-### Ping
-### Server info
-### List buckets
-### List keys
-### Get/set client id
-### Get/set/reset bucket properties
-
-### TODO
-
 
 # Questions / Comments
 

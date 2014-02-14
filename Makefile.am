@@ -1,6 +1,7 @@
 ACLOCAL_AMFLAGS = -I m4
 
 SRCDIR = $(top_srcdir)/src
+RIAK_PB = $(top_srcdir)/riak_pb
 EXAMPLESDIR = $(top_srcdir)/examples
 TESTCUNITDIR = $(top_srcdir)/test/cunit
 
@@ -35,20 +36,6 @@ dist_msginclude_DATA =	src/include/messages/riak_2index.h \
 			src/include/messages/riak_set_bucketprops.h \
 			src/include/messages/riak_set_clientid.h
 
-BUILT_SOURCES =		src/proto/riak.pb-c.c \
-			src/proto/riak_dt.pb-c.c \
-			src/proto/riak_kv.pb-c.c \
-			src/proto/riak_search.pb-c.c \
-			src/proto/riak_yokozuna.pb-c.c
-
-BUILT_H =		src/proto/include/riak.pb-c.h \
-			src/proto/include/riak_dt.pb-c.h \
-			src/proto/include/riak_kv.pb-c.h \
-			src/proto/include/riak_search.pb-c.h \
-			src/proto/include/riak_yokozuna.pb-c.h
-
-CLEANFILES = 		$(BUILT_SOURCES) $(BUILT_H)
-
 lib_LTLIBRARIES =	libriak_c_client-1.0.la
 libriak_c_client_1_0_la_SOURCES = \
 			src/riak.c \
@@ -81,14 +68,18 @@ libriak_c_client_1_0_la_SOURCES = \
 			src/messages/riak_serverinfo.c \
 			src/messages/riak_set_bucketprops.c \
 			src/messages/riak_set_clientid.c \
-			$(BUILT_SOURCES)
+			riak_pb/c/riak.pb-c.c \
+			riak_pb/c/riak_dt.pb-c.c \
+			riak_pb/c/riak_kv.pb-c.c \
+			riak_pb/c/riak_search.pb-c.c \
+			riak_pb/c/riak_yokozuna.pb-c.c
 
 libriak_c_client_1_0_la_CPPFLAGS = \
 			$(PROTOBUFC_INCLUDES) $(PROTOBUF_INCLUDES) \
 			$(EVENT_INCLUDES) \
 			-I$(SRCDIR)/include \
 			-I$(SRCDIR)/internal \
-			-I$(SRCDIR)/proto/include -I$(SRCDIR) \
+			-I$(RIAK_PB)/c -I$(SRCDIR) \
 			-DUSE_DEBUG
 
 libriak_c_client_1_0_la_LIBADD = \
@@ -96,17 +87,6 @@ libriak_c_client_1_0_la_LIBADD = \
 			-lpthread
 
 AM_CFLAGS =		-g -Wall
-
-src/proto/%.pb-c.c: $(RIAK_PB)/%.pb-c.c
-	@echo "Copying Protocol Buffer Files"
-	cp $< $@
-
-src/proto/include/%.pb-c.h: $(RIAK_PB)/include/%.pb-c.h
-	@echo "Copying Protocol Buffer Header"
-	mkdir -p src/proto/include
-	cp $< $@
-
-$(BUILT_SOURCES) : $(BUILT_H)
 
 EXTRA_DIST =	$(SRCDIR)/include $(SRCDIR)/internal $(SRCDIR)/adapters \
 		$(EXAMPLESDIR)/example_call_backs.h \
@@ -122,7 +102,7 @@ riak_c_example_CPPFLAGS = \
 			-DUSE_DEBUG -D_RIAK_DEBUG \
 			-I$(SRCDIR)/include \
 			-I$(SRCDIR)/internal \
-			-I$(SRCDIR)/proto/include \
+			-I$(RIAK_PB)/c \
 			-I$(SRCDIR)/adapters \
 			-I$(SRCDIR) \
 			-Iexamples
@@ -155,7 +135,7 @@ riak_c_cunit_SOURCES = 	test/cunit/registry.c \
 
 riak_c_cunit_CPPFLAGS = -I$(SRCDIR)/include \
 			-I$(SRCDIR)/internal \
-			-I$(SRCDIR)/proto/include \
+			-I$(RIAK_PB)/c \
 			-I$(SRCDIR) \
 			-I$(TESTCUNITDIR)/include
 
