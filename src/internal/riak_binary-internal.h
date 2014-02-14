@@ -29,42 +29,29 @@
 
 // Based off of ProtobufCBinaryData
 struct _riak_binary {
-    riak_size_t   len;
-    riak_uint8_t *data;
+    riak_size_t    len;
+    riak_uint8_t  *data;
+    riak_boolean_t managed;
 };
 
 /**
  * @brief Allocate a new riak_binary and populate from data pointer
+ * @param cfg Riak Configuration
  * @param bin Existing `ProtobufCBinaryData` to be shallow copied
  * @returns pointer to newly created `riak_binary` struct
  */
 riak_binary*
-riak_binary_populate_from_pb(riak_config *cfg,
-                             ProtobufCBinaryData  *bin);
-
-void
-riak_binary_to_pb_copy(ProtobufCBinaryData *to,
-                       riak_binary         *from);
-riak_error
-riak_binary_to_pb_deep_copy(riak_config        *cfg,
-                            ProtobufCBinaryData *to,
-                            riak_binary         *from);
-void
-riak_binary_from_pb_copy(riak_binary        *to,
-                         ProtobufCBinaryData *from);
-riak_error
-riak_binary_from_pb_deep_copy(riak_config        *cfg,
-                              riak_binary         *to,
-                              ProtobufCBinaryData *from);
+riak_binary_copy_from_pb(riak_config         *cfg,
+                         ProtobufCBinaryData *bin);
 
 /**
- * @brief Clean up deeply allocated PB binary
- * @param cfg Riak Configuration
- * @param b Protocol Buffer
+ * @brief Create a shallow copy of `riak_binary` for use in PB
+ * @param to Existing PBC struct
+ * @param from Existing `riak_binary`
  */
 void
-riak_binary_deep_free_pb(riak_config        *cfg,
-                         ProtobufCBinaryData *b);
+riak_binary_copy_to_pb(ProtobufCBinaryData *to,
+                       riak_binary         *from);
 
 #define _RIAK_DUMP_BINARY_HEX(B) { char buffer[10240]; \
     char *dest = buffer; \

@@ -40,7 +40,7 @@ riak_reset_bucketprops_request_encode(riak_operation      *rop,
     RpbResetBucketReq resetmsg;
     rpb_reset_bucket_req__init(&resetmsg);
 
-    riak_binary_to_pb_copy(&resetmsg.bucket, bucket);
+    riak_binary_copy_to_pb(&resetmsg.bucket, bucket);
 
     riak_uint32_t msglen = rpb_reset_bucket_req__get_packed_size(&resetmsg);
     riak_uint8_t* msgbuf = (riak_uint8_t*)(cfg->malloc_fn)(msglen);

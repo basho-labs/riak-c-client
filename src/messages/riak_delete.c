@@ -41,8 +41,8 @@ riak_delete_request_encode(riak_operation      *rop,
     riak_config *cfg = riak_operation_get_config(rop);
     RpbDelReq delmsg = RPB_DEL_REQ__INIT;
 
-    riak_binary_to_pb_copy(&delmsg.bucket, bucket);
-    riak_binary_to_pb_copy(&delmsg.key, key);
+    riak_binary_copy_to_pb(&delmsg.bucket, bucket);
+    riak_binary_copy_to_pb(&delmsg.key, key);
 
     // process delete options
     if (options != NULL) {
@@ -69,7 +69,7 @@ riak_delete_request_encode(riak_operation      *rop,
         }
         if (options->has_vclock) {
             delmsg.has_vclock = RIAK_TRUE;
-            riak_binary_to_pb_copy(&delmsg.vclock, options->vclock);
+            riak_binary_copy_to_pb(&delmsg.vclock, options->vclock);
         }
         if (options->has_w) {
             delmsg.has_w = RIAK_TRUE;
@@ -230,7 +230,7 @@ riak_delete_options_set_vclock(riak_config      *cfg,
     if (opt->vclock) {
         riak_free(cfg, &opt->vclock);
     }
-    opt->vclock = riak_binary_deep_new(cfg, value);
+    opt->vclock = riak_binary_copy(cfg, value);
 }
 void
 riak_delete_options_set_w(riak_delete_options *opt,

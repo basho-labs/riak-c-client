@@ -42,23 +42,23 @@ riak_2index_request_encode(riak_operation      *rop,
 
     riak_operation_set_bucket(rop, bucket);
     riak_operation_set_index(rop, index);
-    riak_binary_to_pb_copy(&twoimsg.bucket, bucket);
-    riak_binary_to_pb_copy(&twoimsg.index, index);
+    riak_binary_copy_to_pb(&twoimsg.bucket, bucket);
+    riak_binary_copy_to_pb(&twoimsg.index, index);
 
     // process get options
     if (index_options != NULL) {
         twoimsg.qtype = index_options->qtype;
         twoimsg.has_key = index_options->has_key;
         if (index_options->has_key) {
-            riak_binary_to_pb_copy(&twoimsg.key, index_options->key);
+            riak_binary_copy_to_pb(&twoimsg.key, index_options->key);
         }
         twoimsg.has_range_min = index_options->has_range_min;
         if (index_options->has_range_min) {
-            riak_binary_to_pb_copy(&twoimsg.range_min, index_options->range_min);
+            riak_binary_copy_to_pb(&twoimsg.range_min, index_options->range_min);
         }
         twoimsg.has_range_max = index_options->has_range_max;
         if (index_options->has_range_max) {
-            riak_binary_to_pb_copy(&twoimsg.range_max, index_options->range_max);
+            riak_binary_copy_to_pb(&twoimsg.range_max, index_options->range_max);
         }
         twoimsg.has_return_terms = index_options->has_return_terms;
         twoimsg.return_terms = index_options->return_terms;
@@ -68,17 +68,17 @@ riak_2index_request_encode(riak_operation      *rop,
         twoimsg.max_results = index_options->max_results;
         twoimsg.has_continuation = index_options->has_continuation;
         if (index_options->has_continuation) {
-            riak_binary_to_pb_copy(&twoimsg.continuation, index_options->continuation);
+            riak_binary_copy_to_pb(&twoimsg.continuation, index_options->continuation);
         }
         twoimsg.has_timeout = index_options->has_timeout;
         twoimsg.timeout = index_options->timeout;
         twoimsg.has_type = index_options->has_type;
         if (index_options->has_type) {
-            riak_binary_to_pb_copy(&twoimsg.type, index_options->type);
+            riak_binary_copy_to_pb(&twoimsg.type, index_options->type);
         }
         twoimsg.has_term_regex = index_options->has_term_regex;
         if (index_options->has_term_regex) {
-            riak_binary_to_pb_copy(&twoimsg.term_regex, index_options->term_regex);
+            riak_binary_copy_to_pb(&twoimsg.term_regex, index_options->term_regex);
         }
         twoimsg.has_pagination_sort = index_options->has_pagination_sort;
         twoimsg.pagination_sort = index_options->pagination_sort;
@@ -167,7 +167,7 @@ riak_2index_response_decode(riak_operation        *rop,
 
         for(i = 0, j = 0, chunk = 0; i < response->n_keys; i++) {
             RpbIndexResp *rpb_response = response->_internal[chunk];
-            response->keys[i] = riak_binary_populate_from_pb(cfg, &(rpb_response->keys[j]));
+            response->keys[i] = riak_binary_copy_from_pb(cfg, &(rpb_response->keys[j]));
             if (response->keys[i] == NULL) {
                 riak_free(cfg, &(response->keys));
                 return ERIAK_OUT_OF_MEMORY;
@@ -197,7 +197,7 @@ riak_2index_response_decode(riak_operation        *rop,
     // Is this correct?  This would only be from the last message
     RpbIndexResp *rpb_response = response->_internal[response->_n_responses-1];
     response->has_continuation = rpb_response->has_continuation;
-    response->continuation = riak_binary_populate_from_pb(cfg, &(rpb_response->continuation));
+    response->continuation = riak_binary_copy_from_pb(cfg, &(rpb_response->continuation));
     response->has_done = rpb_response->has_done;
     response->done = rpb_response->done;
 
@@ -440,7 +440,7 @@ riak_2index_options_set_key(riak_config         *cfg,
                             riak_2index_options *opt,
                             riak_binary         *value) {
     opt->has_key = RIAK_TRUE;
-    opt->key = riak_binary_deep_new(cfg, value);
+    opt->key = riak_binary_copy(cfg, value);
     if (opt->key == NULL) {
         return ERIAK_OUT_OF_MEMORY;
     }
@@ -452,7 +452,7 @@ riak_2index_options_set_range_min(riak_config         *cfg,
                                   riak_2index_options *opt,
                                   riak_binary         *value) {
     opt->has_range_min = RIAK_TRUE;
-    opt->range_min = riak_binary_deep_new(cfg, value);
+    opt->range_min = riak_binary_copy(cfg, value);
     if (opt->range_min == NULL) {
         return ERIAK_OUT_OF_MEMORY;
     }
@@ -464,7 +464,7 @@ riak_2index_options_set_range_max(riak_config         *cfg,
                                   riak_2index_options *opt,
                                   riak_binary         *value) {
     opt->has_range_max = RIAK_TRUE;
-    opt->range_max = riak_binary_deep_new(cfg, value);
+    opt->range_max = riak_binary_copy(cfg, value);
     if (opt->range_max == NULL) {
         return ERIAK_OUT_OF_MEMORY;
     }
@@ -497,7 +497,7 @@ riak_2index_options_set_continuation(riak_config         *cfg,
                                      riak_2index_options *opt,
                                      riak_binary         *value) {
     opt->has_continuation = RIAK_TRUE;
-    opt->continuation = riak_binary_deep_new(cfg, value);
+    opt->continuation = riak_binary_copy(cfg, value);
     if (opt->continuation == NULL) {
         return ERIAK_OUT_OF_MEMORY;
     }
@@ -516,7 +516,7 @@ riak_2index_options_set_type(riak_config         *cfg,
                              riak_2index_options *opt,
                              riak_binary         *value) {
     opt->has_type = RIAK_TRUE;
-    opt->type = riak_binary_deep_new(cfg, value);
+    opt->type = riak_binary_copy(cfg, value);
     if (opt->type == NULL) {
         return ERIAK_OUT_OF_MEMORY;
     }
@@ -528,7 +528,7 @@ riak_2index_options_set_term_regex(riak_config         *cfg,
                                    riak_2index_options *opt,
                                    riak_binary         *value) {
     opt->has_term_regex = RIAK_TRUE;
-    opt->term_regex = riak_binary_deep_new(cfg, value);
+    opt->term_regex = riak_binary_copy(cfg, value);
     if (opt->term_regex == NULL) {
         return ERIAK_OUT_OF_MEMORY;
     }

@@ -39,7 +39,7 @@ riak_get_bucketprops_request_encode(riak_operation   *rop,
     RpbGetBucketReq bucketreq;
     rpb_get_bucket_req__init(&bucketreq);
 
-    riak_binary_to_pb_copy(&(bucketreq.bucket), bucket);
+    riak_binary_copy_to_pb(&(bucketreq.bucket), bucket);
     riak_size_t msglen = rpb_get_bucket_req__get_packed_size(&bucketreq);
     riak_uint8_t *msgbuf = (riak_uint8_t*)(cfg->malloc_fn)(msglen);
     if (msgbuf == NULL) {

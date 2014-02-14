@@ -40,8 +40,8 @@ riak_mapreduce_request_encode(riak_operation   *rop,
     riak_config *cfg = riak_operation_get_config(rop);
     RpbMapRedReq mapmsg = RPB_MAP_RED_REQ__INIT;
 
-    riak_binary_to_pb_copy(&mapmsg.request, map_request);
-    riak_binary_to_pb_copy(&mapmsg.content_type, content_type);
+    riak_binary_copy_to_pb(&mapmsg.request, map_request);
+    riak_binary_copy_to_pb(&mapmsg.content_type, content_type);
 
     riak_uint32_t msglen = rpb_map_red_req__get_packed_size (&mapmsg);
     riak_uint8_t* msgbuf = (riak_uint8_t*)(cfg->malloc_fn)(msglen);
@@ -127,7 +127,7 @@ riak_mapreduce_response_decode(riak_operation           *rop,
             msg->has_phase = rpb_response->has_phase;
             msg->phase = rpb_response->phase;
             msg->has_response = rpb_response->has_response;
-            msg->response = riak_binary_populate_from_pb(cfg, &(rpb_response->response));
+            msg->response = riak_binary_copy_from_pb(cfg, &(rpb_response->response));
         }
     }
 

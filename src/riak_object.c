@@ -70,11 +70,11 @@ riak_pairs_copy_to_pb(riak_config  *cfg,
             return ERIAK_OUT_OF_MEMORY;
         }
         
-        riak_binary_to_pb_copy(&(pbpair[i]->key), pair[i]->key);
+        riak_binary_copy_to_pb(&(pbpair[i]->key), pair[i]->key);
         
         if (pair[i]->has_value) {
             pbpair[i]->has_value = RIAK_TRUE;
-            riak_binary_to_pb_copy(&(pbpair[i]->value), pair[i]->value);
+            riak_binary_copy_to_pb(&(pbpair[i]->value), pair[i]->value);
         }
     }
     // Finally assign the pointer to the list of pair pointers
@@ -104,13 +104,13 @@ riak_pairs_copy_from_pb(riak_config *cfg,
     if (pair == NULL) {
         return ERIAK_OUT_OF_MEMORY;
     }
-    pair->key = riak_binary_populate_from_pb(cfg, &(pbpair->key));
+    pair->key = riak_binary_copy_from_pb(cfg, &(pbpair->key));
     if (pair->key == NULL) {
         return ERIAK_OUT_OF_MEMORY;
     }
     if (pbpair->has_value) {
         pair->has_value = RIAK_TRUE;
-        pair->value = riak_binary_populate_from_pb(cfg, &(pbpair->value));
+        pair->value = riak_binary_copy_from_pb(cfg, &(pbpair->value));
         if (pair->value == NULL) {
             return ERIAK_OUT_OF_MEMORY;
         }
@@ -205,15 +205,15 @@ riak_links_copy_to_pb(riak_config  *cfg,
         memset(pblink[i], '\0', sizeof(RpbLink));
         if (link[i]->has_bucket) {
             pblink[i]->has_bucket = RIAK_TRUE;
-            riak_binary_to_pb_copy(&(pblink[i]->bucket), link[i]->bucket);
+            riak_binary_copy_to_pb(&(pblink[i]->bucket), link[i]->bucket);
         }
         if (link[i]->has_key) {
             pblink[i]->has_key = RIAK_TRUE;
-            riak_binary_to_pb_copy(&(pblink[i]->key), link[i]->key);
+            riak_binary_copy_to_pb(&(pblink[i]->key), link[i]->key);
         }
         if (link[i]->has_tag) {
             pblink[i]->has_tag = RIAK_TRUE;
-            riak_binary_to_pb_copy(&(pblink[i]->tag), link[i]->tag);
+            riak_binary_copy_to_pb(&(pblink[i]->tag), link[i]->tag);
         }
     }
     // Finally assign the pointer to the list of link pointers
@@ -252,21 +252,21 @@ riak_links_copy_from_pb(riak_config  *cfg,
         memset(link[i], '\0', sizeof(riak_link));
         if (pblink[i]->has_bucket) {
             link[i]->has_bucket = RIAK_TRUE;
-            link[i]->bucket = riak_binary_populate_from_pb(cfg, &(pblink[i]->bucket));
+            link[i]->bucket = riak_binary_copy_from_pb(cfg, &(pblink[i]->bucket));
             if (link[i]->bucket == NULL) {
                 return ERIAK_OUT_OF_MEMORY;
             }
         }
         if (pblink[i]->has_key) {
             pblink[i]->has_key = RIAK_TRUE;
-            link[i]->key = riak_binary_populate_from_pb(cfg, &(pblink[i]->key));
+            link[i]->key = riak_binary_copy_from_pb(cfg, &(pblink[i]->key));
             if (link[i]->key == NULL) {
                 return ERIAK_OUT_OF_MEMORY;
             }
         }
         if (pblink[i]->has_tag) {
             pblink[i]->has_tag = RIAK_TRUE;
-            link[i]->tag = riak_binary_populate_from_pb(cfg, &(pblink[i]->tag));
+            link[i]->tag = riak_binary_copy_from_pb(cfg, &(pblink[i]->tag));
             if (link[i]->tag == NULL) {
                 return ERIAK_OUT_OF_MEMORY;
             }
@@ -381,18 +381,18 @@ riak_object_to_pb_copy(riak_config *cfg,
 
     rpb_content__init(to);
 
-    riak_binary_to_pb_copy(&(to->value), from->value);
+    riak_binary_copy_to_pb(&(to->value), from->value);
     if (from->has_charset) {
         to->has_charset = RIAK_TRUE;
-        riak_binary_to_pb_copy(&(to->charset), from->charset);
+        riak_binary_copy_to_pb(&(to->charset), from->charset);
     }
     if (from->has_content_encoding) {
         to->has_content_encoding = RIAK_TRUE;
-        riak_binary_to_pb_copy(&(to->content_encoding), from->encoding);
+        riak_binary_copy_to_pb(&(to->content_encoding), from->encoding);
     }
     if (from->has_content_type) {
         to->has_content_type = RIAK_TRUE;
-        riak_binary_to_pb_copy(&(to->content_type), from->content_type);
+        riak_binary_copy_to_pb(&(to->content_type), from->content_type);
     }
     if (from->has_deleted) {
         to->has_deleted = RIAK_TRUE;
@@ -408,7 +408,7 @@ riak_object_to_pb_copy(riak_config *cfg,
     }
     if (from->has_vtag) {
         to->has_vtag = RIAK_TRUE;
-        riak_binary_to_pb_copy(&(to->vtag), from->vtag);
+        riak_binary_copy_to_pb(&(to->vtag), from->vtag);
     }
 
     // Indexes
@@ -452,14 +452,14 @@ riak_object_new_from_pb(riak_config  *cfg,
     }
     riak_object *to = *target;
 
-    to->value = riak_binary_populate_from_pb(cfg, &(from->value));
+    to->value = riak_binary_copy_from_pb(cfg, &(from->value));
     if (to->value == NULL) {
         riak_free(cfg, target);
         return ERIAK_OUT_OF_MEMORY;
     }
     if (from->has_charset) {
         to->has_charset = RIAK_TRUE;
-        to->charset= riak_binary_populate_from_pb(cfg, &(from->charset));
+        to->charset= riak_binary_copy_from_pb(cfg, &(from->charset));
         if (to->charset == NULL) {
             riak_free(cfg, target);
             return ERIAK_OUT_OF_MEMORY;
@@ -467,7 +467,7 @@ riak_object_new_from_pb(riak_config  *cfg,
     }
     if (from->has_content_encoding) {
         to->has_content_encoding = RIAK_TRUE;
-        to->encoding = riak_binary_populate_from_pb(cfg, &(from->content_encoding));
+        to->encoding = riak_binary_copy_from_pb(cfg, &(from->content_encoding));
         if (to->encoding == NULL) {
             riak_free(cfg, target);
             return ERIAK_OUT_OF_MEMORY;
@@ -475,7 +475,7 @@ riak_object_new_from_pb(riak_config  *cfg,
     }
     if (from->has_content_type) {
         to->has_content_type = RIAK_TRUE;
-        to->content_type = riak_binary_populate_from_pb(cfg, &(from->content_type));
+        to->content_type = riak_binary_copy_from_pb(cfg, &(from->content_type));
         if (to->content_type == NULL) {
             riak_free(cfg, target);
             return ERIAK_OUT_OF_MEMORY;
@@ -495,7 +495,7 @@ riak_object_new_from_pb(riak_config  *cfg,
     }
     if (from->has_vtag) {
         to->has_vtag = RIAK_TRUE;
-        to->vtag = riak_binary_populate_from_pb(cfg, &(from->vtag));
+        to->vtag = riak_binary_copy_from_pb(cfg, &(from->vtag));
         if (to->vtag == NULL) {
             riak_free(cfg, target);
             return ERIAK_OUT_OF_MEMORY;

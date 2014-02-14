@@ -28,43 +28,66 @@ typedef struct _riak_binary riak_binary;
 
 /**
  * @brief Allocate a new `riak_binary` struct
+ * @param cfg Riak Configuration
  * @param len Length of binary in bytes
- * @param data Pointer to binary data (shallow copy)
+ * @param data Pointer to binary data
  * @returns pointer to newly created `riak_binary` struct
  */
 riak_binary*
-riak_binary_new(riak_config *cfg,
+riak_binary_new(riak_config  *cfg,
                 riak_size_t   len,
                 riak_uint8_t *data);
 
+/**
+ * @brief Allocate a new `riak_binary` struct (shallow copy)
+ * @param cfg Riak Configuration
+ * @param len Length of binary in bytes
+ * @param data Pointer to binary data
+ * @returns pointer to newly created `riak_binary` struct
+ */
+riak_binary*
+riak_binary_new_shallow(riak_config  *cfg,
+                        riak_size_t   len,
+                        riak_uint8_t *data);
 
 /**
  * @brief Allocate a new `riak_binary` struct
+ * @param cfg Riak Configuration
  * @param bin Original Riak Binary
  * @returns pointer to newly created `riak_binary` struct
  */
 riak_binary*
-riak_binary_deep_new(riak_config *cfg,
-                     riak_binary *bin);
+riak_binary_copy(riak_config *cfg,
+                 riak_binary *bin);
 
 /**
- * @brief Allocate a new riak_binary and populate from data pointer
- * @param bin Existing `riak_binary` to be shallow copied
+ * @brief Allocate a new `riak_binary` struct (shallow copy)
+ * @param cfg Riak Configuration
+ * @param bin Original Riak Binary
  * @returns pointer to newly created `riak_binary` struct
  */
 riak_binary*
-riak_binary_populate(riak_config *cfg,
-                     riak_binary  *bin);
+riak_binary_copy_shallow(riak_config *cfg,
+                         riak_binary *bin);
+
+/**
+ * @brief Create a new `riak_binary` from a string
+ * @param cfg Riak Configuration
+ * @param from NULL-terminated string
+ * @returns pointer to newly created `riak_binary` struct
+ */
+riak_binary*
+riak_binary_copy_from_string(riak_config *cfg,
+                             const char  *from);
 
 /**
  * @brief Free allocated memory used by `riak_binary`
+ * @param cfg Riak Configuration
+ * @param bin Existing `riak_binary`
  */
 void
 riak_binary_free(riak_config  *cfg,
-                 riak_binary  **bin);
-void
-riak_binary_deep_free(riak_config  *cfg,
-                      riak_binary  **bin);
+                 riak_binary **bin);
 
 /**
  * @brief Return the length of the binary object
@@ -82,30 +105,28 @@ riak_binary_len(riak_binary *bin);
 riak_uint8_t*
 riak_binary_data(riak_binary *bin);
 
-void
-riak_binary_copy(riak_binary *to,
-                 riak_binary *from);
-riak_error
-riak_binary_deep_copy(riak_config *cfg,
-                      riak_binary  *to,
-                      riak_binary  *from);
-int
+/**
+ * @brief User-readable representation of a binary object
+ * @param bin Riak Binary
+ * @param target Where to write the output
+ * @param len Maximum allowed number of bytes to write
+ * @returns Number of bytes written
+ */
+riak_size_t
 riak_binary_print(riak_binary  *bin,
                   char         *target,
                   riak_uint32_t len);
-int
+
+/**
+ * @brief Hexidecimal representation of a binary object
+ * @param bin Riak Binary
+ * @param target Where to write the output
+ * @param len Maximum allowed number of bytes to write
+ * @returns Number of bytes written
+ */
+riak_size_t
 riak_binary_hex_print(riak_binary  *bin,
                       char         *target,
                       riak_uint32_t len);
-void
-riak_binary_from_string(riak_binary *to,
-                        const char  *from);
-riak_error
-riak_binary_from_string_deep_copy(riak_config *cfg,
-                                  riak_binary  *to,
-                                  const char   *from);
-riak_binary*
-riak_binary_new_from_string(riak_config *cfg,
-                            const char   *from);
 
 #endif // _RIAK_BINARY_H

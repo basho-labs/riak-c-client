@@ -53,12 +53,12 @@ riak_modfun_deep_new(riak_config *cfg,
     if (fun == NULL) {
         return NULL;
     }
-    fun->module = riak_binary_deep_new(cfg, from->module);
+    fun->module = riak_binary_copy(cfg, from->module);
     if (fun->module == NULL) {
         riak_free(cfg, &fun);
         return NULL;
     }
-    fun->function = riak_binary_deep_new(cfg, from->function);
+    fun->function = riak_binary_copy(cfg, from->function);
     if (fun->function == NULL) {
         riak_binary_free(cfg, &(fun->module));
         riak_free(cfg, &fun);
@@ -79,8 +79,8 @@ riak_modfun_copy_to_pb(riak_config   *cfg,
     if (pbmod_fun == NULL) {
         return ERIAK_OUT_OF_MEMORY;
     }
-    riak_binary_to_pb_copy(&(pbmod_fun->module), mod_fun->module);
-    riak_binary_to_pb_copy(&(pbmod_fun->function), mod_fun->function);
+    riak_binary_copy_to_pb(&(pbmod_fun->module), mod_fun->module);
+    riak_binary_copy_to_pb(&(pbmod_fun->function), mod_fun->function);
     // Finally assign the pointer to the list of mod_fun pointers
     *pbmod_fun_target = pbmod_fun;
 
@@ -95,11 +95,11 @@ riak_modfun_copy_from_pb(riak_config   *cfg,
     if (pbmod_fun == NULL) {
         return ERIAK_OUT_OF_MEMORY;
     }
-    mod_fun->module = riak_binary_populate_from_pb(cfg, &(pbmod_fun->module));
+    mod_fun->module = riak_binary_copy_from_pb(cfg, &(pbmod_fun->module));
     if (mod_fun->module == NULL) {
         return ERIAK_OUT_OF_MEMORY;
     }
-    mod_fun->function = riak_binary_populate_from_pb(cfg, &(pbmod_fun->function));
+    mod_fun->function = riak_binary_copy_from_pb(cfg, &(pbmod_fun->function));
     if (mod_fun->function == NULL) {
         return ERIAK_OUT_OF_MEMORY;
     }
@@ -164,7 +164,7 @@ riak_error
 riak_modfun_set_module(riak_config  *cfg,
                         riak_modfun *mod_fun,
                         riak_binary *value) {
-    mod_fun->module = riak_binary_deep_new(cfg, value);
+    mod_fun->module = riak_binary_copy(cfg, value);
     if (mod_fun->module == NULL) {
         return ERIAK_OUT_OF_MEMORY;
     }
@@ -175,7 +175,7 @@ riak_error
 riak_modfun_set_function(riak_config  *cfg,
                           riak_modfun *mod_fun,
                           riak_binary  *value) {
-    mod_fun->function = riak_binary_deep_new(cfg, value);
+    mod_fun->function = riak_binary_copy(cfg, value);
     if (mod_fun->function == NULL) {
         return ERIAK_OUT_OF_MEMORY;
     }
@@ -229,7 +229,7 @@ riak_commit_hooks_copy_to_pb(riak_config       *cfg,
         memset(pbhook[i], '\0', sizeof(RpbCommitHook));
         if (hook[i]->has_name) {
             pbhook[i]->has_name = RIAK_TRUE;
-            riak_binary_to_pb_copy(&(pbhook[i]->name), hook[i]->name);
+            riak_binary_copy_to_pb(&(pbhook[i]->name), hook[i]->name);
         }
         riak_error err = riak_modfun_copy_to_pb(cfg, &(pbhook[i]->modfun), hook[i]->modfun);
         if (err) {
@@ -260,7 +260,7 @@ riak_commit_hooks_copy_from_pb(riak_config         *cfg,
         memset(hook[i], '\0', sizeof(riak_commit_hook));
         if (pbhook[i]->has_name) {
             hook[i]->has_name = RIAK_TRUE;
-            hook[i]->name = riak_binary_populate_from_pb(cfg, &(pbhook[i]->name));
+            hook[i]->name = riak_binary_copy_from_pb(cfg, &(pbhook[i]->name));
             if (hook[i]->name == NULL) {
                 return ERIAK_OUT_OF_MEMORY;
             }
@@ -355,7 +355,7 @@ riak_commit_hook_set_name(riak_config      *cfg,
                           riak_commit_hook *hook,
                           riak_binary      *value) {
     hook->has_name = RIAK_TRUE;
-    hook->name = riak_binary_deep_new(cfg, value);
+    hook->name = riak_binary_copy(cfg, value);
     if (hook->name == NULL) {
         return ERIAK_OUT_OF_MEMORY;
     }
@@ -473,7 +473,7 @@ riak_bucketprops_to_pb_copy(riak_config       *cfg,
     }
     if (from->has_backend) {
         to->has_backend = RIAK_TRUE;
-        riak_binary_to_pb_copy(&(to->backend), from->backend);
+        riak_binary_copy_to_pb(&(to->backend), from->backend);
     }
     if (from->has_search) {
         to->has_search = RIAK_TRUE;
@@ -485,7 +485,7 @@ riak_bucketprops_to_pb_copy(riak_config       *cfg,
     }
     if (from->has_search_index) {
         to->has_search_index = RIAK_TRUE;
-        riak_binary_to_pb_copy(&(to->search_index), from->search_index);
+        riak_binary_copy_to_pb(&(to->search_index), from->search_index);
     }
 
     riak_error err = riak_modfun_copy_to_pb(cfg, &(to->chash_keyfun), from->chash_keyfun);
@@ -601,7 +601,7 @@ riak_bucketprops_new_from_pb(riak_config        *cfg,
     }
     if (from->has_backend) {
         to->has_backend = RIAK_TRUE;
-        to->backend = riak_binary_populate_from_pb(cfg, &(from->backend));
+        to->backend = riak_binary_copy_from_pb(cfg, &(from->backend));
         if (to->backend == NULL) {
             riak_free(cfg, target);
             return ERIAK_OUT_OF_MEMORY;
@@ -616,7 +616,7 @@ riak_bucketprops_new_from_pb(riak_config        *cfg,
     }
     if (from->has_search_index) {
         to->has_search_index = RIAK_TRUE;
-        to->search_index = riak_binary_populate_from_pb(cfg, &(from->search_index));
+        to->search_index = riak_binary_copy_from_pb(cfg, &(from->search_index));
         if (to->search_index == NULL) {
             riak_free(cfg, target);
             return ERIAK_OUT_OF_MEMORY;

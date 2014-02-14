@@ -43,8 +43,8 @@ riak_get_request_encode(riak_operation  *rop,
 
     riak_operation_set_bucket(rop, bucket);
     riak_operation_set_key(rop, key);
-    riak_binary_to_pb_copy(&getmsg.bucket, bucket);
-    riak_binary_to_pb_copy(&getmsg.key, key);
+    riak_binary_copy_to_pb(&getmsg.bucket, bucket);
+    riak_binary_copy_to_pb(&getmsg.key, key);
 
     // process get options
     if(get_options != NULL) {
@@ -58,7 +58,7 @@ riak_get_request_encode(riak_operation  *rop,
         getmsg.notfound_ok = get_options->notfound_ok;
         if (get_options->has_if_modified) {
             getmsg.has_if_modified = get_options->has_if_modified;
-            riak_binary_to_pb_copy(&getmsg.if_modified, get_options->if_modified);
+            riak_binary_copy_to_pb(&getmsg.if_modified, get_options->if_modified);
         }
         getmsg.has_head = get_options->has_head;
         getmsg.head = get_options->head;
@@ -114,7 +114,7 @@ riak_get_response_decode(riak_operation     *rop,
 
     if (rpbresp->has_vclock) {
         response->has_vclock = RIAK_TRUE;
-        response->vclock = riak_binary_populate_from_pb(cfg, &(rpbresp->vclock));
+        response->vclock = riak_binary_copy_from_pb(cfg, &(rpbresp->vclock));
         if (response->vclock == NULL) {
             riak_free(cfg, &response);
             return ERIAK_OUT_OF_MEMORY;
@@ -139,8 +139,8 @@ riak_get_response_decode(riak_operation     *rop,
                 riak_free(cfg, &response);
                 return err;
             }
-            response->content[i]->bucket  = riak_binary_deep_new(cfg, riak_operation_get_bucket(rop));
-            response->content[i]->key     = riak_binary_deep_new(cfg, riak_operation_get_key(rop));
+            response->content[i]->bucket  = riak_binary_copy(cfg, riak_operation_get_bucket(rop));
+            response->content[i]->key     = riak_binary_copy(cfg, riak_operation_get_key(rop));
             response->content[i]->has_key = RIAK_TRUE;
         }
     }
@@ -399,7 +399,7 @@ riak_get_options_set_if_modified(riak_config      *cfg,
     if (opt->if_modified) {
         riak_free(cfg, &opt->if_modified);
     }
-    opt->if_modified =  riak_binary_deep_new(cfg, value);
+    opt->if_modified =  riak_binary_copy(cfg, value);
 }
 void
 riak_get_options_set_head(riak_get_options *opt,

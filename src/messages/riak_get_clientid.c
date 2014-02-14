@@ -69,7 +69,7 @@ riak_get_clientid_response_decode(riak_operation              *rop,
     memset(response, '\0', sizeof(riak_get_clientid_response));
     response->_internal = rpbresp;
 
-    response->client_id = riak_binary_populate_from_pb(cfg, &(rpbresp->client_id));
+    response->client_id = riak_binary_copy_from_pb(cfg, &(rpbresp->client_id));
     if (response->client_id == NULL) {
         return ERIAK_OUT_OF_MEMORY;
     }
