@@ -22,6 +22,7 @@
 
 #include <errno.h>
 #include <fcntl.h>
+#include <netinet/in.h>
 #include "riak.h"
 #include "riak_messages-internal.h"
 #include "riak_utils-internal.h"

@@ -36,8 +36,8 @@ dist_msginclude_DATA =	src/include/messages/riak_2index.h \
 			src/include/messages/riak_set_bucketprops.h \
 			src/include/messages/riak_set_clientid.h
 
-lib_LTLIBRARIES =	libriak_c_client-1.0.la
-libriak_c_client_1_0_la_SOURCES = \
+lib_LTLIBRARIES =	libriak_c_client-0.5.la
+libriak_c_client_0_5_la_SOURCES = \
 			src/riak.c \
 			src/riak_async.c \
 			src/riak_binary.c \
@@ -74,7 +74,7 @@ libriak_c_client_1_0_la_SOURCES = \
 			riak_pb/c/riak_search.pb-c.c \
 			riak_pb/c/riak_yokozuna.pb-c.c
 
-libriak_c_client_1_0_la_CPPFLAGS = \
+libriak_c_client_0_5_la_CPPFLAGS = \
 			$(PROTOBUFC_INCLUDES) $(PROTOBUF_INCLUDES) \
 			$(EVENT_INCLUDES) \
 			-I$(SRCDIR)/include \
@@ -82,7 +82,7 @@ libriak_c_client_1_0_la_CPPFLAGS = \
 			-I$(RIAK_PB)/c -I$(SRCDIR) \
 			-DUSE_DEBUG
 
-libriak_c_client_1_0_la_LIBADD = \
+libriak_c_client_0_5_la_LIBADD = \
 			$(PROTOBUFC_LIBS) $(PROTOBUF_LIBS) $(EVENT_LIBS) \
 			-lpthread
 
@@ -108,11 +108,11 @@ riak_c_example_CPPFLAGS = \
 			-Iexamples
 
 riak_c_example_LDADD = \
-		-lriak_c_client-1.0 \
+		-lriak_c_client-0.5 \
 		$(PROTOBUFC_LIBS) $(PROTOBUF_LIBS) $(EVENT_LIBS) \
 		-lcunit -lpthread
 
-riak_c_example_DEPENDENCIES = libriak_c_client-1.0.la
+riak_c_example_DEPENDENCIES = libriak_c_client-0.5.la
 
 check_PROGRAMS = riak_c_cunit
 riak_c_cunit_SOURCES = 	test/cunit/registry.c \
@@ -139,10 +139,10 @@ riak_c_cunit_CPPFLAGS = -I$(SRCDIR)/include \
 			-I$(SRCDIR) \
 			-I$(TESTCUNITDIR)/include
 
-riak_c_cunit_LDADD =	-lriak_c_client-1.0 \
+riak_c_cunit_LDADD =	-lriak_c_client-0.5 \
 			$(PROTOBUFC_LIBS) $(PROTOBUF_LIBS) $(EVENT_LIBS) \
 			-lcunit -lpthread
 
-riak_c_cunit_DEPENDENCIES = libriak_c_client-1.0.la
+riak_c_cunit_DEPENDENCIES = libriak_c_client-0.5.la
 
 TESTS = riak_c_cunit
