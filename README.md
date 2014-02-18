@@ -45,10 +45,6 @@ brew install git automake autoconf libtool pkg-config protobuf protobuf-c libeve
 
 git clone https://github.com/basho/riak-c-client
 cd riak-c-client
-git clone https://github.com/basho/riak_pb
-cd riak_pb
-make c_compile
-cd ..
 ./autogen.sh
 ./configure
 make
@@ -94,10 +90,6 @@ cd ..
  
 git clone https://github.com/basho/riak-c-client
 cd riak-c-client
-git clone https://github.com/basho/riak_pb
-cd riak_pb
-make c_compile
-cd ..
 ./autogen.sh
 LDFLAGS="-Wl,-rpath=/usr/local/protobuf-2.5.0/lib,--enable-new-dtags" ./configure PKG_CONFIG_PATH=/usr/local/protobuf-2.5.0/lib/pkgconfig
 make
@@ -147,10 +139,6 @@ cd ..
 
 git clone https://github.com/basho/riak-c-client
 cd riak-c-client
-git clone https://github.com/basho/riak_pb
-cd riak_pb
-make c_compile
-cd ..
 ./autogen.sh
 ./configure PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 make
@@ -211,12 +199,34 @@ cd ..
 
 git clone https://github.com/basho/riak-c-client
 cd riak-c-client
-git clone https://github.com/basho/riak_pb
-cd riak_pb
-make c_compile
-cd ..
 ./autogen.sh
 ./configure CFLAGS="-m64" PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib/amd64/pkgconfig
+make
+make check
+doxygen
+make install
+```
+
+### FreeBSD 10.0
+
+```
+pkg install sudo-1.8.8 (as root)
+sudoedit /usr/local/etc/sudoers
+sudo pkg install git-1.8.5.2
+sudo pkg install gcc-4.6.4
+sudo pkg install autoconf-2.69
+sudo pkg install automake-1.14
+sudo pkg install libtool-2.4.2_2
+sudo pkg install libevent2-2.0.21
+sudo pkg install protobuf-2.5.0_1
+sudo pkg install protobuf-c-0.15_1
+sudo pkg install cunit-2.1.0_2
+sudo pkg install gmake-3.82_1
+
+git clone https://github.com/basho/riak-c-client
+cd riak-c-client
+./autogen.sh
+CC=gcc46 ./configure
 make
 make check
 doxygen
