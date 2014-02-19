@@ -312,30 +312,20 @@ riak_links_print(riak_link    *link,
                  char         *target,
                  riak_uint32_t len) {
     int total = 0;
-    int wrote = 0;
     char buffer[2048];
     if (link->has_bucket) {
         riak_binary_print(link->bucket, buffer, sizeof(buffer));
-        wrote = snprintf(target, len, "Link buffer: %s\n", buffer);
-        len -= wrote;
-        target += wrote;
-        total += wrote;
+        total += riak_snprintf_cat(&target, &len, "Link buffer: %s\n", buffer);
     }
     if (link->has_key) {
         riak_binary_print(link->key, buffer, sizeof(buffer));
-        wrote = snprintf(target, len, "Link Key: %s\n", buffer);
-        len -= wrote;
-        target += wrote;
-        total += wrote;
+        total += riak_snprintf_cat(&target, &len, "Link Key: %s\n", buffer);
     }
     if (link->has_tag) {
         riak_binary_print(link->tag, buffer, sizeof(buffer));
-        wrote = snprintf(target, len, "Link Tag: %s\n", target);
-        len -= wrote;
-        target += wrote;
-        total += wrote;
+        total += riak_snprintf_cat(&target, &len, "Link Tag: %s\n", target);
     }
-    return total;
+    return total; /* beware: total could be >= len */
 }
 
 //
@@ -538,78 +528,59 @@ riak_object_print(riak_object  *obj,
     char buffer[2048];
     riak_binary_print(obj->bucket, buffer, sizeof(buffer));
     int total = 0;
-    int wrote = snprintf(target, len, "Bucket: %s\n", buffer);
-    len -= wrote;
-    target += wrote;
-    total += wrote;
+
+    /* XXX: we do not check that riak_snprintf() did not return -1 below. */
+    total += riak_snprintf_cat(&target, &len, "Bucket: %s\n", buffer);
+
     if (obj->has_key) {
         riak_binary_print(obj->key, buffer, sizeof(buffer));
-        wrote = snprintf(target, len, "Key: %s\n", buffer);
-        len -= wrote;
-        target += wrote;
-        total += wrote;
+	total += riak_snprintf_cat(&target, &len, "Key: %s\n", buffer);
     }
-    // TODO: Bigger buffer for full value
-    riak_binary_print(obj->value, buffer, sizeof(buffer));
-    wrote = snprintf(target, len, "Value: %s\n", buffer);
-    len -= wrote;
-    target += wrote;
-    total += wrote;
+
+    {
+      // TODO: Bigger buffer for full value
+      riak_binary_print(obj->value, buffer, sizeof(buffer));
+      total += riak_snprintf_cat(&target, &len, "Value: %s\n", buffer);
+    }
+
     if (obj->has_charset) {
         riak_binary_print(obj->charset, buffer, sizeof(buffer));
-        wrote = snprintf(target, len, "Charset: %s\n", buffer);
-        len -= wrote;
-        target += wrote;
-        total += wrote;
+        total += riak_snprintf_cat(&target, &len, "Charset: %s\n", buffer);
     }
     if (obj->has_last_mod) {
         time_t mod = (time_t)(obj->last_mod);
         strftime(buffer, 1024, "%Y-%m-%d %H:%M:%S", localtime(&mod));
-        wrote = snprintf(target, len, "Last Mod: %s\n", buffer);
-        len -= wrote;
-        target += wrote;
-        total += wrote;
+        total += riak_snprintf_cat(&target, &len, "Last Mod: %s\n", buffer);
     }
     if (obj->has_last_mod_usecs) {
-        wrote = snprintf(target, len, "Last Mod uSecs: %d\n", obj->last_mod_usecs);
-        len -= wrote;
-        target += wrote;
-        total += wrote;
+        total += riak_snprintf_cat(&target, &len, "Last Mod uSecs: %d\n", obj->last_mod_usecs);
     }
     if (obj->has_content_type) {
         riak_binary_print(obj->content_type, buffer, sizeof(buffer));
-        wrote = snprintf(target, len, "Content Type: %s\n", buffer);
-        len -= wrote;
-        target += wrote;
-        total += wrote;
+        total += riak_snprintf_cat(&target, &len, "Content Type: %s\n", buffer);
     }
     if (obj->has_content_encoding) {
         riak_binary_print(obj->encoding, buffer, sizeof(buffer));
-        wrote = snprintf(target, len, "Content Encoding: %s\n", buffer);
-        len -= wrote;
-        target += wrote;
-        total += wrote;
+        total += riak_snprintf_cat(&target, &len, "Content Encoding: %s\n", buffer);
     }
     if (obj->has_deleted) {
-        wrote = snprintf(target, len, "Deleted: %s\n", (obj->deleted) ? "true" : "false");
-        len -= wrote;
-        target += wrote;
-        total += wrote;
+        total += riak_snprintf_cat(&target, &len, "Deleted: %s\n", (obj->deleted) ? "true" : "false");
     }
     if (obj->has_vtag) {
         riak_binary_print(obj->vtag, buffer, sizeof(buffer));
-        wrote = snprintf(target, len, "VTag: %s\n", buffer);
-        len -= wrote;
-        target += wrote;
-        total += wrote;
+        total += riak_snprintf_cat(&target, &len, "VTag: %s\n", buffer);
     }
 
     int i;
     for(i = 0; i < obj->n_links; i++) {
-        wrote = riak_links_print(obj->links[i], target, len);
-        len -= wrote;
-        target += wrote;
-        total += wrote;
+        int wrote = riak_links_print(obj->links[i], target, len);
+	total += wrote; /* we will return the number of character which would have been written */
+
+	if (wrote >= len)
+	  wrote = len - 1;
+
+	target += wrote;
+	len -= wrote;
     }
     return total;
 }

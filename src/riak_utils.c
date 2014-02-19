@@ -20,6 +20,8 @@
  *
  *********************************************************************/
 
+#include <stdarg.h>
+
 #include "riak.h"
 #include "riak_binary-internal.h"
 #include "riak_messages-internal.h"
@@ -87,3 +89,40 @@ riak_free_internal(riak_config *cfg,
     }
 }
 
+/* append formatted string to `target' buffer to the limit of available space, but still
+ *  return the number of characters which would have been printed if enough space was
+ *  available.
+ * This function ignore an output error and returns 0.
+ *
+ * Basically, if the sum of calls to riak_snprintf_cat() is >= than the initial buffer
+ *  size, then it means that not enough space was available.
+ *
+ * This functions:
+ * - move the `target' pointer forwards
+ * - decrement the `left_to_write' integer
+ */
+size_t
+riak_snprintf_cat(char **target,
+		  riak_uint32_t *left_to_write,
+		  const char *format,
+		  ...)
+{
+  va_list ap;
+  size_t nb_bytes;
+
+  va_start(ap, format);
+  nb_bytes = vsnprintf(*target, *left_to_write, format, ap);
+  va_end(ap);
+
+  if (nb_bytes < 0)
+    return 0; /* bug: ignore error... */
+
+  int nb_really_wrote = nb_bytes;
+  if (nb_really_wrote >= *left_to_write)
+    nb_really_wrote = *left_to_write - 1; /* it will always be 1 byte left for the final '\0' */
+
+  *target += nb_really_wrote;
+  *left_to_write -= nb_really_wrote;
+
+  return nb_bytes;
+}

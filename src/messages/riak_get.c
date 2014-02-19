@@ -154,7 +154,7 @@ riak_print_get_response(riak_get_response *response,
                         char              *target,
                         riak_size_t        len) {
     riak_int32_t left_to_write = len;
-    riak_int32_t wrote;
+    riak_int32_t wrote = 0;
     riak_print_binary_hex("V-Clock", response->vclock, &target, &wrote, &left_to_write);
     riak_print_bool("Unmodified", response->unmodified, &target, &wrote, &left_to_write);
     riak_print_bool("Deleted", response->deleted, &target, &wrote, &left_to_write);
@@ -163,6 +163,10 @@ riak_print_get_response(riak_get_response *response,
     riak_uint32_t i;
     for(i = 0; (i < response->n_content) && (left_to_write > 0); i++) {
         wrote = riak_object_print(response->content[i], target, left_to_write);
+
+	if (wrote >= left_to_write)
+	  wrote = left_to_write - 1;
+
         left_to_write -= wrote;
         target += wrote;
     }
