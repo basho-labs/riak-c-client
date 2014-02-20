@@ -1,6 +1,7 @@
+p
 # -*- Autoconf -*-
 AC_PREREQ([2.61])
-AC_INIT([riak_c_client],[0.1])
+AC_INIT([riak_c_client],[0.5])
 AC_CANONICAL_SYSTEM
 AM_INIT_AUTOMAKE([foreign subdir-objects])
 AC_CONFIG_MACRO_DIR([m4])

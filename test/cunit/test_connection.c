@@ -24,6 +24,7 @@
 #include <stdio.h>
 #include <stddef.h>
 #include <string.h>
+#include <netinet/in.h>
 #include <CUnit/CUnit.h>
 #include <CUnit/Automated.h>
 #include <CUnit/Basic.h>

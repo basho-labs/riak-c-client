@@ -3,17 +3,17 @@
 
 # Status
 
-**This project is currently under heavy development and is NOT ready to use in a production environment. Expect
+**This project is currently under development and is NOT ready to use in a production environment. Expect
 significant changes to the API.**
 
 ## Current tasks:
-* completing Riak 1.4.x API
 * cleanup around libevent threading (currently broken)
 * support Riak 2.0 messages
+   * Bucket Types
    * CRDTs (riak_dt)
    * Yokozuna
-* move C headers generation to riak-pb 
-* clean up header files, only require a single riak.h 
+   * Security
+   * Strong consistency
 * testing
 * general code cleanup
 * documentation 
@@ -22,197 +22,221 @@ significant changes to the API.**
 
 # Dependencies
 
-* autotools
-* libevent
-* protobuf
-* protobuf-c
+* automake
+* autoconf
+* libtool
+* libevent-2.0.21
+* protobuf-2.5.0
+* protobuf-c-0.15
+* cunit
+* pkg-config
 * pthreads
 * doxygen (if you are building docs)
+* riak_pb
+	* see note below
+	
+### riak_pb 
 
+The riak-c-client depends on [riak_pb](https://github.com/basho/riak_pb), which is automatically downloaded via `./autogen.sh` as part of a normal build. The branch/tag that riak_pb uses is recorded in `.\.riak_pb.vsn`.
 
 # Building
 
-### OSX Build
+### OSX 10.8.5 and 10.9.1 Build
 
-	git clone https://github.com/basho/zlog.git
-	cd zlog
-	git checkout feature/add-pkgconfig
-	
-	make
-	sudo make install
-		or 
-	make PREFIX=/usr/local/
-	sudo make PREFIX=/usr/local/ install
-	
-	brew install protobuf protobuf-c libevent cunit
-	git clone git@github.com:/basho/riak-c-client.git
-	cd riak-c-client
-	./autogen.sh
-	make
-
-
-### Ubuntu 13.04 build
+Be sure Xcode, command-line tools and [Home Brew](http://brew.sh/) installed first.
 
 ```
-sudo apt-get install libevent-dev protobuf-c-compiler dev-libprotobuf dev-libprotoc libcunit1 libcunit1-ncurses-dev
- 
-git clone https://github.com/basho/zlog.git
-cd zlog
-git checkout feature/add-pkgconfig
-	
+brew install git automake autoconf libtool pkg-config protobuf protobuf-c libevent cunit doxygen
+
+git clone https://github.com/basho/riak-c-client
+cd riak-c-client
+./autogen.sh
+./configure
 make
+make check
+doxygen
+make install
+```
+
+### Ubuntu 12.04 LTS and 13.10 Build
+
+*Note:* There appears to a conflict between the required version of **libprotobuf** installed on the system by default, so we need to put our version in its own directory.
+
+```
+sudo apt-get update
+sudo apt-get install build-essential git automake libtool libcunit1-dev doxygen
+
+wget https://protobuf.googlecode.com/files/protobuf-2.5.0.tar.gz
+tar fx protobuf-2.5.0.tar.gz
+cd protobuf-2.5.0
+./configure --prefix=/usr/local/protobuf-2.5.0
+make
+make check
 sudo make install
-	or 
-make PREFIX=/usr/local/
-sudo make PREFIX=/usr/local/ install 
- 
-wget https://protobuf-c.googlecode.com/files/protobuf-c-0.15.tar.gz
-cd protobuf-c-0.15
-./configure && make && sudo make install
 cd ..
 
-git clone git@github.com:/basho/riak-c-client.git
+wget https://protobuf-c.googlecode.com/files/protobuf-c-0.15.tar.gz
+tar fx protobuf-c-0.15.tar.gz
+cd protobuf-c-0.15
+./configure CXXFLAGS=-I/usr/local/protobuf-2.5.0/include LDFLAGS=-L/usr/local/protobuf-2.5.0/lib PATH=/usr/local/protobuf-2.5.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+make
+make check
+sudo make install
+cd ..
+
+wget https://github.com/downloads/libevent/libevent/libevent-2.0.21-stable.tar.gz
+tar fx libevent-2.0.21-stable.tar.gz
+cd libevent-2.0.21-stable
+./configure
+make
+LD_LIBRARY_PATH=/usr/local/protobuf-2.5.0/lib:/usr/local/lib make check
+sudo make install
+cd ..
+ 
+git clone https://github.com/basho/riak-c-client
 cd riak-c-client
-scons
+./autogen.sh
+LDFLAGS="-Wl,-rpath=/usr/local/protobuf-2.5.0/lib,--enable-new-dtags" ./configure PKG_CONFIG_PATH=/usr/local/protobuf-2.5.0/lib/pkgconfig
+make
+make check
+doxygen
+make install
 ```
 
-### API Documentation
-
-[Here](http://basho.github.io/riak-c-client/index.html)
-
-### Building local API docs
-
-To build API documentation + man pages, you'll need `doxygen` installed. 
-
-	scons docs
-
-
-# Tutorial (outdated, work in progress)
-
-**Note** 
-Links to documentation below are against the Git *master* branch. 
-
-**Note** 
-Links to specific line numbers in the html API documentation may not work as some files are not long enough to scroll to a specific line numbers.
-
-
-## Include files
-
-## 
+### Centos Developer Desktop Build
 
 ```
- // TODO: more cleanup around .h files
- #include "riak.h"
- #include "riak_command.h"
- #include "riak_event.h"
- #include "riak_call_backs.h"
+wget https://github.com/downloads/libevent/libevent/libevent-2.0.21-stable.tar.gz
+tar fx libevent-2.0.21-stable.tar.gz
+cd libevent-2.0.21-stable
+./configure
+make
+make check
+sudo make install
+cd ..
+
+wget https://protobuf.googlecode.com/files/protobuf-2.5.0.tar.gz
+tar fx protobuf-2.5.0.tar.gz
+cd protobuf-2.5.0
+./configure
+make
+make check
+sudo make install
+cd ..
+
+wget https://protobuf-c.googlecode.com/files/protobuf-c-0.15.tar.gz
+tar fx protobuf-c-0.15.tar.gz
+cd protobuf-c-0.15
+./configure LDFLAGS="-L/usr/local/lib"
+make
+make check
+sudo make install
+cd ..
+
+wget http://downloads.sourceforge.net/project/cunit/CUnit/2.1-2/CUnit-2.1-2-src.tar.bz2
+tar fx CUnit-2.1-2-src.tar.bz2
+cd CUnit-2.1-2
+./configure
+make
+make check
+sudo make install
+cd ..
+
+git clone https://github.com/basho/riak-c-client
+cd riak-c-client
+./autogen.sh
+./configure PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
+make
+make check
+doxygen
+make install
 ```
 
-## Connecting to Riak
+### Solaris 11
 
-A **riak_context** needs to be created to communicate with Riak.
-
-A convenience macro is available if you wish to specify only host and port.
-
-`#define riak_context_new_default(C,H,P) riak_context_new((C),(H),(P),NULL,NULL,NULL,NULL,NULL,NULL)`
-	* defined in [riak_context.h](http://basho.github.io/riak-c-client/riak__context_8h_source.html#l00055)
-
-To create a full riak_context with custom memory management and logging, see [riak_context_new](http://basho.github.io/riak-c-client/riak__context_8h_source.html#l00048)
-
-#### Example
+Add to PATH:
 ```
-char *hostname = "127.0.0.1";
-char *pbport   = "10017";
-riak_context *ctx;
-riak_error err = riak_context_new_default(&ctx, hostname, pbport);
-if (err) {
-	// handle connection error
-}
+/usr/local/bin
 ```
 
-## Working with binary values
-
-In order to accomodate multiple character sets, all values stored with the Riak C client use a [riak_binary](http://basho.github.io/riak-c-client/riak__binary_8h_source.html). Any character set conversion can be done before a value is stored in a **riak_binary**. 
-
-To allocate a new [riak_binary](http://basho.github.io/riak-c-client/riak__binary_8h_source.html), call the [riak_binary_new](http://basho.github.io/riak-c-client/riak__binary_8h_source.html#l00035) function:
-
-Allocated riak_binaries must be freed with the [riak_binary_free](http://basho.github.io/riak-c-client/riak__binary_8h_source.html#l00064) function.
-
-
-If you are working with **char*** values, use the [riak_binary_new_from_string](http://basho.github.io/riak-c-client/riak__binary_8h_source.html#l00109) function:
-
-
-There are several riak_binary utility functions available, please see the [API docs](http://basho.github.io/riak-c-client/riak__binary_8h_source.html).
-
-####Example
-
 ```
-riak_binary *bucket_bin = riak_binary_new_from_string(ctx, "my_bucket"); // Not copied
-riak_binary *key_bin    = riak_binary_new_from_string(ctx, "my_key"); // Not copied
-riak_binary *value_bin  = riak_binary_new_from_string(ctx, "my_value"); // Not copied
-```
+sudo pkg install -v pkg:/developer/gcc-45@4.5.2-0.175.1.0.0.24.0
+sudo pkg install -v pkg:/developer/build/automake-111@1.11.2-0.175.1.0.0.24.0
+sudo pkg install -v pkg:/developer/build/autoconf@2.68-0.175.1.0.0.24.0
+sudo pkg install -v pkg:/developer/versioning/git@1.7.9.2-0.175.1.0.0.24.0
+sudo pkg install -v pkg:/developer/documentation-tool/doxygen@1.7.6.1-0.175.1.0.0.24.0
 
-## Synchronous communications
+wget https://github.com/downloads/libevent/libevent/libevent-2.0.21-stable.tar.gz
+tar fx libevent-2.0.21-stable.tar.gz
+cd libevent-2.0.21-stable
+./configure CFLAGS="-m64"
+make
+make check
+sudo make install
+cd ..
 
-### Get
+wget https://protobuf.googlecode.com/files/protobuf-2.5.0.tar.gz
+tar fx protobuf-2.5.0.tar.gz
+cd protobuf-2.5.0
+./configure CFLAGS="-m64"
+make
+make check
+sudo make install
+cd ..
 
-To perform a *get* against Riak, use the [riak_get](http://basho.github.io/riak-c-client/riak_8h_source.html#l00078) function defined in [riak.h](https://github.com/basho/riak-c-client/blob/develop/src/include/riak.h).
+wget https://protobuf-c.googlecode.com/files/protobuf-c-0.15.tar.gz
+tar fx protobuf-c-0.15.tar.gz
+cd protobuf-c-0.15
+./configure  CFLAGS="-m64" CXXFLAGS="-I/usr/local/include -m64" LDFLAGS="-L/usr/local/lib/amd64" PATH="/usr/local/bin:/usr/bin:/usr/sbin"  LIBS="-lnsl -lsocket -lresolv"
+make
+make check
+sudo make install
+cd ..
 
-A [riak_get_options](http://basho.github.io/riak-c-client/struct__riak__get__options.html) struct needs to be provided to the function. 
+wget http://downloads.sourceforge.net/project/cunit/CUnit/2.1-2/CUnit-2.1-2-src.tar.bz2
+tar fx CUnit-2.1-2-src.tar.bz2
+cd CUnit-2.1-2
+./configure CFLAGS="-m64"
+make
+make check
+sudo make install
+cd ..
 
-If the return value != [ERIAK_OK](http://basho.github.io/riak-c-client/riak__error_8h_source.html#l00027), the get request failed.
-
-Once you are finished with a riak_get_response, it needs to be freed via [riak_free_get_response](http://basho.github.io/riak-c-client/riak__messages-internal_8h_source.html#l00479). This is currently defined in [riak_messages-internal.h](https://github.com/basho/riak-c-client/blob/develop/src/internal/riak_messages-internal.h), but will be moved soon.
-
-```
-riak_error
-riak_get(riak_context              *ctx,
-         riak_binary               *bucket,
-         riak_binary               *key,
-         riak_get_options          *opts,
-         riak_get_response        **response);
-```
-
-#### Example
-```
-riak_get_response *get_response;
-riak_error err = riak_get(ctx, bucket_bin, key_bin, NULL, &get_response);
-if (err) {
-	fprintf(stderr, "Get Problems\n");
-}
-riak_print_get_response(get_response, output, sizeof(output));
-printf("%s\n", output);
-riak_free_get_response(ctx, &get_response);
+git clone https://github.com/basho/riak-c-client
+cd riak-c-client
+./autogen.sh
+./configure CFLAGS="-m64" PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib/amd64/pkgconfig
+make
+make check
+doxygen
+make install
 ```
 
-### Put
-### Delete
-### Ping
-### Server info
-### List buckets
-### List keys
-### Get/set client id
-### Get/set/reset bucket properties
+### FreeBSD 10.0
 
+```
+pkg install sudo-1.8.8 (as root)
+sudoedit /usr/local/etc/sudoers
+sudo pkg install git-1.8.5.2
+sudo pkg install gcc-4.6.4
+sudo pkg install autoconf-2.69
+sudo pkg install automake-1.14
+sudo pkg install libtool-2.4.2_2
+sudo pkg install libevent2-2.0.21
+sudo pkg install protobuf-2.5.0_1
+sudo pkg install protobuf-c-0.15_1
+sudo pkg install cunit-2.1.0_2
+sudo pkg install gmake-3.82_1
 
-
-
-### TODO
-
-## Asynchronous communications
-### Asynch setup
-### Get
-### Put
-### Delete
-### Ping
-### Server info
-### List buckets
-### List keys
-### Get/set client id
-### Get/set/reset bucket properties
-
-### TODO
-
+git clone https://github.com/basho/riak-c-client
+cd riak-c-client
+./autogen.sh
+CC=gcc46 ./configure
+make
+make check
+doxygen
+make install
+```
 
 # Questions / Comments
 
