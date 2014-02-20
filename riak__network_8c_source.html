@@ -92,7 +92,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> * riak_network.c: Riak C General Networking Utilities</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment"> * This file is provided to you under the Apache License,</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment"> * Version 2.0 (the &quot;License&quot;); you may not use this file</span></div>
@@ -111,94 +111,107 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment"> *********************************************************************/</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &lt;errno.h&gt;</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="riak_8h.html">riak.h</a>&quot;</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="riak__messages-internal_8h.html">riak_messages-internal.h</a>&quot;</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="riak__utils-internal_8h.html">riak_utils-internal.h</a>&quot;</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
-<div class="line"><a name="l00029"></a><span class="lineno"><a class="code" href="riak__network_8c.html#a4523bf027820a19532c9c9ea514bc818">   29</a></span>&#160;<a class="code" href="riak__network_8h.html#a4523bf027820a19532c9c9ea514bc818" title="Turns ASCII host/port into addrinfo struct. ">riak_resolve_address</a>(<a class="code" href="struct__riak__context.html">riak_context</a>      *ctx,</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;                     <a class="code" href="riak__types_8h.html#a7f8b6773136c682371e320746da32c29">riak_addr_resolver</a> resolver,</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;                     <span class="keyword">const</span> <span class="keywordtype">char</span>        *host,</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;                     <span class="keyword">const</span> <span class="keywordtype">char</span>        *portnum,</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;                     <a class="code" href="riak__types_8h.html#a3a2b510543130a06cfec955cfff890b0">riak_addrinfo</a>    **addrinfo) {</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <a class="code" href="riak__types_8h.html#a3a2b510543130a06cfec955cfff890b0">riak_addrinfo</a> addrhints;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="comment">// Build the hints to tell getaddrinfo how to act.</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    memset(&amp;addrhints, <span class="charliteral">&#39;\0&#39;</span>, <span class="keyword">sizeof</span>(<a class="code" href="riak__types_8h.html#a3a2b510543130a06cfec955cfff890b0">riak_addrinfo</a>));</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment">//   addrhints.ai_family   = AF_UNSPEC; // IPv6 seems a bit broken for now</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    addrhints.ai_family   = AF_INET; <span class="comment">// IPv4 works like a champ</span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    addrhints.ai_socktype = SOCK_STREAM;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    addrhints.ai_protocol = IPPROTO_TCP; <span class="comment">// We want a TCP socket</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="comment">/* Only return addresses we can use. */</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    addrhints.ai_flags = EVUTIL_AI_ADDRCONFIG;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="comment">// Use nice, platform agnostic DNS lookup and return an array of results</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordtype">int</span> err = resolver(host, portnum, &amp;addrhints, addrinfo);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keywordflow">if</span> (err != 0) {</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <a class="code" href="riak__log_8h.html#ab05fe5eaa594aedbcd0055e60cdc5015">riak_log_fatal_context</a>(ctx, <span class="stringliteral">&quot;Error while resolving &#39;%s:%s&#39;: %s&quot;</span>,</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                 host, portnum, evutil_gai_strerror(err));</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a8b15e63ad163395562b75c8879bfe2b2">ERIAK_DNS_RESOLUTION</a>;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    }</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a7c1673179668a548724d5cbf0221bcb8">ERIAK_OK</a>;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;}</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno"><a class="code" href="riak__network_8c.html#ad45070a0e33b297ccc91547955fa9ae1">   57</a></span>&#160;<a class="code" href="riak__network_8h.html#ad45070a0e33b297ccc91547955fa9ae1" title="Prints a human-readable version of addrinfo. ">riak_print_host</a>(<a class="code" href="riak__types_8h.html#a3a2b510543130a06cfec955cfff890b0">riak_addrinfo</a> *addrinfo,</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;                <span class="keywordtype">char</span>          *target,</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;                <span class="keywordtype">int</span>            len,</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                <a class="code" href="riak__types_8h.html#a3e3915aabf4b85c60930e128aa0e158c">riak_uint16_t</a> *port) {</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keyword">struct </span>sockaddr_in  *ipv4;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keyword">struct </span>sockaddr_in6 *ipv6;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordflow">switch</span> (addrinfo-&gt;ai_addr-&gt;sa_family) {</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keywordflow">case</span> AF_INET:</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        ipv4 = (<span class="keyword">struct </span>sockaddr_in*)addrinfo-&gt;ai_addr;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        evutil_inet_ntop(ipv4-&gt;sin_family, &amp;(ipv4-&gt;sin_addr), target, len);</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        *port = ntohs(ipv4-&gt;sin_port);</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordflow">case</span> AF_INET6:</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        ipv6 = (<span class="keyword">struct </span>sockaddr_in6*)addrinfo-&gt;ai_addr;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        evutil_inet_ntop(ipv6-&gt;sin6_family, &amp;(ipv6-&gt;sin6_addr), target, len);</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        *port = ntohs(ipv6-&gt;sin6_port);</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordflow">default</span>:</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <a class="code" href="riak__utils-internal_8h.html#a8cd9f2e1a3c206c25f85d68496487dd8" title="Since strlcpy is not standard everywhere, write our own. ">riak_strlcpy</a>(target, <span class="stringliteral">&quot;&lt;Unknown&gt;&quot;</span>, len);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        port = 0;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    }</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;}</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<a class="code" href="riak__types_8h.html#a348eacbcecbcc43481425761291767eb">riak_socket_t</a></div>
-<div class="line"><a name="l00081"></a><span class="lineno"><a class="code" href="riak__network_8c.html#aa54e41abaaa4fb699ec89c727b33c8b4">   81</a></span>&#160;<a class="code" href="riak__network_8h.html#aa54e41abaaa4fb699ec89c727b33c8b4" title="Opens a socket and connects to a host. ">riak_just_open_a_socket</a>(<a class="code" href="struct__riak__context.html">riak_context</a>  *ctx,</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;                        <a class="code" href="riak__types_8h.html#a3a2b510543130a06cfec955cfff890b0">riak_addrinfo</a> *addrinfo) {</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <a class="code" href="riak__types_8h.html#a348eacbcecbcc43481425761291767eb">riak_socket_t</a> sock = socket(addrinfo-&gt;ai_family,</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;                                addrinfo-&gt;ai_socktype,</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;                                addrinfo-&gt;ai_protocol);</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="keywordflow">if</span> (sock &lt; 0) {</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        <a class="code" href="riak__log_8h.html#ab05fe5eaa594aedbcd0055e60cdc5015">riak_log_fatal_context</a>(ctx, <span class="stringliteral">&quot;%s&quot;</span>, <span class="stringliteral">&quot;Could not just open a socket&quot;</span>);</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    }</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="keywordtype">int</span> err = connect(sock, addrinfo-&gt;ai_addr, addrinfo-&gt;ai_addrlen);</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="keywordflow">if</span> (err) {</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        <span class="comment">// Since this is nonblocking, we&#39;ll need to treat some errors</span></div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        <span class="comment">// (like EINTR and EAGAIN) specially.</span></div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        <span class="keywordflow">if</span> (errno != EINPROGRESS &amp;&amp; errno != EAGAIN) {</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;            <span class="keywordtype">char</span> ip[INET6_ADDRSTRLEN];</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;            <a class="code" href="riak__types_8h.html#a3e3915aabf4b85c60930e128aa0e158c">riak_uint16_t</a> port;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;            <a class="code" href="riak__network_8h.html#ad45070a0e33b297ccc91547955fa9ae1" title="Prints a human-readable version of addrinfo. ">riak_print_host</a>(addrinfo, ip, <span class="keyword">sizeof</span>(ip), &amp;port);</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;            EVUTIL_CLOSESOCKET(sock);</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;            <a class="code" href="riak__log_8h.html#ab05fe5eaa594aedbcd0055e60cdc5015">riak_log_fatal_context</a>(ctx, <span class="stringliteral">&quot;Could not connect a socket to host %s:%d [%s]\n&quot;</span>, ip, port, strerror(errno));</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;            <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        }</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    }</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="keywordflow">return</span> sock;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;}</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &lt;fcntl.h&gt;</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &lt;netinet/in.h&gt;</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="riak_8h.html">riak.h</a>&quot;</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="riak__messages-internal_8h.html">riak_messages-internal.h</a>&quot;</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="riak__utils-internal_8h.html">riak_utils-internal.h</a>&quot;</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="code" href="riak__network_8c.html#a8ece8b677ecee09c194b103920513154">   31</a></span>&#160;<a class="code" href="riak__network_8h.html#a8ece8b677ecee09c194b103920513154" title="Turns ASCII host/port into addrinfo struct. ">riak_resolve_address</a>(<a class="code" href="struct__riak__config.html">riak_config</a>       *cfg,</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;                     <a class="code" href="riak__types_8h.html#a7f8b6773136c682371e320746da32c29">riak_addr_resolver</a> resolver,</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;                     <span class="keyword">const</span> <span class="keywordtype">char</span>        *host,</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;                     <span class="keyword">const</span> <span class="keywordtype">char</span>        *portnum,</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;                     <a class="code" href="riak__types_8h.html#aa6516300a70b6a0d5db7fd21c2ef3843">riak_addrinfo</a>    **addrinfo) {</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <a class="code" href="riak__types_8h.html#aa6516300a70b6a0d5db7fd21c2ef3843">riak_addrinfo</a> addrhints;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="comment">// Build the hints to tell getaddrinfo how to act.</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    memset(&amp;addrhints, <span class="charliteral">&#39;\0&#39;</span>, <span class="keyword">sizeof</span>(<a class="code" href="riak__types_8h.html#aa6516300a70b6a0d5db7fd21c2ef3843">riak_addrinfo</a>));</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment">//   addrhints.ai_family   = AF_UNSPEC; // IPv6 seems a bit broken for now</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    addrhints.ai_family   = AF_INET; <span class="comment">// IPv4 works like a champ</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    addrhints.ai_socktype = SOCK_STREAM;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    addrhints.ai_protocol = IPPROTO_TCP; <span class="comment">// We want a TCP socket</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="comment">/* Only return addresses we can use. */</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    addrhints.ai_flags = AI_ADDRCONFIG;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="comment">// Use nice, platform agnostic DNS lookup and return an array of results</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordtype">int</span> err = resolver(host, portnum, &amp;addrhints, addrinfo);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordflow">if</span> (err != 0) {</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <a class="code" href="riak__log_8h.html#a5cba32e6aabec3f80c82edb384aeff1d">riak_log_critical_config</a>(cfg, <span class="stringliteral">&quot;Error while resolving &#39;%s:%s&#39;: %s&quot;</span>,</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;                 host, portnum, gai_strerror(err));</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a8b15e63ad163395562b75c8879bfe2b2">ERIAK_DNS_RESOLUTION</a>;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    }</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a7c1673179668a548724d5cbf0221bcb8">ERIAK_OK</a>;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;}</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="code" href="riak__network_8c.html#ad45070a0e33b297ccc91547955fa9ae1">   59</a></span>&#160;<a class="code" href="riak__network_8h.html#ad45070a0e33b297ccc91547955fa9ae1" title="Prints a human-readable version of addrinfo. ">riak_print_host</a>(<a class="code" href="riak__types_8h.html#aa6516300a70b6a0d5db7fd21c2ef3843">riak_addrinfo</a> *addrinfo,</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                <span class="keywordtype">char</span>          *target,</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;                <span class="keywordtype">int</span>            len,</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;                <a class="code" href="riak__types_8h.html#a06c3c2160082cdee02a398f8a5d35071">riak_uint16_t</a> *port) {</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keyword">struct </span>sockaddr_in  *ipv4;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keyword">struct </span>sockaddr_in6 *ipv6;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordflow">switch</span> (addrinfo-&gt;ai_addr-&gt;sa_family) {</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordflow">case</span> AF_INET:</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        ipv4 = (<span class="keyword">struct </span>sockaddr_in*)addrinfo-&gt;ai_addr;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        inet_ntop(ipv4-&gt;sin_family, &amp;(ipv4-&gt;sin_addr), target, len);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        *port = ntohs(ipv4-&gt;sin_port);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordflow">case</span> AF_INET6:</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        ipv6 = (<span class="keyword">struct </span>sockaddr_in6*)addrinfo-&gt;ai_addr;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        inet_ntop(ipv6-&gt;sin6_family, &amp;(ipv6-&gt;sin6_addr), target, len);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        *port = ntohs(ipv6-&gt;sin6_port);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keywordflow">default</span>:</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <a class="code" href="riak__utils-internal_8h.html#a8cd9f2e1a3c206c25f85d68496487dd8" title="Since strlcpy is not standard everywhere, write our own. ">riak_strlcpy</a>(target, <span class="stringliteral">&quot;&lt;Unknown&gt;&quot;</span>, len);</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        port = 0;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    }</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;}</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<a class="code" href="riak__types_8h.html#a082911f37b78ac16e5a302fa20b16470">riak_socket_t</a></div>
+<div class="line"><a name="l00083"></a><span class="lineno"><a class="code" href="riak__network_8c.html#a7e741fd3b57d8b0f5d99bf6097e45508">   83</a></span>&#160;<a class="code" href="riak__network_8h.html#a7e741fd3b57d8b0f5d99bf6097e45508" title="Opens a socket and connects to a host. ">riak_just_open_a_socket</a>(<a class="code" href="struct__riak__config.html">riak_config</a>   *cfg,</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;                        <a class="code" href="riak__types_8h.html#aa6516300a70b6a0d5db7fd21c2ef3843">riak_addrinfo</a> *addrinfo) {</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <a class="code" href="riak__types_8h.html#a082911f37b78ac16e5a302fa20b16470">riak_socket_t</a> sock = socket(addrinfo-&gt;ai_family,</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;                                addrinfo-&gt;ai_socktype,</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;                                addrinfo-&gt;ai_protocol);</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keywordflow">if</span> (sock &lt; 0) {</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        <a class="code" href="riak__log_8h.html#a5cba32e6aabec3f80c82edb384aeff1d">riak_log_critical_config</a>(cfg, <span class="stringliteral">&quot;%s&quot;</span>, <span class="stringliteral">&quot;Could not just open a socket&quot;</span>);</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    }</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="preprocessor">#ifdef _RIAK_NON_BLOCKING</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="preprocessor"></span>    <a class="code" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a> blocking = <a class="code" href="riak__types_8h.html#a32b007d4c81d097b9f8a37d7b80317ef">RIAK_FALSE</a>;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="keywordtype">int</span> flags = fcntl(sock, F_GETFL, 0);</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <span class="keywordflow">if</span> (flags &lt; 0) <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    flags = blocking ? (flags&amp;~O_NONBLOCK) : (flags|O_NONBLOCK);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="keywordflow">if</span> (fcntl(sock, F_SETFL, flags) != 0) {</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;       <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    }</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="keywordtype">int</span> err = connect(sock, addrinfo-&gt;ai_addr, addrinfo-&gt;ai_addrlen);</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <span class="keywordflow">if</span> (err) {</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <span class="comment">// Since this is nonblocking, we&#39;ll need to treat some errors</span></div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        <span class="comment">// (like EINTR and EAGAIN) specially.</span></div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        <span class="keywordflow">if</span> (errno != EINPROGRESS &amp;&amp; errno != EAGAIN) {</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;            <span class="keywordtype">char</span> ip[INET6_ADDRSTRLEN];</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;            <a class="code" href="riak__types_8h.html#a06c3c2160082cdee02a398f8a5d35071">riak_uint16_t</a> port;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;            <a class="code" href="riak__network_8h.html#ad45070a0e33b297ccc91547955fa9ae1" title="Prints a human-readable version of addrinfo. ">riak_print_host</a>(addrinfo, ip, <span class="keyword">sizeof</span>(ip), &amp;port);</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;            close(sock);</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;            <a class="code" href="riak__log_8h.html#a5cba32e6aabec3f80c82edb384aeff1d">riak_log_critical_config</a>(cfg, <span class="stringliteral">&quot;Could not connect a socket to host %s:%d [%s]\n&quot;</span>, ip, port, strerror(errno));</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;            <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        }</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    }</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <span class="keywordflow">return</span> sock;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;}</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 28 2013 13:01:34 for riak-c-client by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Feb 20 2014 17:00:52 for riak-c-client by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

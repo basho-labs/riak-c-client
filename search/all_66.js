@@ -1,6 +1,9 @@
 var searchData=
 [
-  ['fd',['fd',['../struct__riak__event.html#a1cb3f944d8cdb68909aca6ada292d994',1,'_riak_event']]],
-  ['free_5ffn',['free_fn',['../struct__riak__context.html#a50ed90bd73873c495550badc275097db',1,'_riak_context']]],
-  ['function',['function',['../struct__riak__mod__fun.html#af879dc118e04ace9a9795d24c22fb3c7',1,'_riak_mod_fun']]]
+  ['fd',['fd',['../struct__riak__connection.html#ac6768533b130275da34d8f78e71f7ef5',1,'_riak_connection']]],
+  ['fields',['fields',['../struct__riak__search__doc.html#a24c760995b781e854f47353b289fbb2e',1,'_riak_search_doc']]],
+  ['filter',['filter',['../struct__riak__search__options.html#a8c120f06bcfd0cfffdae2d94bdcda813',1,'_riak_search_options']]],
+  ['fl',['fl',['../struct__riak__search__options.html#a144621455759073ea2b0c93132359409',1,'_riak_search_options']]],
+  ['free_5ffn',['free_fn',['../struct__riak__config.html#a0423ef894178e249f2abd92fff11b2ff',1,'_riak_config']]],
+  ['function',['function',['../struct__riak__modfun.html#ac2ee93b90b25601471581c0e2d84e5f1',1,'_riak_modfun']]]
 ];

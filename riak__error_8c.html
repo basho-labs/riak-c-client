@@ -85,16 +85,25 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">riak_error.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="riak__error_8h_source.html">riak_error.h</a>&quot;</code><br/>
+<div class="textblock"><code>#include &quot;<a class="el" href="riak_8h_source.html">riak.h</a>&quot;</code><br/>
+<code>#include &quot;riak_error.h&quot;</code><br/>
+<code>#include &quot;<a class="el" href="riak__messages-internal_8h_source.html">riak_messages-internal.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="riak__config-internal_8h_source.html">riak_config-internal.h</a>&quot;</code><br/>
 </div>
 <p><a href="riak__error_8c_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct__riak__server__error.html">_riak_server_error</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:a46b6f4e948b76b6c83600dad6ab0b3b6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__error_8c.html#a46b6f4e948b76b6c83600dad6ab0b3b6">_RIAK_ERROR_DEFINE_MSGS</a></td></tr>
@@ -102,6 +111,18 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:abde4aea0a6cbae862f7f00aaedb37e80"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__error_8c.html#abde4aea0a6cbae862f7f00aaedb37e80">riak_server_error_new</a> (struct <a class="el" href="struct__riak__config.html">_riak_config</a> *cfg, <a class="el" href="riak__error_8h.html#a61975700c4ddab00ab15143d7c6117e7">riak_server_error</a> **err, <a class="el" href="riak__types_8h.html#a7ec8ff62977a655990cac91b32f679d8">riak_uint32_t</a> errcode, struct <a class="el" href="struct__riak__binary.html">_riak_binary</a> *errmsg)</td></tr>
+<tr class="memdesc:abde4aea0a6cbae862f7f00aaedb37e80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new server error structure.  <a href="#abde4aea0a6cbae862f7f00aaedb37e80">More...</a><br/></td></tr>
+<tr class="separator:abde4aea0a6cbae862f7f00aaedb37e80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a531640117212f6cdf1d5a9ec0b730333"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__error_8c.html#a531640117212f6cdf1d5a9ec0b730333">riak_server_error_free</a> (struct <a class="el" href="struct__riak__config.html">_riak_config</a> *cfg, <a class="el" href="riak__error_8h.html#a61975700c4ddab00ab15143d7c6117e7">riak_server_error</a> **err)</td></tr>
+<tr class="memdesc:a531640117212f6cdf1d5a9ec0b730333"><td class="mdescLeft">&#160;</td><td class="mdescRight">Free memory used by a server error.  <a href="#a531640117212f6cdf1d5a9ec0b730333">More...</a><br/></td></tr>
+<tr class="separator:a531640117212f6cdf1d5a9ec0b730333"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabdd42284f0fa0ed672461ba6f2165cb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__types_8h.html#a7ec8ff62977a655990cac91b32f679d8">riak_uint32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__error_8c.html#aabdd42284f0fa0ed672461ba6f2165cb">riak_server_error_get_errcode</a> (<a class="el" href="riak__error_8h.html#a61975700c4ddab00ab15143d7c6117e7">riak_server_error</a> *err)</td></tr>
+<tr class="memdesc:aabdd42284f0fa0ed672461ba6f2165cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the code associated with an error response from the server.  <a href="#aabdd42284f0fa0ed672461ba6f2165cb">More...</a><br/></td></tr>
+<tr class="separator:aabdd42284f0fa0ed672461ba6f2165cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7bc03b566d33eb4a8a4b49878d4d6401"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__error_8c.html#a7bc03b566d33eb4a8a4b49878d4d6401">riak_server_error_get_errmsg</a> (<a class="el" href="riak__error_8h.html#a61975700c4ddab00ab15143d7c6117e7">riak_server_error</a> *err)</td></tr>
+<tr class="memdesc:a7bc03b566d33eb4a8a4b49878d4d6401"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the error message returned by the server.  <a href="#a7bc03b566d33eb4a8a4b49878d4d6401">More...</a><br/></td></tr>
+<tr class="separator:a7bc03b566d33eb4a8a4b49878d4d6401"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aadb0d3aee102fc1415ed054c13095b54"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__error_8c.html#aadb0d3aee102fc1415ed054c13095b54">riak_strerror</a> (<a class="el" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a> err)</td></tr>
 <tr class="separator:aadb0d3aee102fc1415ed054c13095b54"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -121,6 +142,164 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="a531640117212f6cdf1d5a9ec0b730333"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void riak_server_error_free </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="struct__riak__config.html">_riak_config</a> *&#160;</td>
+          <td class="paramname"><em>cfg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="riak__error_8h.html#a61975700c4ddab00ab15143d7c6117e7">riak_server_error</a> **&#160;</td>
+          <td class="paramname"><em>err</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Free memory used by a server error. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cxt</td><td>Riak Configuration </td></tr>
+    <tr><td class="paramname">err</td><td>Server error to free </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="riak__error_8c_source.html#l00056">56</a> of file <a class="el" href="riak__error_8c_source.html">riak_error.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;                                                  {</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keywordflow">if</span> (err == NULL || *err == NULL) <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <a class="code" href="riak__binary_8h.html#a10f90e95f13f98e5113256d31f737f16" title="Free allocated memory used by riak_binary ">riak_binary_free</a>(cfg, &amp;((*err)-&gt;errmsg));</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <a class="code" href="riak__config_8h.html#a40be1d2c6b9c88bea0a9f627ee91940c">riak_free</a>(cfg, err);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="aabdd42284f0fa0ed672461ba6f2165cb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="riak__types_8h.html#a7ec8ff62977a655990cac91b32f679d8">riak_uint32_t</a> riak_server_error_get_errcode </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="riak__error_8h.html#a61975700c4ddab00ab15143d7c6117e7">riak_server_error</a> *&#160;</td>
+          <td class="paramname"><em>err</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return the code associated with an error response from the server. </p>
+<dl class="section return"><dt>Returns</dt><dd>Error Code </dd></dl>
+
+<p>Definition at line <a class="el" href="riak__error_8c_source.html#l00065">65</a> of file <a class="el" href="riak__error_8c_source.html">riak_error.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;                                                      {</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordflow">return</span> err-&gt;<a class="code" href="struct__riak__server__error.html#a0745a4f447233ec22b2aac6a7c0347e8">errcode</a>;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="a7bc03b566d33eb4a8a4b49878d4d6401"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a>* riak_server_error_get_errmsg </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="riak__error_8h.html#a61975700c4ddab00ab15143d7c6117e7">riak_server_error</a> *&#160;</td>
+          <td class="paramname"><em>err</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return the error message returned by the server. </p>
+<dl class="section return"><dt>Returns</dt><dd>Binary representation of error message </dd></dl>
+
+<p>Definition at line <a class="el" href="riak__error_8c_source.html#l00070">70</a> of file <a class="el" href="riak__error_8c_source.html">riak_error.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;                                                     {</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordflow">return</span> err-&gt;<a class="code" href="struct__riak__server__error.html#a0957a3899711afad663834e8a9508248">errmsg</a>;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="abde4aea0a6cbae862f7f00aaedb37e80"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a> riak_server_error_new </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="struct__riak__config.html">_riak_config</a> *&#160;</td>
+          <td class="paramname"><em>cfg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="riak__error_8h.html#a61975700c4ddab00ab15143d7c6117e7">riak_server_error</a> **&#160;</td>
+          <td class="paramname"><em>err</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="riak__types_8h.html#a7ec8ff62977a655990cac91b32f679d8">riak_uint32_t</a>&#160;</td>
+          <td class="paramname"><em>errcode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">struct <a class="el" href="struct__riak__binary.html">_riak_binary</a> *&#160;</td>
+          <td class="paramname"><em>errmsg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create a new server error structure. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cfg</td><td>Riak Configuration </td></tr>
+    <tr><td class="paramname">err</td><td>Returned Server Eeeror </td></tr>
+    <tr><td class="paramname">errcode</td><td>Code returned by the server in the error message </td></tr>
+    <tr><td class="paramname">errmsg</td><td>Message returned by the server </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Error Code </dd></dl>
+
+<p>Definition at line <a class="el" href="riak__error_8c_source.html#l00035">35</a> of file <a class="el" href="riak__error_8c_source.html">riak_error.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;                                                    {</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <a class="code" href="struct__riak__server__error.html">riak_server_error</a> *error = (<a class="code" href="struct__riak__server__error.html">riak_server_error</a>*)(cfg-&gt;<a class="code" href="struct__riak__config.html#ab3cadb8a6c623eec241b9ee8dc0e2344">malloc_fn</a>)(<span class="keyword">sizeof</span>(<a class="code" href="riak__error_8h.html#a61975700c4ddab00ab15143d7c6117e7">riak_server_error</a>));</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordflow">if</span> (error == NULL) {</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a01d8a1bd9deb5701f232126e87740cd1">ERIAK_OUT_OF_MEMORY</a>;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    }</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    *err = error;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    error-&gt;<a class="code" href="struct__riak__server__error.html#a0745a4f447233ec22b2aac6a7c0347e8">errcode</a> = errcode;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    error-&gt;<a class="code" href="struct__riak__server__error.html#a0957a3899711afad663834e8a9508248">errmsg</a> = <a class="code" href="riak__binary_8h.html#af3742246c82ff1494bfe783ad733e27f" title="Allocate a new riak_binary struct. ">riak_binary_copy</a>(cfg, errmsg);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keywordflow">if</span> (error-&gt;<a class="code" href="struct__riak__server__error.html#a0957a3899711afad663834e8a9508248">errmsg</a> == NULL) {</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <a class="code" href="riak__config_8h.html#a40be1d2c6b9c88bea0a9f627ee91940c">riak_free</a>(cfg, err);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a01d8a1bd9deb5701f232126e87740cd1">ERIAK_OUT_OF_MEMORY</a>;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    }</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a7c1673179668a548724d5cbf0221bcb8">ERIAK_OK</a>;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;}</div>
+</div><!-- fragment -->
+</div>
+</div>
 <a class="anchor" id="aadb0d3aee102fc1415ed054c13095b54"></a>
 <div class="memitem">
 <div class="memproto">
@@ -135,20 +314,20 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="riak__error_8c_source.html#l00027">27</a> of file <a class="el" href="riak__error_8c_source.html">riak_error.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;                                          {</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keywordflow">if</span> (err &gt;= <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a7c1673179668a548724d5cbf0221bcb8">ERIAK_OK</a> &amp;&amp; err &lt; <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200aa6acdd634bedcfef946104176d24edf2">ERIAK_LAST_ERRORNUM</a>) {</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="keywordflow">return</span> errmsgs[err];</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    }</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keywordflow">return</span> <span class="stringliteral">&quot;&lt;Unknown Error&gt;&quot;</span>;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;}</div>
+<p>Definition at line <a class="el" href="riak__error_8c_source.html#l00074">74</a> of file <a class="el" href="riak__error_8c_source.html">riak_error.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;                                          {</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keywordflow">if</span> (err &gt;= <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a7c1673179668a548724d5cbf0221bcb8">ERIAK_OK</a> &amp;&amp; err &lt; <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200aa6acdd634bedcfef946104176d24edf2">ERIAK_LAST_ERRORNUM</a>) {</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <span class="keywordflow">return</span> errmsgs[err];</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    }</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keywordflow">return</span> <span class="stringliteral">&quot;&lt;Unknown Error&gt;&quot;</span>;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 28 2013 13:01:35 for riak-c-client by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Feb 20 2014 17:00:53 for riak-c-client by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

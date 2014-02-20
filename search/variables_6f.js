@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['old_5fvclock',['old_vclock',['../struct__riak__bucket__props.html#a8ac957058d8be278747fd63c43c181a5',1,'_riak_bucket_props']]],
-  ['operation',['operation',['../structriak__args.html#a213702e773194734dbdf91aed62e5eb0',1,'riak_args']]]
+  ['old_5fvclock',['old_vclock',['../struct__riak__bucketprops.html#ad03d1a79d76778eafbdcdd1d1a3aca07',1,'_riak_bucketprops']]],
+  ['op',['op',['../struct__riak__search__options.html#a3a9e9a8061eb61aeb961cc1a84c939e4',1,'_riak_search_options']]]
 ];

@@ -92,7 +92,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> * riak.h: Riak C Client Types</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment"> * This file is provided to you under the Apache License,</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment"> * Version 2.0 (the &quot;License&quot;); you may not use this file</span></div>
@@ -110,8 +110,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment"> *********************************************************************/</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#ifndef RIAK_H</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define RIAK_H</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#ifndef _RIAK_H</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define _RIAK_H</span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
@@ -119,18 +119,18 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &lt;string.h&gt;</span></div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &lt;unistd.h&gt;</span></div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &lt;arpa/inet.h&gt;</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &lt;event2/dns.h&gt;</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &lt;event2/bufferevent.h&gt;</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &lt;event2/buffer.h&gt;</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#include &lt;event2/util.h&gt;</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#include &lt;event2/event.h&gt;</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="riak__types_8h.html">riak_types.h</a>&quot;</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="riak__error_8h.html">riak_error.h</a>&quot;</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="riak__context_8h.html">riak_context.h</a>&quot;</span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="riak__binary_8h.html">riak_binary.h</a>&quot;</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="riak__event_8h.html">riak_event.h</a>&quot;</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &lt;sys/types.h&gt;</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &lt;sys/socket.h&gt;</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &lt;netdb.h&gt;</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="riak__types_8h.html">riak_types.h</a>&quot;</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="riak__log__config_8h.html">riak_log_config.h</a>&quot;</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="riak__error_8h.html">riak_error.h</a>&quot;</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="riak__config_8h.html">riak_config.h</a>&quot;</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="riak__binary_8h.html">riak_binary.h</a>&quot;</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="riak__connection_8h.html">riak_connection.h</a>&quot;</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="riak__operation_8h.html">riak_operation.h</a>&quot;</span></div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="riak__object_8h.html">riak_object.h</a>&quot;</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="riak__bucket__props_8h.html">riak_bucket_props.h</a>&quot;</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="riak__bucketprops_8h.html">riak_bucketprops.h</a>&quot;</span></div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="riak__messages_8h.html">riak_messages.h</a>&quot;</span></div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="riak__log_8h.html">riak_log.h</a>&quot;</span></div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
@@ -139,79 +139,190 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="comment">//</span></div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<a class="code" href="riak_8h.html#a4085ced4af12ea274eb91905a9e1a318" title="Send a Ping Request. ">riak_ping</a>(<a class="code" href="struct__riak__context.html">riak_context</a> *ctx);</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<a class="code" href="riak_8h.html#ac4d1f60b7bb9a3da3e96ed24923debef" title="Send a Ping Request. ">riak_ping</a>(<a class="code" href="struct__riak__connection.html">riak_connection</a> *cxn);</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<a class="code" href="riak_8h.html#a9118eb2406d86a5ca421dced64711b7b" title="Send a Server Info Request. ">riak_serverinfo</a>(<a class="code" href="struct__riak__context.html">riak_context</a>              *ctx,</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<a class="code" href="riak_8h.html#a33e9ed3865f8cb551e1e226796b5088e" title="Send a Server Info Request. ">riak_serverinfo</a>(<a class="code" href="struct__riak__connection.html">riak_connection</a>           *cxn,</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;                <a class="code" href="struct__riak__serverinfo__response.html">riak_serverinfo_response</a> **response);</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<a class="code" href="riak_8h.html#a8729255ef2de097478dbcb143a0f143f" title="Synchronous Fetch request. ">riak_get</a>(<a class="code" href="struct__riak__context.html">riak_context</a>              *ctx,</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<a class="code" href="riak_8h.html#a30ceac1ab5500280c8070bf01008f5b6" title="Synchronous Fetch request. ">riak_get</a>(<a class="code" href="struct__riak__connection.html">riak_connection</a>           *cxn,</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;         <a class="code" href="struct__riak__binary.html">riak_binary</a>               *bucket,</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;         <a class="code" href="struct__riak__binary.html">riak_binary</a>               *key,</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;         <a class="code" href="struct__riak__get__options.html">riak_get_options</a>          *opts,</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;         <a class="code" href="struct__riak__get__response.html">riak_get_response</a>        **response);</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<a class="code" href="riak_8h.html#af2c9d4e894bca807d615483c6a4f5f65" title="Synchronous Store request. ">riak_put</a>(<a class="code" href="struct__riak__context.html">riak_context</a>       *ctx,</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<a class="code" href="riak_8h.html#ab77804c0274ec45a42495ce7a69f3550" title="Synchronous Store request. ">riak_put</a>(<a class="code" href="struct__riak__connection.html">riak_connection</a>    *cxn,</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;         <a class="code" href="struct__riak__object.html">riak_object</a>        *obj,</div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;         <a class="code" href="struct__riak__put__options.html">riak_put_options</a>   *opts,</div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;         <a class="code" href="struct__riak__put__response.html">riak_put_response</a> **response);</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<a class="code" href="riak_8h.html#af31af2b1d801f8d9b38a30ccd62c7906" title="Synchronous Delete request. ">riak_delete</a>(<a class="code" href="struct__riak__context.html">riak_context</a>        *ctx,</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<a class="code" href="riak_8h.html#a760c3abf4ac49508defdf43436b002bc" title="Synchronous Delete request. ">riak_delete</a>(<a class="code" href="struct__riak__connection.html">riak_connection</a>     *cxn,</div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;            <a class="code" href="struct__riak__binary.html">riak_binary</a>         *bucket,</div>
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;            <a class="code" href="struct__riak__binary.html">riak_binary</a>         *key,</div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;            <a class="code" href="struct__riak__delete__options.html">riak_delete_options</a> *opts);</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;</div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<a class="code" href="riak_8h.html#a9d508312d9f7d58b070bedcdd57fdec8" title="List all of the buckets on a server. ">riak_listbuckets</a>(<a class="code" href="struct__riak__context.html">riak_context</a>               *ctx,</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<a class="code" href="riak_8h.html#a20b4e6989a3d5486ecb4a6252b936e98" title="List all of the buckets on a server. ">riak_listbuckets</a>(<a class="code" href="struct__riak__connection.html">riak_connection</a>            *cxn,</div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;                 <a class="code" href="struct__riak__listbuckets__response.html">riak_listbuckets_response</a> **repsonse);</div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;</div>
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;<a class="code" href="riak_8h.html#ad6ce3187ba6c14bcd321d95e11f63135" title="List all of the keys in a bucket. ">riak_listkeys</a>(<a class="code" href="struct__riak__context.html">riak_context</a>            *ctx,</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;<a class="code" href="riak_8h.html#ab6111bce0b512751ffe4ea4d8570b4e5" title="List all of the keys in a bucket. ">riak_listkeys</a>(<a class="code" href="struct__riak__connection.html">riak_connection</a>         *cxn,</div>
 <div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;              <a class="code" href="struct__riak__binary.html">riak_binary</a>             *bucket,</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;              <a class="code" href="riak__types_8h.html#a9dc3c4eb5e5574cccc9c87f28e532d63">riak_uint32_t</a>            timeout,</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;              <a class="code" href="riak__types_8h.html#a7ec8ff62977a655990cac91b32f679d8">riak_uint32_t</a>            timeout,</div>
 <div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;              <a class="code" href="struct__riak__listkeys__response.html">riak_listkeys_response</a> **repsonse);</div>
 <div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;</div>
 <div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;<a class="code" href="riak_8h.html#a5f248c48d6e1ee7451bdae155f560932" title="Synchronous setting of client ID request. ">riak_get_clientid</a>(<a class="code" href="struct__riak__context.html">riak_context</a>                *ctx,</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;<a class="code" href="riak_8h.html#a8e935548c45dc0dc35f5d4545ace46d1" title="Synchronous setting of client ID request. ">riak_get_clientid</a>(<a class="code" href="struct__riak__connection.html">riak_connection</a>             *cxn,</div>
 <div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;                  <a class="code" href="struct__riak__get__clientid__response.html">riak_get_clientid_response</a> **response);</div>
 <div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;</div>
 <div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;<a class="code" href="riak_8h.html#a95f8cf6a4186ecf26826d3188ec24780" title="Synchronous fetching of client ID request. ">riak_set_clientid</a>(<a class="code" href="struct__riak__context.html">riak_context</a>                *ctx,</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;<a class="code" href="riak_8h.html#a62be64603b094336b34e09c4cfbcc3d6" title="Synchronous fetching of client ID request. ">riak_set_clientid</a>(<a class="code" href="struct__riak__connection.html">riak_connection</a>             *cxn,</div>
 <div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;                  <a class="code" href="struct__riak__binary.html">riak_binary</a>                 *clientid,</div>
 <div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;                  <a class="code" href="struct__riak__set__clientid__response.html">riak_set_clientid_response</a> **response);</div>
 <div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;</div>
 <div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;<a class="code" href="riak_8h.html#a4b140e7e98eb1fb6900c17bd6b8eccbf" title="List the properties associated with a bucket. ">riak_get_bucketprops</a>(<a class="code" href="struct__riak__context.html">riak_context</a>                   *ctx,</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;<a class="code" href="riak_8h.html#a18e2c03945ae3e91922e76867efd8949" title="List the properties associated with a bucket. ">riak_get_bucketprops</a>(<a class="code" href="struct__riak__connection.html">riak_connection</a>                   *cxn,</div>
 <div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;                     <a class="code" href="struct__riak__binary.html">riak_binary</a>                    *bucket,</div>
 <div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;                     <a class="code" href="struct__riak__get__bucketprops__response.html">riak_get_bucketprops_response</a> **repsonse);</div>
 <div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;</div>
 <div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;<a class="code" href="riak_8h.html#a31c38a84f55eda290ede4408f3a2b46b" title="Reset the properties associated with a bucket. ">riak_reset_bucketprops</a>(<a class="code" href="struct__riak__context.html">riak_context</a>                     *ctx,</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;<a class="code" href="riak_8h.html#a02f1b05f8e93579b510192dfac3aba14" title="Reset the properties associated with a bucket. ">riak_reset_bucketprops</a>(<a class="code" href="struct__riak__connection.html">riak_connection</a>                  *cxn,</div>
 <div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;                       <a class="code" href="struct__riak__binary.html">riak_binary</a>                      *bucket,</div>
 <div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;                       <a class="code" href="struct__riak__reset__bucketprops__response.html">riak_reset_bucketprops_response</a> **response);</div>
 <div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;</div>
 <div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;<a class="code" href="riak_8h.html#a00d91eb27af4a23d697421bea91fa646" title="Update the properties associated with a bucket. ">riak_set_bucketprops</a>(<a class="code" href="struct__riak__context.html">riak_context</a>                   *ctx,</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;<a class="code" href="riak_8h.html#aa857da3176a7544c700eab6f16d4fd1d" title="Update the properties associated with a bucket. ">riak_set_bucketprops</a>(<a class="code" href="struct__riak__connection.html">riak_connection</a>                *cxn,</div>
 <div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;                     <a class="code" href="struct__riak__binary.html">riak_binary</a>                    *bucket,</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;                     <a class="code" href="struct__riak__bucket__props.html">riak_bucket_props</a>              *props,</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;                     <a class="code" href="struct__riak__bucketprops.html">riak_bucketprops</a>               *props,</div>
 <div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;                     <a class="code" href="struct__riak__set__bucketprops__response.html">riak_set_bucketprops_response</a> **response);</div>
 <div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;<span class="keywordtype">void</span> <a class="code" href="riak_8h.html#aa19deaadbeb6c4be64771f9089bdbe7b">riak_bucket_set_props</a>(<a class="code" href="struct__riak__context.html">riak_context</a>*);</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;<span class="keywordtype">void</span> <a class="code" href="riak_8h.html#a77c13ce3b66561985e52adc034d3ce13">riak_bucket_get_props</a>(<a class="code" href="struct__riak__context.html">riak_context</a>*);</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;<span class="keywordtype">void</span> <a class="code" href="riak_8h.html#a9f62e24c043700ae01e318d414b0a71e">riak_query_2i</a>(<a class="code" href="struct__riak__context.html">riak_context</a>*);</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;<span class="keywordtype">void</span> <a class="code" href="riak_8h.html#a353e91cccedad3ea41e659092457a806">riak_map_reduce</a>(<a class="code" href="struct__riak__context.html">riak_context</a>*);</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;<a class="code" href="riak_8h.html#adaa140e373ba0659194d21f0c04b9c2d" title="Query using Secondary Index. ">riak_2index</a>(<a class="code" href="struct__riak__connection.html">riak_connection</a>       *cxn,</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;            <a class="code" href="struct__riak__binary.html">riak_binary</a>           *bucket,</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;            <a class="code" href="struct__riak__binary.html">riak_binary</a>           *index,</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;            <a class="code" href="struct__riak__2index__options.html">riak_2index_options</a>   *opts,</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;            <a class="code" href="struct__riak__2index__response.html">riak_2index_response</a> **response);</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;<a class="code" href="riak_8h.html#ac1e735df547f046e15eacb93e6264a13" title="Synchronous Map/Reduce request. ">riak_mapreduce</a>(<a class="code" href="struct__riak__connection.html">riak_connection</a>          *cxn,</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;               <a class="code" href="struct__riak__binary.html">riak_binary</a>              *content_type,</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;               <a class="code" href="struct__riak__binary.html">riak_binary</a>              *map_request,</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;               <a class="code" href="struct__riak__mapreduce__response.html">riak_mapreduce_response</a> **response);</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;<a class="code" href="riak_8h.html#aad15d6c7fcd21d4d44a9d7176cb5657a" title="Synchronous Riak Search request. ">riak_search</a>(<a class="code" href="struct__riak__connection.html">riak_connection</a>       *cxn,</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;            <a class="code" href="struct__riak__binary.html">riak_binary</a>           *bucket,</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;            <a class="code" href="struct__riak__binary.html">riak_binary</a>           *query,</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;            <a class="code" href="struct__riak__search__options.html">riak_search_options</a>   *opts,</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;            <a class="code" href="struct__riak__search__response.html">riak_search_response</a> **response);</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;<span class="comment">// A S Y N C H R O N O U S</span></div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;<a class="code" href="riak_8h.html#a81790ebb6a63922ef625334595e49a1a" title="Create a Riak Connection for async use. ">riak_async_register_ping</a>(<a class="code" href="struct__riak__operation.html">riak_operation</a>        *rop,</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;                         <a class="code" href="riak__operation_8h.html#a8f7c47f3ce06e0388133962234b066c1">riak_response_callback</a> cb);</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;<a class="code" href="riak_8h.html#af507a585a35db0cf8866ef471359a1ee">riak_async_register_serverinfo</a>(<a class="code" href="struct__riak__operation.html">riak_operation</a>        *rop,</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;                               <a class="code" href="riak__operation_8h.html#a8f7c47f3ce06e0388133962234b066c1">riak_response_callback</a> cb);</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;<a class="code" href="riak_8h.html#a9506be9687ee6b7e9a92cf5289c5ef52">riak_async_register_get</a>(<a class="code" href="struct__riak__operation.html">riak_operation</a>        *rop,</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;                        <a class="code" href="struct__riak__binary.html">riak_binary</a>           *bucket,</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;                        <a class="code" href="struct__riak__binary.html">riak_binary</a>           *key,</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;                        <a class="code" href="struct__riak__get__options.html">riak_get_options</a>      *get_options,</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;                        <a class="code" href="riak__operation_8h.html#a8f7c47f3ce06e0388133962234b066c1">riak_response_callback</a> cb);</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;<a class="code" href="riak_8h.html#a2a7ca2662dc511666fe855317d1a9bc8">riak_async_register_put</a>(<a class="code" href="struct__riak__operation.html">riak_operation</a>        *rop,</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;                        <a class="code" href="struct__riak__object.html">riak_object</a>           *riak_obj,</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;                        <a class="code" href="struct__riak__put__options.html">riak_put_options</a>      *options,</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;                        <a class="code" href="riak__operation_8h.html#a8f7c47f3ce06e0388133962234b066c1">riak_response_callback</a> cb);</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;<a class="code" href="riak_8h.html#ae5d8e288ab5f8adbe1eb8611d39fff83">riak_async_register_delete</a>(<a class="code" href="struct__riak__operation.html">riak_operation</a>        *rop,</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;                           <a class="code" href="struct__riak__binary.html">riak_binary</a>           *bucket,</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;                           <a class="code" href="struct__riak__binary.html">riak_binary</a>           *key,</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;                           <a class="code" href="struct__riak__delete__options.html">riak_delete_options</a>   *options,</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;                           <a class="code" href="riak__operation_8h.html#a8f7c47f3ce06e0388133962234b066c1">riak_response_callback</a> cb);</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;<a class="code" href="riak_8h.html#a0641bd833298ef8df8d609a77e908b43">riak_async_register_listbuckets</a>(<a class="code" href="struct__riak__operation.html">riak_operation</a>        *rop,</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;                                <a class="code" href="riak__operation_8h.html#a8f7c47f3ce06e0388133962234b066c1">riak_response_callback</a> cb);</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;<a class="code" href="riak_8h.html#afcedc72f0063925df773f0c55df84643">riak_async_register_listkeys</a>(<a class="code" href="struct__riak__operation.html">riak_operation</a>        *rop,</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;                             <a class="code" href="struct__riak__binary.html">riak_binary</a>           *bucket,</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;                             <a class="code" href="riak__types_8h.html#a7ec8ff62977a655990cac91b32f679d8">riak_uint32_t</a>          timeout,</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;                             <a class="code" href="riak__operation_8h.html#a8f7c47f3ce06e0388133962234b066c1">riak_response_callback</a> cb );</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;<a class="code" href="riak_8h.html#ad76ec65f1fffead8d529bd5eb5821262">riak_async_register_get_clientid</a>(<a class="code" href="struct__riak__operation.html">riak_operation</a>        *rop,</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;                                 <a class="code" href="riak__operation_8h.html#a8f7c47f3ce06e0388133962234b066c1">riak_response_callback</a> cb);</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;<a class="code" href="riak_8h.html#a52bf2d19c4bbe92e4d33e5ffd8f94a19">riak_async_register_set_clientid</a>(<a class="code" href="struct__riak__operation.html">riak_operation</a>        *rop,</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;                                 <a class="code" href="struct__riak__binary.html">riak_binary</a>           *clientid,</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;                                 <a class="code" href="riak__operation_8h.html#a8f7c47f3ce06e0388133962234b066c1">riak_response_callback</a> cb);</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;<a class="code" href="riak_8h.html#a5517a7479b27ebc96cd8333daa0e656a">riak_async_register_get_bucketprops</a>(<a class="code" href="struct__riak__operation.html">riak_operation</a>        *rop,</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;                                    <a class="code" href="struct__riak__binary.html">riak_binary</a>           *bucket,</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;                                    <a class="code" href="riak__operation_8h.html#a8f7c47f3ce06e0388133962234b066c1">riak_response_callback</a> cb);</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;<a class="code" href="riak_8h.html#a3ebbfb9f682320be74192e7ae5e265db">riak_async_register_reset_bucketprops</a>(<a class="code" href="struct__riak__operation.html">riak_operation</a>        *rop,</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;                                      <a class="code" href="struct__riak__binary.html">riak_binary</a>           *bucket,</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;                                      <a class="code" href="riak__operation_8h.html#a8f7c47f3ce06e0388133962234b066c1">riak_response_callback</a> cb);</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;<a class="code" href="riak_8h.html#a73c10aa1ce92df3ed0c311a4664c86a6">riak_async_register_set_bucketprops</a>(<a class="code" href="struct__riak__operation.html">riak_operation</a>        *rop,</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;                                    <a class="code" href="struct__riak__binary.html">riak_binary</a>           *bucket,</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;                                    <a class="code" href="struct__riak__bucketprops.html">riak_bucketprops</a>      *props,</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;                                    <a class="code" href="riak__operation_8h.html#a8f7c47f3ce06e0388133962234b066c1">riak_response_callback</a> cb);</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;<a class="code" href="riak_8h.html#a2bd97f00bcb9aa88346515260cc1de49" title="Register an asynchronous Map/Reduce job. ">riak_async_register_mapreduce</a>(<a class="code" href="struct__riak__operation.html">riak_operation</a>        *rop,</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;                              <a class="code" href="struct__riak__binary.html">riak_binary</a>           *content_type,</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;                              <a class="code" href="struct__riak__binary.html">riak_binary</a>           *map_request,</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;                              <a class="code" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a>         streaming,</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;                              <a class="code" href="riak__operation_8h.html#a8f7c47f3ce06e0388133962234b066c1">riak_response_callback</a> cb);</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;<a class="code" href="riak_8h.html#a13b3fc8fe3d82d8e7ec47649a8f9d287" title="Register an asynchronous Secondary Index job. ">riak_async_register_2index</a>(<a class="code" href="struct__riak__operation.html">riak_operation</a>        *rop,</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;                           <a class="code" href="struct__riak__binary.html">riak_binary</a>           *bucket,</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;                           <a class="code" href="struct__riak__binary.html">riak_binary</a>           *index,</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;                           <a class="code" href="struct__riak__2index__options.html">riak_2index_options</a>   *index_options,</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;                           <a class="code" href="riak__operation_8h.html#a8f7c47f3ce06e0388133962234b066c1">riak_response_callback</a> cb);</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;<a class="code" href="riak_8h.html#a32f28c6e4dcf89770f0497d5b35b31f8" title="Register an asynchronous Riak Search job. ">riak_async_register_search</a>(<a class="code" href="struct__riak__operation.html">riak_operation</a>        *rop,</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;                           <a class="code" href="struct__riak__binary.html">riak_binary</a>           *bucket,</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;                           <a class="code" href="struct__riak__binary.html">riak_binary</a>           *query,</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;                           <a class="code" href="struct__riak__search__options.html">riak_search_options</a>   *index_options,</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;                           <a class="code" href="riak__operation_8h.html#a8f7c47f3ce06e0388133962234b066c1">riak_response_callback</a> cb);</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;</div>
+<div class="line"><a name="l00365"></a><span class="lineno"><a class="code" href="riak_8h.html#adc1126ae1263fca2d1e8dd66801c750c">  365</a></span>&#160;<span class="keyword">typedef</span> <a class="code" href="riak__types_8h.html#a08d0ed21b4d2b5a5410efa38e1cce846">riak_ssize_t</a> (*<a class="code" href="riak_8h.html#adc1126ae1263fca2d1e8dd66801c750c">riak_io_cb</a>)(<span class="keywordtype">void</span>  *ptr,</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;                                   <span class="keywordtype">void</span>  *data,</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;                                   <span class="keywordtype">size_t</span> size);</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;<a class="code" href="riak_8h.html#a8a9b1d566b5126e36200a72c452a0a78">riak_read</a>(<a class="code" href="struct__riak__operation.html">riak_operation</a>   *rop,</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;          <a class="code" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a>   *done_streaming,</div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;          <a class="code" href="riak_8h.html#adc1126ae1263fca2d1e8dd66801c750c">riak_io_cb</a>        read_cb,</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;          <span class="keywordtype">void</span>             *read_cb_data);</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;<a class="code" href="riak_8h.html#a7499a021c1c2d12b3fc7b18abe441901">riak_write</a>(<a class="code" href="struct__riak__operation.html">riak_operation</a> *rop,</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;           <a class="code" href="riak_8h.html#adc1126ae1263fca2d1e8dd66801c750c">riak_io_cb</a>      write_cb,</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;           <span class="keywordtype">void</span>           *write_cb_data);</div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;</div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;<span class="preprocessor">#endif // _RIAK_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 28 2013 13:01:34 for riak-c-client by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Feb 20 2014 17:00:52 for riak-c-client by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

@@ -85,47 +85,61 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">riak_log.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;zlog.h&gt;</code><br/>
-<code>#include &quot;<a class="el" href="riak_8h_source.html">riak.h</a>&quot;</code><br/>
+<div class="textblock"><code>#include &quot;<a class="el" href="riak_8h_source.html">riak.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="riak__log_8h_source.html">riak_log.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="riak__messages-internal_8h_source.html">riak_messages-internal.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="riak__context-internal_8h_source.html">riak_context-internal.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="riak__event-internal_8h_source.html">riak_event-internal.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="riak__config-internal_8h_source.html">riak_config-internal.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="riak__connection-internal_8h_source.html">riak_connection-internal.h</a>&quot;</code><br/>
 </div>
 <p><a href="riak__log_8c_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a41c158f5879867e481bbf6f75b138931"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__log_8c.html#a41c158f5879867e481bbf6f75b138931">_RIAK_LOG_DESCRIPTION</a></td></tr>
+<tr class="separator:a41c158f5879867e481bbf6f75b138931"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a3236c5acc6b330310b0c898cd425b191"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__log_8c.html#a3236c5acc6b330310b0c898cd425b191">riak_log_internal</a> (<a class="el" href="riak__context_8h.html#ad856681ca733293974b5bec0ac17b247">riak_context</a> *ctx, <a class="el" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060">riak_log_level_t</a> level, const char *file, size_t filelen, const char *func, size_t funclen, long line, const char *format,...)</td></tr>
-<tr class="memdesc:a3236c5acc6b330310b0c898cd425b191"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a record to the Riak log.  <a href="#a3236c5acc6b330310b0c898cd425b191">More...</a><br/></td></tr>
-<tr class="separator:a3236c5acc6b330310b0c898cd425b191"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:a288b39ef15decd5a2092bb48857f362c"><td class="memItemLeft" align="right" valign="top">const zlog_level&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__log_8c.html#a288b39ef15decd5a2092bb48857f362c">map_level_to_priority</a> []</td></tr>
-<tr class="separator:a288b39ef15decd5a2092bb48857f362c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7802f6aa3ed44aa893ba9f2c7425ad81"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__log_8c.html#a7802f6aa3ed44aa893ba9f2c7425ad81">riak_log_internal</a> (<a class="el" href="riak__config_8h.html#a600d9c01ffe17fb6edfd7f7e81adfdc1">riak_config</a> *cfg, <a class="el" href="riak__log__config_8h.html#ad8622a1e1230d0603a81c529d05ca060">riak_log_level_t</a> level, const char *file, <a class="el" href="riak__types_8h.html#ac4b74bedfd8743b6748d23d643d15f43">riak_size_t</a> filelen, const char *func, <a class="el" href="riak__types_8h.html#ac4b74bedfd8743b6748d23d643d15f43">riak_size_t</a> funclen, <a class="el" href="riak__types_8h.html#a7ec8ff62977a655990cac91b32f679d8">riak_uint32_t</a> line, const char *format,...)</td></tr>
+<tr class="memdesc:a7802f6aa3ed44aa893ba9f2c7425ad81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a record to the Riak log.  <a href="#a7802f6aa3ed44aa893ba9f2c7425ad81">More...</a><br/></td></tr>
+<tr class="separator:a7802f6aa3ed44aa893ba9f2c7425ad81"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="a41c158f5879867e481bbf6f75b138931"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define _RIAK_LOG_DESCRIPTION</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="riak__log_8c_source.html#l00023">23</a> of file <a class="el" href="riak__log_8c_source.html">riak_log.c</a>.</p>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a3236c5acc6b330310b0c898cd425b191"></a>
+<a class="anchor" id="a7802f6aa3ed44aa893ba9f2c7425ad81"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void riak_log_internal </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="riak__context_8h.html#ad856681ca733293974b5bec0ac17b247">riak_context</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em>, </td>
+          <td class="paramtype"><a class="el" href="riak__config_8h.html#a600d9c01ffe17fb6edfd7f7e81adfdc1">riak_config</a> *&#160;</td>
+          <td class="paramname"><em>cfg</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060">riak_log_level_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="riak__log__config_8h.html#ad8622a1e1230d0603a81c529d05ca060">riak_log_level_t</a>&#160;</td>
           <td class="paramname"><em>level</em>, </td>
         </tr>
         <tr>
@@ -137,7 +151,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">size_t&#160;</td>
+          <td class="paramtype"><a class="el" href="riak__types_8h.html#ac4b74bedfd8743b6748d23d643d15f43">riak_size_t</a>&#160;</td>
           <td class="paramname"><em>filelen</em>, </td>
         </tr>
         <tr>
@@ -149,13 +163,13 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">size_t&#160;</td>
+          <td class="paramtype"><a class="el" href="riak__types_8h.html#ac4b74bedfd8743b6748d23d643d15f43">riak_size_t</a>&#160;</td>
           <td class="paramname"><em>funclen</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">long&#160;</td>
+          <td class="paramtype"><a class="el" href="riak__types_8h.html#a7ec8ff62977a655990cac91b32f679d8">riak_uint32_t</a>&#160;</td>
           <td class="paramname"><em>line</em>, </td>
         </tr>
         <tr>
@@ -181,7 +195,7 @@ Variables</h2></td></tr>
 <p>Add a record to the Riak log. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ctx</td><td>Riak Context </td></tr>
+    <tr><td class="paramname">cfg</td><td>Riak Configuration </td></tr>
     <tr><td class="paramname">level</td><td>Logging level (see <code>riak_log_level_t</code>) </td></tr>
     <tr><td class="paramname">file</td><td>Filename where log message is written </td></tr>
     <tr><td class="paramname">filelen</td><td>Length of above </td></tr>
@@ -194,66 +208,33 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="riak__log_8c_source.html#l00043">43</a> of file <a class="el" href="riak__log_8c_source.html">riak_log.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;                       {</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordflow">if</span> (level &lt; RIAK_LOG_FATAL || level &gt; <a class="code" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060a99dc45d9f58437faba6dd2afba2ca0e0">RIAK_LOG_UNKNOWN</a>) level = <a class="code" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060a99dc45d9f58437faba6dd2afba2ca0e0">RIAK_LOG_UNKNOWN</a>;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="comment">// Map to underlying zlog priorities</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    zlog_level priority = <a class="code" href="riak__log_8c.html#a288b39ef15decd5a2092bb48857f362c">map_level_to_priority</a>[(int)level];</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <a class="code" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a> has_logging = <a class="code" href="riak__types_8h.html#a32b007d4c81d097b9f8a37d7b80317ef">RIAK_FALSE</a>;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    zlog_category_t *category;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordflow">if</span> (ctx-&gt;<a class="code" href="struct__riak__context.html#a12d0b981fc4dbd45fbf1f4ab249744e7">logging_category</a>[0] != <span class="charliteral">&#39;\0&#39;</span>) {</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        category = zlog_get_category(ctx-&gt;<a class="code" href="struct__riak__context.html#a12d0b981fc4dbd45fbf1f4ab249744e7">logging_category</a>);</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        has_logging = <a class="code" href="riak__types_8h.html#a30eda4d7c7fe244e40336714e8a3822e">RIAK_TRUE</a>;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    }</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    va_list va;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    va_start(va, format);</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keywordflow">if</span> (has_logging) {</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        vzlog(category,</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;              file,</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;              filelen,</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;              func,</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;              funclen,</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;              line,</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;              priority,</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;              format,</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;              va);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        vfprintf(stderr, format, va);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    }</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    va_end(va);</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;}</div>
+<p>Definition at line <a class="el" href="riak__log_8c_source.html#l00045">45</a> of file <a class="el" href="riak__log_8c_source.html">riak_log.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;                       {</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <a class="code" href="riak__log__config_8h.html#a0b14d16f3b58dfc013417f27199d6d94" title="Definition of logging function. ">riak_log_fn</a> log_fn = riak_log_default;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordflow">if</span> (cfg-&gt;<a class="code" href="struct__riak__config.html#a32c41c29ee5235d517f8081a86610d43">log_fn</a>) {</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        log_fn = cfg-&gt;<a class="code" href="struct__riak__config.html#a32c41c29ee5235d517f8081a86610d43">log_fn</a>;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    }</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    va_list va;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    va_start(va, format);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    (log_fn)((<span class="keywordtype">void</span>*)cfg-&gt;<a class="code" href="struct__riak__config.html#a3add52921d1cf6fc44c680e9691801b5">log_data</a>,</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;             level,</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;             file,</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;             filelen,</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;             func,</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;             funclen,</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;             line,</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;             format,</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;             va);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    va_end(va);</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;}</div>
 </div><!-- fragment -->
-</div>
-</div>
-<h2 class="groupheader">Variable Documentation</h2>
-<a class="anchor" id="a288b39ef15decd5a2092bb48857f362c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const zlog_level map_level_to_priority[]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {</div>
-<div class="line">    ZLOG_LEVEL_FATAL,</div>
-<div class="line">    ZLOG_LEVEL_ERROR,</div>
-<div class="line">    ZLOG_LEVEL_WARN,</div>
-<div class="line">    ZLOG_LEVEL_NOTICE,</div>
-<div class="line">    ZLOG_LEVEL_INFO,</div>
-<div class="line">    ZLOG_LEVEL_DEBUG,</div>
-<div class="line">    0</div>
-<div class="line">}</div>
-</div><!-- fragment -->
-<p>Definition at line <a class="el" href="riak__log_8c_source.html#l00031">31</a> of file <a class="el" href="riak__log_8c_source.html">riak_log.c</a>.</p>
-
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 28 2013 13:01:35 for riak-c-client by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Feb 20 2014 17:00:53 for riak-c-client by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

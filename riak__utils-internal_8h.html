@@ -101,23 +101,20 @@ Functions</h2></td></tr>
 <tr class="memitem:aa5565c51be1b137f34f27b99c3734610"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__utils-internal_8h.html#aa5565c51be1b137f34f27b99c3734610">riak_strlcat</a> (char *dst, const char *src, size_t size)</td></tr>
 <tr class="memdesc:aa5565c51be1b137f34f27b99c3734610"><td class="mdescLeft">&#160;</td><td class="mdescRight">Since strlcat is not standard everywhere, write our own.  <a href="#aa5565c51be1b137f34f27b99c3734610">More...</a><br/></td></tr>
 <tr class="separator:aa5565c51be1b137f34f27b99c3734610"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac88b7457c55ef8684d105f4c3b37d819"><td class="memItemLeft" align="right" valign="top">void **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__utils-internal_8h.html#ac88b7457c55ef8684d105f4c3b37d819">riak_array_realloc</a> (<a class="el" href="riak__context_8h.html#ad856681ca733293974b5bec0ac17b247">riak_context</a> *ctx, void ***from, <a class="el" href="riak__types_8h.html#ac4b74bedfd8743b6748d23d643d15f43">riak_size_t</a> size, <a class="el" href="riak__types_8h.html#a9dc3c4eb5e5574cccc9c87f28e532d63">riak_uint32_t</a> oldnum, <a class="el" href="riak__types_8h.html#a9dc3c4eb5e5574cccc9c87f28e532d63">riak_uint32_t</a> newnum)</td></tr>
-<tr class="memdesc:ac88b7457c55ef8684d105f4c3b37d819"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use Riak Context to reallocate memory.  <a href="#ac88b7457c55ef8684d105f4c3b37d819">More...</a><br/></td></tr>
-<tr class="separator:ac88b7457c55ef8684d105f4c3b37d819"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8d447a1533347afde51ad9d3e8841173"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__utils-internal_8h.html#a8d447a1533347afde51ad9d3e8841173">riak_send_req</a> (<a class="el" href="riak__event_8h.html#ad2048100715518a347a8bbe1f04cee19">riak_event</a> *ev, <a class="el" href="riak__messages-internal_8h.html#ab188be77216909602b613746663c2bd4">riak_pb_message</a> *req)</td></tr>
-<tr class="memdesc:a8d447a1533347afde51ad9d3e8841173"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send PB message via bufferevent.  <a href="#a8d447a1533347afde51ad9d3e8841173">More...</a><br/></td></tr>
-<tr class="separator:a8d447a1533347afde51ad9d3e8841173"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c0bcf0cd1e77c28bfaeaab965c42168"><td class="memItemLeft" align="right" valign="top">void **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__utils-internal_8h.html#a6c0bcf0cd1e77c28bfaeaab965c42168">riak_array_realloc</a> (<a class="el" href="riak__config_8h.html#a600d9c01ffe17fb6edfd7f7e81adfdc1">riak_config</a> *cfg, void ***from, <a class="el" href="riak__types_8h.html#ac4b74bedfd8743b6748d23d643d15f43">riak_size_t</a> size, <a class="el" href="riak__types_8h.html#a7ec8ff62977a655990cac91b32f679d8">riak_uint32_t</a> oldnum, <a class="el" href="riak__types_8h.html#a7ec8ff62977a655990cac91b32f679d8">riak_uint32_t</a> newnum)</td></tr>
+<tr class="memdesc:a6c0bcf0cd1e77c28bfaeaab965c42168"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use Riak Configuration to reallocate memory.  <a href="#a6c0bcf0cd1e77c28bfaeaab965c42168">More...</a><br/></td></tr>
+<tr class="separator:a6c0bcf0cd1e77c28bfaeaab965c42168"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ac88b7457c55ef8684d105f4c3b37d819"></a>
+<a class="anchor" id="a6c0bcf0cd1e77c28bfaeaab965c42168"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void** riak_array_realloc </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="riak__context_8h.html#ad856681ca733293974b5bec0ac17b247">riak_context</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em>, </td>
+          <td class="paramtype"><a class="el" href="riak__config_8h.html#a600d9c01ffe17fb6edfd7f7e81adfdc1">riak_config</a> *&#160;</td>
+          <td class="paramname"><em>cfg</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -134,13 +131,13 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="riak__types_8h.html#a9dc3c4eb5e5574cccc9c87f28e532d63">riak_uint32_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="riak__types_8h.html#a7ec8ff62977a655990cac91b32f679d8">riak_uint32_t</a>&#160;</td>
           <td class="paramname"><em>oldnum</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="riak__types_8h.html#a9dc3c4eb5e5574cccc9c87f28e532d63">riak_uint32_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="riak__types_8h.html#a7ec8ff62977a655990cac91b32f679d8">riak_uint32_t</a>&#160;</td>
           <td class="paramname"><em>newnum</em>&#160;</td>
         </tr>
         <tr>
@@ -151,10 +148,10 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Use Riak Context to reallocate memory. </p>
+<p>Use Riak Configuration to reallocate memory. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ctx</td><td>Riak Context </td></tr>
+    <tr><td class="paramname">cfg</td><td>Riak Configuration </td></tr>
     <tr><td class="paramname">from</td><td>Location of old array pointer to reallocate </td></tr>
     <tr><td class="paramname">size</td><td>Size of new unit to allocate </td></tr>
     <tr><td class="paramname">oldnum</td><td>Number of old units allocated </td></tr>
@@ -166,95 +163,17 @@ Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="riak__utils_8c_source.html#l00063">63</a> of file <a class="el" href="riak__utils_8c_source.html">riak_utils.c</a>.</p>
 <div class="fragment"><div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;                                         {</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordtype">void</span>** new_array = (<span class="keywordtype">void</span>**)(ctx-&gt;<a class="code" href="struct__riak__context.html#a280595a88e18cf42b6dc57a97b182a47">malloc_fn</a>)(newnum*size);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordtype">void</span>** new_array = (<span class="keywordtype">void</span>**)(cfg-&gt;<a class="code" href="struct__riak__config.html#ab3cadb8a6c623eec241b9ee8dc0e2344">malloc_fn</a>)(newnum*size);</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordflow">if</span> (new_array == NULL) {</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="keywordflow">return</span> NULL;</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    }</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="comment">// Just for good measure, clear out memory</span></div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    memset((<span class="keywordtype">void</span>*)new_array, <span class="charliteral">&#39;\0&#39;</span>, newnum*size);</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    memcpy((<span class="keywordtype">void</span>*)new_array, (<span class="keywordtype">void</span>*)(*from), oldnum*size);</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <a class="code" href="riak__context_8h.html#a40be1d2c6b9c88bea0a9f627ee91940c">riak_free</a>(ctx, from);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <a class="code" href="riak__config_8h.html#a40be1d2c6b9c88bea0a9f627ee91940c">riak_free</a>(cfg, from);</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    *from = new_array;</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keywordflow">return</span> (*from);</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;}</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a class="anchor" id="a8d447a1533347afde51ad9d3e8841173"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a> riak_send_req </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="riak__event_8h.html#ad2048100715518a347a8bbe1f04cee19">riak_event</a> *&#160;</td>
-          <td class="paramname"><em>ev</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="riak__messages-internal_8h.html#ab188be77216909602b613746663c2bd4">riak_pb_message</a> *&#160;</td>
-          <td class="paramname"><em>req</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Send PB message via bufferevent. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">event</td><td>Event related to request </td></tr>
-    <tr><td class="paramname">req</td><td>Riak PBC message wrapper </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Error code </dd></dl>
-
-<p>Definition at line <a class="el" href="riak__utils_8c_source.html#l00090">90</a> of file <a class="el" href="riak__utils_8c_source.html">riak_utils.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;                                    {</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <a class="code" href="riak__types_8h.html#a5e758e505201febe8b4e62ad3b2c1710">riak_bufferevent</a> *bev    = rev-&gt;bevent;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <a class="code" href="riak__types_8h.html#a4a33cd4420942c6ceda4974952e3eb62">riak_uint8_t</a>      reqid  = req-&gt;<a class="code" href="struct__riak__pb__message.html#a33d3b4f82a8e42146387eaf3268b7a61">msgid</a>;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <a class="code" href="riak__types_8h.html#a4a33cd4420942c6ceda4974952e3eb62">riak_uint8_t</a>     *msgbuf = req-&gt;<a class="code" href="struct__riak__pb__message.html#a3c8b3427b1e74f9f56eecb90d3ee2ff8">data</a>;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <a class="code" href="riak__types_8h.html#ac4b74bedfd8743b6748d23d643d15f43">riak_size_t</a>       len    = req-&gt;<a class="code" href="struct__riak__pb__message.html#a6765fafa62ebab922fd787f4573fe262">len</a>;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="comment">// Convert len to network byte order</span></div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    ev_uint32_t msglen = htonl(len+1);</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="keywordtype">int</span> result = bufferevent_write(bev, (<span class="keywordtype">void</span>*)&amp;msglen, <span class="keyword">sizeof</span>(msglen));</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="keywordflow">if</span> (result != 0) <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200ae64f217c4e0c559149833c30998568d4">ERIAK_WRITE</a>;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    result = bufferevent_write(bev, (<span class="keywordtype">void</span>*)&amp;reqid, <span class="keyword">sizeof</span>(reqid));</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="keywordflow">if</span> (result != 0) <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200ae64f217c4e0c559149833c30998568d4">ERIAK_WRITE</a>;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <span class="keywordflow">if</span> (msglen &gt; 0) {</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        result = bufferevent_write(bev, (<span class="keywordtype">void</span>*)msgbuf, len);</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        <span class="keywordflow">if</span> (result != 0) <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200ae64f217c4e0c559149833c30998568d4">ERIAK_WRITE</a>;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    }</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <a class="code" href="riak__log_8h.html#a190a526ef85c83bb7851111852f4c007">riak_log_debug</a>(rev, <span class="stringliteral">&quot;Wrote %d bytes\n&quot;</span>, (<span class="keywordtype">int</span>)len);</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="preprocessor">#ifdef _RIAK_DEBUG</span></div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="preprocessor"></span>    <span class="keywordtype">char</span> buffer[10240];</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <a class="code" href="riak__types_8h.html#ac4b74bedfd8743b6748d23d643d15f43">riak_size_t</a> buflen = <span class="keyword">sizeof</span>(buffer);</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    <span class="keywordtype">char</span> *pos = buffer;</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    <a class="code" href="riak__types_8h.html#a562f946b2c70e57a8a8e2c7f6f7d32c5">riak_int32_t</a> wrote = 0;</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="keywordflow">for</span>(i = 0; i &lt; buflen; i++) {</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        wrote = snprintf(pos, buflen, <span class="stringliteral">&quot;%02x&quot;</span>, msgbuf[i]);</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        pos += wrote;</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        buflen -= wrote;</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    }</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    fprintf(stdout, <span class="stringliteral">&quot;\n&quot;</span>);</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <span class="keywordflow">for</span>(i = 0; i &lt; buflen; i++) {</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        <span class="keywordtype">char</span> c = <span class="charliteral">&#39;.&#39;</span>;</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        <span class="keywordflow">if</span> (msgbuf[i] &gt; 31 &amp;&amp; msgbuf[i] &lt; 128) {</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;            c = msgbuf[i];</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        }</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        wrote = snprintf(pos, buflen, <span class="stringliteral">&quot;%c&quot;</span>, c);</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;        pos += wrote;</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;        buflen -= wrote;</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    }</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="preprocessor"></span>    <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a7c1673179668a548724d5cbf0221bcb8">ERIAK_OK</a>;</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -373,7 +292,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 28 2013 13:01:35 for riak-c-client by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Feb 20 2014 17:00:53 for riak-c-client by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

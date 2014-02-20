@@ -92,7 +92,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> * riak_utils.h: Riak C Client Utilities</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment"> * This file is provided to you under the Apache License,</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment"> * Version 2.0 (the &quot;License&quot;); you may not use this file</span></div>
@@ -110,8 +110,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment"> *********************************************************************/</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#ifndef RIAK_UTILS_INTERNAL_H</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define RIAK_UTILS_INTERNAL_H</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#ifndef _RIAK_UTILS_INTERNAL_H</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define _RIAK_UTILS_INTERNAL_H</span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keywordtype">size_t</span></div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<a class="code" href="riak__utils-internal_8h.html#a8cd9f2e1a3c206c25f85d68496487dd8" title="Since strlcpy is not standard everywhere, write our own. ">riak_strlcpy</a>(<span class="keywordtype">char</span>       *dst,</div>
@@ -124,23 +124,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;             <span class="keywordtype">size_t</span>      size);</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="keywordtype">void</span>**</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<a class="code" href="riak__utils-internal_8h.html#ac88b7457c55ef8684d105f4c3b37d819" title="Use Riak Context to reallocate memory. ">riak_array_realloc</a>(<a class="code" href="struct__riak__context.html">riak_context</a> *ctx,</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<a class="code" href="riak__utils-internal_8h.html#a6c0bcf0cd1e77c28bfaeaab965c42168" title="Use Riak Configuration to reallocate memory. ">riak_array_realloc</a>(<a class="code" href="struct__riak__config.html">riak_config</a> *cfg,</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;                   <span class="keywordtype">void</span>       ***from,</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                   <a class="code" href="riak__types_8h.html#ac4b74bedfd8743b6748d23d643d15f43">riak_size_t</a>   size,</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;                   <a class="code" href="riak__types_8h.html#a9dc3c4eb5e5574cccc9c87f28e532d63">riak_uint32_t</a> oldnum,</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;                   <a class="code" href="riak__types_8h.html#a9dc3c4eb5e5574cccc9c87f28e532d63">riak_uint32_t</a> newnum);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;                   <a class="code" href="riak__types_8h.html#a7ec8ff62977a655990cac91b32f679d8">riak_uint32_t</a> oldnum,</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;                   <a class="code" href="riak__types_8h.html#a7ec8ff62977a655990cac91b32f679d8">riak_uint32_t</a> newnum);</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="comment">// TODO: NOT CHARSET SAFE, need iconv</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<a class="code" href="riak__utils-internal_8h.html#a8d447a1533347afde51ad9d3e8841173" title="Send PB message via bufferevent. ">riak_send_req</a>(<a class="code" href="struct__riak__event.html">riak_event</a>      *ev,</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;              <a class="code" href="struct__riak__pb__message.html">riak_pb_message</a> *req);</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">#endif // _RIAK_UTILS_INTERNAL_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 28 2013 13:01:34 for riak-c-client by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Feb 20 2014 17:00:52 for riak-c-client by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

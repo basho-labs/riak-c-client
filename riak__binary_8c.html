@@ -95,70 +95,249 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <code>#include &quot;<a class="el" href="riak__binary-internal_8h_source.html">riak_binary-internal.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="riak__messages-internal_8h_source.html">riak_messages-internal.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="riak__utils-internal_8h_source.html">riak_utils-internal.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="riak__context-internal_8h_source.html">riak_context-internal.h</a>&quot;</code><br/>
 </div>
 <p><a href="riak__binary_8c_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a244cdb4f376af530757072f860eb1847"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__binary_8c.html#a244cdb4f376af530757072f860eb1847">riak_binary_new</a> (<a class="el" href="riak__context_8h.html#ad856681ca733293974b5bec0ac17b247">riak_context</a> *ctx, <a class="el" href="riak__types_8h.html#ac4b74bedfd8743b6748d23d643d15f43">riak_size_t</a> len, <a class="el" href="riak__types_8h.html#a4a33cd4420942c6ceda4974952e3eb62">riak_uint8_t</a> *data)</td></tr>
-<tr class="memdesc:a244cdb4f376af530757072f860eb1847"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate a new <code>riak_binary</code> struct.  <a href="#a244cdb4f376af530757072f860eb1847">More...</a><br/></td></tr>
-<tr class="separator:a244cdb4f376af530757072f860eb1847"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2f5e960ea8a210e89cf894f0f56e36c7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__binary_8c.html#a2f5e960ea8a210e89cf894f0f56e36c7">riak_binary_deep_new</a> (<a class="el" href="riak__context_8h.html#ad856681ca733293974b5bec0ac17b247">riak_context</a> *ctx, <a class="el" href="riak__types_8h.html#ac4b74bedfd8743b6748d23d643d15f43">riak_size_t</a> len, <a class="el" href="riak__types_8h.html#a4a33cd4420942c6ceda4974952e3eb62">riak_uint8_t</a> *data)</td></tr>
-<tr class="memdesc:a2f5e960ea8a210e89cf894f0f56e36c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate a new <code>riak_binary</code> struct.  <a href="#a2f5e960ea8a210e89cf894f0f56e36c7">More...</a><br/></td></tr>
-<tr class="separator:a2f5e960ea8a210e89cf894f0f56e36c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abb3358774d48e0ab0d3d8a5572735246"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__binary_8c.html#abb3358774d48e0ab0d3d8a5572735246">riak_binary_populate</a> (<a class="el" href="riak__context_8h.html#ad856681ca733293974b5bec0ac17b247">riak_context</a> *ctx, <a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *b)</td></tr>
-<tr class="memdesc:abb3358774d48e0ab0d3d8a5572735246"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate a new riak_binary and populate from data pointer.  <a href="#abb3358774d48e0ab0d3d8a5572735246">More...</a><br/></td></tr>
-<tr class="separator:abb3358774d48e0ab0d3d8a5572735246"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb6e8b18218741ec7b033bede40b9cde"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__binary_8c.html#afb6e8b18218741ec7b033bede40b9cde">riak_binary_populate_from_pb</a> (<a class="el" href="riak__context_8h.html#ad856681ca733293974b5bec0ac17b247">riak_context</a> *ctx, ProtobufCBinaryData *b)</td></tr>
-<tr class="memdesc:afb6e8b18218741ec7b033bede40b9cde"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate a new riak_binary and populate from data pointer.  <a href="#afb6e8b18218741ec7b033bede40b9cde">More...</a><br/></td></tr>
-<tr class="separator:afb6e8b18218741ec7b033bede40b9cde"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeee149187eef4f440badd79b3500aa32"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__binary_8c.html#aeee149187eef4f440badd79b3500aa32">riak_binary_new</a> (<a class="el" href="riak__config_8h.html#a600d9c01ffe17fb6edfd7f7e81adfdc1">riak_config</a> *cfg, <a class="el" href="riak__types_8h.html#ac4b74bedfd8743b6748d23d643d15f43">riak_size_t</a> len, <a class="el" href="riak__types_8h.html#aade50fc7e7b270d6f44000d958e37531">riak_uint8_t</a> *data)</td></tr>
+<tr class="memdesc:aeee149187eef4f440badd79b3500aa32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate a new <code>riak_binary</code> struct.  <a href="#aeee149187eef4f440badd79b3500aa32">More...</a><br/></td></tr>
+<tr class="separator:aeee149187eef4f440badd79b3500aa32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73f37b9bca93b59d62a9200d18189921"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__binary_8c.html#a73f37b9bca93b59d62a9200d18189921">riak_binary_new_shallow</a> (<a class="el" href="riak__config_8h.html#a600d9c01ffe17fb6edfd7f7e81adfdc1">riak_config</a> *cfg, <a class="el" href="riak__types_8h.html#ac4b74bedfd8743b6748d23d643d15f43">riak_size_t</a> len, <a class="el" href="riak__types_8h.html#aade50fc7e7b270d6f44000d958e37531">riak_uint8_t</a> *data)</td></tr>
+<tr class="memdesc:a73f37b9bca93b59d62a9200d18189921"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate a new <code>riak_binary</code> struct (shallow copy)  <a href="#a73f37b9bca93b59d62a9200d18189921">More...</a><br/></td></tr>
+<tr class="separator:a73f37b9bca93b59d62a9200d18189921"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3742246c82ff1494bfe783ad733e27f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__binary_8c.html#af3742246c82ff1494bfe783ad733e27f">riak_binary_copy</a> (<a class="el" href="riak__config_8h.html#a600d9c01ffe17fb6edfd7f7e81adfdc1">riak_config</a> *cfg, <a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *bin)</td></tr>
+<tr class="memdesc:af3742246c82ff1494bfe783ad733e27f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate a new <code>riak_binary</code> struct.  <a href="#af3742246c82ff1494bfe783ad733e27f">More...</a><br/></td></tr>
+<tr class="separator:af3742246c82ff1494bfe783ad733e27f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0761c0f4f9d7edfafa578424d01f00dd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__binary_8c.html#a0761c0f4f9d7edfafa578424d01f00dd">riak_binary_copy_shallow</a> (<a class="el" href="riak__config_8h.html#a600d9c01ffe17fb6edfd7f7e81adfdc1">riak_config</a> *cfg, <a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *bin)</td></tr>
+<tr class="memdesc:a0761c0f4f9d7edfafa578424d01f00dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate a new <code>riak_binary</code> struct (shallow copy)  <a href="#a0761c0f4f9d7edfafa578424d01f00dd">More...</a><br/></td></tr>
+<tr class="separator:a0761c0f4f9d7edfafa578424d01f00dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19504059fcc8134d86a4bb9de81f2045"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__binary_8c.html#a19504059fcc8134d86a4bb9de81f2045">riak_binary_copy_from_string</a> (<a class="el" href="riak__config_8h.html#a600d9c01ffe17fb6edfd7f7e81adfdc1">riak_config</a> *cfg, const char *from)</td></tr>
+<tr class="memdesc:a19504059fcc8134d86a4bb9de81f2045"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new <code>riak_binary</code> from a string.  <a href="#a19504059fcc8134d86a4bb9de81f2045">More...</a><br/></td></tr>
+<tr class="separator:a19504059fcc8134d86a4bb9de81f2045"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63d55bee8e1258aec1e94742149a9ada"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__binary_8c.html#a63d55bee8e1258aec1e94742149a9ada">riak_binary_copy_from_pb</a> (<a class="el" href="riak__config_8h.html#a600d9c01ffe17fb6edfd7f7e81adfdc1">riak_config</a> *cfg, ProtobufCBinaryData *bin)</td></tr>
+<tr class="memdesc:a63d55bee8e1258aec1e94742149a9ada"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate a new riak_binary and populate from data pointer.  <a href="#a63d55bee8e1258aec1e94742149a9ada">More...</a><br/></td></tr>
+<tr class="separator:a63d55bee8e1258aec1e94742149a9ada"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab3a1ef83e39c6227ab25d943e88cf9f6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__types_8h.html#ac4b74bedfd8743b6748d23d643d15f43">riak_size_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__binary_8c.html#ab3a1ef83e39c6227ab25d943e88cf9f6">riak_binary_len</a> (<a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *bin)</td></tr>
 <tr class="memdesc:ab3a1ef83e39c6227ab25d943e88cf9f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the length of the binary object.  <a href="#ab3a1ef83e39c6227ab25d943e88cf9f6">More...</a><br/></td></tr>
 <tr class="separator:ab3a1ef83e39c6227ab25d943e88cf9f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8dcceb4c8017abbc8b1ec2f79c964c23"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__types_8h.html#a4a33cd4420942c6ceda4974952e3eb62">riak_uint8_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__binary_8c.html#a8dcceb4c8017abbc8b1ec2f79c964c23">riak_binary_data</a> (<a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *bin)</td></tr>
+<tr class="memitem:a8dcceb4c8017abbc8b1ec2f79c964c23"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__types_8h.html#aade50fc7e7b270d6f44000d958e37531">riak_uint8_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__binary_8c.html#a8dcceb4c8017abbc8b1ec2f79c964c23">riak_binary_data</a> (<a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *bin)</td></tr>
 <tr class="memdesc:a8dcceb4c8017abbc8b1ec2f79c964c23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the encapsulated data.  <a href="#a8dcceb4c8017abbc8b1ec2f79c964c23">More...</a><br/></td></tr>
 <tr class="separator:a8dcceb4c8017abbc8b1ec2f79c964c23"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a474e098615199420b6d7e22b5c98067f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__binary_8c.html#a474e098615199420b6d7e22b5c98067f">riak_binary_free</a> (<a class="el" href="riak__context_8h.html#ad856681ca733293974b5bec0ac17b247">riak_context</a> *ctx, <a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> **b)</td></tr>
-<tr class="memdesc:a474e098615199420b6d7e22b5c98067f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Free allocated memory used by <code>riak_binary</code>  <a href="#a474e098615199420b6d7e22b5c98067f">More...</a><br/></td></tr>
-<tr class="separator:a474e098615199420b6d7e22b5c98067f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf0d5618781bdc5112b06c15df561b46"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__binary_8c.html#aaf0d5618781bdc5112b06c15df561b46">riak_binary_deep_free</a> (<a class="el" href="riak__context_8h.html#ad856681ca733293974b5bec0ac17b247">riak_context</a> *ctx, <a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> **b)</td></tr>
-<tr class="separator:aaf0d5618781bdc5112b06c15df561b46"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3050c342db6b4edb1275fb9980fdaedb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__binary_8c.html#a3050c342db6b4edb1275fb9980fdaedb">riak_binary_deep_free_pb</a> (<a class="el" href="riak__context_8h.html#ad856681ca733293974b5bec0ac17b247">riak_context</a> *ctx, ProtobufCBinaryData *b)</td></tr>
-<tr class="memdesc:a3050c342db6b4edb1275fb9980fdaedb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clean up deeply allocated PB binary.  <a href="#a3050c342db6b4edb1275fb9980fdaedb">More...</a><br/></td></tr>
-<tr class="separator:a3050c342db6b4edb1275fb9980fdaedb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a58b853500d9c66d08ed652d7d19c8f98"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__binary_8c.html#a58b853500d9c66d08ed652d7d19c8f98">riak_binary_copy</a> (<a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *to, <a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *from)</td></tr>
-<tr class="separator:a58b853500d9c66d08ed652d7d19c8f98"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34844cf7850bfc3ed9810c1457c2fc42"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__binary_8c.html#a34844cf7850bfc3ed9810c1457c2fc42">riak_binary_deep_copy</a> (<a class="el" href="riak__context_8h.html#ad856681ca733293974b5bec0ac17b247">riak_context</a> *ctx, <a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *to, <a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *from)</td></tr>
-<tr class="separator:a34844cf7850bfc3ed9810c1457c2fc42"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae2d4a0f6f877d33ba7b6d375f3f835d7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__binary_8c.html#ae2d4a0f6f877d33ba7b6d375f3f835d7">riak_binary_to_pb_copy</a> (ProtobufCBinaryData *to, <a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *from)</td></tr>
-<tr class="separator:ae2d4a0f6f877d33ba7b6d375f3f835d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad71e8ec204c9b3fec257ae106f83d522"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__binary_8c.html#ad71e8ec204c9b3fec257ae106f83d522">riak_binary_to_pb_deep_copy</a> (<a class="el" href="riak__context_8h.html#ad856681ca733293974b5bec0ac17b247">riak_context</a> *ctx, ProtobufCBinaryData *to, <a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *from)</td></tr>
-<tr class="separator:ad71e8ec204c9b3fec257ae106f83d522"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a499d1689f1fb7ffa8f60e762fbc893e1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__binary_8c.html#a499d1689f1fb7ffa8f60e762fbc893e1">riak_binary_from_pb_copy</a> (<a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *to, ProtobufCBinaryData *from)</td></tr>
-<tr class="separator:a499d1689f1fb7ffa8f60e762fbc893e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ecce2dfb23135c9a76a1df834b17c0d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__binary_8c.html#a5ecce2dfb23135c9a76a1df834b17c0d">riak_binary_from_pb_deep_copy</a> (<a class="el" href="riak__context_8h.html#ad856681ca733293974b5bec0ac17b247">riak_context</a> *ctx, <a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *to, ProtobufCBinaryData *from)</td></tr>
-<tr class="separator:a5ecce2dfb23135c9a76a1df834b17c0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0a5af73bcebcc4e0ec040b681ea127be"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__binary_8c.html#a0a5af73bcebcc4e0ec040b681ea127be">riak_binary_print</a> (<a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *bin, char *target, <a class="el" href="riak__types_8h.html#a9dc3c4eb5e5574cccc9c87f28e532d63">riak_uint32_t</a> len)</td></tr>
-<tr class="separator:a0a5af73bcebcc4e0ec040b681ea127be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a37bda74e13142da66fc5fa6e7e60c16f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__binary_8c.html#a37bda74e13142da66fc5fa6e7e60c16f">riak_binary_hex_print</a> (<a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *bin, char *target, <a class="el" href="riak__types_8h.html#a9dc3c4eb5e5574cccc9c87f28e532d63">riak_uint32_t</a> len)</td></tr>
-<tr class="separator:a37bda74e13142da66fc5fa6e7e60c16f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a41c291caaff5245425109ba56510d44c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__binary_8c.html#a41c291caaff5245425109ba56510d44c">riak_binary_from_string</a> (<a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *to, const char *from)</td></tr>
-<tr class="separator:a41c291caaff5245425109ba56510d44c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4735b8f93771d6bb8794407ee4aa940c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__binary_8c.html#a4735b8f93771d6bb8794407ee4aa940c">riak_binary_from_string_deep_copy</a> (<a class="el" href="riak__context_8h.html#ad856681ca733293974b5bec0ac17b247">riak_context</a> *ctx, <a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *to, const char *from)</td></tr>
-<tr class="separator:a4735b8f93771d6bb8794407ee4aa940c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1c1ae70991b36caf72c0d9213d9f3c27"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__binary_8c.html#a1c1ae70991b36caf72c0d9213d9f3c27">riak_binary_new_from_string</a> (<a class="el" href="riak__context_8h.html#ad856681ca733293974b5bec0ac17b247">riak_context</a> *ctx, const char *from)</td></tr>
-<tr class="separator:a1c1ae70991b36caf72c0d9213d9f3c27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa49c1483c72d3c71ee3071ea9dc35a5e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__binary_8c.html#aa49c1483c72d3c71ee3071ea9dc35a5e">riak_binary_free</a> (<a class="el" href="riak__config_8h.html#a600d9c01ffe17fb6edfd7f7e81adfdc1">riak_config</a> *cfg, <a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> **b)</td></tr>
+<tr class="memdesc:aa49c1483c72d3c71ee3071ea9dc35a5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Free allocated memory used by <code>riak_binary</code>  <a href="#aa49c1483c72d3c71ee3071ea9dc35a5e">More...</a><br/></td></tr>
+<tr class="separator:aa49c1483c72d3c71ee3071ea9dc35a5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adfab37a21a2f6984bc38c0956daeb295"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__binary_8c.html#adfab37a21a2f6984bc38c0956daeb295">riak_binary_copy_to_pb</a> (ProtobufCBinaryData *to, <a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *from)</td></tr>
+<tr class="memdesc:adfab37a21a2f6984bc38c0956daeb295"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a shallow copy of <code>riak_binary</code> for use in PB.  <a href="#adfab37a21a2f6984bc38c0956daeb295">More...</a><br/></td></tr>
+<tr class="separator:adfab37a21a2f6984bc38c0956daeb295"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad94ddd308bb73f819f208d0b0415724c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__types_8h.html#ac4b74bedfd8743b6748d23d643d15f43">riak_size_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__binary_8c.html#ad94ddd308bb73f819f208d0b0415724c">riak_binary_print</a> (<a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *bin, char *target, <a class="el" href="riak__types_8h.html#a7ec8ff62977a655990cac91b32f679d8">riak_uint32_t</a> len)</td></tr>
+<tr class="memdesc:ad94ddd308bb73f819f208d0b0415724c"><td class="mdescLeft">&#160;</td><td class="mdescRight">User-readable representation of a binary object.  <a href="#ad94ddd308bb73f819f208d0b0415724c">More...</a><br/></td></tr>
+<tr class="separator:ad94ddd308bb73f819f208d0b0415724c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e37be719bb9683be537597b4c230d68"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__types_8h.html#ac4b74bedfd8743b6748d23d643d15f43">riak_size_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__binary_8c.html#a4e37be719bb9683be537597b4c230d68">riak_binary_hex_print</a> (<a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *bin, char *target, <a class="el" href="riak__types_8h.html#a7ec8ff62977a655990cac91b32f679d8">riak_uint32_t</a> len)</td></tr>
+<tr class="memdesc:a4e37be719bb9683be537597b4c230d68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hexidecimal representation of a binary object.  <a href="#a4e37be719bb9683be537597b4c230d68">More...</a><br/></td></tr>
+<tr class="separator:a4e37be719bb9683be537597b4c230d68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a58b853500d9c66d08ed652d7d19c8f98"></a>
+<a class="anchor" id="af3742246c82ff1494bfe783ad733e27f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void riak_binary_copy </td>
+          <td class="memname"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a>* riak_binary_copy </td>
           <td>(</td>
+          <td class="paramtype"><a class="el" href="riak__config_8h.html#a600d9c01ffe17fb6edfd7f7e81adfdc1">riak_config</a> *&#160;</td>
+          <td class="paramname"><em>cfg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *&#160;</td>
+          <td class="paramname"><em>bin</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Allocate a new <code>riak_binary</code> struct. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cfg</td><td>Riak Configuration </td></tr>
+    <tr><td class="paramname">bin</td><td>Original Riak Binary </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>pointer to newly created <code>riak_binary</code> struct </dd></dl>
+
+<p>Definition at line <a class="el" href="riak__binary_8c_source.html#l00069">69</a> of file <a class="el" href="riak__binary_8c_source.html">riak_binary.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;                                   {</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordflow">if</span> (bin == NULL) {</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="keywordflow">return</span> NULL;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    }</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="riak__binary_8h.html#aeee149187eef4f440badd79b3500aa32" title="Allocate a new riak_binary struct. ">riak_binary_new</a>(cfg, bin-&gt;<a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">len</a>, bin-&gt;<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a>);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="a63d55bee8e1258aec1e94742149a9ada"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a>* riak_binary_copy_from_pb </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="riak__config_8h.html#a600d9c01ffe17fb6edfd7f7e81adfdc1">riak_config</a> *&#160;</td>
+          <td class="paramname"><em>cfg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ProtobufCBinaryData *&#160;</td>
+          <td class="paramname"><em>bin</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Allocate a new riak_binary and populate from data pointer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cfg</td><td>Riak Configuration </td></tr>
+    <tr><td class="paramname">bin</td><td>Existing <code>ProtobufCBinaryData</code> to be shallow copied </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>pointer to newly created <code>riak_binary</code> struct </dd></dl>
+
+<p>Definition at line <a class="el" href="riak__binary_8c_source.html#l00104">104</a> of file <a class="el" href="riak__binary_8c_source.html">riak_binary.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;                                                   {</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <a class="code" href="riak__types_8h.html#ac4b74bedfd8743b6748d23d643d15f43">riak_size_t</a>  len = bin-&gt;len;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <a class="code" href="struct__riak__binary.html">riak_binary</a> *b   = <a class="code" href="riak__config_8h.html#a5ddf61fc5a6ac89d30d4f267e0301a12" title="Use the default allocator to claim some memory. ">riak_config_allocate</a>(cfg, <span class="keyword">sizeof</span>(<a class="code" href="struct__riak__binary.html">riak_binary</a>));</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <span class="comment">// In the degenerate case, force the length to be zero</span></div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="keywordflow">if</span> (bin-&gt;data == NULL) {</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        len = 0;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    }</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    <span class="keywordflow">if</span> (b) {</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        b-&gt;<a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">len</a>     = len;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        b-&gt;<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a>    = bin-&gt;data;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        b-&gt;<a class="code" href="struct__riak__binary.html#afdca2ae0d114e91be21aceb0dea27873">managed</a> = <a class="code" href="riak__types_8h.html#a32b007d4c81d097b9f8a37d7b80317ef">RIAK_FALSE</a>;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    }</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <span class="keywordflow">return</span> b;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="a19504059fcc8134d86a4bb9de81f2045"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a>* riak_binary_copy_from_string </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="riak__config_8h.html#a600d9c01ffe17fb6edfd7f7e81adfdc1">riak_config</a> *&#160;</td>
+          <td class="paramname"><em>cfg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>from</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create a new <code>riak_binary</code> from a string. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cfg</td><td>Riak Configuration </td></tr>
+    <tr><td class="paramname">from</td><td>NULL-terminated string </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>pointer to newly created <code>riak_binary</code> struct </dd></dl>
+
+<p>Definition at line <a class="el" href="riak__binary_8c_source.html#l00095">95</a> of file <a class="el" href="riak__binary_8c_source.html">riak_binary.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;                                                {</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <span class="keywordflow">if</span> (from == NULL) {</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        <span class="keywordflow">return</span> NULL;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    }</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="riak__binary_8h.html#aeee149187eef4f440badd79b3500aa32" title="Allocate a new riak_binary struct. ">riak_binary_new</a>(cfg, strlen(from), (<a class="code" href="riak__types_8h.html#aade50fc7e7b270d6f44000d958e37531">riak_uint8_t</a>*)from);</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="a0761c0f4f9d7edfafa578424d01f00dd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a>* riak_binary_copy_shallow </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="riak__config_8h.html#a600d9c01ffe17fb6edfd7f7e81adfdc1">riak_config</a> *&#160;</td>
+          <td class="paramname"><em>cfg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *&#160;</td>
+          <td class="paramname"><em>bin</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Allocate a new <code>riak_binary</code> struct (shallow copy) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cfg</td><td>Riak Configuration </td></tr>
+    <tr><td class="paramname">bin</td><td>Original Riak Binary </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>pointer to newly created <code>riak_binary</code> struct </dd></dl>
+
+<p>Definition at line <a class="el" href="riak__binary_8c_source.html#l00078">78</a> of file <a class="el" href="riak__binary_8c_source.html">riak_binary.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;                                           {</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <a class="code" href="riak__types_8h.html#ac4b74bedfd8743b6748d23d643d15f43">riak_size_t</a>  len = bin-&gt;<a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">len</a>;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <a class="code" href="struct__riak__binary.html">riak_binary</a> *b   = <a class="code" href="riak__config_8h.html#a5ddf61fc5a6ac89d30d4f267e0301a12" title="Use the default allocator to claim some memory. ">riak_config_allocate</a>(cfg, <span class="keyword">sizeof</span>(<a class="code" href="struct__riak__binary.html">riak_binary</a>));</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="comment">// In the degenerate case, force the length to be zero</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keywordflow">if</span> (bin-&gt;<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a> == NULL) {</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        len = 0;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    }</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keywordflow">if</span> (b) {</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        b-&gt;<a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">len</a>     = len;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        b-&gt;<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a>    = bin-&gt;<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a>;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        b-&gt;<a class="code" href="struct__riak__binary.html#afdca2ae0d114e91be21aceb0dea27873">managed</a> = <a class="code" href="riak__types_8h.html#a32b007d4c81d097b9f8a37d7b80317ef">RIAK_FALSE</a>;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    }</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="keywordflow">return</span> b;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="adfab37a21a2f6984bc38c0956daeb295"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void riak_binary_copy_to_pb </td>
+          <td>(</td>
+          <td class="paramtype">ProtobufCBinaryData *&#160;</td>
           <td class="paramname"><em>to</em>, </td>
         </tr>
         <tr>
@@ -175,11 +354,20 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="riak__binary_8c_source.html#l00108">108</a> of file <a class="el" href="riak__binary_8c_source.html">riak_binary.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;                                    {</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    to-&gt;<a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">len</a>  = from-&gt;<a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">len</a>;</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    to-&gt;<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a> = from-&gt;<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a>;</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;}</div>
+<p>Create a shallow copy of <code>riak_binary</code> for use in PB. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">to</td><td>Existing PBC struct </td></tr>
+    <tr><td class="paramname">from</td><td>Existing <code>riak_binary</code> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="riak__binary_8c_source.html#l00143">143</a> of file <a class="el" href="riak__binary_8c_source.html">riak_binary.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;                                                  {</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    to-&gt;len  = from-&gt;<a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">len</a>;</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    to-&gt;data = from-&gt;<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a>;</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -188,7 +376,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="riak__types_8h.html#a4a33cd4420942c6ceda4974952e3eb62">riak_uint8_t</a>* riak_binary_data </td>
+          <td class="memname"><a class="el" href="riak__types_8h.html#aade50fc7e7b270d6f44000d958e37531">riak_uint8_t</a>* riak_binary_data </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *&#160;</td>
           <td class="paramname"><em>bin</em>)</td><td></td>
@@ -206,200 +394,28 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Pointer to underlying data </dd></dl>
 
-<p>Definition at line <a class="el" href="riak__binary_8c_source.html#l00075">75</a> of file <a class="el" href="riak__binary_8c_source.html">riak_binary.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;                                   {</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keywordflow">return</span> bin-&gt;<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a>;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;}</div>
+<p>Definition at line <a class="el" href="riak__binary_8c_source.html#l00126">126</a> of file <a class="el" href="riak__binary_8c_source.html">riak_binary.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;                                   {</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    <span class="keywordflow">return</span> bin-&gt;<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a>;</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
-<a class="anchor" id="a34844cf7850bfc3ed9810c1457c2fc42"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a> riak_binary_deep_copy </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="riak__context_8h.html#ad856681ca733293974b5bec0ac17b247">riak_context</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *&#160;</td>
-          <td class="paramname"><em>to</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *&#160;</td>
-          <td class="paramname"><em>from</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="riak__binary_8c_source.html#l00115">115</a> of file <a class="el" href="riak__binary_8c_source.html">riak_binary.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;                                          {</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    to-&gt;<a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">len</a>  = from-&gt;<a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">len</a>;</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    to-&gt;<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a> = (<a class="code" href="riak__types_8h.html#a4a33cd4420942c6ceda4974952e3eb62">riak_uint8_t</a>*)(ctx-&gt;<a class="code" href="struct__riak__context.html#a280595a88e18cf42b6dc57a97b182a47">malloc_fn</a>)(from-&gt;<a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">len</a>);</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    <span class="keywordflow">if</span> (to-&gt;<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a> == NULL) <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a01d8a1bd9deb5701f232126e87740cd1">ERIAK_OUT_OF_MEMORY</a>;</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    memcpy((<span class="keywordtype">void</span>*)to-&gt;<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a>, (<span class="keywordtype">void</span>*)from-&gt;<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a>, from-&gt;<a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">len</a>);</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a7c1673179668a548724d5cbf0221bcb8">ERIAK_OK</a>;</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;}</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a class="anchor" id="aaf0d5618781bdc5112b06c15df561b46"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void riak_binary_deep_free </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="riak__context_8h.html#ad856681ca733293974b5bec0ac17b247">riak_context</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> **&#160;</td>
-          <td class="paramname"><em>b</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="riak__binary_8c_source.html#l00089">89</a> of file <a class="el" href="riak__binary_8c_source.html">riak_binary.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;                                        {</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;      <span class="keywordflow">if</span> (b == NULL) {</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;          <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;      }</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;      <a class="code" href="riak__context_8h.html#a40be1d2c6b9c88bea0a9f627ee91940c">riak_free</a>(ctx, &amp;((*b)-&gt;data));</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;      <a class="code" href="riak__context_8h.html#a40be1d2c6b9c88bea0a9f627ee91940c">riak_free</a>(ctx, b);</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;}</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a class="anchor" id="a3050c342db6b4edb1275fb9980fdaedb"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void riak_binary_deep_free_pb </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="riak__context_8h.html#ad856681ca733293974b5bec0ac17b247">riak_context</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">ProtobufCBinaryData *&#160;</td>
-          <td class="paramname"><em>b</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Clean up deeply allocated PB binary. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">ctx</td><td>Riak Context </td></tr>
-    <tr><td class="paramname">b</td><td>Protocol Buffer </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Definition at line <a class="el" href="riak__binary_8c_source.html#l00099">99</a> of file <a class="el" href="riak__binary_8c_source.html">riak_binary.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;                                                 {</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;      <span class="keywordflow">if</span> (b == NULL) {</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;          <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;      }</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;      <a class="code" href="riak__context_8h.html#a40be1d2c6b9c88bea0a9f627ee91940c">riak_free</a>(ctx, &amp;(b-&gt;data));</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;}</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a class="anchor" id="a2f5e960ea8a210e89cf894f0f56e36c7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a>* riak_binary_deep_new </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="riak__context_8h.html#ad856681ca733293974b5bec0ac17b247">riak_context</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="riak__types_8h.html#ac4b74bedfd8743b6748d23d643d15f43">riak_size_t</a>&#160;</td>
-          <td class="paramname"><em>len</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="riak__types_8h.html#a4a33cd4420942c6ceda4974952e3eb62">riak_uint8_t</a> *&#160;</td>
-          <td class="paramname"><em>data</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Allocate a new <code>riak_binary</code> struct. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">len</td><td>Length of binary in bytes </td></tr>
-    <tr><td class="paramname">data</td><td>Pointer to binary data (shallow copy) </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>pointer to newly created <code>riak_binary</code> struct </dd></dl>
-
-<p>Definition at line <a class="el" href="riak__binary_8c_source.html#l00043">43</a> of file <a class="el" href="riak__binary_8c_source.html">riak_binary.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;                                         {</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <a class="code" href="struct__riak__binary.html">riak_binary</a> *b = <a class="code" href="riak__binary_8h.html#a244cdb4f376af530757072f860eb1847" title="Allocate a new riak_binary struct. ">riak_binary_new</a>(ctx, len, data);</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordflow">if</span> (b) {</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        b-&gt;<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a> = (<a class="code" href="riak__types_8h.html#a4a33cd4420942c6ceda4974952e3eb62">riak_uint8_t</a>*)(ctx-&gt;<a class="code" href="struct__riak__context.html#a280595a88e18cf42b6dc57a97b182a47">malloc_fn</a>)(len);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        memcpy((<span class="keywordtype">void</span>*)b-&gt;<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a>, (<span class="keywordtype">void</span>*)data, len);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    }</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordflow">return</span> b;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;}</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a class="anchor" id="a474e098615199420b6d7e22b5c98067f"></a>
+<a class="anchor" id="aa49c1483c72d3c71ee3071ea9dc35a5e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void riak_binary_free </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="riak__context_8h.html#ad856681ca733293974b5bec0ac17b247">riak_context</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em>, </td>
+          <td class="paramtype"><a class="el" href="riak__config_8h.html#a600d9c01ffe17fb6edfd7f7e81adfdc1">riak_config</a> *&#160;</td>
+          <td class="paramname"><em>cfg</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> **&#160;</td>
-          <td class="paramname"><em>b</em>&#160;</td>
+          <td class="paramname"><em>bin</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -410,170 +426,33 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Free allocated memory used by <code>riak_binary</code> </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cfg</td><td>Riak Configuration </td></tr>
+    <tr><td class="paramname">bin</td><td>Existing <code>riak_binary</code> </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p>Definition at line <a class="el" href="riak__binary_8c_source.html#l00080">80</a> of file <a class="el" href="riak__binary_8c_source.html">riak_binary.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;                                   {</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;      <span class="keywordflow">if</span> (b == NULL) {</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;          <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;      }</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;      <a class="code" href="riak__context_8h.html#a40be1d2c6b9c88bea0a9f627ee91940c">riak_free</a>(ctx, b);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;}</div>
+<p>Definition at line <a class="el" href="riak__binary_8c_source.html#l00131">131</a> of file <a class="el" href="riak__binary_8c_source.html">riak_binary.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;                                  {</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;      <span class="keywordflow">if</span> (b == NULL || *b == NULL) {</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;          <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;      }</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;      <span class="keywordflow">if</span> ((*b)-&gt;managed) {</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;          <a class="code" href="riak__config_8h.html#a40be1d2c6b9c88bea0a9f627ee91940c">riak_free</a>(cfg, &amp;((*b)-&gt;data));</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;      }</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;      <a class="code" href="riak__config_8h.html#a40be1d2c6b9c88bea0a9f627ee91940c">riak_free</a>(cfg, b);</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
-<a class="anchor" id="a499d1689f1fb7ffa8f60e762fbc893e1"></a>
+<a class="anchor" id="a4e37be719bb9683be537597b4c230d68"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void riak_binary_from_pb_copy </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *&#160;</td>
-          <td class="paramname"><em>to</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">ProtobufCBinaryData *&#160;</td>
-          <td class="paramname"><em>from</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="riak__binary_8c_source.html#l00144">144</a> of file <a class="el" href="riak__binary_8c_source.html">riak_binary.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;                                                    {</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    to-&gt;<a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">len</a>  = from-&gt;len;</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    to-&gt;<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a> = from-&gt;data;</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;}</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a class="anchor" id="a5ecce2dfb23135c9a76a1df834b17c0d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a> riak_binary_from_pb_deep_copy </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="riak__context_8h.html#ad856681ca733293974b5bec0ac17b247">riak_context</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *&#160;</td>
-          <td class="paramname"><em>to</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">ProtobufCBinaryData *&#160;</td>
-          <td class="paramname"><em>from</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="riak__binary_8c_source.html#l00151">151</a> of file <a class="el" href="riak__binary_8c_source.html">riak_binary.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;                                                         {</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    to-&gt;<a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">len</a>  = from-&gt;len;</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    to-&gt;<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a> = (<a class="code" href="riak__types_8h.html#a4a33cd4420942c6ceda4974952e3eb62">riak_uint8_t</a>*)(ctx-&gt;<a class="code" href="struct__riak__context.html#a280595a88e18cf42b6dc57a97b182a47">malloc_fn</a>)(from-&gt;len);</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    <span class="keywordflow">if</span> (to-&gt;<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a> == NULL) <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a01d8a1bd9deb5701f232126e87740cd1">ERIAK_OUT_OF_MEMORY</a>;</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;    memcpy((<span class="keywordtype">void</span>*)to-&gt;<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a>, (<span class="keywordtype">void</span>*)from-&gt;data, from-&gt;len);</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a7c1673179668a548724d5cbf0221bcb8">ERIAK_OK</a>;</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;}</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a class="anchor" id="a41c291caaff5245425109ba56510d44c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void riak_binary_from_string </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *&#160;</td>
-          <td class="paramname"><em>to</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>from</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="riak__binary_8c_source.html#l00199">199</a> of file <a class="el" href="riak__binary_8c_source.html">riak_binary.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;                                           {</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;    to-&gt;<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a> = (<a class="code" href="riak__types_8h.html#a4a33cd4420942c6ceda4974952e3eb62">riak_uint8_t</a>*)from;</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    to-&gt;<a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">len</a> = strlen(from);</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;}</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a class="anchor" id="a4735b8f93771d6bb8794407ee4aa940c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a> riak_binary_from_string_deep_copy </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="riak__context_8h.html#ad856681ca733293974b5bec0ac17b247">riak_context</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *&#160;</td>
-          <td class="paramname"><em>to</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>from</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="riak__binary_8c_source.html#l00206">206</a> of file <a class="el" href="riak__binary_8c_source.html">riak_binary.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;                                                      {</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;    to-&gt;<a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">len</a> = strlen(from);</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;    to-&gt;<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a> = (<a class="code" href="riak__types_8h.html#a4a33cd4420942c6ceda4974952e3eb62">riak_uint8_t</a>*)(ctx-&gt;<a class="code" href="struct__riak__context.html#a280595a88e18cf42b6dc57a97b182a47">malloc_fn</a>)(to-&gt;<a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">len</a>);</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;    <span class="keywordflow">if</span> (to-&gt;<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a> == NULL) <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a01d8a1bd9deb5701f232126e87740cd1">ERIAK_OUT_OF_MEMORY</a>;</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;    memcpy((<span class="keywordtype">void</span>*)to-&gt;<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a>, (<span class="keywordtype">void</span>*)from, to-&gt;<a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">len</a>);</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a7c1673179668a548724d5cbf0221bcb8">ERIAK_OK</a>;</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;}</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a class="anchor" id="a37bda74e13142da66fc5fa6e7e60c16f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int riak_binary_hex_print </td>
+          <td class="memname"><a class="el" href="riak__types_8h.html#ac4b74bedfd8743b6748d23d643d15f43">riak_size_t</a> riak_binary_hex_print </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *&#160;</td>
           <td class="paramname"><em>bin</em>, </td>
@@ -587,7 +466,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="riak__types_8h.html#a9dc3c4eb5e5574cccc9c87f28e532d63">riak_uint32_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="riak__types_8h.html#a7ec8ff62977a655990cac91b32f679d8">riak_uint32_t</a>&#160;</td>
           <td class="paramname"><em>len</em>&#160;</td>
         </tr>
         <tr>
@@ -598,22 +477,33 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="riak__binary_8c_source.html#l00180">180</a> of file <a class="el" href="riak__binary_8c_source.html">riak_binary.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;                                         {</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    <span class="keywordtype">int</span> count = 0;</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">char</span> hex[] = <span class="stringliteral">&quot;0123456789abcdef&quot;</span>;</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    <span class="keywordflow">if</span> (bin != NULL) {</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;        <span class="keywordflow">for</span>( ; count &lt; bin-&gt;<a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">len</a> &amp;&amp; (count*2) &lt; len-1; count++) {</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;            <span class="keywordtype">int</span> nibble = (bin-&gt;<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a>[count] &amp; 0xf0) &gt;&gt; 4;</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;            target[count*2] = hex[nibble];</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;            nibble = (bin-&gt;<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a>[count] &amp; 0x0f);</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;            target[count*2+1] = hex[nibble];</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;        }</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    }</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    <span class="keywordflow">if</span> (len &gt; 0) target[count*2] = <span class="charliteral">&#39;\0&#39;</span>;</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    <span class="keywordflow">return</span> count*2;</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;}</div>
+<p>Hexidecimal representation of a binary object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">bin</td><td>Riak Binary </td></tr>
+    <tr><td class="paramname">target</td><td>Where to write the output </td></tr>
+    <tr><td class="paramname">len</td><td>Maximum allowed number of bytes to write </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Number of bytes written </dd></dl>
+
+<p>Definition at line <a class="el" href="riak__binary_8c_source.html#l00168">168</a> of file <a class="el" href="riak__binary_8c_source.html">riak_binary.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;                                         {</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    <a class="code" href="riak__types_8h.html#ac4b74bedfd8743b6748d23d643d15f43">riak_size_t</a> count = 0;</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">char</span> hex[] = <span class="stringliteral">&quot;0123456789abcdef&quot;</span>;</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    <span class="keywordflow">if</span> (bin != NULL) {</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;        <span class="keywordflow">for</span>( ; count &lt; bin-&gt;<a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">len</a> &amp;&amp; (count*2) &lt; len-1; count++) {</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;            <span class="keywordtype">int</span> nibble = (bin-&gt;<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a>[count] &amp; 0xf0) &gt;&gt; 4;</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;            target[count*2] = hex[nibble];</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;            nibble = (bin-&gt;<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a>[count] &amp; 0x0f);</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;            target[count*2+1] = hex[nibble];</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;        }</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    }</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    <span class="keywordflow">if</span> (len &gt; 0) target[count*2] = <span class="charliteral">&#39;\0&#39;</span>;</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    <span class="keywordflow">return</span> count*2;</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -640,22 +530,22 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Length in bytes </dd></dl>
 
-<p>Definition at line <a class="el" href="riak__binary_8c_source.html#l00070">70</a> of file <a class="el" href="riak__binary_8c_source.html">riak_binary.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;                                  {</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordflow">return</span> bin-&gt;<a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">len</a>;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;}</div>
+<p>Definition at line <a class="el" href="riak__binary_8c_source.html#l00121">121</a> of file <a class="el" href="riak__binary_8c_source.html">riak_binary.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;                                  {</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    <span class="keywordflow">return</span> bin-&gt;<a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">len</a>;</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
-<a class="anchor" id="a244cdb4f376af530757072f860eb1847"></a>
+<a class="anchor" id="aeee149187eef4f440badd79b3500aa32"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a>* riak_binary_new </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="riak__context_8h.html#ad856681ca733293974b5bec0ac17b247">riak_context</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em>, </td>
+          <td class="paramtype"><a class="el" href="riak__config_8h.html#a600d9c01ffe17fb6edfd7f7e81adfdc1">riak_config</a> *&#160;</td>
+          <td class="paramname"><em>cfg</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -666,7 +556,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="riak__types_8h.html#a4a33cd4420942c6ceda4974952e3eb62">riak_uint8_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="riak__types_8h.html#aade50fc7e7b270d6f44000d958e37531">riak_uint8_t</a> *&#160;</td>
           <td class="paramname"><em>data</em>&#160;</td>
         </tr>
         <tr>
@@ -680,40 +570,57 @@ Functions</h2></td></tr>
 <p>Allocate a new <code>riak_binary</code> struct. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramname">cfg</td><td>Riak Configuration </td></tr>
     <tr><td class="paramname">len</td><td>Length of binary in bytes </td></tr>
-    <tr><td class="paramname">data</td><td>Pointer to binary data (shallow copy) </td></tr>
+    <tr><td class="paramname">data</td><td>Pointer to binary data </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>pointer to newly created <code>riak_binary</code> struct </dd></dl>
 
-<p>Definition at line <a class="el" href="riak__binary_8c_source.html#l00031">31</a> of file <a class="el" href="riak__binary_8c_source.html">riak_binary.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;                                    {</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <a class="code" href="struct__riak__binary.html">riak_binary</a> *b = (<a class="code" href="struct__riak__binary.html">riak_binary</a>*)(ctx-&gt;<a class="code" href="struct__riak__context.html#a280595a88e18cf42b6dc57a97b182a47">malloc_fn</a>)(<span class="keyword">sizeof</span>(<a class="code" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a>));</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keywordflow">if</span> (b == NULL) <span class="keywordflow">return</span> NULL;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    b-&gt;<a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">len</a>  = len;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    b-&gt;<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a> = data;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordflow">return</span> b;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;}</div>
+<p>Definition at line <a class="el" href="riak__binary_8c_source.html#l00030">30</a> of file <a class="el" href="riak__binary_8c_source.html">riak_binary.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;                                    {</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <a class="code" href="struct__riak__binary.html">riak_binary</a> *b = <a class="code" href="riak__config_8h.html#a5ddf61fc5a6ac89d30d4f267e0301a12" title="Use the default allocator to claim some memory. ">riak_config_allocate</a>(cfg, <span class="keyword">sizeof</span>(<a class="code" href="struct__riak__binary.html">riak_binary</a>));</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="comment">// In the degenerate case, force the length to be zero</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keywordflow">if</span> (data == NULL) {</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        len = 0;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    }</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keywordflow">if</span> (b) {</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        b-&gt;<a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">len</a>     = len;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        b-&gt;<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a>    = <a class="code" href="riak__config_8h.html#a5ddf61fc5a6ac89d30d4f267e0301a12" title="Use the default allocator to claim some memory. ">riak_config_allocate</a>(cfg, len);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        b-&gt;<a class="code" href="struct__riak__binary.html#afdca2ae0d114e91be21aceb0dea27873">managed</a> = <a class="code" href="riak__types_8h.html#a30eda4d7c7fe244e40336714e8a3822e">RIAK_TRUE</a>;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keywordflow">if</span> (b-&gt;<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a>) {</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            memcpy((<span class="keywordtype">void</span>*)b-&gt;<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a>, (<span class="keywordtype">void</span>*)data, len);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            <a class="code" href="riak__config_8h.html#a40be1d2c6b9c88bea0a9f627ee91940c">riak_free</a>(cfg, &amp;b);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        }</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    }</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordflow">return</span> b;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
-<a class="anchor" id="a1c1ae70991b36caf72c0d9213d9f3c27"></a>
+<a class="anchor" id="a73f37b9bca93b59d62a9200d18189921"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a>* riak_binary_new_from_string </td>
+          <td class="memname"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a>* riak_binary_new_shallow </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="riak__context_8h.html#ad856681ca733293974b5bec0ac17b247">riak_context</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em>, </td>
+          <td class="paramtype"><a class="el" href="riak__config_8h.html#a600d9c01ffe17fb6edfd7f7e81adfdc1">riak_config</a> *&#160;</td>
+          <td class="paramname"><em>cfg</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>from</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="riak__types_8h.html#ac4b74bedfd8743b6748d23d643d15f43">riak_size_t</a>&#160;</td>
+          <td class="paramname"><em>len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="riak__types_8h.html#aade50fc7e7b270d6f44000d958e37531">riak_uint8_t</a> *&#160;</td>
+          <td class="paramname"><em>data</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -723,103 +630,40 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="riak__binary_8c_source.html#l00218">218</a> of file <a class="el" href="riak__binary_8c_source.html">riak_binary.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;                                                {</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;    <a class="code" href="struct__riak__binary.html">riak_binary</a> *b = <a class="code" href="riak__binary_8h.html#a244cdb4f376af530757072f860eb1847" title="Allocate a new riak_binary struct. ">riak_binary_new</a>(ctx, 0, NULL);</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;    <span class="keywordflow">if</span> (b != NULL) {</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;        <a class="code" href="riak__binary_8h.html#a41c291caaff5245425109ba56510d44c">riak_binary_from_string</a>(b, from);</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;    }</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    <span class="keywordflow">return</span> b;</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;}</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a class="anchor" id="abb3358774d48e0ab0d3d8a5572735246"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a>* riak_binary_populate </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="riak__context_8h.html#ad856681ca733293974b5bec0ac17b247">riak_context</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *&#160;</td>
-          <td class="paramname"><em>bin</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Allocate a new riak_binary and populate from data pointer. </p>
+<p>Allocate a new <code>riak_binary</code> struct (shallow copy) </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">bin</td><td>Existing <code>riak_binary</code> to be shallow copied </td></tr>
+    <tr><td class="paramname">cfg</td><td>Riak Configuration </td></tr>
+    <tr><td class="paramname">len</td><td>Length of binary in bytes </td></tr>
+    <tr><td class="paramname">data</td><td>Pointer to binary data </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>pointer to newly created <code>riak_binary</code> struct </dd></dl>
 
-<p>Definition at line <a class="el" href="riak__binary_8c_source.html#l00057">57</a> of file <a class="el" href="riak__binary_8c_source.html">riak_binary.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;                                      {</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="riak__binary_8h.html#a244cdb4f376af530757072f860eb1847" title="Allocate a new riak_binary struct. ">riak_binary_new</a>(ctx, b-&gt;<a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">len</a>, b-&gt;<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a>);</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;}</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a class="anchor" id="afb6e8b18218741ec7b033bede40b9cde"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a>* riak_binary_populate_from_pb </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="riak__context_8h.html#ad856681ca733293974b5bec0ac17b247">riak_context</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">ProtobufCBinaryData *&#160;</td>
-          <td class="paramname"><em>bin</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Allocate a new riak_binary and populate from data pointer. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">bin</td><td>Existing <code>ProtobufCBinaryData</code> to be shallow copied </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>pointer to newly created <code>riak_binary</code> struct </dd></dl>
-
-<p>Definition at line <a class="el" href="riak__binary_8c_source.html#l00063">63</a> of file <a class="el" href="riak__binary_8c_source.html">riak_binary.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;                                                     {</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="riak__binary_8h.html#a244cdb4f376af530757072f860eb1847" title="Allocate a new riak_binary struct. ">riak_binary_new</a>(ctx, b-&gt;len, b-&gt;data);</div>
+<p>Definition at line <a class="el" href="riak__binary_8c_source.html#l00052">52</a> of file <a class="el" href="riak__binary_8c_source.html">riak_binary.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;                                            {</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <a class="code" href="struct__riak__binary.html">riak_binary</a> *b = <a class="code" href="riak__config_8h.html#a5ddf61fc5a6ac89d30d4f267e0301a12" title="Use the default allocator to claim some memory. ">riak_config_allocate</a>(cfg, <span class="keyword">sizeof</span>(<a class="code" href="struct__riak__binary.html">riak_binary</a>));</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="comment">// In the degenerate case, force the length to be zero</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordflow">if</span> (data == NULL) {</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        len = 0;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    }</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordflow">if</span> (b) {</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        b-&gt;<a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">len</a>     = len;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        b-&gt;<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a>    = data;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        b-&gt;<a class="code" href="struct__riak__binary.html#afdca2ae0d114e91be21aceb0dea27873">managed</a> = <a class="code" href="riak__types_8h.html#a32b007d4c81d097b9f8a37d7b80317ef">RIAK_FALSE</a>;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    }</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordflow">return</span> b;</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
-<a class="anchor" id="a0a5af73bcebcc4e0ec040b681ea127be"></a>
+<a class="anchor" id="ad94ddd308bb73f819f208d0b0415724c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int riak_binary_print </td>
+          <td class="memname"><a class="el" href="riak__types_8h.html#ac4b74bedfd8743b6748d23d643d15f43">riak_size_t</a> riak_binary_print </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *&#160;</td>
           <td class="paramname"><em>bin</em>, </td>
@@ -833,7 +677,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="riak__types_8h.html#a9dc3c4eb5e5574cccc9c87f28e532d63">riak_uint32_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="riak__types_8h.html#a7ec8ff62977a655990cac91b32f679d8">riak_uint32_t</a>&#160;</td>
           <td class="paramname"><em>len</em>&#160;</td>
         </tr>
         <tr>
@@ -844,100 +688,38 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="riak__binary_8c_source.html#l00163">163</a> of file <a class="el" href="riak__binary_8c_source.html">riak_binary.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;                                     {</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    <span class="keywordtype">int</span> i = 0;</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    <span class="keywordflow">for</span>( ; (bin) &amp;&amp; (i &lt; (bin-&gt;<a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">len</a>)) &amp;&amp; i &lt; (len-1); i++) {</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;        <span class="keywordtype">char</span> c = <span class="charliteral">&#39;.&#39;</span>;</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;        <span class="comment">// Non-printable characters are replaced by a dot</span></div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;        <span class="keywordflow">if</span> (bin-&gt;<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a>[i] &gt;= 32) c = bin-&gt;<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a>[i];</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;        target[i] = c;</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    }</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    <span class="keywordflow">if</span> (len &gt; 0) {</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;        target[i] = <span class="charliteral">&#39;\0&#39;</span>;</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    }</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    <span class="keywordflow">return</span> i;</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;}</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a class="anchor" id="ae2d4a0f6f877d33ba7b6d375f3f835d7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void riak_binary_to_pb_copy </td>
-          <td>(</td>
-          <td class="paramtype">ProtobufCBinaryData *&#160;</td>
-          <td class="paramname"><em>to</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *&#160;</td>
-          <td class="paramname"><em>from</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
+<p>User-readable representation of a binary object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">bin</td><td>Riak Binary </td></tr>
+    <tr><td class="paramname">target</td><td>Where to write the output </td></tr>
+    <tr><td class="paramname">len</td><td>Maximum allowed number of bytes to write </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Number of bytes written </dd></dl>
 
-<p>Definition at line <a class="el" href="riak__binary_8c_source.html#l00126">126</a> of file <a class="el" href="riak__binary_8c_source.html">riak_binary.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;                                                  {</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    to-&gt;len  = from-&gt;<a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">len</a>;</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    to-&gt;data = from-&gt;<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a>;</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;}</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a class="anchor" id="ad71e8ec204c9b3fec257ae106f83d522"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a> riak_binary_to_pb_deep_copy </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="riak__context_8h.html#ad856681ca733293974b5bec0ac17b247">riak_context</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">ProtobufCBinaryData *&#160;</td>
-          <td class="paramname"><em>to</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">riak_binary</a> *&#160;</td>
-          <td class="paramname"><em>from</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="riak__binary_8c_source.html#l00133">133</a> of file <a class="el" href="riak__binary_8c_source.html">riak_binary.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;                                                       {</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    to-&gt;len  = from-&gt;<a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">len</a>;</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    to-&gt;data = (<a class="code" href="riak__types_8h.html#a4a33cd4420942c6ceda4974952e3eb62">riak_uint8_t</a>*)(ctx-&gt;<a class="code" href="struct__riak__context.html#a280595a88e18cf42b6dc57a97b182a47">malloc_fn</a>)(from-&gt;<a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">len</a>);</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;    <span class="keywordflow">if</span> (to-&gt;data == NULL) <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a01d8a1bd9deb5701f232126e87740cd1">ERIAK_OUT_OF_MEMORY</a>;</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    memcpy((<span class="keywordtype">void</span>*)to-&gt;data, (<span class="keywordtype">void</span>*)from-&gt;<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a>, from-&gt;<a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">len</a>);</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a7c1673179668a548724d5cbf0221bcb8">ERIAK_OK</a>;</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;}</div>
+<p>Definition at line <a class="el" href="riak__binary_8c_source.html#l00151">151</a> of file <a class="el" href="riak__binary_8c_source.html">riak_binary.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;                                     {</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    <a class="code" href="riak__types_8h.html#ac4b74bedfd8743b6748d23d643d15f43">riak_size_t</a> i = 0;</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    <span class="keywordflow">for</span>( ; (bin) &amp;&amp; (i &lt; (bin-&gt;<a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">len</a>)) &amp;&amp; i &lt; (len-1); i++) {</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;        <span class="keywordtype">char</span> c = <span class="charliteral">&#39;.&#39;</span>;</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;        <span class="comment">// Non-printable characters are replaced by a dot</span></div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;        <span class="keywordflow">if</span> (bin-&gt;<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a>[i] &gt;= 32) c = bin-&gt;<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a>[i];</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;        target[i] = c;</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    }</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    <span class="keywordflow">if</span> (len &gt; 0) {</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;        target[i] = <span class="charliteral">&#39;\0&#39;</span>;</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    }</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    <span class="keywordflow">return</span> i;</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 28 2013 13:01:35 for riak-c-client by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Feb 20 2014 17:00:53 for riak-c-client by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

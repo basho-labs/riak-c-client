@@ -92,7 +92,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> * riak_error.h: Riak C Error Handling</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment"> * This file is provided to you under the Apache License,</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment"> * Version 2.0 (the &quot;License&quot;); you may not use this file</span></div>
@@ -110,43 +110,71 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment"> *********************************************************************/</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#ifndef RIAK_ERROR_H_</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define RIAK_ERROR_H_</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#ifndef _RIAK_ERROR_H</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define _RIAK_ERROR_H</span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00026"></a><span class="lineno"><a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200">   26</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">enum</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200">riak_error_enum</a> {</div>
 <div class="line"><a name="l00027"></a><span class="lineno"><a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a7c1673179668a548724d5cbf0221bcb8">   27</a></span>&#160;    <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a7c1673179668a548724d5cbf0221bcb8">ERIAK_OK</a> = 0,</div>
 <div class="line"><a name="l00028"></a><span class="lineno"><a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a8b15e63ad163395562b75c8879bfe2b2">   28</a></span>&#160;    <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a8b15e63ad163395562b75c8879bfe2b2">ERIAK_DNS_RESOLUTION</a>,</div>
-<div class="line"><a name="l00029"></a><span class="lineno"><a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a01d8a1bd9deb5701f232126e87740cd1">   29</a></span>&#160;    <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a01d8a1bd9deb5701f232126e87740cd1">ERIAK_OUT_OF_MEMORY</a>,</div>
-<div class="line"><a name="l00030"></a><span class="lineno"><a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200ae64f217c4e0c559149833c30998568d4">   30</a></span>&#160;    <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200ae64f217c4e0c559149833c30998568d4">ERIAK_WRITE</a>,</div>
-<div class="line"><a name="l00031"></a><span class="lineno"><a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a0db691486845e57d76346b8315ef7bd5">   31</a></span>&#160;    <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a0db691486845e57d76346b8315ef7bd5">ERIAK_EVENT</a>,</div>
-<div class="line"><a name="l00032"></a><span class="lineno"><a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a30425058b954f80330c147ea2ed44184">   32</a></span>&#160;    <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a30425058b954f80330c147ea2ed44184">ERIAK_NO_PING</a>,</div>
-<div class="line"><a name="l00033"></a><span class="lineno"><a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a5c2c21ccf6ea7ad53b4a1fa68f5e2e4f">   33</a></span>&#160;    <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a5c2c21ccf6ea7ad53b4a1fa68f5e2e4f">ERIAK_LOGGING</a>,</div>
-<div class="line"><a name="l00034"></a><span class="lineno"><a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a0482206ba13a1c499c3b3ef433b0a860">   34</a></span>&#160;    <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a0482206ba13a1c499c3b3ef433b0a860">ERIAK_UNINITIALIZED</a>,</div>
-<div class="line"><a name="l00035"></a><span class="lineno"><a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200aa6acdd634bedcfef946104176d24edf2">   35</a></span>&#160;    <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200aa6acdd634bedcfef946104176d24edf2">ERIAK_LAST_ERRORNUM</a></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;} <a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a>;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#ifdef _RIAK_ERROR_DEFINE_MSGS</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor"></span><span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* errmsgs[] = {</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="stringliteral">&quot;No Error&quot;</span>,</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="stringliteral">&quot;Problems resolving host name/port number&quot;</span>,</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="stringliteral">&quot;Out of Memory&quot;</span>,</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="stringliteral">&quot;Write error&quot;</span>,</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="stringliteral">&quot;Riak Event error&quot;</span>,</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="stringliteral">&quot;Ping failure error&quot;</span>,</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="stringliteral">&quot;Logging failure&quot;</span>,</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="stringliteral">&quot;Uninitialized Value&quot;</span>,</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="stringliteral">&quot;SENTINEL FOR LAST ERROR MESSAGE&quot;</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;};</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keyword">const</span> <span class="keywordtype">char</span>*</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<a class="code" href="riak__error_8h.html#aadb0d3aee102fc1415ed054c13095b54">riak_strerror</a>(<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a> err);</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200aafb9e081739ae37cb8c813e47102fff6">   29</a></span>&#160;    <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200aafb9e081739ae37cb8c813e47102fff6">ERIAK_CONNECT</a>,</div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a01d8a1bd9deb5701f232126e87740cd1">   30</a></span>&#160;    <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a01d8a1bd9deb5701f232126e87740cd1">ERIAK_OUT_OF_MEMORY</a>,</div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a64bff9abd11010edc3b697b4b6effa54">   31</a></span>&#160;    <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a64bff9abd11010edc3b697b4b6effa54">ERIAK_READ</a>,</div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200ae64f217c4e0c559149833c30998568d4">   32</a></span>&#160;    <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200ae64f217c4e0c559149833c30998568d4">ERIAK_WRITE</a>,</div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a0db691486845e57d76346b8315ef7bd5">   33</a></span>&#160;    <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a0db691486845e57d76346b8315ef7bd5">ERIAK_EVENT</a>,</div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a30425058b954f80330c147ea2ed44184">   34</a></span>&#160;    <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a30425058b954f80330c147ea2ed44184">ERIAK_NO_PING</a>,</div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a5c2c21ccf6ea7ad53b4a1fa68f5e2e4f">   35</a></span>&#160;    <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a5c2c21ccf6ea7ad53b4a1fa68f5e2e4f">ERIAK_LOGGING</a>,</div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a0482206ba13a1c499c3b3ef433b0a860">   36</a></span>&#160;    <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a0482206ba13a1c499c3b3ef433b0a860">ERIAK_UNINITIALIZED</a>,</div>
+<div class="line"><a name="l00037"></a><span class="lineno"><a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200afe902e68c73b025b8d1683ace505faaa">   37</a></span>&#160;    <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200afe902e68c73b025b8d1683ace505faaa">ERIAK_SERVER_ERROR</a>,</div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a16722e5b2f4c896899862103f3a6752c">   38</a></span>&#160;    <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a16722e5b2f4c896899862103f3a6752c">ERIAK_MESSAGE_FORMAT</a>,</div>
+<div class="line"><a name="l00039"></a><span class="lineno"><a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200aa6acdd634bedcfef946104176d24edf2">   39</a></span>&#160;    <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200aa6acdd634bedcfef946104176d24edf2">ERIAK_LAST_ERRORNUM</a></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;} <a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a>;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#ifdef _RIAK_ERROR_DEFINE_MSGS</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor"></span><span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* errmsgs[] = {</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="stringliteral">&quot;No Error&quot;</span>,</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="stringliteral">&quot;Problems resolving host name/port number&quot;</span>,</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="stringliteral">&quot;Connection Error&quot;</span>,</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="stringliteral">&quot;Out of Memory&quot;</span>,</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="stringliteral">&quot;Read error&quot;</span>,</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="stringliteral">&quot;Write error&quot;</span>,</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="stringliteral">&quot;Riak Connection error&quot;</span>,</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="stringliteral">&quot;Ping failure error&quot;</span>,</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="stringliteral">&quot;Logging failure&quot;</span>,</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="stringliteral">&quot;Uninitialized Value&quot;</span>,</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="stringliteral">&quot;An error was returned from the server&quot;</span>,</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="stringliteral">&quot;Message Format Error&quot;</span>,</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="stringliteral">&quot;SENTINEL FOR LAST ERROR MESSAGE&quot;</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;};</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00060"></a><span class="lineno"><a class="code" href="riak__error_8h.html#a61975700c4ddab00ab15143d7c6117e7">   60</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="struct__riak__server__error.html">_riak_server_error</a> <a class="code" href="struct__riak__server__error.html">riak_server_error</a>;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="keyword">struct </span><a class="code" href="struct__riak__config.html">_riak_config</a>;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="keyword">struct </span><a class="code" href="struct__riak__binary.html">_riak_binary</a>;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<a class="code" href="riak__error_8h.html#abde4aea0a6cbae862f7f00aaedb37e80" title="Create a new server error structure. ">riak_server_error_new</a>(<span class="keyword">struct</span> <a class="code" href="struct__riak__config.html">_riak_config</a> *cfg,</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;                      <a class="code" href="struct__riak__server__error.html">riak_server_error</a>   **err,</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;                      <a class="code" href="riak__types_8h.html#a7ec8ff62977a655990cac91b32f679d8">riak_uint32_t</a>         errcode,</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;                      <span class="keyword">struct</span> <a class="code" href="struct__riak__binary.html">_riak_binary</a>   *errmsg);</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<a class="code" href="riak__error_8h.html#a531640117212f6cdf1d5a9ec0b730333" title="Free memory used by a server error. ">riak_server_error_free</a>(<span class="keyword">struct</span> <a class="code" href="struct__riak__config.html">_riak_config</a> *cfg,</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;                       <a class="code" href="struct__riak__server__error.html">riak_server_error</a>   **err);</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<a class="code" href="riak__types_8h.html#a7ec8ff62977a655990cac91b32f679d8">riak_uint32_t</a></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<a class="code" href="riak__error_8h.html#aabdd42284f0fa0ed672461ba6f2165cb" title="Return the code associated with an error response from the server. ">riak_server_error_get_errcode</a>(<a class="code" href="struct__riak__server__error.html">riak_server_error</a> *err);</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="keyword">struct </span><a class="code" href="struct__riak__binary.html">_riak_binary</a>*</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<a class="code" href="riak__error_8h.html#af03361572ec4c9cb4681c5aeb514384d" title="Return the error message returned by the server. ">riak_server_error_get_errmsg</a>(<a class="code" href="struct__riak__server__error.html">riak_server_error</a> *err);</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="keyword">const</span> <span class="keywordtype">char</span>*</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<a class="code" href="riak__error_8h.html#aadb0d3aee102fc1415ed054c13095b54">riak_strerror</a>(<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a> err);</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="preprocessor">#endif // _RIAK_ERROR_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 28 2013 13:01:34 for riak-c-client by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Feb 20 2014 17:00:52 for riak-c-client by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

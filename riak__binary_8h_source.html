@@ -92,7 +92,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> * riak_binary.h: Riak C Client Binary Object Utilities</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> * Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment"> * This file is provided to you under the Apache License,</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment"> * Version 2.0 (the &quot;License&quot;); you may not use this file</span></div>
@@ -111,70 +111,58 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment"> *********************************************************************/</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#ifndef RIAK_BINARY_H_</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define RIAK_BINARY_H_</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#ifndef _RIAK_BINARY_H</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define _RIAK_BINARY_H</span></div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00027"></a><span class="lineno"><a class="code" href="riak__binary_8h.html#a4184bd6b81e72c3b58eeddcba6f5ddfb">   27</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="struct__riak__binary.html">_riak_binary</a> <a class="code" href="struct__riak__binary.html">riak_binary</a>;</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<a class="code" href="struct__riak__binary.html">riak_binary</a>*</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<a class="code" href="riak__binary_8h.html#a244cdb4f376af530757072f860eb1847" title="Allocate a new riak_binary struct. ">riak_binary_new</a>(<a class="code" href="struct__riak__context.html">riak_context</a> *ctx,</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;                <a class="code" href="riak__types_8h.html#ac4b74bedfd8743b6748d23d643d15f43">riak_size_t</a>   <a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">len</a>,</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;                <a class="code" href="riak__types_8h.html#a4a33cd4420942c6ceda4974952e3eb62">riak_uint8_t</a> *<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a>);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<a class="code" href="struct__riak__binary.html">riak_binary</a>*</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<a class="code" href="riak__binary_8h.html#aeee149187eef4f440badd79b3500aa32" title="Allocate a new riak_binary struct. ">riak_binary_new</a>(<a class="code" href="struct__riak__config.html">riak_config</a>  *cfg,</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;                <a class="code" href="riak__types_8h.html#ac4b74bedfd8743b6748d23d643d15f43">riak_size_t</a>   <a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">len</a>,</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;                <a class="code" href="riak__types_8h.html#aade50fc7e7b270d6f44000d958e37531">riak_uint8_t</a> *<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a>);</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<a class="code" href="struct__riak__binary.html">riak_binary</a>*</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<a class="code" href="riak__binary_8h.html#a2f5e960ea8a210e89cf894f0f56e36c7" title="Allocate a new riak_binary struct. ">riak_binary_deep_new</a>(<a class="code" href="struct__riak__context.html">riak_context</a> *ctx,</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                     <a class="code" href="riak__types_8h.html#ac4b74bedfd8743b6748d23d643d15f43">riak_size_t</a>   <a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">len</a>,</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;                     <a class="code" href="riak__types_8h.html#a4a33cd4420942c6ceda4974952e3eb62">riak_uint8_t</a> *<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a>);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<a class="code" href="struct__riak__binary.html">riak_binary</a>*</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<a class="code" href="riak__binary_8h.html#acc1e89e8abc4ff5735f49de50b08c8cd" title="Allocate a new riak_binary and populate from data pointer. ">riak_binary_populate</a>(<a class="code" href="struct__riak__context.html">riak_context</a> *ctx,</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;                     <a class="code" href="struct__riak__binary.html">riak_binary</a>  *bin);</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<a class="code" href="riak__binary_8h.html#af487cc3596ac37395f24eb59173c6723" title="Free allocated memory used by riak_binary ">riak_binary_free</a>(<a class="code" href="struct__riak__context.html">riak_context</a>  *ctx,</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;                 <a class="code" href="struct__riak__binary.html">riak_binary</a>  **bin);</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<a class="code" href="riak__binary_8h.html#a6763ca380f802902be887d8c86914e0f">riak_binary_deep_free</a>(<a class="code" href="struct__riak__context.html">riak_context</a>  *ctx,</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;                      <a class="code" href="struct__riak__binary.html">riak_binary</a>  **bin);</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<a class="code" href="riak__types_8h.html#ac4b74bedfd8743b6748d23d643d15f43">riak_size_t</a></div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<a class="code" href="riak__binary_8h.html#ab3a1ef83e39c6227ab25d943e88cf9f6" title="Return the length of the binary object. ">riak_binary_len</a>(<a class="code" href="struct__riak__binary.html">riak_binary</a> *bin);</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<a class="code" href="riak__types_8h.html#a4a33cd4420942c6ceda4974952e3eb62">riak_uint8_t</a>*</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<a class="code" href="riak__binary_8h.html#a8dcceb4c8017abbc8b1ec2f79c964c23" title="Get the encapsulated data. ">riak_binary_data</a>(<a class="code" href="struct__riak__binary.html">riak_binary</a> *bin);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<a class="code" href="riak__binary_8h.html#a58b853500d9c66d08ed652d7d19c8f98">riak_binary_copy</a>(<a class="code" href="struct__riak__binary.html">riak_binary</a> *to,</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;                 <a class="code" href="struct__riak__binary.html">riak_binary</a> *from);</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<a class="code" href="riak__binary_8h.html#a34844cf7850bfc3ed9810c1457c2fc42">riak_binary_deep_copy</a>(<a class="code" href="struct__riak__context.html">riak_context</a> *ctx,</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;                      <a class="code" href="struct__riak__binary.html">riak_binary</a>  *to,</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;                      <a class="code" href="struct__riak__binary.html">riak_binary</a>  *from);</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="keywordtype">int</span></div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<a class="code" href="riak__binary_8h.html#a0a5af73bcebcc4e0ec040b681ea127be">riak_binary_print</a>(<a class="code" href="struct__riak__binary.html">riak_binary</a>  *bin,</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;                  <span class="keywordtype">char</span>         *target,</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;                  <a class="code" href="riak__types_8h.html#a9dc3c4eb5e5574cccc9c87f28e532d63">riak_uint32_t</a> <a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">len</a>);</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="keywordtype">int</span></div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<a class="code" href="riak__binary_8h.html#a37bda74e13142da66fc5fa6e7e60c16f">riak_binary_hex_print</a>(<a class="code" href="struct__riak__binary.html">riak_binary</a>  *bin,</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;                      <span class="keywordtype">char</span>         *target,</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;                      <a class="code" href="riak__types_8h.html#a9dc3c4eb5e5574cccc9c87f28e532d63">riak_uint32_t</a> <a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">len</a>);</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<a class="code" href="riak__binary_8h.html#a41c291caaff5245425109ba56510d44c">riak_binary_from_string</a>(<a class="code" href="struct__riak__binary.html">riak_binary</a> *to,</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;                        <span class="keyword">const</span> <span class="keywordtype">char</span>  *from);</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a></div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<a class="code" href="riak__binary_8h.html#a4735b8f93771d6bb8794407ee4aa940c">riak_binary_from_string_deep_copy</a>(<a class="code" href="struct__riak__context.html">riak_context</a> *ctx,</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;                                  <a class="code" href="struct__riak__binary.html">riak_binary</a>  *to,</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;                                  <span class="keyword">const</span> <span class="keywordtype">char</span>   *from);</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<a class="code" href="struct__riak__binary.html">riak_binary</a>*</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<a class="code" href="riak__binary_8h.html#a1c1ae70991b36caf72c0d9213d9f3c27">riak_binary_new_from_string</a>(<a class="code" href="struct__riak__context.html">riak_context</a> *ctx,</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;                            <span class="keyword">const</span> <span class="keywordtype">char</span>   *from);</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* RIAK_BINARY_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<a class="code" href="struct__riak__binary.html">riak_binary</a>*</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<a class="code" href="riak__binary_8h.html#a73f37b9bca93b59d62a9200d18189921" title="Allocate a new riak_binary struct (shallow copy) ">riak_binary_new_shallow</a>(<a class="code" href="struct__riak__config.html">riak_config</a>  *cfg,</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;                        <a class="code" href="riak__types_8h.html#ac4b74bedfd8743b6748d23d643d15f43">riak_size_t</a>   <a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">len</a>,</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;                        <a class="code" href="riak__types_8h.html#aade50fc7e7b270d6f44000d958e37531">riak_uint8_t</a> *<a class="code" href="struct__riak__binary.html#a7b1643acfcfcf6d50ed21e1b156eefb4">data</a>);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<a class="code" href="struct__riak__binary.html">riak_binary</a>*</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<a class="code" href="riak__binary_8h.html#af3742246c82ff1494bfe783ad733e27f" title="Allocate a new riak_binary struct. ">riak_binary_copy</a>(<a class="code" href="struct__riak__config.html">riak_config</a> *cfg,</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;                 <a class="code" href="struct__riak__binary.html">riak_binary</a> *bin);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<a class="code" href="struct__riak__binary.html">riak_binary</a>*</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<a class="code" href="riak__binary_8h.html#a0761c0f4f9d7edfafa578424d01f00dd" title="Allocate a new riak_binary struct (shallow copy) ">riak_binary_copy_shallow</a>(<a class="code" href="struct__riak__config.html">riak_config</a> *cfg,</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                         <a class="code" href="struct__riak__binary.html">riak_binary</a> *bin);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<a class="code" href="struct__riak__binary.html">riak_binary</a>*</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<a class="code" href="riak__binary_8h.html#a19504059fcc8134d86a4bb9de81f2045" title="Create a new riak_binary from a string. ">riak_binary_copy_from_string</a>(<a class="code" href="struct__riak__config.html">riak_config</a> *cfg,</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;                             <span class="keyword">const</span> <span class="keywordtype">char</span>  *from);</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<a class="code" href="riak__binary_8h.html#a10f90e95f13f98e5113256d31f737f16" title="Free allocated memory used by riak_binary ">riak_binary_free</a>(<a class="code" href="struct__riak__config.html">riak_config</a>  *cfg,</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;                 <a class="code" href="struct__riak__binary.html">riak_binary</a> **bin);</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<a class="code" href="riak__types_8h.html#ac4b74bedfd8743b6748d23d643d15f43">riak_size_t</a></div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<a class="code" href="riak__binary_8h.html#ab3a1ef83e39c6227ab25d943e88cf9f6" title="Return the length of the binary object. ">riak_binary_len</a>(<a class="code" href="struct__riak__binary.html">riak_binary</a> *bin);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<a class="code" href="riak__types_8h.html#aade50fc7e7b270d6f44000d958e37531">riak_uint8_t</a>*</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<a class="code" href="riak__binary_8h.html#a8dcceb4c8017abbc8b1ec2f79c964c23" title="Get the encapsulated data. ">riak_binary_data</a>(<a class="code" href="struct__riak__binary.html">riak_binary</a> *bin);</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<a class="code" href="riak__types_8h.html#ac4b74bedfd8743b6748d23d643d15f43">riak_size_t</a></div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<a class="code" href="riak__binary_8h.html#ad94ddd308bb73f819f208d0b0415724c" title="User-readable representation of a binary object. ">riak_binary_print</a>(<a class="code" href="struct__riak__binary.html">riak_binary</a>  *bin,</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;                  <span class="keywordtype">char</span>         *target,</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;                  <a class="code" href="riak__types_8h.html#a7ec8ff62977a655990cac91b32f679d8">riak_uint32_t</a> <a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">len</a>);</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<a class="code" href="riak__types_8h.html#ac4b74bedfd8743b6748d23d643d15f43">riak_size_t</a></div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<a class="code" href="riak__binary_8h.html#a4e37be719bb9683be537597b4c230d68" title="Hexidecimal representation of a binary object. ">riak_binary_hex_print</a>(<a class="code" href="struct__riak__binary.html">riak_binary</a>  *bin,</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;                      <span class="keywordtype">char</span>         *target,</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;                      <a class="code" href="riak__types_8h.html#a7ec8ff62977a655990cac91b32f679d8">riak_uint32_t</a> <a class="code" href="struct__riak__binary.html#a396b500b2d581b866dbe7b93aa19ab25">len</a>);</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;<span class="preprocessor">#endif // _RIAK_BINARY_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 28 2013 13:01:34 for riak-c-client by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Feb 20 2014 17:00:52 for riak-c-client by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

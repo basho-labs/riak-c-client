@@ -86,62 +86,197 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#define-members">Macros</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">riak_log.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;stdarg.h&gt;</code><br/>
-</div>
+
 <p><a href="riak__log_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:aa0c341fbb5a37a46e7320e44eeab223a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__log_8h.html#aa0c341fbb5a37a46e7320e44eeab223a">riak_log_fatal</a>(rev, format,...)</td></tr>
-<tr class="separator:aa0c341fbb5a37a46e7320e44eeab223a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac54890e5668b8b176b42677a1f4e3ce8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__log_8h.html#ac54890e5668b8b176b42677a1f4e3ce8">riak_log_error</a>(rev, format,...)</td></tr>
-<tr class="separator:ac54890e5668b8b176b42677a1f4e3ce8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4d0691ef77fe7729db3e76ecc82b15bc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__log_8h.html#a4d0691ef77fe7729db3e76ecc82b15bc">riak_log_warn</a>(rev, format,...)</td></tr>
-<tr class="separator:a4d0691ef77fe7729db3e76ecc82b15bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab301ddea1942ba06fe6e139effbf27ce"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__log_8h.html#ab301ddea1942ba06fe6e139effbf27ce">riak_log_notice</a>(rev, format,...)</td></tr>
-<tr class="separator:ab301ddea1942ba06fe6e139effbf27ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a190a526ef85c83bb7851111852f4c007"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__log_8h.html#a190a526ef85c83bb7851111852f4c007">riak_log_debug</a>(rev, format,...)</td></tr>
-<tr class="separator:a190a526ef85c83bb7851111852f4c007"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab05fe5eaa594aedbcd0055e60cdc5015"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__log_8h.html#ab05fe5eaa594aedbcd0055e60cdc5015">riak_log_fatal_context</a>(ctx, format,...)</td></tr>
-<tr class="separator:ab05fe5eaa594aedbcd0055e60cdc5015"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9e196c6851bd7375329dfb1c09536009"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__log_8h.html#a9e196c6851bd7375329dfb1c09536009">riak_log_error_context</a>(rev, format,...)</td></tr>
-<tr class="separator:a9e196c6851bd7375329dfb1c09536009"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a61406ebce9dcf88a6b1af0cf881c53a9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__log_8h.html#a61406ebce9dcf88a6b1af0cf881c53a9">riak_log_warn_context</a>(rev, format,...)</td></tr>
-<tr class="separator:a61406ebce9dcf88a6b1af0cf881c53a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a60ed8c3ff78b180419107bae1c196c78"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__log_8h.html#a60ed8c3ff78b180419107bae1c196c78">riak_log_notice_context</a>(rev, format,...)</td></tr>
-<tr class="separator:a60ed8c3ff78b180419107bae1c196c78"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad9d06a1e1f416d34b2f628cc0abb694b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__log_8h.html#ad9d06a1e1f416d34b2f628cc0abb694b">riak_log_debug_context</a>(rev, format,...)</td></tr>
-<tr class="separator:ad9d06a1e1f416d34b2f628cc0abb694b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:ad8622a1e1230d0603a81c529d05ca060"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060">riak_log_level_t</a> { <br/>
-&#160;&#160;<a class="el" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060aec53134563a581a33bd679f9d9df04a8">RIAK_LOG_FATAL</a>, 
-<a class="el" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060a3b8aed816f8d632395104822e73a0417">RIAK_LOG_ERROR</a>, 
-<a class="el" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060a68ff993c86ddaa217d91e6263d04cc81">RIAK_LOG_WARN</a>, 
-<a class="el" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060a2d99d941d019c8daef771bbab7944f47">RIAK_LOG_NOTICE</a>, 
-<br/>
-&#160;&#160;<a class="el" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060affaaf087b7f136766a0a188cac8d6850">RIAK_LOG_INFO</a>, 
-<a class="el" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060a1a5089b46adad65d5f88a78b59d6c079">RIAK_LOG_DEBUG</a>, 
-<a class="el" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060a99dc45d9f58437faba6dd2afba2ca0e0">RIAK_LOG_UNKNOWN</a>
-<br/>
- }</td></tr>
-<tr class="separator:ad8622a1e1230d0603a81c529d05ca060"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85482a0186e2dee5bed411a7aa868105"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__log_8h.html#a85482a0186e2dee5bed411a7aa868105">riak_log_emergency</a>(cxn, format,...)</td></tr>
+<tr class="separator:a85482a0186e2dee5bed411a7aa868105"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a747dc0e2167dd13a4a8f8612dbed44e8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__log_8h.html#a747dc0e2167dd13a4a8f8612dbed44e8">riak_log_alert</a>(cxn, format,...)</td></tr>
+<tr class="separator:a747dc0e2167dd13a4a8f8612dbed44e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4baf7c84c942c2c67b9c22cc1ae81c0e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__log_8h.html#a4baf7c84c942c2c67b9c22cc1ae81c0e">riak_log_critical</a>(cxn, format,...)</td></tr>
+<tr class="separator:a4baf7c84c942c2c67b9c22cc1ae81c0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1beb40cc695f440cca2438983bce112b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__log_8h.html#a1beb40cc695f440cca2438983bce112b">riak_log_error</a>(cxn, format,...)</td></tr>
+<tr class="separator:a1beb40cc695f440cca2438983bce112b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b3e4a7b66bc675f6afcf69f990e9a55"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__log_8h.html#a2b3e4a7b66bc675f6afcf69f990e9a55">riak_log_warn</a>(cxn, format,...)</td></tr>
+<tr class="separator:a2b3e4a7b66bc675f6afcf69f990e9a55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a707e77e210a20bc942dcf7f165000507"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__log_8h.html#a707e77e210a20bc942dcf7f165000507">riak_log_notice</a>(cxn, format,...)</td></tr>
+<tr class="separator:a707e77e210a20bc942dcf7f165000507"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b10bdbae7595d64bb2bf16556ba5a78"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__log_8h.html#a2b10bdbae7595d64bb2bf16556ba5a78">riak_log_debug</a>(cxn, format,...)&#160;&#160;&#160;((void)cxn)</td></tr>
+<tr class="separator:a2b10bdbae7595d64bb2bf16556ba5a78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14f597130f7e6a95cbe8c1718b831480"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__log_8h.html#a14f597130f7e6a95cbe8c1718b831480">riak_log_emergency_config</a>(cfg, format,...)</td></tr>
+<tr class="separator:a14f597130f7e6a95cbe8c1718b831480"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7624561eedb60c101b4f4176edcf0a4c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__log_8h.html#a7624561eedb60c101b4f4176edcf0a4c">riak_log_alert_config</a>(cfg, format,...)</td></tr>
+<tr class="separator:a7624561eedb60c101b4f4176edcf0a4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5cba32e6aabec3f80c82edb384aeff1d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__log_8h.html#a5cba32e6aabec3f80c82edb384aeff1d">riak_log_critical_config</a>(cfg, format,...)</td></tr>
+<tr class="separator:a5cba32e6aabec3f80c82edb384aeff1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52dfacc86e63d0b0a58b327d9c6b61d5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__log_8h.html#a52dfacc86e63d0b0a58b327d9c6b61d5">riak_log_error_config</a>(cxn, format,...)</td></tr>
+<tr class="separator:a52dfacc86e63d0b0a58b327d9c6b61d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5daa4e4f4f6ada0b0c19208a0d8911f5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__log_8h.html#a5daa4e4f4f6ada0b0c19208a0d8911f5">riak_log_warn_config</a>(cxn, format,...)</td></tr>
+<tr class="separator:a5daa4e4f4f6ada0b0c19208a0d8911f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8329b0a9f7b2a1b3ce0cdc4ba2833b0a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__log_8h.html#a8329b0a9f7b2a1b3ce0cdc4ba2833b0a">riak_log_notice_config</a>(cxn, format,...)</td></tr>
+<tr class="separator:a8329b0a9f7b2a1b3ce0cdc4ba2833b0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab76c1c9139ee1e873c45207c9f95f1be"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__log_8h.html#ab76c1c9139ee1e873c45207c9f95f1be">riak_log_debug_config</a>(cxn, format,...)&#160;&#160;&#160;((void)cxn)</td></tr>
+<tr class="separator:ab76c1c9139ee1e873c45207c9f95f1be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a3236c5acc6b330310b0c898cd425b191"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__log_8h.html#a3236c5acc6b330310b0c898cd425b191">riak_log_internal</a> (<a class="el" href="riak__context_8h.html#ad856681ca733293974b5bec0ac17b247">riak_context</a> *ctx, <a class="el" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060">riak_log_level_t</a> level, const char *file, size_t filelen, const char *func, size_t funclen, long line, const char *format,...)</td></tr>
-<tr class="memdesc:a3236c5acc6b330310b0c898cd425b191"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a record to the Riak log.  <a href="#a3236c5acc6b330310b0c898cd425b191">More...</a><br/></td></tr>
-<tr class="separator:a3236c5acc6b330310b0c898cd425b191"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7802f6aa3ed44aa893ba9f2c7425ad81"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__log_8h.html#a7802f6aa3ed44aa893ba9f2c7425ad81">riak_log_internal</a> (<a class="el" href="riak__config_8h.html#a600d9c01ffe17fb6edfd7f7e81adfdc1">riak_config</a> *cfg, <a class="el" href="riak__log__config_8h.html#ad8622a1e1230d0603a81c529d05ca060">riak_log_level_t</a> level, const char *file, <a class="el" href="riak__types_8h.html#ac4b74bedfd8743b6748d23d643d15f43">riak_size_t</a> filelen, const char *func, <a class="el" href="riak__types_8h.html#ac4b74bedfd8743b6748d23d643d15f43">riak_size_t</a> funclen, <a class="el" href="riak__types_8h.html#a7ec8ff62977a655990cac91b32f679d8">riak_uint32_t</a> line, const char *format,...)</td></tr>
+<tr class="memdesc:a7802f6aa3ed44aa893ba9f2c7425ad81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a record to the Riak log.  <a href="#a7802f6aa3ed44aa893ba9f2c7425ad81">More...</a><br/></td></tr>
+<tr class="separator:a7802f6aa3ed44aa893ba9f2c7425ad81"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="a190a526ef85c83bb7851111852f4c007"></a>
+<a class="anchor" id="a747dc0e2167dd13a4a8f8612dbed44e8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define riak_log_alert</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">cxn, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">format, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="riak__log_8h.html#a7802f6aa3ed44aa893ba9f2c7425ad81" title="Add a record to the Riak log. ">riak_log_internal</a>(<a class="code" href="riak__connection_8h.html#aa8e9da641ea24d5176a8badb7cf488f1">riak_connection_get_config</a>(cxn), <a class="code" href="riak__log__config_8h.html#ad8622a1e1230d0603a81c529d05ca060a71db93ab5f82fb46c52c55991a9c0823">RIAK_LOG_ALERT</a>, __FILE__, <span class="keyword">sizeof</span>(__FILE__)-1, \</div>
+<div class="line">        __func__, <span class="keyword">sizeof</span>(__func__)-1, __LINE__, (<span class="stringliteral">&quot;[%d] &quot;</span> format), <a class="code" href="riak__connection_8h.html#a4394c1a254bc58a774719a28f0362cd0">riak_connection_get_fd</a>(cxn), __VA_ARGS__)</div>
+</div><!-- fragment -->
+<p>Definition at line <a class="el" href="riak__log_8h_source.html#l00053">53</a> of file <a class="el" href="riak__log_8h_source.html">riak_log.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7624561eedb60c101b4f4176edcf0a4c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define riak_log_alert_config</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">cfg, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">format, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="riak__log_8h.html#a7802f6aa3ed44aa893ba9f2c7425ad81" title="Add a record to the Riak log. ">riak_log_internal</a>((cfg), <a class="code" href="riak__log__config_8h.html#ad8622a1e1230d0603a81c529d05ca060a71db93ab5f82fb46c52c55991a9c0823">RIAK_LOG_ALERT</a>, __FILE__, <span class="keyword">sizeof</span>(__FILE__)-1, \</div>
+<div class="line">        __func__, <span class="keyword">sizeof</span>(__func__)-1, __LINE__, (format), __VA_ARGS__)</div>
+</div><!-- fragment -->
+<p>Definition at line <a class="el" href="riak__log_8h_source.html#l00079">79</a> of file <a class="el" href="riak__log_8h_source.html">riak_log.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4baf7c84c942c2c67b9c22cc1ae81c0e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define riak_log_critical</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">cxn, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">format, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="riak__log_8h.html#a7802f6aa3ed44aa893ba9f2c7425ad81" title="Add a record to the Riak log. ">riak_log_internal</a>(<a class="code" href="riak__connection_8h.html#aa8e9da641ea24d5176a8badb7cf488f1">riak_connection_get_config</a>(cxn), <a class="code" href="riak__log__config_8h.html#ad8622a1e1230d0603a81c529d05ca060ac2f591d36208b08abf8047f342237b60">RIAK_LOG_CRITICAL</a>, __FILE__, <span class="keyword">sizeof</span>(__FILE__)-1, \</div>
+<div class="line">        __func__, <span class="keyword">sizeof</span>(__func__)-1, __LINE__, (<span class="stringliteral">&quot;[%d] &quot;</span> format), <a class="code" href="riak__connection_8h.html#a4394c1a254bc58a774719a28f0362cd0">riak_connection_get_fd</a>(cxn), __VA_ARGS__)</div>
+</div><!-- fragment -->
+<p>Definition at line <a class="el" href="riak__log_8h_source.html#l00056">56</a> of file <a class="el" href="riak__log_8h_source.html">riak_log.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5cba32e6aabec3f80c82edb384aeff1d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define riak_log_critical_config</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">cfg, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">format, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="riak__log_8h.html#a7802f6aa3ed44aa893ba9f2c7425ad81" title="Add a record to the Riak log. ">riak_log_internal</a>((cfg), <a class="code" href="riak__log__config_8h.html#ad8622a1e1230d0603a81c529d05ca060ac2f591d36208b08abf8047f342237b60">RIAK_LOG_CRITICAL</a>, __FILE__, <span class="keyword">sizeof</span>(__FILE__)-1, \</div>
+<div class="line">        __func__, <span class="keyword">sizeof</span>(__func__)-1, __LINE__, (format), __VA_ARGS__)</div>
+</div><!-- fragment -->
+<p>Definition at line <a class="el" href="riak__log_8h_source.html#l00082">82</a> of file <a class="el" href="riak__log_8h_source.html">riak_log.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a2b10bdbae7595d64bb2bf16556ba5a78"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -149,7 +284,7 @@ Functions</h2></td></tr>
           <td class="memname">#define riak_log_debug</td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname">rev, </td>
+          <td class="paramname">cxn, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -166,24 +301,58 @@ Functions</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td>
+          <td></td><td>&#160;&#160;&#160;((void)cxn)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="riak__log_8h_source.html#l00080">80</a> of file <a class="el" href="riak__log_8h_source.html">riak_log.h</a>.</p>
+<p>Definition at line <a class="el" href="riak__log_8h_source.html#l00073">73</a> of file <a class="el" href="riak__log_8h_source.html">riak_log.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ad9d06a1e1f416d34b2f628cc0abb694b"></a>
+<a class="anchor" id="ab76c1c9139ee1e873c45207c9f95f1be"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define riak_log_debug_context</td>
+          <td class="memname">#define riak_log_debug_config</td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname">rev, </td>
+          <td class="paramname">cxn, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">format, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;((void)cxn)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="riak__log_8h_source.html#l00099">99</a> of file <a class="el" href="riak__log_8h_source.html">riak_log.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a85482a0186e2dee5bed411a7aa868105"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define riak_log_emergency</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">cxn, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -204,12 +373,50 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="riak__log_8h_source.html#l00100">100</a> of file <a class="el" href="riak__log_8h_source.html">riak_log.h</a>.</p>
+<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="riak__log_8h.html#a7802f6aa3ed44aa893ba9f2c7425ad81" title="Add a record to the Riak log. ">riak_log_internal</a>(<a class="code" href="riak__connection_8h.html#aa8e9da641ea24d5176a8badb7cf488f1">riak_connection_get_config</a>(cxn), <a class="code" href="riak__log__config_8h.html#ad8622a1e1230d0603a81c529d05ca060ac76b94ff1a87ae1a43e07fcebdf381cf">RIAK_LOG_EMERG</a>, __FILE__, <span class="keyword">sizeof</span>(__FILE__)-1, \</div>
+<div class="line">        __func__, <span class="keyword">sizeof</span>(__func__)-1, __LINE__, (<span class="stringliteral">&quot;[%d] &quot;</span> format), <a class="code" href="riak__connection_8h.html#a4394c1a254bc58a774719a28f0362cd0">riak_connection_get_fd</a>(cxn), __VA_ARGS__)</div>
+</div><!-- fragment -->
+<p>Definition at line <a class="el" href="riak__log_8h_source.html#l00050">50</a> of file <a class="el" href="riak__log_8h_source.html">riak_log.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac54890e5668b8b176b42677a1f4e3ce8"></a>
+<a class="anchor" id="a14f597130f7e6a95cbe8c1718b831480"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define riak_log_emergency_config</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">cfg, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">format, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="riak__log_8h.html#a7802f6aa3ed44aa893ba9f2c7425ad81" title="Add a record to the Riak log. ">riak_log_internal</a>((cfg), <a class="code" href="riak__log__config_8h.html#ad8622a1e1230d0603a81c529d05ca060ac76b94ff1a87ae1a43e07fcebdf381cf">RIAK_LOG_EMERG</a>, __FILE__, <span class="keyword">sizeof</span>(__FILE__)-1, \</div>
+<div class="line">        __func__, <span class="keyword">sizeof</span>(__func__)-1, __LINE__, (format), __VA_ARGS__)</div>
+</div><!-- fragment -->
+<p>Definition at line <a class="el" href="riak__log_8h_source.html#l00076">76</a> of file <a class="el" href="riak__log_8h_source.html">riak_log.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1beb40cc695f440cca2438983bce112b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -217,7 +424,7 @@ Functions</h2></td></tr>
           <td class="memname">#define riak_log_error</td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname">rev, </td>
+          <td class="paramname">cxn, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -238,22 +445,22 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="riak__log_8h.html#a3236c5acc6b330310b0c898cd425b191" title="Add a record to the Riak log. ">riak_log_internal</a>(<a class="code" href="riak__event_8h.html#adb95813919a421e86cd8289c547355b3" title="Return the Riak Context. ">riak_event_get_context</a>(rev), <a class="code" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060a3b8aed816f8d632395104822e73a0417">RIAK_LOG_ERROR</a>, __FILE__, <span class="keyword">sizeof</span>(__FILE__)-1, \</div>
-<div class="line">        __func__, <span class="keyword">sizeof</span>(__func__)-1, __LINE__, (<span class="stringliteral">&quot;[%d] &quot;</span> format), <a class="code" href="riak__event_8h.html#a78f7db422f95a37945f49072a5c606db" title="Return the underlying socket file descriptor. ">riak_event_get_fd</a>(rev), __VA_ARGS__)</div>
+<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="riak__log_8h.html#a7802f6aa3ed44aa893ba9f2c7425ad81" title="Add a record to the Riak log. ">riak_log_internal</a>(<a class="code" href="riak__connection_8h.html#aa8e9da641ea24d5176a8badb7cf488f1">riak_connection_get_config</a>(cxn), <a class="code" href="riak__log__config_8h.html#ad8622a1e1230d0603a81c529d05ca060a3b8aed816f8d632395104822e73a0417">RIAK_LOG_ERROR</a>, __FILE__, <span class="keyword">sizeof</span>(__FILE__)-1, \</div>
+<div class="line">        __func__, <span class="keyword">sizeof</span>(__func__)-1, __LINE__, (<span class="stringliteral">&quot;[%d] &quot;</span> format), <a class="code" href="riak__connection_8h.html#a4394c1a254bc58a774719a28f0362cd0">riak_connection_get_fd</a>(cxn), __VA_ARGS__)</div>
 </div><!-- fragment -->
-<p>Definition at line <a class="el" href="riak__log_8h_source.html#l00066">66</a> of file <a class="el" href="riak__log_8h_source.html">riak_log.h</a>.</p>
+<p>Definition at line <a class="el" href="riak__log_8h_source.html#l00059">59</a> of file <a class="el" href="riak__log_8h_source.html">riak_log.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a9e196c6851bd7375329dfb1c09536009"></a>
+<a class="anchor" id="a52dfacc86e63d0b0a58b327d9c6b61d5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define riak_log_error_context</td>
+          <td class="memname">#define riak_log_error_config</td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname">rev, </td>
+          <td class="paramname">cxn, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -274,86 +481,14 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="riak__log_8h.html#a3236c5acc6b330310b0c898cd425b191" title="Add a record to the Riak log. ">riak_log_internal</a>((ctx), <a class="code" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060a3b8aed816f8d632395104822e73a0417">RIAK_LOG_ERROR</a>, __FILE__, <span class="keyword">sizeof</span>(__FILE__)-1, \</div>
+<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="riak__log_8h.html#a7802f6aa3ed44aa893ba9f2c7425ad81" title="Add a record to the Riak log. ">riak_log_internal</a>((cfg), <a class="code" href="riak__log__config_8h.html#ad8622a1e1230d0603a81c529d05ca060a3b8aed816f8d632395104822e73a0417">RIAK_LOG_ERROR</a>, __FILE__, <span class="keyword">sizeof</span>(__FILE__)-1, \</div>
 <div class="line">        __func__, <span class="keyword">sizeof</span>(__func__)-1, __LINE__, (format), __VA_ARGS__)</div>
 </div><!-- fragment -->
-<p>Definition at line <a class="el" href="riak__log_8h_source.html#l00086">86</a> of file <a class="el" href="riak__log_8h_source.html">riak_log.h</a>.</p>
+<p>Definition at line <a class="el" href="riak__log_8h_source.html#l00085">85</a> of file <a class="el" href="riak__log_8h_source.html">riak_log.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aa0c341fbb5a37a46e7320e44eeab223a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define riak_log_fatal</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">rev, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">format, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>...</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="riak__log_8h.html#a3236c5acc6b330310b0c898cd425b191" title="Add a record to the Riak log. ">riak_log_internal</a>(<a class="code" href="riak__event_8h.html#adb95813919a421e86cd8289c547355b3" title="Return the Riak Context. ">riak_event_get_context</a>(rev), <a class="code" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060aec53134563a581a33bd679f9d9df04a8">RIAK_LOG_FATAL</a>, __FILE__, <span class="keyword">sizeof</span>(__FILE__)-1, \</div>
-<div class="line">        __func__, <span class="keyword">sizeof</span>(__func__)-1, __LINE__, (<span class="stringliteral">&quot;[%d] &quot;</span> format), <a class="code" href="riak__event_8h.html#a78f7db422f95a37945f49072a5c606db" title="Return the underlying socket file descriptor. ">riak_event_get_fd</a>(rev), __VA_ARGS__)</div>
-</div><!-- fragment -->
-<p>Definition at line <a class="el" href="riak__log_8h_source.html#l00063">63</a> of file <a class="el" href="riak__log_8h_source.html">riak_log.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ab05fe5eaa594aedbcd0055e60cdc5015"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define riak_log_fatal_context</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">ctx, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">format, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>...</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="riak__log_8h.html#a3236c5acc6b330310b0c898cd425b191" title="Add a record to the Riak log. ">riak_log_internal</a>((ctx), <a class="code" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060aec53134563a581a33bd679f9d9df04a8">RIAK_LOG_FATAL</a>, __FILE__, <span class="keyword">sizeof</span>(__FILE__)-1, \</div>
-<div class="line">        __func__, <span class="keyword">sizeof</span>(__func__)-1, __LINE__, (format), __VA_ARGS__)</div>
-</div><!-- fragment -->
-<p>Definition at line <a class="el" href="riak__log_8h_source.html#l00083">83</a> of file <a class="el" href="riak__log_8h_source.html">riak_log.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ab301ddea1942ba06fe6e139effbf27ce"></a>
+<a class="anchor" id="a707e77e210a20bc942dcf7f165000507"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -361,7 +496,7 @@ Functions</h2></td></tr>
           <td class="memname">#define riak_log_notice</td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname">rev, </td>
+          <td class="paramname">cxn, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -382,22 +517,22 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="riak__log_8h.html#a3236c5acc6b330310b0c898cd425b191" title="Add a record to the Riak log. ">riak_log_internal</a>(<a class="code" href="riak__event_8h.html#adb95813919a421e86cd8289c547355b3" title="Return the Riak Context. ">riak_event_get_context</a>(rev), <a class="code" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060a2d99d941d019c8daef771bbab7944f47">RIAK_LOG_NOTICE</a>, __FILE__, <span class="keyword">sizeof</span>(__FILE__)-1, \</div>
-<div class="line">        __func__, <span class="keyword">sizeof</span>(__func__)-1, __LINE__, (<span class="stringliteral">&quot;[%d] &quot;</span> format), <a class="code" href="riak__event_8h.html#a78f7db422f95a37945f49072a5c606db" title="Return the underlying socket file descriptor. ">riak_event_get_fd</a>(rev), __VA_ARGS__)</div>
+<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="riak__log_8h.html#a7802f6aa3ed44aa893ba9f2c7425ad81" title="Add a record to the Riak log. ">riak_log_internal</a>(<a class="code" href="riak__connection_8h.html#aa8e9da641ea24d5176a8badb7cf488f1">riak_connection_get_config</a>(cxn), <a class="code" href="riak__log__config_8h.html#ad8622a1e1230d0603a81c529d05ca060a2d99d941d019c8daef771bbab7944f47">RIAK_LOG_NOTICE</a>, __FILE__, <span class="keyword">sizeof</span>(__FILE__)-1, \</div>
+<div class="line">        __func__, <span class="keyword">sizeof</span>(__func__)-1, __LINE__, (<span class="stringliteral">&quot;[%d] &quot;</span> format), <a class="code" href="riak__connection_8h.html#a4394c1a254bc58a774719a28f0362cd0">riak_connection_get_fd</a>(cxn), __VA_ARGS__)</div>
 </div><!-- fragment -->
-<p>Definition at line <a class="el" href="riak__log_8h_source.html#l00072">72</a> of file <a class="el" href="riak__log_8h_source.html">riak_log.h</a>.</p>
+<p>Definition at line <a class="el" href="riak__log_8h_source.html#l00065">65</a> of file <a class="el" href="riak__log_8h_source.html">riak_log.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a60ed8c3ff78b180419107bae1c196c78"></a>
+<a class="anchor" id="a8329b0a9f7b2a1b3ce0cdc4ba2833b0a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define riak_log_notice_context</td>
+          <td class="memname">#define riak_log_notice_config</td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname">rev, </td>
+          <td class="paramname">cxn, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -418,14 +553,14 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="riak__log_8h.html#a3236c5acc6b330310b0c898cd425b191" title="Add a record to the Riak log. ">riak_log_internal</a>((ctx), <a class="code" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060a2d99d941d019c8daef771bbab7944f47">RIAK_LOG_NOTICE</a>, __FILE__, <span class="keyword">sizeof</span>(__FILE__)-1, \</div>
+<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="riak__log_8h.html#a7802f6aa3ed44aa893ba9f2c7425ad81" title="Add a record to the Riak log. ">riak_log_internal</a>((cfg), <a class="code" href="riak__log__config_8h.html#ad8622a1e1230d0603a81c529d05ca060a2d99d941d019c8daef771bbab7944f47">RIAK_LOG_NOTICE</a>, __FILE__, <span class="keyword">sizeof</span>(__FILE__)-1, \</div>
 <div class="line">        __func__, <span class="keyword">sizeof</span>(__func__)-1, __LINE__, (format), __VA_ARGS__)</div>
 </div><!-- fragment -->
-<p>Definition at line <a class="el" href="riak__log_8h_source.html#l00092">92</a> of file <a class="el" href="riak__log_8h_source.html">riak_log.h</a>.</p>
+<p>Definition at line <a class="el" href="riak__log_8h_source.html#l00091">91</a> of file <a class="el" href="riak__log_8h_source.html">riak_log.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a4d0691ef77fe7729db3e76ecc82b15bc"></a>
+<a class="anchor" id="a2b3e4a7b66bc675f6afcf69f990e9a55"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -433,7 +568,7 @@ Functions</h2></td></tr>
           <td class="memname">#define riak_log_warn</td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname">rev, </td>
+          <td class="paramname">cxn, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -454,22 +589,22 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="riak__log_8h.html#a3236c5acc6b330310b0c898cd425b191" title="Add a record to the Riak log. ">riak_log_internal</a>(<a class="code" href="riak__event_8h.html#adb95813919a421e86cd8289c547355b3" title="Return the Riak Context. ">riak_event_get_context</a>(rev), <a class="code" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060a68ff993c86ddaa217d91e6263d04cc81">RIAK_LOG_WARN</a>, __FILE__, <span class="keyword">sizeof</span>(__FILE__)-1, \</div>
-<div class="line">        __func__, <span class="keyword">sizeof</span>(__func__)-1, __LINE__, (<span class="stringliteral">&quot;[%d] &quot;</span> format), <a class="code" href="riak__event_8h.html#a78f7db422f95a37945f49072a5c606db" title="Return the underlying socket file descriptor. ">riak_event_get_fd</a>(rev), __VA_ARGS__)</div>
+<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="riak__log_8h.html#a7802f6aa3ed44aa893ba9f2c7425ad81" title="Add a record to the Riak log. ">riak_log_internal</a>(<a class="code" href="riak__connection_8h.html#aa8e9da641ea24d5176a8badb7cf488f1">riak_connection_get_config</a>(cxn), <a class="code" href="riak__log__config_8h.html#ad8622a1e1230d0603a81c529d05ca060a68ff993c86ddaa217d91e6263d04cc81">RIAK_LOG_WARN</a>, __FILE__, <span class="keyword">sizeof</span>(__FILE__)-1, \</div>
+<div class="line">        __func__, <span class="keyword">sizeof</span>(__func__)-1, __LINE__, (<span class="stringliteral">&quot;[%d] &quot;</span> format), <a class="code" href="riak__connection_8h.html#a4394c1a254bc58a774719a28f0362cd0">riak_connection_get_fd</a>(cxn), __VA_ARGS__)</div>
 </div><!-- fragment -->
-<p>Definition at line <a class="el" href="riak__log_8h_source.html#l00069">69</a> of file <a class="el" href="riak__log_8h_source.html">riak_log.h</a>.</p>
+<p>Definition at line <a class="el" href="riak__log_8h_source.html#l00062">62</a> of file <a class="el" href="riak__log_8h_source.html">riak_log.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a61406ebce9dcf88a6b1af0cf881c53a9"></a>
+<a class="anchor" id="a5daa4e4f4f6ada0b0c19208a0d8911f5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define riak_log_warn_context</td>
+          <td class="memname">#define riak_log_warn_config</td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname">rev, </td>
+          <td class="paramname">cxn, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -490,68 +625,28 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="riak__log_8h.html#a3236c5acc6b330310b0c898cd425b191" title="Add a record to the Riak log. ">riak_log_internal</a>(ctx), <a class="code" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060a68ff993c86ddaa217d91e6263d04cc81">RIAK_LOG_WARN</a>, __FILE__, <span class="keyword">sizeof</span>(__FILE__)-1, \</div>
+<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="riak__log_8h.html#a7802f6aa3ed44aa893ba9f2c7425ad81" title="Add a record to the Riak log. ">riak_log_internal</a>(cfg), <a class="code" href="riak__log__config_8h.html#ad8622a1e1230d0603a81c529d05ca060a68ff993c86ddaa217d91e6263d04cc81">RIAK_LOG_WARN</a>, __FILE__, <span class="keyword">sizeof</span>(__FILE__)-1, \</div>
 <div class="line">        __func__, <span class="keyword">sizeof</span>(__func__)-1, __LINE__, (format), __VA_ARGS__)</div>
 </div><!-- fragment -->
-<p>Definition at line <a class="el" href="riak__log_8h_source.html#l00089">89</a> of file <a class="el" href="riak__log_8h_source.html">riak_log.h</a>.</p>
+<p>Definition at line <a class="el" href="riak__log_8h_source.html#l00088">88</a> of file <a class="el" href="riak__log_8h_source.html">riak_log.h</a>.</p>
 
-</div>
-</div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ad8622a1e1230d0603a81c529d05ca060"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060">riak_log_level_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ad8622a1e1230d0603a81c529d05ca060aec53134563a581a33bd679f9d9df04a8"></a>RIAK_LOG_FATAL</em>&nbsp;</td><td class="fielddoc">
-<p>fatal </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ad8622a1e1230d0603a81c529d05ca060a3b8aed816f8d632395104822e73a0417"></a>RIAK_LOG_ERROR</em>&nbsp;</td><td class="fielddoc">
-<p>error </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ad8622a1e1230d0603a81c529d05ca060a68ff993c86ddaa217d91e6263d04cc81"></a>RIAK_LOG_WARN</em>&nbsp;</td><td class="fielddoc">
-<p>warn </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ad8622a1e1230d0603a81c529d05ca060a2d99d941d019c8daef771bbab7944f47"></a>RIAK_LOG_NOTICE</em>&nbsp;</td><td class="fielddoc">
-<p>notice </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ad8622a1e1230d0603a81c529d05ca060affaaf087b7f136766a0a188cac8d6850"></a>RIAK_LOG_INFO</em>&nbsp;</td><td class="fielddoc">
-<p>info </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ad8622a1e1230d0603a81c529d05ca060a1a5089b46adad65d5f88a78b59d6c079"></a>RIAK_LOG_DEBUG</em>&nbsp;</td><td class="fielddoc">
-<p>debug </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ad8622a1e1230d0603a81c529d05ca060a99dc45d9f58437faba6dd2afba2ca0e0"></a>RIAK_LOG_UNKNOWN</em>&nbsp;</td><td class="fielddoc">
-<p>unknown </p>
-</td></tr>
-</table>
-
-<p>Definition at line <a class="el" href="riak__log_8h_source.html#l00029">29</a> of file <a class="el" href="riak__log_8h_source.html">riak_log.h</a>.</p>
-<div class="fragment"><div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;             {    <a class="code" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060aec53134563a581a33bd679f9d9df04a8">RIAK_LOG_FATAL</a>,    <a class="code" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060a3b8aed816f8d632395104822e73a0417">RIAK_LOG_ERROR</a>,     <a class="code" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060a68ff993c86ddaa217d91e6263d04cc81">RIAK_LOG_WARN</a>,   <a class="code" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060a2d99d941d019c8daef771bbab7944f47">RIAK_LOG_NOTICE</a>,     <a class="code" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060affaaf087b7f136766a0a188cac8d6850">RIAK_LOG_INFO</a>,    <a class="code" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060a1a5089b46adad65d5f88a78b59d6c079">RIAK_LOG_DEBUG</a>,  <a class="code" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060a99dc45d9f58437faba6dd2afba2ca0e0">RIAK_LOG_UNKNOWN</a></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;} <a class="code" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060">riak_log_level_t</a>;</div>
-</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a3236c5acc6b330310b0c898cd425b191"></a>
+<a class="anchor" id="a7802f6aa3ed44aa893ba9f2c7425ad81"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void riak_log_internal </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="riak__context_8h.html#ad856681ca733293974b5bec0ac17b247">riak_context</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em>, </td>
+          <td class="paramtype"><a class="el" href="riak__config_8h.html#a600d9c01ffe17fb6edfd7f7e81adfdc1">riak_config</a> *&#160;</td>
+          <td class="paramname"><em>cfg</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060">riak_log_level_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="riak__log__config_8h.html#ad8622a1e1230d0603a81c529d05ca060">riak_log_level_t</a>&#160;</td>
           <td class="paramname"><em>level</em>, </td>
         </tr>
         <tr>
@@ -563,7 +658,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">size_t&#160;</td>
+          <td class="paramtype"><a class="el" href="riak__types_8h.html#ac4b74bedfd8743b6748d23d643d15f43">riak_size_t</a>&#160;</td>
           <td class="paramname"><em>filelen</em>, </td>
         </tr>
         <tr>
@@ -575,13 +670,13 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">size_t&#160;</td>
+          <td class="paramtype"><a class="el" href="riak__types_8h.html#ac4b74bedfd8743b6748d23d643d15f43">riak_size_t</a>&#160;</td>
           <td class="paramname"><em>funclen</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">long&#160;</td>
+          <td class="paramtype"><a class="el" href="riak__types_8h.html#a7ec8ff62977a655990cac91b32f679d8">riak_uint32_t</a>&#160;</td>
           <td class="paramname"><em>line</em>, </td>
         </tr>
         <tr>
@@ -607,7 +702,7 @@ Functions</h2></td></tr>
 <p>Add a record to the Riak log. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ctx</td><td>Riak Context </td></tr>
+    <tr><td class="paramname">cfg</td><td>Riak Configuration </td></tr>
     <tr><td class="paramname">level</td><td>Logging level (see <code>riak_log_level_t</code>) </td></tr>
     <tr><td class="paramname">file</td><td>Filename where log message is written </td></tr>
     <tr><td class="paramname">filelen</td><td>Length of above </td></tr>
@@ -620,42 +715,33 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="riak__log_8c_source.html#l00043">43</a> of file <a class="el" href="riak__log_8c_source.html">riak_log.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;                       {</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordflow">if</span> (level &lt; RIAK_LOG_FATAL || level &gt; <a class="code" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060a99dc45d9f58437faba6dd2afba2ca0e0">RIAK_LOG_UNKNOWN</a>) level = <a class="code" href="riak__log_8h.html#ad8622a1e1230d0603a81c529d05ca060a99dc45d9f58437faba6dd2afba2ca0e0">RIAK_LOG_UNKNOWN</a>;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="comment">// Map to underlying zlog priorities</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    zlog_level priority = <a class="code" href="riak__log_8c.html#a288b39ef15decd5a2092bb48857f362c">map_level_to_priority</a>[(int)level];</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <a class="code" href="riak__types_8h.html#a0e7d534a31d40780bf1500358340c5e8">riak_boolean_t</a> has_logging = <a class="code" href="riak__types_8h.html#a32b007d4c81d097b9f8a37d7b80317ef">RIAK_FALSE</a>;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    zlog_category_t *category;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordflow">if</span> (ctx-&gt;<a class="code" href="struct__riak__context.html#a12d0b981fc4dbd45fbf1f4ab249744e7">logging_category</a>[0] != <span class="charliteral">&#39;\0&#39;</span>) {</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        category = zlog_get_category(ctx-&gt;<a class="code" href="struct__riak__context.html#a12d0b981fc4dbd45fbf1f4ab249744e7">logging_category</a>);</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        has_logging = <a class="code" href="riak__types_8h.html#a30eda4d7c7fe244e40336714e8a3822e">RIAK_TRUE</a>;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    }</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    va_list va;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    va_start(va, format);</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keywordflow">if</span> (has_logging) {</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        vzlog(category,</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;              file,</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;              filelen,</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;              func,</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;              funclen,</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;              line,</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;              priority,</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;              format,</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;              va);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        vfprintf(stderr, format, va);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    }</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    va_end(va);</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;}</div>
+<p>Definition at line <a class="el" href="riak__log_8c_source.html#l00045">45</a> of file <a class="el" href="riak__log_8c_source.html">riak_log.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;                       {</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <a class="code" href="riak__log__config_8h.html#a0b14d16f3b58dfc013417f27199d6d94" title="Definition of logging function. ">riak_log_fn</a> log_fn = riak_log_default;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordflow">if</span> (cfg-&gt;<a class="code" href="struct__riak__config.html#a32c41c29ee5235d517f8081a86610d43">log_fn</a>) {</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        log_fn = cfg-&gt;<a class="code" href="struct__riak__config.html#a32c41c29ee5235d517f8081a86610d43">log_fn</a>;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    }</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    va_list va;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    va_start(va, format);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    (log_fn)((<span class="keywordtype">void</span>*)cfg-&gt;<a class="code" href="struct__riak__config.html#a3add52921d1cf6fc44c680e9691801b5">log_data</a>,</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;             level,</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;             file,</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;             filelen,</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;             func,</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;             funclen,</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;             line,</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;             format,</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;             va);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    va_end(va);</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 28 2013 13:01:34 for riak-c-client by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Feb 20 2014 17:00:53 for riak-c-client by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

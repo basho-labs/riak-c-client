@@ -105,26 +105,38 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ae80c266c8c462cf1ec60bb19e79dc0d6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__object-internal_8h.html#ae80c266c8c462cf1ec60bb19e79dc0d6">riak_object_new_from_pb</a> (<a class="el" href="riak__context_8h.html#ad856681ca733293974b5bec0ac17b247">riak_context</a> *ctx, <a class="el" href="riak__object_8h.html#ae6b452e0ed80cca70662fbb7233d2ec0">riak_object</a> **to, RpbContent *from)</td></tr>
-<tr class="memdesc:ae80c266c8c462cf1ec60bb19e79dc0d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shallow copy a Riak Object from a protocol buffer.  <a href="#ae80c266c8c462cf1ec60bb19e79dc0d6">More...</a><br/></td></tr>
-<tr class="separator:ae80c266c8c462cf1ec60bb19e79dc0d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac51eec5015ecd1b6db854039cf2f3a74"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__object-internal_8h.html#ac51eec5015ecd1b6db854039cf2f3a74">riak_object_to_pb_copy</a> (<a class="el" href="riak__context_8h.html#ad856681ca733293974b5bec0ac17b247">riak_context</a> *ctx, RpbContent *to, <a class="el" href="riak__object_8h.html#ae6b452e0ed80cca70662fbb7233d2ec0">riak_object</a> *from)</td></tr>
-<tr class="memdesc:ac51eec5015ecd1b6db854039cf2f3a74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy a Riak Object to a protocol buffer.  <a href="#ac51eec5015ecd1b6db854039cf2f3a74">More...</a><br/></td></tr>
-<tr class="separator:ac51eec5015ecd1b6db854039cf2f3a74"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a30357640749140c1d58af06209632e48"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__object-internal_8h.html#a30357640749140c1d58af06209632e48">riak_object_free_pb</a> (<a class="el" href="riak__context_8h.html#ad856681ca733293974b5bec0ac17b247">riak_context</a> *ctx, RpbContent *obj)</td></tr>
-<tr class="memdesc:a30357640749140c1d58af06209632e48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Release claimed memory used by PB Riak Object.  <a href="#a30357640749140c1d58af06209632e48">More...</a><br/></td></tr>
-<tr class="separator:a30357640749140c1d58af06209632e48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a418b79f0e0b55198f2942a8f76351601"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__object-internal_8h.html#a418b79f0e0b55198f2942a8f76351601">riak_object_new_from_pb</a> (<a class="el" href="riak__config_8h.html#a600d9c01ffe17fb6edfd7f7e81adfdc1">riak_config</a> *cfg, <a class="el" href="riak__object_8h.html#ae6b452e0ed80cca70662fbb7233d2ec0">riak_object</a> **to, RpbContent *from)</td></tr>
+<tr class="memdesc:a418b79f0e0b55198f2942a8f76351601"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shallow copy a Riak Object from a protocol buffer.  <a href="#a418b79f0e0b55198f2942a8f76351601">More...</a><br/></td></tr>
+<tr class="separator:a418b79f0e0b55198f2942a8f76351601"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56ec3e0c0dc1bb13bb1a8bd3acbb84d7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__object-internal_8h.html#a56ec3e0c0dc1bb13bb1a8bd3acbb84d7">riak_object_to_pb_copy</a> (<a class="el" href="riak__config_8h.html#a600d9c01ffe17fb6edfd7f7e81adfdc1">riak_config</a> *cfg, RpbContent *to, <a class="el" href="riak__object_8h.html#ae6b452e0ed80cca70662fbb7233d2ec0">riak_object</a> *from)</td></tr>
+<tr class="memdesc:a56ec3e0c0dc1bb13bb1a8bd3acbb84d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy a Riak Object to a protocol buffer.  <a href="#a56ec3e0c0dc1bb13bb1a8bd3acbb84d7">More...</a><br/></td></tr>
+<tr class="separator:a56ec3e0c0dc1bb13bb1a8bd3acbb84d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6d2aa0676a701f4b4ad90936f3a2c0f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__object-internal_8h.html#af6d2aa0676a701f4b4ad90936f3a2c0f">riak_object_free_pb</a> (<a class="el" href="riak__config_8h.html#a600d9c01ffe17fb6edfd7f7e81adfdc1">riak_config</a> *cfg, RpbContent *obj)</td></tr>
+<tr class="memdesc:af6d2aa0676a701f4b4ad90936f3a2c0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Release claimed memory used by PB Riak Object.  <a href="#af6d2aa0676a701f4b4ad90936f3a2c0f">More...</a><br/></td></tr>
+<tr class="separator:af6d2aa0676a701f4b4ad90936f3a2c0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b9e1ad8dc8e5f99c31a7739a270ad33"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__object-internal_8h.html#a8b9e1ad8dc8e5f99c31a7739a270ad33">riak_pairs_copy_from_pb</a> (<a class="el" href="riak__config_8h.html#a600d9c01ffe17fb6edfd7f7e81adfdc1">riak_config</a> *cfg, <a class="el" href="riak__object_8h.html#a85cd6d860cb1203ccfea9e1df4c6345a">riak_pair</a> **pair_target, RpbPair *pbpair)</td></tr>
+<tr class="memdesc:a8b9e1ad8dc8e5f99c31a7739a270ad33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy a key/value pair from a PB to Riak structure.  <a href="#a8b9e1ad8dc8e5f99c31a7739a270ad33">More...</a><br/></td></tr>
+<tr class="separator:a8b9e1ad8dc8e5f99c31a7739a270ad33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c3cf2216da0aec088316bab6002aafe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__object-internal_8h.html#a7c3cf2216da0aec088316bab6002aafe">riak_pairs_copy_array_from_pb</a> (<a class="el" href="riak__config_8h.html#a600d9c01ffe17fb6edfd7f7e81adfdc1">riak_config</a> *cfg, <a class="el" href="riak__object_8h.html#a85cd6d860cb1203ccfea9e1df4c6345a">riak_pair</a> ***pair_target, RpbPair **pbpair, int num_pairs)</td></tr>
+<tr class="memdesc:a7c3cf2216da0aec088316bab6002aafe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy an array of key/value pairs from a PB to Riak structure.  <a href="#a7c3cf2216da0aec088316bab6002aafe">More...</a><br/></td></tr>
+<tr class="separator:a7c3cf2216da0aec088316bab6002aafe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3688afb5fab3f587089ff1beabdc3cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="riak__types_8h.html#a27add12dad1b9294a36c8d56b673c98e">riak_int32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__object-internal_8h.html#ae3688afb5fab3f587089ff1beabdc3cc">riak_pairs_print</a> (<a class="el" href="riak__object_8h.html#a85cd6d860cb1203ccfea9e1df4c6345a">riak_pair</a> **pair, <a class="el" href="riak__types_8h.html#a7ec8ff62977a655990cac91b32f679d8">riak_uint32_t</a> num_pairs, char **target, <a class="el" href="riak__types_8h.html#a27add12dad1b9294a36c8d56b673c98e">riak_int32_t</a> *len, <a class="el" href="riak__types_8h.html#a27add12dad1b9294a36c8d56b673c98e">riak_int32_t</a> *total)</td></tr>
+<tr class="memdesc:ae3688afb5fab3f587089ff1beabdc3cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print out a series of key/value pairs.  <a href="#ae3688afb5fab3f587089ff1beabdc3cc">More...</a><br/></td></tr>
+<tr class="separator:ae3688afb5fab3f587089ff1beabdc3cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8c0e768a796e531fc34302c3a254252"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="riak__object-internal_8h.html#ad8c0e768a796e531fc34302c3a254252">riak_pairs_free</a> (<a class="el" href="riak__config_8h.html#a600d9c01ffe17fb6edfd7f7e81adfdc1">riak_config</a> *cfg, <a class="el" href="riak__object_8h.html#a85cd6d860cb1203ccfea9e1df4c6345a">riak_pair</a> ***pair_target, int num_pairs)</td></tr>
+<tr class="memdesc:ad8c0e768a796e531fc34302c3a254252"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deallocate any claimed memory by riak_pairs.  <a href="#ad8c0e768a796e531fc34302c3a254252">More...</a><br/></td></tr>
+<tr class="separator:ad8c0e768a796e531fc34302c3a254252"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a30357640749140c1d58af06209632e48"></a>
+<a class="anchor" id="af6d2aa0676a701f4b4ad90936f3a2c0f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void riak_object_free_pb </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="riak__context_8h.html#ad856681ca733293974b5bec0ac17b247">riak_context</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em>, </td>
+          <td class="paramtype"><a class="el" href="riak__config_8h.html#a600d9c01ffe17fb6edfd7f7e81adfdc1">riak_config</a> *&#160;</td>
+          <td class="paramname"><em>cfg</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -143,30 +155,30 @@ Functions</h2></td></tr>
 <p>Release claimed memory used by PB Riak Object. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ctx</td><td>Riak Context </td></tr>
+    <tr><td class="paramname">cfg</td><td>Riak Configuration </td></tr>
     <tr><td class="paramname">obj</td><td>PB Riak Object to be freed </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="riak__object_8c_source.html#l00597">597</a> of file <a class="el" href="riak__object_8c_source.html">riak_object.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00598"></a><span class="lineno">  598</span>&#160;                                       {</div>
-<div class="line"><a name="l00599"></a><span class="lineno">  599</span>&#160;    riak_pairs_free_pb(ctx, &amp;(obj-&gt;indexes), obj-&gt;n_indexes);</div>
-<div class="line"><a name="l00600"></a><span class="lineno">  600</span>&#160;    riak_pairs_free_pb(ctx, &amp;(obj-&gt;usermeta), obj-&gt;n_usermeta);</div>
-<div class="line"><a name="l00601"></a><span class="lineno">  601</span>&#160;    riak_links_free_pb(ctx, &amp;(obj-&gt;links), obj-&gt;n_links);</div>
-<div class="line"><a name="l00602"></a><span class="lineno">  602</span>&#160;}</div>
+<p>Definition at line <a class="el" href="riak__object_8c_source.html#l00638">638</a> of file <a class="el" href="riak__object_8c_source.html">riak_object.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;                                       {</div>
+<div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160;    riak_pairs_free_pb(cfg, &amp;(obj-&gt;indexes), obj-&gt;n_indexes);</div>
+<div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160;    riak_pairs_free_pb(cfg, &amp;(obj-&gt;usermeta), obj-&gt;n_usermeta);</div>
+<div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160;    riak_links_free_pb(cfg, &amp;(obj-&gt;links), obj-&gt;n_links);</div>
+<div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
-<a class="anchor" id="ae80c266c8c462cf1ec60bb19e79dc0d6"></a>
+<a class="anchor" id="a418b79f0e0b55198f2942a8f76351601"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a> riak_object_new_from_pb </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="riak__context_8h.html#ad856681ca733293974b5bec0ac17b247">riak_context</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em>, </td>
+          <td class="paramtype"><a class="el" href="riak__config_8h.html#a600d9c01ffe17fb6edfd7f7e81adfdc1">riak_config</a> *&#160;</td>
+          <td class="paramname"><em>cfg</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -191,7 +203,7 @@ Functions</h2></td></tr>
 <p>Shallow copy a Riak Object from a protocol buffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ctx</td><td>Riak Context </td></tr>
+    <tr><td class="paramname">cfg</td><td>Riak Configuration </td></tr>
     <tr><td class="paramname">to</td><td>Allocated <code>riak_object</code> returned to caller </td></tr>
     <tr><td class="paramname">from</td><td>Riak-supplied Protocol buffer source</td></tr>
   </table>
@@ -199,104 +211,104 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Error code </dd></dl>
 
-<p>Definition at line <a class="el" href="riak__object_8c_source.html#l00408">408</a> of file <a class="el" href="riak__object_8c_source.html">riak_object.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;                                            {</div>
-<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;    *target = <a class="code" href="riak__object_8h.html#a321349004babc02decf9d8681cedff03" title="Construct a new Riak Object. ">riak_object_new</a>(ctx);</div>
-<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;    <span class="keywordflow">if</span> (*target == NULL) {</div>
-<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a01d8a1bd9deb5701f232126e87740cd1">ERIAK_OUT_OF_MEMORY</a>;</div>
-<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;    }</div>
-<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;    <a class="code" href="struct__riak__object.html">riak_object</a> *to = *target;</div>
-<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;</div>
-<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;    to-&gt;<a class="code" href="struct__riak__object.html#a98f1796cc56fcf203934dffd098375d1">value</a> = <a class="code" href="riak__binary-internal_8h.html#a925055ea00f7d4be4b8fbc8725667663" title="Allocate a new riak_binary and populate from data pointer. ">riak_binary_populate_from_pb</a>(ctx, &amp;(from-&gt;value));</div>
-<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;    <span class="keywordflow">if</span> (to-&gt;<a class="code" href="struct__riak__object.html#a98f1796cc56fcf203934dffd098375d1">value</a> == NULL) {</div>
-<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;        <a class="code" href="riak__context_8h.html#a40be1d2c6b9c88bea0a9f627ee91940c">riak_free</a>(ctx, target);</div>
-<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a01d8a1bd9deb5701f232126e87740cd1">ERIAK_OUT_OF_MEMORY</a>;</div>
-<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;    }</div>
-<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;    <span class="keywordflow">if</span> (from-&gt;has_charset) {</div>
-<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;        to-&gt;<a class="code" href="struct__riak__object.html#a9438a6ad2d1c0bddac891d3b603a2b16">has_charset</a> = <a class="code" href="riak__types_8h.html#a30eda4d7c7fe244e40336714e8a3822e">RIAK_TRUE</a>;</div>
-<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;        to-&gt;<a class="code" href="struct__riak__object.html#a0e6b18b8f3177ded5656c04ec229a163">charset</a>= <a class="code" href="riak__binary-internal_8h.html#a925055ea00f7d4be4b8fbc8725667663" title="Allocate a new riak_binary and populate from data pointer. ">riak_binary_populate_from_pb</a>(ctx, &amp;(from-&gt;charset));</div>
-<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;        <span class="keywordflow">if</span> (to-&gt;<a class="code" href="struct__riak__object.html#a0e6b18b8f3177ded5656c04ec229a163">charset</a> == NULL) {</div>
-<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;            <a class="code" href="riak__context_8h.html#a40be1d2c6b9c88bea0a9f627ee91940c">riak_free</a>(ctx, target);</div>
-<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a01d8a1bd9deb5701f232126e87740cd1">ERIAK_OUT_OF_MEMORY</a>;</div>
-<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;        }</div>
-<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;    }</div>
-<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;    <span class="keywordflow">if</span> (from-&gt;has_content_encoding) {</div>
-<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;        to-&gt;<a class="code" href="struct__riak__object.html#ae668841611b40196694544e9ae90125d">has_content_encoding</a> = <a class="code" href="riak__types_8h.html#a30eda4d7c7fe244e40336714e8a3822e">RIAK_TRUE</a>;</div>
-<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;        to-&gt;<a class="code" href="struct__riak__object.html#aaf46108eaead5450f334f63489140340">encoding</a> = <a class="code" href="riak__binary-internal_8h.html#a925055ea00f7d4be4b8fbc8725667663" title="Allocate a new riak_binary and populate from data pointer. ">riak_binary_populate_from_pb</a>(ctx, &amp;(from-&gt;content_encoding));</div>
-<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;        <span class="keywordflow">if</span> (to-&gt;<a class="code" href="struct__riak__object.html#aaf46108eaead5450f334f63489140340">encoding</a> == NULL) {</div>
-<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;            <a class="code" href="riak__context_8h.html#a40be1d2c6b9c88bea0a9f627ee91940c">riak_free</a>(ctx, target);</div>
-<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a01d8a1bd9deb5701f232126e87740cd1">ERIAK_OUT_OF_MEMORY</a>;</div>
-<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;        }</div>
-<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;    }</div>
-<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;    <span class="keywordflow">if</span> (from-&gt;has_content_type) {</div>
-<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;        to-&gt;<a class="code" href="struct__riak__object.html#aebbe85d47154fbcc9a82af84ead9f219">has_content_type</a> = <a class="code" href="riak__types_8h.html#a30eda4d7c7fe244e40336714e8a3822e">RIAK_TRUE</a>;</div>
-<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;        to-&gt;<a class="code" href="struct__riak__object.html#a34fb6ec36cfdcfc4ed9dac4809b433cf">content_type</a> = <a class="code" href="riak__binary-internal_8h.html#a925055ea00f7d4be4b8fbc8725667663" title="Allocate a new riak_binary and populate from data pointer. ">riak_binary_populate_from_pb</a>(ctx, &amp;(from-&gt;content_type));</div>
-<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;        <span class="keywordflow">if</span> (to-&gt;<a class="code" href="struct__riak__object.html#a34fb6ec36cfdcfc4ed9dac4809b433cf">content_type</a> == NULL) {</div>
-<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;            <a class="code" href="riak__context_8h.html#a40be1d2c6b9c88bea0a9f627ee91940c">riak_free</a>(ctx, target);</div>
-<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a01d8a1bd9deb5701f232126e87740cd1">ERIAK_OUT_OF_MEMORY</a>;</div>
-<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;        }</div>
-<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;    }</div>
-<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;    <span class="keywordflow">if</span> (from-&gt;has_deleted) {</div>
-<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;        to-&gt;<a class="code" href="struct__riak__object.html#ac4615a16ba6032e223cdccbe244e9904">has_deleted</a> = <a class="code" href="riak__types_8h.html#a30eda4d7c7fe244e40336714e8a3822e">RIAK_TRUE</a>;</div>
-<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;        to-&gt;<a class="code" href="struct__riak__object.html#a8fb5662ab455df6af7e1fd55edd8afbb">deleted</a> = from-&gt;deleted;</div>
-<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;    }</div>
-<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;    <span class="keywordflow">if</span> (from-&gt;has_last_mod) {</div>
-<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;        to-&gt;<a class="code" href="struct__riak__object.html#af5b5cfc00183d02ab6d4a5ef5c4609cb">has_last_mod</a> = <a class="code" href="riak__types_8h.html#a30eda4d7c7fe244e40336714e8a3822e">RIAK_TRUE</a>;</div>
-<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;        to-&gt;<a class="code" href="struct__riak__object.html#af5318c6d47163c3033123e10f63580d8">last_mod</a> = from-&gt;last_mod;</div>
-<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;    }</div>
-<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;    <span class="keywordflow">if</span> (from-&gt;has_last_mod_usecs) {</div>
-<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;        to-&gt;<a class="code" href="struct__riak__object.html#a33a5a2c07054e648c92d4a6283c68cf0">has_last_mod_usecs</a> = <a class="code" href="riak__types_8h.html#a30eda4d7c7fe244e40336714e8a3822e">RIAK_TRUE</a>;</div>
-<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;        to-&gt;<a class="code" href="struct__riak__object.html#abf5aaafc0ba53f016efa649daf4d6dfd">last_mod_usecs</a> = from-&gt;last_mod_usecs;</div>
-<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;    }</div>
-<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;    <span class="keywordflow">if</span> (from-&gt;has_vtag) {</div>
-<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;        to-&gt;<a class="code" href="struct__riak__object.html#a2abecbadccbe35dfe893953372eb3755">has_vtag</a> = <a class="code" href="riak__types_8h.html#a30eda4d7c7fe244e40336714e8a3822e">RIAK_TRUE</a>;</div>
-<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;        to-&gt;<a class="code" href="struct__riak__object.html#a8968683d89a25836327d5a6025abdcda">vtag</a> = <a class="code" href="riak__binary-internal_8h.html#a925055ea00f7d4be4b8fbc8725667663" title="Allocate a new riak_binary and populate from data pointer. ">riak_binary_populate_from_pb</a>(ctx, &amp;(from-&gt;vtag));</div>
-<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;        <span class="keywordflow">if</span> (to-&gt;<a class="code" href="struct__riak__object.html#a8968683d89a25836327d5a6025abdcda">vtag</a> == NULL) {</div>
-<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;            <a class="code" href="riak__context_8h.html#a40be1d2c6b9c88bea0a9f627ee91940c">riak_free</a>(ctx, target);</div>
-<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a01d8a1bd9deb5701f232126e87740cd1">ERIAK_OUT_OF_MEMORY</a>;</div>
-<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;        }</div>
-<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;    }</div>
-<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;</div>
-<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;    <span class="comment">// Indexes</span></div>
-<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;    <span class="keywordflow">if</span> (from-&gt;n_indexes &gt; 0) {</div>
-<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;        to-&gt;<a class="code" href="struct__riak__object.html#ae5c8a009410c04249a5c9dceedb7d3af">n_indexes</a> = from-&gt;n_indexes;</div>
-<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;        <span class="keywordtype">int</span> idxresult = riak_pairs_copy_from_pb(ctx, &amp;(to-&gt;<a class="code" href="struct__riak__object.html#aa50d20677bf697be7ab6303cd7268419">indexes</a>), from-&gt;indexes, to-&gt;<a class="code" href="struct__riak__object.html#ae5c8a009410c04249a5c9dceedb7d3af">n_indexes</a>);</div>
-<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;        <span class="keywordflow">if</span> (idxresult) {</div>
-<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;            <span class="keywordflow">return</span> idxresult;</div>
-<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;        }</div>
-<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;    }</div>
-<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;</div>
-<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;    <span class="comment">// User-Metadave</span></div>
-<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;    <span class="keywordflow">if</span> (from-&gt;n_usermeta &gt; 0) {</div>
-<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;        to-&gt;<a class="code" href="struct__riak__object.html#afa02a9c4ced31053811ed154907748c4">n_usermeta</a> = from-&gt;n_usermeta;</div>
-<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;        <span class="keywordtype">int</span> uresult = riak_pairs_copy_from_pb(ctx, &amp;(to-&gt;<a class="code" href="struct__riak__object.html#ac3dc5071f40e69c47a55ab3eafaf9532">usermeta</a>), from-&gt;usermeta, to-&gt;<a class="code" href="struct__riak__object.html#afa02a9c4ced31053811ed154907748c4">n_usermeta</a>);</div>
-<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;        <span class="keywordflow">if</span> (uresult) {</div>
-<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;            <span class="keywordflow">return</span> uresult;</div>
+<p>Definition at line <a class="el" href="riak__object_8c_source.html#l00446">446</a> of file <a class="el" href="riak__object_8c_source.html">riak_object.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;                                            {</div>
+<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;    *target = <a class="code" href="riak__object_8h.html#a9a6dbd99f4e0b74c0a4591a85eea7c74" title="Construct a new Riak Object. ">riak_object_new</a>(cfg);</div>
+<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;    <span class="keywordflow">if</span> (*target == NULL) {</div>
+<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a01d8a1bd9deb5701f232126e87740cd1">ERIAK_OUT_OF_MEMORY</a>;</div>
+<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;    }</div>
+<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;    <a class="code" href="struct__riak__object.html">riak_object</a> *to = *target;</div>
+<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;</div>
+<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;    to-&gt;<a class="code" href="struct__riak__object.html#a98f1796cc56fcf203934dffd098375d1">value</a> = <a class="code" href="riak__binary-internal_8h.html#a63d55bee8e1258aec1e94742149a9ada" title="Allocate a new riak_binary and populate from data pointer. ">riak_binary_copy_from_pb</a>(cfg, &amp;(from-&gt;value));</div>
+<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;    <span class="keywordflow">if</span> (to-&gt;<a class="code" href="struct__riak__object.html#a98f1796cc56fcf203934dffd098375d1">value</a> == NULL) {</div>
+<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;        <a class="code" href="riak__config_8h.html#a40be1d2c6b9c88bea0a9f627ee91940c">riak_free</a>(cfg, target);</div>
+<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a01d8a1bd9deb5701f232126e87740cd1">ERIAK_OUT_OF_MEMORY</a>;</div>
+<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;    }</div>
+<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;    <span class="keywordflow">if</span> (from-&gt;has_charset) {</div>
+<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;        to-&gt;<a class="code" href="struct__riak__object.html#a9438a6ad2d1c0bddac891d3b603a2b16">has_charset</a> = <a class="code" href="riak__types_8h.html#a30eda4d7c7fe244e40336714e8a3822e">RIAK_TRUE</a>;</div>
+<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;        to-&gt;<a class="code" href="struct__riak__object.html#a0e6b18b8f3177ded5656c04ec229a163">charset</a>= <a class="code" href="riak__binary-internal_8h.html#a63d55bee8e1258aec1e94742149a9ada" title="Allocate a new riak_binary and populate from data pointer. ">riak_binary_copy_from_pb</a>(cfg, &amp;(from-&gt;charset));</div>
+<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;        <span class="keywordflow">if</span> (to-&gt;<a class="code" href="struct__riak__object.html#a0e6b18b8f3177ded5656c04ec229a163">charset</a> == NULL) {</div>
+<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;            <a class="code" href="riak__config_8h.html#a40be1d2c6b9c88bea0a9f627ee91940c">riak_free</a>(cfg, target);</div>
+<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a01d8a1bd9deb5701f232126e87740cd1">ERIAK_OUT_OF_MEMORY</a>;</div>
+<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;        }</div>
+<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;    }</div>
+<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;    <span class="keywordflow">if</span> (from-&gt;has_content_encoding) {</div>
+<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;        to-&gt;<a class="code" href="struct__riak__object.html#ae668841611b40196694544e9ae90125d">has_content_encoding</a> = <a class="code" href="riak__types_8h.html#a30eda4d7c7fe244e40336714e8a3822e">RIAK_TRUE</a>;</div>
+<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;        to-&gt;<a class="code" href="struct__riak__object.html#aaf46108eaead5450f334f63489140340">encoding</a> = <a class="code" href="riak__binary-internal_8h.html#a63d55bee8e1258aec1e94742149a9ada" title="Allocate a new riak_binary and populate from data pointer. ">riak_binary_copy_from_pb</a>(cfg, &amp;(from-&gt;content_encoding));</div>
+<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;        <span class="keywordflow">if</span> (to-&gt;<a class="code" href="struct__riak__object.html#aaf46108eaead5450f334f63489140340">encoding</a> == NULL) {</div>
+<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;            <a class="code" href="riak__config_8h.html#a40be1d2c6b9c88bea0a9f627ee91940c">riak_free</a>(cfg, target);</div>
+<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a01d8a1bd9deb5701f232126e87740cd1">ERIAK_OUT_OF_MEMORY</a>;</div>
+<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;        }</div>
+<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;    }</div>
+<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;    <span class="keywordflow">if</span> (from-&gt;has_content_type) {</div>
+<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;        to-&gt;<a class="code" href="struct__riak__object.html#aebbe85d47154fbcc9a82af84ead9f219">has_content_type</a> = <a class="code" href="riak__types_8h.html#a30eda4d7c7fe244e40336714e8a3822e">RIAK_TRUE</a>;</div>
+<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;        to-&gt;<a class="code" href="struct__riak__object.html#a34fb6ec36cfdcfc4ed9dac4809b433cf">content_type</a> = <a class="code" href="riak__binary-internal_8h.html#a63d55bee8e1258aec1e94742149a9ada" title="Allocate a new riak_binary and populate from data pointer. ">riak_binary_copy_from_pb</a>(cfg, &amp;(from-&gt;content_type));</div>
+<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;        <span class="keywordflow">if</span> (to-&gt;<a class="code" href="struct__riak__object.html#a34fb6ec36cfdcfc4ed9dac4809b433cf">content_type</a> == NULL) {</div>
+<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;            <a class="code" href="riak__config_8h.html#a40be1d2c6b9c88bea0a9f627ee91940c">riak_free</a>(cfg, target);</div>
+<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a01d8a1bd9deb5701f232126e87740cd1">ERIAK_OUT_OF_MEMORY</a>;</div>
 <div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;        }</div>
 <div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160;    }</div>
-<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;</div>
-<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;    <span class="comment">// Links</span></div>
-<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;    <span class="keywordflow">if</span> (from-&gt;n_links &gt; 0) {</div>
-<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;        to-&gt;<a class="code" href="struct__riak__object.html#a59ccdc234f7caf778f1c4fbfb3e6a23d">n_links</a> = from-&gt;n_links;</div>
-<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;        <span class="keywordtype">int</span> lresult = riak_links_copy_from_pb(ctx, &amp;(to-&gt;<a class="code" href="struct__riak__object.html#a0fccb4d3ad0a5b02f5581d0c3fe306ec">links</a>), from-&gt;links, to-&gt;<a class="code" href="struct__riak__object.html#a59ccdc234f7caf778f1c4fbfb3e6a23d">n_links</a>);</div>
-<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;        <span class="keywordflow">if</span> (lresult) {</div>
-<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;            <span class="keywordflow">return</span> lresult;</div>
-<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;        }</div>
-<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;    }</div>
-<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a7c1673179668a548724d5cbf0221bcb8">ERIAK_OK</a>;</div>
-<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;}</div>
+<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;    <span class="keywordflow">if</span> (from-&gt;has_deleted) {</div>
+<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;        to-&gt;<a class="code" href="struct__riak__object.html#ac4615a16ba6032e223cdccbe244e9904">has_deleted</a> = <a class="code" href="riak__types_8h.html#a30eda4d7c7fe244e40336714e8a3822e">RIAK_TRUE</a>;</div>
+<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;        to-&gt;<a class="code" href="struct__riak__object.html#a8fb5662ab455df6af7e1fd55edd8afbb">deleted</a> = from-&gt;deleted;</div>
+<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;    }</div>
+<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;    <span class="keywordflow">if</span> (from-&gt;has_last_mod) {</div>
+<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;        to-&gt;<a class="code" href="struct__riak__object.html#af5b5cfc00183d02ab6d4a5ef5c4609cb">has_last_mod</a> = <a class="code" href="riak__types_8h.html#a30eda4d7c7fe244e40336714e8a3822e">RIAK_TRUE</a>;</div>
+<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;        to-&gt;<a class="code" href="struct__riak__object.html#af5318c6d47163c3033123e10f63580d8">last_mod</a> = from-&gt;last_mod;</div>
+<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;    }</div>
+<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;    <span class="keywordflow">if</span> (from-&gt;has_last_mod_usecs) {</div>
+<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;        to-&gt;<a class="code" href="struct__riak__object.html#a33a5a2c07054e648c92d4a6283c68cf0">has_last_mod_usecs</a> = <a class="code" href="riak__types_8h.html#a30eda4d7c7fe244e40336714e8a3822e">RIAK_TRUE</a>;</div>
+<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;        to-&gt;<a class="code" href="struct__riak__object.html#abf5aaafc0ba53f016efa649daf4d6dfd">last_mod_usecs</a> = from-&gt;last_mod_usecs;</div>
+<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;    }</div>
+<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;    <span class="keywordflow">if</span> (from-&gt;has_vtag) {</div>
+<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;        to-&gt;<a class="code" href="struct__riak__object.html#a2abecbadccbe35dfe893953372eb3755">has_vtag</a> = <a class="code" href="riak__types_8h.html#a30eda4d7c7fe244e40336714e8a3822e">RIAK_TRUE</a>;</div>
+<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;        to-&gt;<a class="code" href="struct__riak__object.html#a8968683d89a25836327d5a6025abdcda">vtag</a> = <a class="code" href="riak__binary-internal_8h.html#a63d55bee8e1258aec1e94742149a9ada" title="Allocate a new riak_binary and populate from data pointer. ">riak_binary_copy_from_pb</a>(cfg, &amp;(from-&gt;vtag));</div>
+<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;        <span class="keywordflow">if</span> (to-&gt;<a class="code" href="struct__riak__object.html#a8968683d89a25836327d5a6025abdcda">vtag</a> == NULL) {</div>
+<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;            <a class="code" href="riak__config_8h.html#a40be1d2c6b9c88bea0a9f627ee91940c">riak_free</a>(cfg, target);</div>
+<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a01d8a1bd9deb5701f232126e87740cd1">ERIAK_OUT_OF_MEMORY</a>;</div>
+<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;        }</div>
+<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;    }</div>
+<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;</div>
+<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;    <span class="comment">// Indexes</span></div>
+<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;    <span class="keywordflow">if</span> (from-&gt;n_indexes &gt; 0) {</div>
+<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;        to-&gt;<a class="code" href="struct__riak__object.html#ae5c8a009410c04249a5c9dceedb7d3af">n_indexes</a> = from-&gt;n_indexes;</div>
+<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;        <span class="keywordtype">int</span> idxresult = <a class="code" href="riak__object-internal_8h.html#a7c3cf2216da0aec088316bab6002aafe" title="Copy an array of key/value pairs from a PB to Riak structure. ">riak_pairs_copy_array_from_pb</a>(cfg, &amp;(to-&gt;<a class="code" href="struct__riak__object.html#aa50d20677bf697be7ab6303cd7268419">indexes</a>), from-&gt;indexes, to-&gt;<a class="code" href="struct__riak__object.html#ae5c8a009410c04249a5c9dceedb7d3af">n_indexes</a>);</div>
+<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160;        <span class="keywordflow">if</span> (idxresult) {</div>
+<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;            <span class="keywordflow">return</span> idxresult;</div>
+<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;        }</div>
+<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;    }</div>
+<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;</div>
+<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;    <span class="comment">// User-Metadave</span></div>
+<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160;    <span class="keywordflow">if</span> (from-&gt;n_usermeta &gt; 0) {</div>
+<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;        to-&gt;<a class="code" href="struct__riak__object.html#afa02a9c4ced31053811ed154907748c4">n_usermeta</a> = from-&gt;n_usermeta;</div>
+<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;        <span class="keywordtype">int</span> uresult = <a class="code" href="riak__object-internal_8h.html#a7c3cf2216da0aec088316bab6002aafe" title="Copy an array of key/value pairs from a PB to Riak structure. ">riak_pairs_copy_array_from_pb</a>(cfg, &amp;(to-&gt;<a class="code" href="struct__riak__object.html#ac3dc5071f40e69c47a55ab3eafaf9532">usermeta</a>), from-&gt;usermeta, to-&gt;<a class="code" href="struct__riak__object.html#afa02a9c4ced31053811ed154907748c4">n_usermeta</a>);</div>
+<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;        <span class="keywordflow">if</span> (uresult) {</div>
+<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;            <span class="keywordflow">return</span> uresult;</div>
+<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;        }</div>
+<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;    }</div>
+<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;</div>
+<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;    <span class="comment">// Links</span></div>
+<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;    <span class="keywordflow">if</span> (from-&gt;n_links &gt; 0) {</div>
+<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;        to-&gt;<a class="code" href="struct__riak__object.html#a59ccdc234f7caf778f1c4fbfb3e6a23d">n_links</a> = from-&gt;n_links;</div>
+<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;        <span class="keywordtype">int</span> lresult = riak_links_copy_from_pb(cfg, &amp;(to-&gt;<a class="code" href="struct__riak__object.html#a0fccb4d3ad0a5b02f5581d0c3fe306ec">links</a>), from-&gt;links, to-&gt;<a class="code" href="struct__riak__object.html#a59ccdc234f7caf778f1c4fbfb3e6a23d">n_links</a>);</div>
+<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;        <span class="keywordflow">if</span> (lresult) {</div>
+<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;            <span class="keywordflow">return</span> lresult;</div>
+<div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160;        }</div>
+<div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160;    }</div>
+<div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a7c1673179668a548724d5cbf0221bcb8">ERIAK_OK</a>;</div>
+<div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
-<a class="anchor" id="ac51eec5015ecd1b6db854039cf2f3a74"></a>
+<a class="anchor" id="a56ec3e0c0dc1bb13bb1a8bd3acbb84d7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">int riak_object_to_pb_copy </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="riak__context_8h.html#ad856681ca733293974b5bec0ac17b247">riak_context</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em>, </td>
+          <td class="paramtype"><a class="el" href="riak__config_8h.html#a600d9c01ffe17fb6edfd7f7e81adfdc1">riak_config</a> *&#160;</td>
+          <td class="paramname"><em>cfg</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -321,7 +333,7 @@ Functions</h2></td></tr>
 <p>Copy a Riak Object to a protocol buffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ctx</td><td>Riak Context </td></tr>
+    <tr><td class="paramname">cfg</td><td>Riak Configuration </td></tr>
     <tr><td class="paramname">to</td><td>Protocol buffer target </td></tr>
     <tr><td class="paramname">from</td><td>User-supplied <code>riak_object</code></td></tr>
   </table>
@@ -329,77 +341,348 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Error code </dd></dl>
 
-<p>Definition at line <a class="el" href="riak__object_8c_source.html#l00340">340</a> of file <a class="el" href="riak__object_8c_source.html">riak_object.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;                                           {</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    rpb_content__init(to);</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;</div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;    <a class="code" href="riak__binary-internal_8h.html#ae2d4a0f6f877d33ba7b6d375f3f835d7">riak_binary_to_pb_copy</a>(&amp;(to-&gt;value), from-&gt;<a class="code" href="struct__riak__object.html#a98f1796cc56fcf203934dffd098375d1">value</a>);</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;    <span class="keywordflow">if</span> (from-&gt;<a class="code" href="struct__riak__object.html#a9438a6ad2d1c0bddac891d3b603a2b16">has_charset</a>) {</div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;        to-&gt;has_charset = <a class="code" href="riak__types_8h.html#a30eda4d7c7fe244e40336714e8a3822e">RIAK_TRUE</a>;</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;        <a class="code" href="riak__binary-internal_8h.html#ae2d4a0f6f877d33ba7b6d375f3f835d7">riak_binary_to_pb_copy</a>(&amp;(to-&gt;charset), from-&gt;<a class="code" href="struct__riak__object.html#a0e6b18b8f3177ded5656c04ec229a163">charset</a>);</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;    }</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    <span class="keywordflow">if</span> (from-&gt;<a class="code" href="struct__riak__object.html#ae668841611b40196694544e9ae90125d">has_content_encoding</a>) {</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;        to-&gt;has_content_encoding = <a class="code" href="riak__types_8h.html#a30eda4d7c7fe244e40336714e8a3822e">RIAK_TRUE</a>;</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;        <a class="code" href="riak__binary-internal_8h.html#ae2d4a0f6f877d33ba7b6d375f3f835d7">riak_binary_to_pb_copy</a>(&amp;(to-&gt;content_encoding), from-&gt;<a class="code" href="struct__riak__object.html#aaf46108eaead5450f334f63489140340">encoding</a>);</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;    }</div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;    <span class="keywordflow">if</span> (from-&gt;<a class="code" href="struct__riak__object.html#aebbe85d47154fbcc9a82af84ead9f219">has_content_type</a>) {</div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;        to-&gt;has_content_type = <a class="code" href="riak__types_8h.html#a30eda4d7c7fe244e40336714e8a3822e">RIAK_TRUE</a>;</div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;        <a class="code" href="riak__binary-internal_8h.html#ae2d4a0f6f877d33ba7b6d375f3f835d7">riak_binary_to_pb_copy</a>(&amp;(to-&gt;content_type), from-&gt;<a class="code" href="struct__riak__object.html#a34fb6ec36cfdcfc4ed9dac4809b433cf">content_type</a>);</div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;    }</div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;    <span class="keywordflow">if</span> (from-&gt;<a class="code" href="struct__riak__object.html#ac4615a16ba6032e223cdccbe244e9904">has_deleted</a>) {</div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;        to-&gt;has_deleted = <a class="code" href="riak__types_8h.html#a30eda4d7c7fe244e40336714e8a3822e">RIAK_TRUE</a>;</div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;        to-&gt;deleted = from-&gt;<a class="code" href="struct__riak__object.html#a8fb5662ab455df6af7e1fd55edd8afbb">deleted</a>;</div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;    }</div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;    <span class="keywordflow">if</span> (from-&gt;<a class="code" href="struct__riak__object.html#af5b5cfc00183d02ab6d4a5ef5c4609cb">has_last_mod</a>) {</div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;        to-&gt;has_last_mod = <a class="code" href="riak__types_8h.html#a30eda4d7c7fe244e40336714e8a3822e">RIAK_TRUE</a>;</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;        to-&gt;last_mod = from-&gt;<a class="code" href="struct__riak__object.html#af5318c6d47163c3033123e10f63580d8">last_mod</a>;</div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;    }</div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;    <span class="keywordflow">if</span> (from-&gt;<a class="code" href="struct__riak__object.html#a33a5a2c07054e648c92d4a6283c68cf0">has_last_mod_usecs</a>) {</div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;        to-&gt;has_last_mod_usecs = <a class="code" href="riak__types_8h.html#a30eda4d7c7fe244e40336714e8a3822e">RIAK_TRUE</a>;</div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;        to-&gt;last_mod_usecs = from-&gt;<a class="code" href="struct__riak__object.html#abf5aaafc0ba53f016efa649daf4d6dfd">last_mod_usecs</a>;</div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;    }</div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;    <span class="keywordflow">if</span> (from-&gt;<a class="code" href="struct__riak__object.html#a2abecbadccbe35dfe893953372eb3755">has_vtag</a>) {</div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;        to-&gt;has_vtag = <a class="code" href="riak__types_8h.html#a30eda4d7c7fe244e40336714e8a3822e">RIAK_TRUE</a>;</div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;        <a class="code" href="riak__binary-internal_8h.html#ae2d4a0f6f877d33ba7b6d375f3f835d7">riak_binary_to_pb_copy</a>(&amp;(to-&gt;vtag), from-&gt;<a class="code" href="struct__riak__object.html#a8968683d89a25836327d5a6025abdcda">vtag</a>);</div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;    }</div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;</div>
-<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;    <span class="comment">// Indexes</span></div>
-<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;    <span class="keywordflow">if</span> (from-&gt;<a class="code" href="struct__riak__object.html#ae5c8a009410c04249a5c9dceedb7d3af">n_indexes</a> &gt; 0) {</div>
-<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;        to-&gt;n_indexes = from-&gt;<a class="code" href="struct__riak__object.html#ae5c8a009410c04249a5c9dceedb7d3af">n_indexes</a>;</div>
-<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;        <span class="keywordtype">int</span> idxresult = riak_pairs_copy_to_pb(ctx, &amp;(to-&gt;indexes), from-&gt;<a class="code" href="struct__riak__object.html#aa50d20677bf697be7ab6303cd7268419">indexes</a>, to-&gt;n_indexes);</div>
-<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;        <span class="keywordflow">if</span> (idxresult) {</div>
-<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;            <span class="keywordflow">return</span> idxresult;</div>
-<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;        }</div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;    }</div>
-<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;</div>
-<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;    <span class="comment">// User-Metadave</span></div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;    <span class="keywordflow">if</span> (from-&gt;<a class="code" href="struct__riak__object.html#afa02a9c4ced31053811ed154907748c4">n_usermeta</a> &gt; 0) {</div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;        to-&gt;n_usermeta = from-&gt;<a class="code" href="struct__riak__object.html#afa02a9c4ced31053811ed154907748c4">n_usermeta</a>;</div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;        <a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a> err = riak_pairs_copy_to_pb(ctx, &amp;(to-&gt;usermeta), from-&gt;<a class="code" href="struct__riak__object.html#ac3dc5071f40e69c47a55ab3eafaf9532">usermeta</a>, to-&gt;n_usermeta);</div>
-<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;        <span class="keywordflow">if</span> (err) {</div>
-<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;            <span class="keywordflow">return</span> err;</div>
-<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;        }</div>
+<p>Definition at line <a class="el" href="riak__object_8c_source.html#l00378">378</a> of file <a class="el" href="riak__object_8c_source.html">riak_object.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;                                          {</div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;</div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;    rpb_content__init(to);</div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;</div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;    <a class="code" href="riak__binary-internal_8h.html#adfab37a21a2f6984bc38c0956daeb295" title="Create a shallow copy of riak_binary for use in PB. ">riak_binary_copy_to_pb</a>(&amp;(to-&gt;value), from-&gt;<a class="code" href="struct__riak__object.html#a98f1796cc56fcf203934dffd098375d1">value</a>);</div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;    <span class="keywordflow">if</span> (from-&gt;<a class="code" href="struct__riak__object.html#a9438a6ad2d1c0bddac891d3b603a2b16">has_charset</a>) {</div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;        to-&gt;has_charset = <a class="code" href="riak__types_8h.html#a30eda4d7c7fe244e40336714e8a3822e">RIAK_TRUE</a>;</div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;        <a class="code" href="riak__binary-internal_8h.html#adfab37a21a2f6984bc38c0956daeb295" title="Create a shallow copy of riak_binary for use in PB. ">riak_binary_copy_to_pb</a>(&amp;(to-&gt;charset), from-&gt;<a class="code" href="struct__riak__object.html#a0e6b18b8f3177ded5656c04ec229a163">charset</a>);</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;    }</div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;    <span class="keywordflow">if</span> (from-&gt;<a class="code" href="struct__riak__object.html#ae668841611b40196694544e9ae90125d">has_content_encoding</a>) {</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;        to-&gt;has_content_encoding = <a class="code" href="riak__types_8h.html#a30eda4d7c7fe244e40336714e8a3822e">RIAK_TRUE</a>;</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;        <a class="code" href="riak__binary-internal_8h.html#adfab37a21a2f6984bc38c0956daeb295" title="Create a shallow copy of riak_binary for use in PB. ">riak_binary_copy_to_pb</a>(&amp;(to-&gt;content_encoding), from-&gt;<a class="code" href="struct__riak__object.html#aaf46108eaead5450f334f63489140340">encoding</a>);</div>
 <div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;    }</div>
-<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;</div>
-<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;    <span class="comment">// Links</span></div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;    <span class="keywordflow">if</span> (from-&gt;<a class="code" href="struct__riak__object.html#a59ccdc234f7caf778f1c4fbfb3e6a23d">n_links</a> &gt; 0) {</div>
-<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;        to-&gt;n_links = from-&gt;<a class="code" href="struct__riak__object.html#a59ccdc234f7caf778f1c4fbfb3e6a23d">n_links</a>;</div>
-<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;        <a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a> err = riak_links_copy_to_pb(ctx, &amp;(to-&gt;links), from-&gt;<a class="code" href="struct__riak__object.html#a0fccb4d3ad0a5b02f5581d0c3fe306ec">links</a>, to-&gt;n_links);</div>
-<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;        <span class="keywordflow">if</span> (err) {</div>
-<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;            <span class="keywordflow">return</span> err;</div>
-<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;        }</div>
-<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;    }</div>
-<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;</div>
-<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a7c1673179668a548724d5cbf0221bcb8">ERIAK_OK</a>;</div>
-<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;}</div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;    <span class="keywordflow">if</span> (from-&gt;<a class="code" href="struct__riak__object.html#aebbe85d47154fbcc9a82af84ead9f219">has_content_type</a>) {</div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;        to-&gt;has_content_type = <a class="code" href="riak__types_8h.html#a30eda4d7c7fe244e40336714e8a3822e">RIAK_TRUE</a>;</div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;        <a class="code" href="riak__binary-internal_8h.html#adfab37a21a2f6984bc38c0956daeb295" title="Create a shallow copy of riak_binary for use in PB. ">riak_binary_copy_to_pb</a>(&amp;(to-&gt;content_type), from-&gt;<a class="code" href="struct__riak__object.html#a34fb6ec36cfdcfc4ed9dac4809b433cf">content_type</a>);</div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;    }</div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;    <span class="keywordflow">if</span> (from-&gt;<a class="code" href="struct__riak__object.html#ac4615a16ba6032e223cdccbe244e9904">has_deleted</a>) {</div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;        to-&gt;has_deleted = <a class="code" href="riak__types_8h.html#a30eda4d7c7fe244e40336714e8a3822e">RIAK_TRUE</a>;</div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;        to-&gt;deleted = from-&gt;<a class="code" href="struct__riak__object.html#a8fb5662ab455df6af7e1fd55edd8afbb">deleted</a>;</div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;    }</div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;    <span class="keywordflow">if</span> (from-&gt;<a class="code" href="struct__riak__object.html#af5b5cfc00183d02ab6d4a5ef5c4609cb">has_last_mod</a>) {</div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;        to-&gt;has_last_mod = <a class="code" href="riak__types_8h.html#a30eda4d7c7fe244e40336714e8a3822e">RIAK_TRUE</a>;</div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;        to-&gt;last_mod = from-&gt;<a class="code" href="struct__riak__object.html#af5318c6d47163c3033123e10f63580d8">last_mod</a>;</div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;    }</div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;    <span class="keywordflow">if</span> (from-&gt;<a class="code" href="struct__riak__object.html#a33a5a2c07054e648c92d4a6283c68cf0">has_last_mod_usecs</a>) {</div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;        to-&gt;has_last_mod_usecs = <a class="code" href="riak__types_8h.html#a30eda4d7c7fe244e40336714e8a3822e">RIAK_TRUE</a>;</div>
+<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;        to-&gt;last_mod_usecs = from-&gt;<a class="code" href="struct__riak__object.html#abf5aaafc0ba53f016efa649daf4d6dfd">last_mod_usecs</a>;</div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;    }</div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;    <span class="keywordflow">if</span> (from-&gt;<a class="code" href="struct__riak__object.html#a2abecbadccbe35dfe893953372eb3755">has_vtag</a>) {</div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;        to-&gt;has_vtag = <a class="code" href="riak__types_8h.html#a30eda4d7c7fe244e40336714e8a3822e">RIAK_TRUE</a>;</div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;        <a class="code" href="riak__binary-internal_8h.html#adfab37a21a2f6984bc38c0956daeb295" title="Create a shallow copy of riak_binary for use in PB. ">riak_binary_copy_to_pb</a>(&amp;(to-&gt;vtag), from-&gt;<a class="code" href="struct__riak__object.html#a8968683d89a25836327d5a6025abdcda">vtag</a>);</div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;    }</div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;</div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;    <span class="comment">// Indexes</span></div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;    <span class="keywordflow">if</span> (from-&gt;<a class="code" href="struct__riak__object.html#ae5c8a009410c04249a5c9dceedb7d3af">n_indexes</a> &gt; 0) {</div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;        to-&gt;n_indexes = from-&gt;<a class="code" href="struct__riak__object.html#ae5c8a009410c04249a5c9dceedb7d3af">n_indexes</a>;</div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;        <span class="keywordtype">int</span> idxresult = riak_pairs_copy_to_pb(cfg, &amp;(to-&gt;indexes), from-&gt;<a class="code" href="struct__riak__object.html#aa50d20677bf697be7ab6303cd7268419">indexes</a>, to-&gt;n_indexes);</div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;        <span class="keywordflow">if</span> (idxresult) {</div>
+<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;            <span class="keywordflow">return</span> idxresult;</div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;        }</div>
+<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;    }</div>
+<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;</div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;    <span class="comment">// User-Metadave</span></div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;    <span class="keywordflow">if</span> (from-&gt;<a class="code" href="struct__riak__object.html#afa02a9c4ced31053811ed154907748c4">n_usermeta</a> &gt; 0) {</div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;        to-&gt;n_usermeta = from-&gt;<a class="code" href="struct__riak__object.html#afa02a9c4ced31053811ed154907748c4">n_usermeta</a>;</div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;        <a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a> err = riak_pairs_copy_to_pb(cfg, &amp;(to-&gt;usermeta), from-&gt;<a class="code" href="struct__riak__object.html#ac3dc5071f40e69c47a55ab3eafaf9532">usermeta</a>, to-&gt;n_usermeta);</div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;        <span class="keywordflow">if</span> (err) {</div>
+<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;            <span class="keywordflow">return</span> err;</div>
+<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;        }</div>
+<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;    }</div>
+<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;</div>
+<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;    <span class="comment">// Links</span></div>
+<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;    <span class="keywordflow">if</span> (from-&gt;<a class="code" href="struct__riak__object.html#a59ccdc234f7caf778f1c4fbfb3e6a23d">n_links</a> &gt; 0) {</div>
+<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;        to-&gt;n_links = from-&gt;<a class="code" href="struct__riak__object.html#a59ccdc234f7caf778f1c4fbfb3e6a23d">n_links</a>;</div>
+<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;        <a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a> err = riak_links_copy_to_pb(cfg, &amp;(to-&gt;links), from-&gt;<a class="code" href="struct__riak__object.html#a0fccb4d3ad0a5b02f5581d0c3fe306ec">links</a>, to-&gt;n_links);</div>
+<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;        <span class="keywordflow">if</span> (err) {</div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;            <span class="keywordflow">return</span> err;</div>
+<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;        }</div>
+<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;    }</div>
+<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;</div>
+<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a7c1673179668a548724d5cbf0221bcb8">ERIAK_OK</a>;</div>
+<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="a7c3cf2216da0aec088316bab6002aafe"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a> riak_pairs_copy_array_from_pb </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="riak__config_8h.html#a600d9c01ffe17fb6edfd7f7e81adfdc1">riak_config</a> *&#160;</td>
+          <td class="paramname"><em>cfg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="riak__object_8h.html#a85cd6d860cb1203ccfea9e1df4c6345a">riak_pair</a> ***&#160;</td>
+          <td class="paramname"><em>pair_target</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">RpbPair **&#160;</td>
+          <td class="paramname"><em>pbpair</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>num_pairs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Copy an array of key/value pairs from a PB to Riak structure. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cfg</td><td>Riak Configuration </td></tr>
+    <tr><td class="paramname">pair_target</td><td>The newly populated Riak key/value pair array (out) </td></tr>
+    <tr><td class="paramname">pbpair</td><td>Protocol Buffer version of key/value pair array </td></tr>
+    <tr><td class="paramname">num_pairs</td><td>Number of key/value pairs </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Any memory allocation error </dd></dl>
+
+<p>Definition at line <a class="el" href="riak__object_8c_source.html#l00125">125</a> of file <a class="el" href="riak__object_8c_source.html">riak_object.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;                                                       {</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    <a class="code" href="struct__riak__pair.html">riak_pair</a> **pair = (<a class="code" href="struct__riak__pair.html">riak_pair</a>**)<a class="code" href="riak__config_8h.html#a9c477d551f6e3deea08ba6b0f5f23e95" title="Use the default allocator to claim some memory. ">riak_config_clean_allocate</a>(cfg, <span class="keyword">sizeof</span>(<a class="code" href="struct__riak__pair.html">riak_pair</a>*) * num_pairs);</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    <span class="keywordflow">if</span> (pair == NULL) {</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a01d8a1bd9deb5701f232126e87740cd1">ERIAK_OUT_OF_MEMORY</a>;</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    }</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    <span class="keywordflow">for</span>(i = 0; i &lt; num_pairs; i++) {</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;        <a class="code" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a> err = <a class="code" href="riak__object-internal_8h.html#a8b9e1ad8dc8e5f99c31a7739a270ad33" title="Copy a key/value pair from a PB to Riak structure. ">riak_pairs_copy_from_pb</a>(cfg, &amp;(pair[i]), pbpair[i]);</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;        <span class="keywordflow">if</span> (err != <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a7c1673179668a548724d5cbf0221bcb8">ERIAK_OK</a>) {</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;            <span class="keywordflow">return</span> err;</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;        }</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    }</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    <span class="comment">// Finally assign the pointer to the list of pair pointers</span></div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;    *pair_target = pair;</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a7c1673179668a548724d5cbf0221bcb8">ERIAK_OK</a>;</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="a8b9e1ad8dc8e5f99c31a7739a270ad33"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="riak__error_8h.html#a9287917d228776da5934e0fcf687561f">riak_error</a> riak_pairs_copy_from_pb </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="riak__config_8h.html#a600d9c01ffe17fb6edfd7f7e81adfdc1">riak_config</a> *&#160;</td>
+          <td class="paramname"><em>cfg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="riak__object_8h.html#a85cd6d860cb1203ccfea9e1df4c6345a">riak_pair</a> **&#160;</td>
+          <td class="paramname"><em>pair_target</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">RpbPair *&#160;</td>
+          <td class="paramname"><em>pbpair</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Copy a key/value pair from a PB to Riak structure. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cfg</td><td>Riak Configuration </td></tr>
+    <tr><td class="paramname">pair_target</td><td>The newly populated Riak key/value pair (out) </td></tr>
+    <tr><td class="paramname">pbpair</td><td>Protocol Buffer version of key/value pair </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Any memory allocation error </dd></dl>
+
+<p>Definition at line <a class="el" href="riak__object_8c_source.html#l00099">99</a> of file <a class="el" href="riak__object_8c_source.html">riak_object.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;                                             {</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <a class="code" href="struct__riak__pair.html">riak_pair</a> *pair = (<a class="code" href="struct__riak__pair.html">riak_pair</a>*)<a class="code" href="riak__config_8h.html#a9c477d551f6e3deea08ba6b0f5f23e95" title="Use the default allocator to claim some memory. ">riak_config_clean_allocate</a>(cfg, <span class="keyword">sizeof</span>(<a class="code" href="struct__riak__pair.html">riak_pair</a>));</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="keywordflow">if</span> (pair == NULL) {</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a01d8a1bd9deb5701f232126e87740cd1">ERIAK_OUT_OF_MEMORY</a>;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    }</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    pair-&gt;<a class="code" href="struct__riak__pair.html#ac4e94171fb9488e0001ffbae23d9280e">key</a> = <a class="code" href="riak__binary-internal_8h.html#a63d55bee8e1258aec1e94742149a9ada" title="Allocate a new riak_binary and populate from data pointer. ">riak_binary_copy_from_pb</a>(cfg, &amp;(pbpair-&gt;key));</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <span class="keywordflow">if</span> (pair-&gt;<a class="code" href="struct__riak__pair.html#ac4e94171fb9488e0001ffbae23d9280e">key</a> == NULL) {</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a01d8a1bd9deb5701f232126e87740cd1">ERIAK_OUT_OF_MEMORY</a>;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    }</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    <span class="keywordflow">if</span> (pbpair-&gt;has_value) {</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        pair-&gt;<a class="code" href="struct__riak__pair.html#a8ca4a1d6f929b448466fa4041a808488">has_value</a> = <a class="code" href="riak__types_8h.html#a30eda4d7c7fe244e40336714e8a3822e">RIAK_TRUE</a>;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        pair-&gt;<a class="code" href="struct__riak__pair.html#a10a74710d5032d4938c165c3baef0fae">value</a> = <a class="code" href="riak__binary-internal_8h.html#a63d55bee8e1258aec1e94742149a9ada" title="Allocate a new riak_binary and populate from data pointer. ">riak_binary_copy_from_pb</a>(cfg, &amp;(pbpair-&gt;value));</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        <span class="keywordflow">if</span> (pair-&gt;<a class="code" href="struct__riak__pair.html#a10a74710d5032d4938c165c3baef0fae">value</a> == NULL) {</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a01d8a1bd9deb5701f232126e87740cd1">ERIAK_OUT_OF_MEMORY</a>;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        }</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    }</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <span class="comment">// Finally assign the pointer to the list of pair pointers</span></div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    *pair_target = pair;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="riak__error_8h.html#ab724821626a67065bdf8b76180e31200a7c1673179668a548724d5cbf0221bcb8">ERIAK_OK</a>;</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="ad8c0e768a796e531fc34302c3a254252"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void riak_pairs_free </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="riak__config_8h.html#a600d9c01ffe17fb6edfd7f7e81adfdc1">riak_config</a> *&#160;</td>
+          <td class="paramname"><em>cfg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="riak__object_8h.html#a85cd6d860cb1203ccfea9e1df4c6345a">riak_pair</a> ***&#160;</td>
+          <td class="paramname"><em>pair_target</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>num_pairs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Deallocate any claimed memory by riak_pairs. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cfg</td><td>Riak Configuration </td></tr>
+    <tr><td class="paramname">pair_target</td><td>Pointer to array to be freed </td></tr>
+    <tr><td class="paramname">num_pairs</td><td>Number of elements in <code>pair_target</code></td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Deallocate any claimed memory by riak_pairs.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cfg</td><td>Riak Configuration </td></tr>
+    <tr><td class="paramname">pairs</td><td>Pointer to array of pairs to be freed </td></tr>
+    <tr><td class="paramname">num_pairs</td><td>Number of pairs in array </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="riak__object_8c_source.html#l00166">166</a> of file <a class="el" href="riak__object_8c_source.html">riak_object.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;                                         {</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    <a class="code" href="struct__riak__pair.html">riak_pair</a> **pair = *pair_target;</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    <span class="keywordflow">for</span>(i = 0; i &lt; num_pairs; i++) {</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;        <a class="code" href="riak__config_8h.html#a40be1d2c6b9c88bea0a9f627ee91940c">riak_free</a>(cfg, &amp;(pair[i]-&gt;key));</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;        <a class="code" href="riak__config_8h.html#a40be1d2c6b9c88bea0a9f627ee91940c">riak_free</a>(cfg, &amp;(pair[i]-&gt;value));</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;        <a class="code" href="riak__config_8h.html#a40be1d2c6b9c88bea0a9f627ee91940c">riak_free</a>(cfg, &amp;(pair[i]));</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    }</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    <a class="code" href="riak__config_8h.html#a40be1d2c6b9c88bea0a9f627ee91940c">riak_free</a>(cfg, pair_target);</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="ae3688afb5fab3f587089ff1beabdc3cc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="riak__types_8h.html#a27add12dad1b9294a36c8d56b673c98e">riak_int32_t</a> riak_pairs_print </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="riak__object_8h.html#a85cd6d860cb1203ccfea9e1df4c6345a">riak_pair</a> **&#160;</td>
+          <td class="paramname"><em>pair</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="riak__types_8h.html#a7ec8ff62977a655990cac91b32f679d8">riak_uint32_t</a>&#160;</td>
+          <td class="paramname"><em>num_pairs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char **&#160;</td>
+          <td class="paramname"><em>target</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="riak__types_8h.html#a27add12dad1b9294a36c8d56b673c98e">riak_int32_t</a> *&#160;</td>
+          <td class="paramname"><em>len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="riak__types_8h.html#a27add12dad1b9294a36c8d56b673c98e">riak_int32_t</a> *&#160;</td>
+          <td class="paramname"><em>total</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Print out a series of key/value pairs. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pair</td><td>Array of pairs to print </td></tr>
+    <tr><td class="paramname">num_pairs</td><td>Number of arrays in <code>pair</code> </td></tr>
+    <tr><td class="paramname">target</td><td>Where to write the output (out) </td></tr>
+    <tr><td class="paramname">len</td><td>Max allowed bytes to write (out) </td></tr>
+    <tr><td class="paramname">total</td><td>Running total of bytes written (out) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Number of bytes written </dd></dl>
+
+<p>Definition at line <a class="el" href="riak__object_8c_source.html#l00147">147</a> of file <a class="el" href="riak__object_8c_source.html">riak_object.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;                                      {</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    <a class="code" href="riak__types_8h.html#a27add12dad1b9294a36c8d56b673c98e">riak_int32_t</a> wrote = 0;</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    <span class="keywordflow">if</span> (*len &gt; 0) {</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;        <a class="code" href="riak__types_8h.html#a27add12dad1b9294a36c8d56b673c98e">riak_int32_t</a> i;</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;        <span class="keywordflow">for</span>(i = 0; i &lt; num_pairs; i++) {</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;            wrote += <a class="code" href="riak__print-internal_8h.html#a8de18dd02823ebcd158e73a939f18e46">riak_print_binary</a>(<span class="stringliteral">&quot;key&quot;</span>, pair[i]-&gt;key, target, len, total);</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;            <span class="keywordflow">if</span> (pair[i]-&gt;has_value) {</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;                wrote += <a class="code" href="riak__print-internal_8h.html#a8de18dd02823ebcd158e73a939f18e46">riak_print_binary</a>(<span class="stringliteral">&quot;value&quot;</span>, pair[i]-&gt;value, target, len, total);</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;            }</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;        }</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    }</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    <span class="keywordflow">return</span> wrote;</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 28 2013 13:01:35 for riak-c-client by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Feb 20 2014 17:00:53 for riak-c-client by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>
