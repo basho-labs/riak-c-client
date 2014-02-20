@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * test_put.c: Riak C Unit testing for Riak Object
+ * test_object.c: Riak C Unit testing for Riak Object
  *
  * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.
  *
@@ -40,13 +40,14 @@ test_riak_object_bucket() {
     riak_object *obj = riak_object_new(cfg);
     CU_ASSERT_FATAL(obj != NULL)
     riak_binary bucket;
-    bucket.data = (riak_uint8_t *)"bucket";
-    bucket.len = 6;
+    const char *bucket_val = "bucket";
+    bucket.data = (riak_uint8_t *)bucket_val;
+    bucket.len = strlen(bucket_val);
     err = riak_object_set_bucket(cfg, obj, &bucket);
     CU_ASSERT_FATAL(err == ERIAK_OK)
 
     riak_binary *result = riak_object_get_bucket(obj);
-    CU_ASSERT_EQUAL(memcmp(riak_binary_data(result), "bucket", 6), 0)
+    CU_ASSERT_EQUAL(memcmp(riak_binary_data(result), bucket_val, strlen(bucket_val)), 0)
 
     riak_object_free(cfg, &obj);
 }
@@ -61,14 +62,15 @@ test_riak_object_key() {
     riak_object *obj = riak_object_new(cfg);
     CU_ASSERT_FATAL(obj != NULL)
     riak_binary key;
-    key.data = (riak_uint8_t *)"key";
-    key.len = 3;
+    const char *key_val = "key";
+    key.data = (riak_uint8_t *)key_val;
+    key.len = strlen(key_val);
     err = riak_object_set_key(cfg, obj, &key);
     CU_ASSERT_FATAL(err == ERIAK_OK)
 
     CU_ASSERT_EQUAL_FATAL(riak_object_get_has_key(obj), RIAK_TRUE)
     riak_binary *result = riak_object_get_key(obj);
-    CU_ASSERT_EQUAL(memcmp(riak_binary_data(result), "key", 3), 0)
+    CU_ASSERT_EQUAL(memcmp(riak_binary_data(result), key_val, strlen(key_val)), 0)
 
     riak_object_free(cfg, &obj);
 }
@@ -123,14 +125,15 @@ test_riak_object_charset() {
     riak_object *obj = riak_object_new(cfg);
     CU_ASSERT_FATAL(obj != NULL)
     riak_binary charset;
-    charset.data = (riak_uint8_t *)"charset";
-    charset.len = 7;
+    const char *charset_val = "charset";
+    charset.data = (riak_uint8_t *)charset_val;
+    charset.len = strlen(charset_val);
     err = riak_object_set_charset(cfg, obj, &charset);
     CU_ASSERT_FATAL(err == ERIAK_OK)
 
     CU_ASSERT_EQUAL_FATAL(riak_object_get_has_charset(obj), RIAK_TRUE)
     riak_binary *result = riak_object_get_charset(obj);
-    CU_ASSERT_EQUAL(memcmp(riak_binary_data(result), "charset", 7), 0)
+    CU_ASSERT_EQUAL(memcmp(riak_binary_data(result), charset_val, strlen(charset_val)), 0)
 
     riak_object_free(cfg, &obj);
 }
@@ -179,14 +182,15 @@ test_riak_object_content_type() {
     riak_object *obj = riak_object_new(cfg);
     CU_ASSERT_FATAL(obj != NULL)
     riak_binary content_type;
-    content_type.data = (riak_uint8_t *)"content_type";
-    content_type.len = 13;
+    const char* content_type_val = "content_type";
+    content_type.data = (riak_uint8_t *)content_type_val;
+    content_type.len = strlen(content_type_val);
     err = riak_object_set_content_type(cfg, obj, &content_type);
     CU_ASSERT_FATAL(err == ERIAK_OK)
 
     CU_ASSERT_EQUAL_FATAL(riak_object_get_has_content_type(obj), RIAK_TRUE)
     riak_binary *result = riak_object_get_content_type(obj);
-    CU_ASSERT_EQUAL(memcmp(riak_binary_data(result), "content_type", 13), 0)
+    CU_ASSERT_EQUAL(memcmp(riak_binary_data(result), content_type_val, strlen(content_type_val)), 0)
 
     riak_object_free(cfg, &obj);
 }
@@ -201,14 +205,15 @@ test_riak_object_content_encoding() {
     riak_object *obj = riak_object_new(cfg);
     CU_ASSERT_FATAL(obj != NULL)
     riak_binary encoding;
-    encoding.data = (riak_uint8_t *)"encoding";
-    encoding.len = 8;
+    const char *encoding_val = "encoding";
+    encoding.data = (riak_uint8_t *)encoding_val;
+    encoding.len = strlen(encoding_val);
     err = riak_object_set_content_encoding(cfg, obj, &encoding);
     CU_ASSERT_FATAL(err == ERIAK_OK)
 
     CU_ASSERT_EQUAL_FATAL(riak_object_get_has_content_encoding(obj), RIAK_TRUE)
     riak_binary *result = riak_object_get_content_encoding(obj);
-    CU_ASSERT_EQUAL(memcmp(riak_binary_data(result), "encoding", 8), 0)
+    CU_ASSERT_EQUAL(memcmp(riak_binary_data(result), encoding_val, strlen(encoding_val)), 0)
 
     riak_object_free(cfg, &obj);
 }
@@ -240,14 +245,15 @@ test_riak_object_vtag() {
     riak_object *obj = riak_object_new(cfg);
     CU_ASSERT_FATAL(obj != NULL)
     riak_binary vtag;
-    vtag.data = (riak_uint8_t *)"vtag";
-    vtag.len = 4;
+    const char *vtag_val = "vtag";
+    vtag.data = (riak_uint8_t *)vtag_val;
+    vtag.len = strlen(vtag_val);
     err = riak_object_set_vtag(cfg, obj, &vtag);
     CU_ASSERT_FATAL(err == ERIAK_OK)
 
     CU_ASSERT_EQUAL_FATAL(riak_object_get_has_vtag(obj), RIAK_TRUE)
     riak_binary *result = riak_object_get_vtag(obj);
-    CU_ASSERT_EQUAL(memcmp(riak_binary_data(result), "vtag", 4), 0)
+    CU_ASSERT_EQUAL(memcmp(riak_binary_data(result), vtag_val, strlen(vtag_val)), 0)
 
     riak_object_free(cfg, &obj);
 }
@@ -284,7 +290,8 @@ test_riak_object_links() {
     riak_binary *result;
     int len;
     for(int i = 0; i < 3; i++) {
-        link = riak_object_get_link(obj, i);
+        err = riak_object_get_link(obj, &link, i);
+        CU_ASSERT_FATAL(err == ERIAK_OK)
         sprintf(buffer, "%s%d", "bucket", i);
         result = riak_link_get_bucket(link);
         len = strlen(buffer);
@@ -314,29 +321,30 @@ test_riak_object_usermeta() {
 
     char buffer[128];
     riak_binary *bin;
-    riak_pair   *pair;
+    riak_pair *meta;
     for(int i = 0; i < 3; i++) {
-        pair = riak_object_new_usermeta(cfg, obj);
-        CU_ASSERT_FATAL(pair != NULL)
+        meta = riak_object_new_usermeta(cfg, obj);
+        CU_ASSERT_FATAL(meta != NULL)
         sprintf(buffer, "%s%d", "value", i);
         bin = riak_binary_copy_from_string(cfg, buffer);
-        riak_pair_set_value(cfg, pair, bin);
+        riak_pair_set_value(cfg, meta, bin);
         riak_free(cfg, &bin);
         sprintf(buffer, "%s%d", "key", i);
         bin = riak_binary_copy_from_string(cfg, buffer);
-        riak_pair_set_key(cfg, pair, bin);
+        riak_pair_set_key(cfg, meta, bin);
         riak_free(cfg, &bin);
     }
     riak_binary *result;
     int len;
     for(int i = 0; i < 3; i++) {
-        pair = riak_object_get_usermeta(obj, i);
+        err = riak_object_get_usermeta(obj, &meta, i);
+        CU_ASSERT_FATAL(err == ERIAK_OK)
         sprintf(buffer, "%s%d", "value", i);
-        result = riak_pair_get_value(pair);
+        result = riak_pair_get_value(meta);
         len = strlen(buffer);
         CU_ASSERT_EQUAL(memcmp(riak_binary_data(result), buffer, len), 0)
         sprintf(buffer, "%s%d", "key", i);
-        result = riak_pair_get_key(pair);
+        result = riak_pair_get_key(meta);
         len = strlen(buffer);
         CU_ASSERT_EQUAL(memcmp(riak_binary_data(result), buffer, len), 0)
     }
@@ -356,29 +364,30 @@ test_riak_object_indexes() {
 
     char buffer[128];
     riak_binary *bin;
-    riak_pair   *pair;
+    riak_pair   *index;
     for(int i = 0; i < 3; i++) {
-        pair = riak_object_new_index(cfg, obj);
-        CU_ASSERT_FATAL(pair != NULL)
+        index = riak_object_new_index(cfg, obj);
+        CU_ASSERT_FATAL(index != NULL)
         sprintf(buffer, "%s%d", "value", i);
         bin = riak_binary_copy_from_string(cfg, buffer);
-        riak_pair_set_value(cfg, pair, bin);
+        riak_pair_set_value(cfg, index, bin);
         riak_free(cfg, &bin);
         sprintf(buffer, "%s%d", "key", i);
         bin = riak_binary_copy_from_string(cfg, buffer);
-        riak_pair_set_key(cfg, pair, bin);
+        riak_pair_set_key(cfg, index, bin);
         riak_free(cfg, &bin);
     }
     riak_binary *result;
     int len;
     for(int i = 0; i < 3; i++) {
-        pair = riak_object_get_index(obj, i);
+        err = riak_object_get_index(obj, &index, i);
+        CU_ASSERT_FATAL(err == ERIAK_OK)
         sprintf(buffer, "%s%d", "value", i);
-        result = riak_pair_get_value(pair);
+        result = riak_pair_get_value(index);
         len = strlen(buffer);
         CU_ASSERT_EQUAL(memcmp(riak_binary_data(result), buffer, len), 0)
         sprintf(buffer, "%s%d", "key", i);
-        result = riak_pair_get_key(pair);
+        result = riak_pair_get_key(index);
         len = strlen(buffer);
         CU_ASSERT_EQUAL(memcmp(riak_binary_data(result), buffer, len), 0)
     }

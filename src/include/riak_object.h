@@ -106,6 +106,8 @@ riak_object_get_key(riak_object *obj);
 
 /**
  * @brief Access the object's value
+ *      Character set is left to the user
+ *      See `riak_object_get_has_charset()/riak_object_get_charset()`
  * @param obj Riak Object
  * @returns The object's value
  */
@@ -235,17 +237,20 @@ riak_object_get_n_links(riak_object *obj);
 /**
  * @brief Access the link-walking links
  * @param obj Riak Object
- * @param n Number of Link to Return
- * @returns The link-walking links
+ * @param link Returned Link
+ * @param n Index of Link to Return
+ * @returns Error code if index is out of range
  */
-riak_link*
+
+riak_error
 riak_object_get_link(riak_object  *obj,
+                     riak_link   **link,
                      riak_uint32_t n);
 
 /**
- * @brief Access the Number of `User Metadata` items
+ * @brief Access the Index of `User Metadata` items
  * @param obj Riak Object
- * @returns The Number of `Metadata items`
+ * @returns The number of `Metadata items`
  */
 riak_int32_t
 riak_object_get_n_usermeta(riak_object *obj);
@@ -253,11 +258,13 @@ riak_object_get_n_usermeta(riak_object *obj);
 /**
  * @brief Access the `User Metadata`
  * @param obj Riak Object
- * @param n Number of `User Metadata` to return
- * @returns The `User Metadata`
+ * @param meta Returned User Metadata
+ * @param n Index of `User Metadata` to return
+ * @returns Error code if index is out of range
  */
-riak_pair*
+riak_error
 riak_object_get_usermeta(riak_object  *obj,
+                         riak_pair   **meta,
                          riak_uint32_t n);
 
 /**
@@ -271,11 +278,13 @@ riak_object_get_n_indexes(riak_object *obj);
 /**
  * @brief Access the object indexes
  * @param obj Riak Object
- * @param n Number of User Index to Return
- * @returns The object indexes
+ * @param index Returned User Index
+ * @param n Index number of User Index to return
+ * @returns Error code if index is out of range
  */
-riak_pair*
+riak_error
 riak_object_get_index(riak_object  *obj,
+                      riak_pair   **index,
                       riak_uint32_t n);
 
 /**
@@ -315,7 +324,7 @@ riak_object_set_value(riak_config *cfg,
                       riak_binary *value);
 
 /**
- * @brief Set the object's underlying value without making a copy
+ * @brief Set the object's value without duplicating underlying data
  * @param cfg Riak Configuration
  * @param obj Riak Object
  * @param value Value

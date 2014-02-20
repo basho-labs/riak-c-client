@@ -165,16 +165,19 @@ riak_pair_get_key(riak_pair *pair)
 {
     return pair->key;
 }
+
 riak_boolean_t
 riak_pair_get_has_value(riak_pair *pair)
 {
     return pair->has_value;
 }
+
 riak_binary*
 riak_pair_get_value(riak_pair *pair)
 {
     return pair->value;
 }
+
 riak_error
 riak_pair_set_key(riak_config *cfg,
                   riak_pair   *pair,
@@ -185,11 +188,11 @@ riak_pair_set_key(riak_config *cfg,
     }
     return ERIAK_OK;
 }
+
 riak_error
 riak_pair_set_value(riak_config *cfg,
                     riak_pair   *pair,
                     riak_binary *value) {
-    pair->value = value;
     pair->value = riak_binary_copy(cfg, value);
     if (pair->value == NULL) {
         return ERIAK_OUT_OF_MEMORY;
@@ -347,62 +350,69 @@ riak_link_get_has_bucket(riak_link *link)
 {
     return link->has_bucket;
 }
+
 riak_binary*
 riak_link_get_bucket(riak_link *link)
 {
     return link->bucket;
 }
+
 riak_boolean_t
 riak_link_get_has_key(riak_link *link)
 {
     return link->has_key;
 }
+
 riak_binary*
 riak_link_get_key(riak_link *link)
 {
     return link->key;
 }
+
 riak_boolean_t
 riak_link_get_has_tag(riak_link *link)
 {
     return link->has_tag;
 }
+
 riak_binary*
 riak_link_get_tag(riak_link *link)
 {
     return link->tag;
 }
+
 riak_error
 riak_link_set_bucket(riak_config *cfg,
                      riak_link   *link,
                      riak_binary *value) {
-      link->has_bucket = RIAK_TRUE;
       link->bucket = riak_binary_copy(cfg, value);
       if (link->bucket == NULL) {
           return ERIAK_OUT_OF_MEMORY;
       }
+      link->has_bucket = RIAK_TRUE;
       return ERIAK_OK;
 }
 riak_error
 riak_link_set_key(riak_config *cfg,
                   riak_link   *link,
                   riak_binary *value) {
-    link->has_key = RIAK_TRUE;
     link->key = riak_binary_copy(cfg, value);
     if (link->key == NULL) {
         return ERIAK_OUT_OF_MEMORY;
     }
+    link->has_key = RIAK_TRUE;
     return ERIAK_OK;
 }
+
 riak_error
 riak_link_set_tag(riak_config *cfg,
                   riak_link   *link,
                   riak_binary *value) {
-    link->has_tag = RIAK_TRUE;
     link->tag = riak_binary_copy(cfg, value);
     if (link->tag == NULL) {
         return ERIAK_OUT_OF_MEMORY;
     }
+    link->has_tag = RIAK_TRUE;
     return ERIAK_OK;
 }
 
@@ -494,7 +504,6 @@ riak_object_to_pb_copy(riak_config *cfg,
 
     return err;
 }
-
 
 riak_error
 riak_object_new_from_pb(riak_config  *cfg,
@@ -697,132 +706,161 @@ riak_object_get_bucket(riak_object *obj)
 {
     return obj->bucket;
 }
+
 riak_boolean_t
 riak_object_get_has_key(riak_object *obj)
 {
     return obj->has_key;
 }
+
 riak_binary*
 riak_object_get_key(riak_object *obj)
 {
     return obj->key;
 }
+
 riak_binary*
 riak_object_get_value(riak_object *obj)
 {
     return obj->value;
 }
+
 riak_boolean_t
 riak_object_get_has_charset(riak_object *obj)
 {
     return obj->has_charset;
 }
+
 riak_binary*
 riak_object_get_charset(riak_object *obj)
 {
     return obj->charset;
 }
+
 riak_boolean_t
 riak_object_get_has_last_mod(riak_object *obj)
 {
     return obj->has_last_mod;
 }
+
 riak_uint32_t
 riak_object_get_last_mod(riak_object *obj)
 {
     return obj->last_mod;
 }
+
 riak_boolean_t
 riak_object_get_has_last_mod_usecs(riak_object *obj)
 {
     return obj->has_last_mod_usecs;
 }
+
 riak_uint32_t
 riak_object_get_last_mod_usecs(riak_object *obj)
 {
     return obj->last_mod_usecs;
 }
+
 riak_boolean_t
 riak_object_get_has_content_type(riak_object *obj)
 {
     return obj->has_content_type;
 }
+
 riak_binary*
 riak_object_get_content_type(riak_object *obj)
 {
     return obj->content_type;
 }
+
 riak_boolean_t
 riak_object_get_has_content_encoding(riak_object *obj)
 {
     return obj->has_content_encoding;
 }
+
 riak_binary*
 riak_object_get_content_encoding(riak_object *obj)
 {
     return obj->encoding;
 }
+
 riak_boolean_t
 riak_object_get_has_deleted(riak_object *obj)
 {
     return obj->has_deleted;
 }
+
 riak_boolean_t
 riak_object_get_deleted(riak_object *obj)
 {
     return obj->deleted;
 }
+
 riak_boolean_t
 riak_object_get_has_vtag(riak_object *obj)
 {
     return obj->has_vtag;
 }
+
 riak_binary*
 riak_object_get_vtag(riak_object *obj)
 {
     return obj->vtag;
 }
+
 riak_int32_t
 riak_object_get_n_links(riak_object *obj)
 {
     return obj->n_links;
 }
-riak_link*
+
+riak_error
 riak_object_get_link(riak_object  *obj,
+                     riak_link   **link,
                      riak_uint32_t n)
 {
     if (n >= obj->n_links) {
-        return NULL;
+        return ERIAK_OUT_OF_RANGE;
     }
-    return obj->links[n];
+    *link = obj->links[n];
+    return ERIAK_OK;
 }
+
 riak_int32_t
 riak_object_get_n_usermeta(riak_object *obj)
 {
     return obj->n_usermeta;
 }
-riak_pair*
+
+riak_error
 riak_object_get_usermeta(riak_object  *obj,
+                         riak_pair   **pair,
                          riak_uint32_t n)
 {
     if (n >= obj->n_usermeta) {
-        return NULL;
+        return ERIAK_OUT_OF_RANGE;
     }
-    return obj->usermeta[n];
+    *pair = obj->usermeta[n];
+    return ERIAK_OK;
 }
+
 riak_int32_t
 riak_object_get_n_indexes(riak_object *obj)
 {
     return obj->n_indexes;
 }
-riak_pair*
+
+riak_error
 riak_object_get_index(riak_object  *obj,
+                      riak_pair   **index,
                       riak_uint32_t n)
 {
     if (n >= obj->n_indexes) {
-        return NULL;
+        return ERIAK_OUT_OF_RANGE;
     }
-    return obj->indexes[n];
+    *index = obj->indexes[n];
+    return ERIAK_OK;
 }
 
 riak_error
@@ -835,17 +873,19 @@ riak_object_set_bucket(riak_config *cfg,
     }
     return ERIAK_OK;
 }
+
 riak_error
 riak_object_set_key(riak_config *cfg,
                     riak_object *obj,
                     riak_binary *value) {
-     obj->has_key = RIAK_TRUE;
      obj->key = riak_binary_copy(cfg, value);
      if (obj->key == NULL) {
          return ERIAK_OUT_OF_MEMORY;
      }
+     obj->has_key = RIAK_TRUE;
      return ERIAK_OK;
 }
+
 riak_error
 riak_object_set_value(riak_config *cfg,
                       riak_object *obj,
@@ -856,6 +896,7 @@ riak_object_set_value(riak_config *cfg,
      }
      return ERIAK_OK;
 }
+
 riak_error
 riak_object_set_value_shallow_copy(riak_config *cfg,
                                    riak_object *obj,
@@ -866,66 +907,73 @@ riak_object_set_value_shallow_copy(riak_config *cfg,
      }
      return ERIAK_OK;
 }
+
 riak_error
 riak_object_set_charset(riak_config *cfg,
                         riak_object *obj,
                         riak_binary *value) {
-     obj->has_charset = RIAK_TRUE;
      obj->charset = riak_binary_copy(cfg, value);
      if (obj->charset == NULL) {
          return ERIAK_OUT_OF_MEMORY;
      }
+     obj->has_charset = RIAK_TRUE;
      return ERIAK_OK;
 }
+
 void
 riak_object_set_last_mod(riak_object  *obj,
                          riak_uint32_t value) {
      obj->last_mod = value;
      obj->has_last_mod = RIAK_TRUE;
 }
+
 void
 riak_object_set_last_mod_usecs(riak_object  *obj,
                                riak_uint32_t value) {
      obj->last_mod_usecs = value;
      obj->has_last_mod_usecs = RIAK_TRUE;
 }
+
 riak_error
 riak_object_set_content_type(riak_config *cfg,
                              riak_object *obj,
                              riak_binary *value) {
-     obj->has_content_type = RIAK_TRUE;
      obj->content_type = riak_binary_copy(cfg, value);
      if (obj->content_type == NULL) {
          return ERIAK_OUT_OF_MEMORY;
      }
+     obj->has_content_type = RIAK_TRUE;
      return ERIAK_OK;
 }
+
 riak_error
 riak_object_set_content_encoding(riak_config *cfg,
                                  riak_object *obj,
                                  riak_binary *value) {
-     obj->has_content_encoding = RIAK_TRUE;
      obj->encoding = riak_binary_copy(cfg, value);
      if (obj->encoding == NULL) {
          return ERIAK_OUT_OF_MEMORY;
      }
+     obj->has_content_encoding = RIAK_TRUE;
      return ERIAK_OK;
 }
+
 void
 riak_object_set_deleted(riak_object   *obj,
                         riak_boolean_t value) {
      obj->deleted = value;
      obj->has_deleted = RIAK_TRUE;
 }
+
 riak_error
 riak_object_set_vtag(riak_config *cfg,
                      riak_object *obj,
                      riak_binary *value) {
-     obj->has_vtag = RIAK_TRUE;
      obj->vtag = riak_binary_copy(cfg, value);
      if (obj->vtag == NULL) {
          return ERIAK_OUT_OF_MEMORY;
      }
+     obj->has_vtag = RIAK_TRUE;
      return ERIAK_OK;
 }
 
@@ -999,5 +1047,3 @@ riak_object_new_index(riak_config *cfg,
 
     return result;
 }
-
-
