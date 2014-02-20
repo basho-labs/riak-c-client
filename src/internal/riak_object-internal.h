@@ -84,7 +84,7 @@ struct _riak_object {
 /**
  * @brief Shallow copy a Riak Object from a protocol buffer
  * @param cfg Riak Configuration
- * @param to Allocated `riak_object` returned to caller
+ * @param to Allocated Riak Object returned to caller
  * @param from Riak-supplied Protocol buffer source
  *
  * @returns Error code
@@ -102,7 +102,8 @@ riak_object_new_from_pb(riak_config *cfg,
  *
  * @returns Error code
  */
-int riak_object_to_pb_copy(riak_config *cfg,
+riak_error
+riak_object_to_pb_copy(riak_config *cfg,
                            RpbContent   *to,
                            riak_object  *from);
 
@@ -115,11 +116,34 @@ void
 riak_object_free_pb(riak_config *cfg,
                     RpbContent  *obj);
 
+//
+// P A I R S
+//
+
+/**
+ * @brief Construct a new Riak Key/Value Pair
+ * @param cfg Riak Configuration
+ * @return Riak Key/Value Pair
+ */
+riak_pair*
+riak_pair_new(riak_config *cfg);
+
+/**
+ * @brief Release memory claimed by Riak Key/Value Pairs
+ * @param cfg Riak Configuration
+ * @param pairs Pointer to array of pairs to be freed
+ * @param num_pairs Number of pairs in array
+ */
+void
+riak_pairs_free(riak_config  *cfg,
+                riak_pair  ***pair_target,
+                int           num_pairs);
+
 /**
  * @brief Copy a key/value pair from a PB to Riak structure
  * @param cfg Riak Configuration
- * @param pair_target The newly populated Riak key/value pair (out)
- * @param pbpair Protocol Buffer version of key/value pair
+ * @param pair_target The newly populated Riak Key/Value Pair (out)
+ * @param pbpair Protocol Buffer version of Riak Key/Value Pair
  * @returns Any memory allocation error
  */
 riak_error
@@ -128,11 +152,11 @@ riak_pairs_copy_from_pb(riak_config *cfg,
                         RpbPair     *pbpair);
 
 /**
- * @brief Copy an array of key/value pairs from a PB to Riak structure
+ * @brief Copy an array of Riak Key/Value Pairs from a PB to Riak structure
  * @param cfg Riak Configuration
- * @param pair_target The newly populated Riak key/value pair array (out)
- * @param pbpair Protocol Buffer version of key/value pair array
- * @param num_pairs Number of key/value pairs
+ * @param pair_target The newly populated Riak Key/Value Pair array (out)
+ * @param pbpair Protocol Buffer version of Riak Key/Value Pair array
+ * @param num_pairs Number of Riak Key/Value Pairs
  * @returns Any memory allocation error
  */
 riak_error
@@ -142,9 +166,9 @@ riak_pairs_copy_array_from_pb(riak_config  *cfg,
                               int           num_pairs);
 
 /**
- * @brief Print out a series of key/value pairs
- * @param pair Array of pairs to print
- * @param num_pairs Number of arrays in `pair`
+ * @brief Print out a series of Riak Key/Value Pair
+ * @param pair Array of Riak Key/Value Pair to print
+ * @param num_pairs Number of arrays in Riak Key/Value Pair
  * @param target Where to write the output (out)
  * @param len Max allowed bytes to write (out)
  * @param total Running total of bytes written (out)
@@ -158,14 +182,37 @@ riak_pairs_print(riak_pair   **pair,
                  riak_int32_t *total);
 
 /**
- * @brief Deallocate any claimed memory by riak_pairs
+ * @brief Deallocate any claimed memory by Riak Key/Value Pair
  * @param cfg Riak Configuration
  * @param pair_target Pointer to array to be freed
- * @param num_pairs Number of elements in `pair_target`
+ * @param num_pairs Number of elements in Riak Key/Value Pair array
  */
 void
 riak_pairs_free(riak_config  *cfg,
                 riak_pair  ***pair_target,
                 int           num_pairs);
+
+//
+// L I N K S
+//
+
+/**
+ * @brief Construct a new Riak Link-Walking Link
+ * @param cfg Riak Configuration
+ * @return Riak Link-Walking Link
+ */
+riak_link*
+riak_link_new(riak_config *cfg);
+
+/**
+ * @brief Release memory claimed by links
+ * @param cfg Riak Configuration
+ * @param links Pointer to array of links to be freed
+ * @param num_links Number of links in array
+ */
+void
+riak_links_free(riak_config  *cfg,
+                riak_link  ***links,
+                int           num_links);
 
 #endif // _RIAK_OBJECT_INTERNAL_H

@@ -43,6 +43,7 @@
 #include "test_bucketprops.h"
 #include "test_mapreduce.h"
 #include "test_search.h"
+#include "test_object.h"
 
 int
 main(int   argc,
@@ -132,6 +133,21 @@ main(int   argc,
     CU_ADD_TEST(messages_suite, test_search_options_fl);
     CU_ADD_TEST(messages_suite, test_search_options_presort);
     CU_ADD_TEST(messages_suite, test_search_decode_response);
+    CU_ADD_TEST(messages_suite, test_riak_object_bucket);
+    CU_ADD_TEST(messages_suite, test_riak_object_key);
+    CU_ADD_TEST(messages_suite, test_riak_object_value);
+    CU_ADD_TEST(messages_suite, test_riak_object_charset);
+    CU_ADD_TEST(messages_suite, test_riak_object_last_mod);
+    CU_ADD_TEST(messages_suite, test_riak_object_last_mod_usecs);
+    CU_ADD_TEST(messages_suite, test_riak_object_content_type);
+    CU_ADD_TEST(messages_suite, test_riak_object_content_encoding);
+    CU_ADD_TEST(messages_suite, test_riak_object_deleted);
+    CU_ADD_TEST(messages_suite, test_riak_object_vtag);
+    CU_ADD_TEST(messages_suite, test_riak_object_links);
+    CU_ADD_TEST(messages_suite, test_riak_object_usermeta);
+    CU_ADD_TEST(messages_suite, test_riak_object_indexes);
+
+
 
     // Run all tests using the CUnit Basic interface
     CU_basic_set_mode(CU_BRM_VERBOSE);

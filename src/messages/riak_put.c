@@ -48,7 +48,8 @@ riak_put_request_encode(riak_operation   *rop,
     }
 
     // Data content payload
-    RpbContent content;
+    RpbContent content = RPB_CONTENT__INIT;
+
     riak_object_to_pb_copy(cfg, &content, riak_obj);
     putmsg.content = &content;
 
