@@ -32,7 +32,12 @@ significant changes to the API.**
 * pkg-config
 * pthreads
 * doxygen (if you are building docs)
+* riak_pb
+	* see note below
+	
+### riak_pb 
 
+The riak-c-client depends on [riak_pb](https://github.com/basho/riak_pb), which is automatically downloaded via `./autogen.sh` as part of a normal build. The branch/tag that riak_pb uses is recorded in `.\.riak_pb.vsn`.
 
 # Building
 
