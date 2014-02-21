@@ -149,4 +149,6 @@ TESTS = riak_c_cunit
 
 
 pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = riak-c-client.pc
+pkgconfig_DATA = riak-c-client-async.pc \
+			riak-c-client-sync.pc
+

@@ -3,10 +3,10 @@ exec_prefix=@exec_prefix@
 libdir=@libdir@
 includedir=@includedir@
 
-Name: Riak C Client
+Name: Riak C Client, synchronous impl
 Description: A C client for the Riak Distributed Database
 URL: https://github.com/basho/riak-c-client
 Version: @VERSION@
-Requires: libevent libevent_pthreads
+Requires:
 Libs: -lriak_c_client-@VERSION@
 Cflags:
