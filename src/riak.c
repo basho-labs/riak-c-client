@@ -461,6 +461,8 @@ riak_read(riak_operation *rop,
         // Are we done yet? If not, break out and wait for the next callback
         if (rop->position < rop->msglen) {
             riak_log_error(cxn, "%s","Partial message received");
+            if (!rop->response_cb) /* If the operation is not async, read again */
+              continue;
             return ERIAK_OK;
         }
         assert(rop->position == rop->msglen);

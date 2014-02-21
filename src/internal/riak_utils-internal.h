@@ -61,4 +61,16 @@ riak_array_realloc(riak_config *cfg,
                    riak_uint32_t oldnum,
                    riak_uint32_t newnum);
 
+/**
+ * @brief append a formatted string to a length-limited buffer
+ * @param target pointer to end of the buffer, which will be updated
+ * @param left_to_write to-be-updated available space
+ * @param format
+ */
+size_t
+riak_snprintf_cat(char **target,
+		  riak_uint32_t *left_to_write,
+		  const char *format,
+		  ...);
+
 #endif // _RIAK_UTILS_INTERNAL_H
