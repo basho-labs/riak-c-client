@@ -8,5 +8,5 @@ Description: A C client for the Riak Distributed Database
 URL: https://github.com/basho/riak-c-client
 Version: @VERSION@
 Requires: libevent libevent_pthreads
-Libs: riak-c-client-@VERSION@
+Libs: -lriak_c_client-@VERSION@
 Cflags:
