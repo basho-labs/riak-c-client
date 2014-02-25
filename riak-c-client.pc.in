@@ -3,7 +3,7 @@ exec_prefix=@exec_prefix@
 libdir=@libdir@
 includedir=@includedir@
 
-Name: Riak C Client, synchronous impl
+Name: Riak C Client, synchronous implementation
 Description: A C client for the Riak Distributed Database
 URL: https://github.com/basho/riak-c-client
 Version: @VERSION@
