@@ -34,5 +34,5 @@ AC_ARG_WITH([protoc-c],
     [PROTOC_C='protoc-c'])
 AC_SUBST([PROTOC_C])
 
-AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([Makefile riak-c-client-async.pc riak-c-client.pc])
 AC_OUTPUT

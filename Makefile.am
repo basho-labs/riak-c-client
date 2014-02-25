@@ -147,3 +147,9 @@ riak_c_cunit_LDADD =	-lriak_c_client-0.5 \
 riak_c_cunit_DEPENDENCIES = libriak_c_client-0.5.la
 
 TESTS = riak_c_cunit
+
+
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = riak-c-client-async.pc \
+			riak-c-client.pc
+
