@@ -19,6 +19,9 @@ significant changes to the API.**
 * documentation 
 * performance tuning
 
+# API Documentation
+
+Doxygen generated docs located [here](http://basho.github.io/riak-c-client/globals_func.html)
 
 # Dependencies
 
