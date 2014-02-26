@@ -28,6 +28,10 @@
 #include "riak_connection-internal.h"
 #include "riak_network.h"
 
+#include <openssl/bio.h>
+#include <openssl/ssl.h>
+#include <openssl/err.h>
+
 riak_error
 riak_connection_new(riak_config       *cfg,
                     riak_connection  **cxn_target,
@@ -66,10 +70,183 @@ riak_connection_new(riak_config       *cfg,
     return ERIAK_OK;
 }
 
+riak_error starttls(riak_config *cfg,
+                    BIO *bio) {
+    unsigned char b[1024];
+    unsigned char messageCode = 255;
+    int length = htonl(1);
+
+    BIO_write(bio, &length, 4);
+    BIO_write(bio, &messageCode, 1);
+
+    int total = 0;
+    for (;;) {
+        int p = BIO_read(bio, b+total, 5);
+        total += p;
+        if (p <= 0) {
+            riak_log_critical_config(cfg, "%s", "StartTLS data error");
+            return ERIAK_TLS_ERROR;
+        }
+        if (total >= 5) {
+            break;
+        }
+    }
+
+    if (b[4] != 255) {
+        riak_log_critical_config(cfg, "%s", "Invalid StartTLS response");
+        return ERIAK_TLS_ERROR;
+    }
+  return ERIAK_OK;
+}
+
+
+riak_error
+riak_ssl_handshake(riak_config *cfg,
+                   riak_connection *cxn,
+                   riak_security_credentials *creds,
+                   BIO *bio) {
+    SSL* ssl;
+    SSL_library_init();
+
+    struct _riak_security_credentials *sc = creds;
+    //SSL_CTX * ctx = SSL_CTX_new(SSLv23_client_method());
+    SSL_CTX * ctx = SSL_CTX_new(SSLv23_client_method());
+
+    if (NULL == ctx) {
+        printf("ctx is NULL\n");
+        return ERIAK_TLS_ERROR;
+    }
+
+    if(sc->cacertfile == NULL) {
+      printf("Invalid CACERT file");
+    }
+    if(!SSL_CTX_load_verify_locations(ctx, sc->cacertfile, NULL)) {
+        printf("Couldn't load .crt\n");
+        return ERIAK_TLS_ERROR;
+    }
+
+    ssl = SSL_new(ctx);
+    SSL_set_bio(ssl,bio,bio);
+    SSL_set_connect_state(ssl);
+    int hr = SSL_do_handshake(ssl);
+    printf("HR  = %d\n", hr);
+    int ec = SSL_get_error(ssl, hr);
+    printf("EC = %d\n", ec);
+    printf("Error: %s\n", ERR_reason_error_string(ec));
+
+    if(hr <= 0) {
+        printf("Handshake failed; boo!\n");
+        return ERIAK_TLS_ERROR;
+    }
+
+    if(!(SSL_get_peer_certificate != NULL && SSL_get_verify_result(ssl) == X509_V_OK)) {
+        long l = SSL_get_verify_result(ssl);
+        printf("Certificate verification error: %s\n", X509_verify_cert_error_string(l));
+        return ERIAK_TLS_ERROR;
+    }
+
+    cxn->ssl_bio = bio;
+    cxn->ssl = ssl;
+    cxn->ssl_context = ctx;
+    return ERIAK_OK;
+}
+
+riak_error
+riak_ssl_auth(riak_config *cfg,
+              riak_connection *cxn,
+              riak_security_credentials *creds)  {
+
+    riak_binary *user_bin = riak_binary_copy_from_string(cfg, creds->username);
+    riak_binary *pass_bin = riak_binary_copy_from_string(cfg, creds->password);
+
+    printf("Calling Riak AUTH\n");
+    riak_error result = riak_auth(cxn, user_bin, pass_bin);
+    riak_binary_free(cfg, &user_bin);
+    riak_binary_free(cfg, &pass_bin);
+    if(result != ERIAK_OK) {
+      printf("AUTH FAILED\n");
+      return ERIAK_TLS_ERROR;
+    }
+    printf("Finished Riak AUTH\n");
+    return ERIAK_OK;
+}
+
+riak_error
+riak_secure_connection_new(riak_config       *cfg,
+                           riak_connection  **cxn_target,
+                           const char        *hostname,
+                           const char        *portnum,
+                           riak_addr_resolver resolver,
+                           riak_security_credentials *creds) {
+    if(creds == NULL) {
+      riak_log_critical_config(cfg, "%s", "SSL Configuration not specified");
+      // TODO
+      exit(-1);
+    }
+
+    // TODO: resolver is unused..
+
+    riak_connection *cxn = (riak_connection*)(cfg->malloc_fn)(sizeof(riak_connection));
+    if (cxn == NULL) {
+        riak_log_critical_config(cfg, "%s", "Could not allocate a riak_connection");
+        return ERIAK_OUT_OF_MEMORY;
+    }
+    memset((void*)cxn, '\0', sizeof(riak_connection));
+    *cxn_target = cxn;
+    cxn->config = cfg;
+
+    riak_strlcpy(cxn->hostname, hostname, sizeof(cxn->hostname));
+    riak_strlcpy(cxn->portnum, portnum, sizeof(cxn->portnum));
+
+    int hostportlen = strlen(hostname) + strlen(portnum) + 1;
+    char *hp = (cfg->malloc_fn)(hostportlen);
+    if(sprintf(hp,"%s:%s", hostname, portnum) != hostportlen) {
+      return ERIAK_OUT_OF_MEMORY;
+    }
+
+    printf("SSL connection to %s\n", hp);
+    BIO *bio;
+
+    bio = BIO_new_connect(hp);
+    // TODO: make sure this free() isn't screwing anything up down the line w/
+    // the BIO
+    free(hp);
+    if (NULL == bio) {
+        riak_log_critical_config(cfg, "%s", "Failed to initialize OpenSSL BIO");
+        return ERIAK_TLS_ERROR;
+    }
+
+    if (BIO_do_connect(bio) <= 0) {
+        riak_log_critical_config(cfg, "%s", "OpenSSL BIO can't connect");
+        ERR_print_errors_fp(stderr);
+        BIO_free_all(bio);
+        return ERIAK_TLS_ERROR;
+    }
+
+    riak_error starttls_err = starttls(cfg, bio);
+    if(starttls_err != ERIAK_OK) {
+      return starttls_err;
+    }
+
+    printf("STARTTLS successful, trying auth\n");
+    riak_error auth_err = riak_ssl_auth(cfg, cxn, creds);
+    if(auth_err != ERIAK_OK) {
+      return auth_err;
+    }
+
+    return ERIAK_OK;
+}
+
+SSL*
+riak_connection_get_ssl(riak_connection *cxn) {
+    return cxn->ssl;
+}
+
 riak_socket_t
 riak_connection_get_fd(riak_connection *cxn) {
     return cxn->fd;
 }
+
 riak_config*
 riak_connection_get_config(riak_connection *cxn) {
     return cxn->config;
@@ -82,9 +259,50 @@ void riak_connection_free(riak_connection** cxn_target) {
 
     if (cxn->fd) {
         close(cxn->fd);
-
     }
+
+    if(cxn->ssl) {
+      SSL_free(cxn->ssl);
+    }
+
+    if(cxn->ssl_bio) {
+      BIO_free_all(cxn->ssl_bio);
+    }
+
+    if(cxn->ssl_context) {
+      SSL_CTX_free(cxn->ssl_context);
+    }
+
     if (cxn->addrinfo != NULL) freeaddrinfo(cxn->addrinfo);
     riak_free(cfg, cxn_target);
+}
+
+
+riak_error
+riak_security_credentials_new(riak_config *cfg,
+                              riak_security_credentials **creds_target,
+                              char *username,
+                              char *password,
+                              char *cacertfile) {
+    riak_security_credentials *creds= (riak_security_credentials*)(cfg->malloc_fn)(sizeof(riak_security_credentials));
+    if (creds == NULL) {
+        riak_log_critical_config(cfg, "%s", "Could not allocate riak_security_credentials");
+        return ERIAK_OUT_OF_MEMORY;
+    }
+    memset((void*)creds, '\0', sizeof(riak_security_credentials));
+    *creds_target = creds;
+    // TODO: macro?
+    creds->ssl_method = SSLv23_client_method();
+    riak_strlcpy(creds->username, username, sizeof(creds->username));
+    riak_strlcpy(creds->password, password, sizeof(creds->password));
+    riak_strlcpy(creds->cacertfile, cacertfile, sizeof(creds->cacertfile));
+    return ERIAK_OK;
+}
+
+void riak_security_credentials_free(riak_config *cfg,
+                                    riak_security_credentials **creds) {
+
+    if(creds== NULL || *creds== NULL) return;
+    riak_free(cfg, creds);
 }
 

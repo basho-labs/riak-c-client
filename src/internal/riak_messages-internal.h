@@ -129,6 +129,7 @@ riak_pb_message_free(riak_config     *cfg,
 #include "messages/riak_serverinfo-internal.h"
 #include "messages/riak_set_bucketprops-internal.h"
 #include "messages/riak_set_clientid-internal.h"
+#include "messages/riak_security-internal.h"
 
 // Based on RpbErrorResp
 struct _riak_error_response {
@@ -141,7 +142,6 @@ struct _riak_error_response {
 struct _riak_ping_response {
     riak_boolean_t success;
 };
-
 
 /**
  * @brief Convert PBC error response into user-readable data type
@@ -180,5 +180,9 @@ riak_decode_ping_response(riak_operation      *rop,
                           riak_pb_message     *pbresp,
                           riak_ping_response **resp,
                           riak_boolean_t      *done);
+
+
+
+
 
 #endif // _RIAK_EVENT_INTERNAL_H

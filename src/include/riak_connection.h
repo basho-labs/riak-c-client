@@ -22,12 +22,15 @@
 
 #ifndef _RIAK_CONNECTION_H
 #define _RIAK_CONNECTION_H
+#include <openssl/ssl.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 typedef struct _riak_connection riak_connection;
+typedef struct _riak_security_credentials riak_security_credentials;
+
 
 /**
  * @brief Construct a Riak event
@@ -44,6 +47,20 @@ riak_connection_new(riak_config       *cfg,
                     const char        *hostname,
                     const char        *portnum,
                     riak_addr_resolver resolver);
+
+
+riak_error
+riak_secure_connection_new(riak_config               *cfg,
+                           riak_connection          **cxn,
+                           const char                *hostname,
+                           const char                *portnum,
+                           riak_addr_resolver         resolver,
+                           riak_security_credentials *creds
+                           );
+
+
+
+
 /**
  * @brief Cleanup memory used by a Riak Connection
  * @param re Riak Connection
@@ -57,8 +74,22 @@ riak_connection_get_fd(riak_connection *cxn);
 riak_config*
 riak_connection_get_config(riak_connection *cxn);
 
+SSL*
+riak_connection_get_ssl(riak_connection *cxn);
+
 #ifdef __cplusplus
 }
 #endif
+
+
+riak_error
+riak_security_credentials_new(riak_config *cfg,
+                              riak_security_credentials **creds_target,
+                              char *username,
+                              char *password,
+                              char *cacertfile);
+
+void riak_security_credentials_free(riak_config *cfg,
+                                    riak_security_credentials **creds);
 
 #endif // _RIAK_CONNECTION_H

@@ -42,6 +42,7 @@ typedef enum riak_error_enum {
     ERIAK_UNINITIALIZED,
     ERIAK_SERVER_ERROR,
     ERIAK_MESSAGE_FORMAT,
+    ERIAK_TLS_ERROR,
     ERIAK_LAST_ERRORNUM
 } riak_error;
 

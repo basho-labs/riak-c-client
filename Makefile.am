@@ -31,6 +31,7 @@ dist_msginclude_DATA =	src/include/messages/riak_2index.h \
 			src/include/messages/riak_listkeys.h \
 			src/include/messages/riak_mapreduce.h \
 			src/include/messages/riak_ping.h \
+			src/include/messages/riak_security.h \
 			src/include/messages/riak_put.h \
 			src/include/messages/riak_reset_bucketprops.h \
 			src/include/messages/riak_search.h \
@@ -64,6 +65,7 @@ libriak_c_client_0_5_la_SOURCES = \
 			src/messages/riak_listkeys.c \
 			src/messages/riak_mapreduce.c \
 			src/messages/riak_ping.c \
+			src/messages/riak_security.c \
 			src/messages/riak_put.c \
 			src/messages/riak_reset_bucketprops.c \
 			src/messages/riak_search.c \
@@ -80,6 +82,7 @@ libriak_c_client_0_5_la_CPPFLAGS = \
 			$(PROTOBUFC_INCLUDES) \
 			$(PROTOBUF_INCLUDES) \
 			$(EVENT_INCLUDES) \
+			$(OPENSSL_INCLUDES) \
 			-I$(SRCDIR)/include \
 			-I$(SRCDIR)/internal \
 			-I$(RIAK_PB)/c \
@@ -90,6 +93,9 @@ libriak_c_client_0_5_la_LIBADD = \
 			$(PROTOBUFC_LIBS) \
 			$(PROTOBUF_LIBS) \
 			$(EVENT_LIBS)
+			$(OPENSSL_LIBS) \
+			$(OPENSSL_LDFLAGS) \
+			-lpthread
 
 AM_CFLAGS =		-g -Wall
 
@@ -98,7 +104,7 @@ EXTRA_DIST =	$(SRCDIR)/include $(SRCDIR)/internal $(SRCDIR)/adapters \
 		$(EXAMPLESDIR)/riak_command.h \
 		$(TESTCUNITDIR)/include
 
-bin_PROGRAMS = riak_c_example
+bin_PROGRAMS = riak_c_example riak_ssl_test
 riak_c_example_SOURCES = examples/example.c \
 			examples/example_call_backs.c \
 			examples/riak_command.c
@@ -117,8 +123,38 @@ riak_c_example_LDADD = \
 		$(PROTOBUFC_LIBS) \
 		$(PROTOBUF_LIBS) \
 		$(EVENT_LIBS)
+		$(OPENSSL_LIBS) \
+		-lcunit -lpthread
 
 riak_c_example_DEPENDENCIES = libriak_c_client-0.5.la
+
+
+
+
+
+riak_ssl_test_SOURCES = ./test/ssl_tests/riak_c_client_ssl_tests.c
+
+riak_ssl_test_CPPFLAGS = \
+			-DUSE_DEBUG -D_RIAK_DEBUG \
+			-I$(SRCDIR)/include \
+			-I$(SRCDIR)/internal \
+			-I$(RIAK_PB)/c \
+			-I$(SRCDIR)/adapters \
+			-I$(SRCDIR)
+			$(OPENSSL_INCLUDES)
+
+riak_ssl_test_LDADD = \
+		-lriak_c_client-0.5 \
+			$(PROTOBUFC_LIBS) \
+			$(PROTOBUF_LIBS) \
+			$(EVENT_LIBS) \
+			$(OPENSSL_LIBS) \
+			$(OPENSSL_LDFLAGS) \
+		-lcunit -lpthread
+riak_ssl_test_DEPENDENCIES = libriak_c_client-0.5.la
+
+
+
 
 check_PROGRAMS = riak_c_cunit
 riak_c_cunit_SOURCES = 	test/cunit/registry.c \
@@ -152,6 +188,8 @@ riak_c_cunit_LDADD =	-lriak_c_client-0.5 \
 			$(PROTOBUF_LIBS) \
 			$(EVENT_LIBS) \
 			$(CUNIT_LIBS)
+			$(OPENSSL_LIBS) \
+			-lcunit -lpthread
 
 riak_c_cunit_DEPENDENCIES = libriak_c_client-0.5.la
 

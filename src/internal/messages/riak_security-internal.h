@@ -1,7 +1,5 @@
 /*********************************************************************
  *
- * riak_messages.h: Riak C Client External Messages
- *
  * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.
  *
  * This file is provided to you under the Apache License,
@@ -20,20 +18,22 @@
  *
  *********************************************************************/
 
-#include "messages/riak_2index.h"
-#include "messages/riak_delete.h"
-#include "messages/riak_error.h"
-#include "messages/riak_get.h"
-#include "messages/riak_get_bucketprops.h"
-#include "messages/riak_get_clientid.h"
-#include "messages/riak_listbuckets.h"
-#include "messages/riak_listkeys.h"
-#include "messages/riak_mapreduce.h"
-#include "messages/riak_ping.h"
-#include "messages/riak_put.h"
-#include "messages/riak_reset_bucketprops.h"
-#include "messages/riak_search.h"
-#include "messages/riak_serverinfo.h"
-#include "messages/riak_set_bucketprops.h"
-#include "messages/riak_set_clientid.h"
-#include "messages/riak_security.h"
+struct _riak_auth_response {
+    riak_boolean_t success;
+};
+
+
+
+// TODO: fix naming of riak_encode/riak_decode
+riak_error
+riak_auth_request_encode(riak_operation   *rop,
+                         riak_binary       *user,
+                         riak_binary       *password,
+                         riak_pb_message  **req);
+
+riak_error
+riak_auth_response_decode(riak_operation      *rop,
+                          riak_pb_message     *pbresp,
+                          riak_auth_response **resp,
+                          riak_boolean_t      *done);
+
