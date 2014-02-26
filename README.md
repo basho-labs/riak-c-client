@@ -27,6 +27,7 @@ Doxygen generated docs located [here](http://basho.github.io/riak-c-client/globa
 
 * automake
 * autoconf
+* autoconf-archive
 * libtool
 * libevent-2.0.21
 * protobuf-2.5.0
@@ -49,7 +50,7 @@ The riak-c-client depends on [riak_pb](https://github.com/basho/riak_pb), which 
 Be sure Xcode, command-line tools and [Home Brew](http://brew.sh/) installed first.
 
 ```
-brew install git automake autoconf libtool pkg-config protobuf protobuf-c libevent cunit doxygen
+brew install git automake autoconf autoconf-archive libtool pkg-config protobuf protobuf-c libevent cunit doxygen
 
 git clone https://github.com/basho/riak-c-client
 cd riak-c-client

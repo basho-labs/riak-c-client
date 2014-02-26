@@ -7,6 +7,6 @@ Name: Riak C Client, synchronous implementation
 Description: A C client for the Riak Distributed Database
 URL: https://github.com/basho/riak-c-client
 Version: @VERSION@
-Requires: libprotobuf-c
+Requires: libprotobuf-c openssl
 Libs: -L${libdir} -lriak_c_client-@VERSION@
 Cflags: -I${includedir}

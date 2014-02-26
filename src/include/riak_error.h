@@ -42,6 +42,8 @@ typedef enum riak_error_enum {
     ERIAK_UNINITIALIZED,
     ERIAK_SERVER_ERROR,
     ERIAK_MESSAGE_FORMAT,
+    ERIAK_TLS_ERROR,
+    ERIAK_AUTH_ERROR,
     ERIAK_LAST_ERRORNUM
 } riak_error;
 
@@ -61,6 +63,8 @@ static const char* errmsgs[] = {
     "Uninitialized Value",
     "An error was returned from the server",
     "Message Format Error",
+    "Error establishing SSL/TLS connection",
+    "Error authorizing to Riak",
     "SENTINEL FOR LAST ERROR MESSAGE"
 };
 #endif
