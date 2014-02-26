@@ -1,4 +1,3 @@
-p
 # -*- Autoconf -*-
 AC_PREREQ([2.61])
 AC_INIT([riak_c_client],[0.5])
@@ -19,6 +18,10 @@ PKG_CHECK_MODULES([PROTOBUF], [protobuf])
 PROTOBUF_INCLUDES=`pkg-config protobuf --cflags-only-I`
 PKG_CHECK_MODULES([CUNIT], [cunit])
 CUNIT_INCLUDES=`pkg-config cunit --cflags-only-I`
+PKG_CHECK_MODULES([OPENSSL], [openssl])
+OPENSSL_INCLUDES=`pkg-config openssl --cflags-only-I`
+
+AX_CHECK_OPENSSL
 
 AC_TYPE_SIZE_T
 AC_TYPE_UINT8_T
