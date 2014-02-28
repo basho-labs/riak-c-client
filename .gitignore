@@ -52,4 +52,5 @@ missing
 */.dirstamp
 test/cunit/.deps
 test/cunit/.dirstamp
-*/*.Plo
+*.Plo
+*.pc
