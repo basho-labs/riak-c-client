@@ -274,6 +274,11 @@ riak_get_get_n_content(riak_get_response *response) {
     return response->n_content;
 }
 
+riak_boolean_t
+riak_get_is_found(riak_get_response *response) {
+    return (response->n_content > 0) ? RIAK_TRUE : RIAK_FALSE;
+}
+
 /**
  * @brief Access an array of Riak Objects in a Get response
  * @param response Riak Get Response

@@ -101,6 +101,14 @@ riak_int32_t
 riak_get_get_n_content(riak_get_response *response);
 
 /**
+ * @brief Determine if a key has been found
+ * @param response Riak Get Response
+ * @returns True if key is found on the server
+ */
+riak_boolean_t
+riak_get_is_found(riak_get_response *response);
+
+/**
  * @brief Access an array of Riak Objects in a Get response
  * @param response Riak Get Response
  * @returns Array of Riak Objects (siblings)
