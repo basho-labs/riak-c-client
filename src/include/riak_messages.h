@@ -36,3 +36,4 @@
 #include "messages/riak_serverinfo.h"
 #include "messages/riak_set_bucketprops.h"
 #include "messages/riak_set_clientid.h"
+#include "messages/riak_counter.h"

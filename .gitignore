@@ -1,6 +1,8 @@
 # Object files
 *.o
 
+*.swp
+
 # Libraries
 *.lib
 *.a
@@ -50,3 +52,4 @@ missing
 */.dirstamp
 test/cunit/.deps
 test/cunit/.dirstamp
+*/*.Plo

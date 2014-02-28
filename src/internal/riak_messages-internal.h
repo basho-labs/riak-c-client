@@ -129,6 +129,7 @@ riak_pb_message_free(riak_config     *cfg,
 #include "messages/riak_serverinfo-internal.h"
 #include "messages/riak_set_bucketprops-internal.h"
 #include "messages/riak_set_clientid-internal.h"
+#include "messages/riak_counter-internal.h"
 
 // Based on RpbErrorResp
 struct _riak_error_response {
