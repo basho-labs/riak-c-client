@@ -23,6 +23,10 @@
 #ifndef _RIAK_GET_CLIENTID_MESSAGE_H
 #define _RIAK_GET_CLIENTID_MESSAGE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct _riak_get_clientid_response riak_get_clientid_response;
 typedef void (*riak_get_clientid_response_callback)(riak_get_clientid_response *response, void *ptr);
 
@@ -53,5 +57,9 @@ riak_get_clientid_response_free(riak_config                 *cfg,
  */
 riak_binary*
 riak_get_clientid_get_clientid(riak_get_clientid_response *resp);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

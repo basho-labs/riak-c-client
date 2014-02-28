@@ -98,18 +98,15 @@ riak_get_response_decode(riak_operation     *rop,
     if (rpbresp == NULL) {
         return ERIAK_MESSAGE_FORMAT;
     }
-    riak_connection *cxn = riak_operation_get_connection(rop);
-    riak_log_debug(cxn, "riak_decode_get_response len=%d/pb unpack = 0x%lx\n", pbresp->len, (long)(rpbresp));
     *done = RIAK_TRUE;
     if (rpbresp == NULL) {
         return ERIAK_OUT_OF_MEMORY;
     }
     int i = 0;
-    riak_get_response *response = (riak_get_response*)(cfg->malloc_fn)(sizeof(riak_get_response));
+    riak_get_response *response = riak_config_clean_allocate(cfg, sizeof(riak_get_response));
     if (response == NULL) {
         return ERIAK_OUT_OF_MEMORY;
     }
-    memset(response, '\0', sizeof(riak_get_response));
     response->_internal = rpbresp;
 
     if (rpbresp->has_vclock) {
@@ -154,11 +151,11 @@ riak_print_get_response(riak_get_response *response,
                         char              *target,
                         riak_size_t        len) {
     riak_int32_t left_to_write = len;
-    riak_int32_t wrote;
-    riak_print_binary_hex("V-Clock", response->vclock, &target, &wrote, &left_to_write);
-    riak_print_bool("Unmodified", response->unmodified, &target, &wrote, &left_to_write);
-    riak_print_bool("Deleted", response->deleted, &target, &wrote, &left_to_write);
-    riak_print_int("Objects", response->n_content, &target, &wrote, &left_to_write);
+    riak_int32_t wrote = 0;
+    riak_print_binary_hex("V-Clock", response->vclock, &target, &left_to_write, &wrote);
+    riak_print_bool("Unmodified", response->unmodified, &target, &left_to_write, &wrote);
+    riak_print_bool("Deleted", response->deleted, &target, &left_to_write, &wrote);
+    riak_print_int("Objects", response->n_content, &target, &left_to_write, &wrote);
 
     riak_uint32_t i;
     for(i = 0; (i < response->n_content) && (left_to_write > 0); i++) {
@@ -275,6 +272,11 @@ riak_get_get_deleted(riak_get_response *response) {
 riak_int32_t
 riak_get_get_n_content(riak_get_response *response) {
     return response->n_content;
+}
+
+riak_boolean_t
+riak_get_is_found(riak_get_response *response) {
+    return (response->n_content > 0) ? RIAK_TRUE : RIAK_FALSE;
 }
 
 /**

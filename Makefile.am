@@ -6,6 +6,7 @@ EXAMPLESDIR = $(top_srcdir)/examples
 TESTCUNITDIR = $(top_srcdir)/test/cunit
 
 include_HEADERS =	src/include/riak.h \
+			src/include/riak_async.h \
 			src/include/riak_binary.h \
 			src/include/riak_bucketprops.h \
 			src/include/riak_config.h \
@@ -76,16 +77,19 @@ libriak_c_client_0_5_la_SOURCES = \
 			riak_pb/c/riak_yokozuna.pb-c.c
 
 libriak_c_client_0_5_la_CPPFLAGS = \
-			$(PROTOBUFC_INCLUDES) $(PROTOBUF_INCLUDES) \
+			$(PROTOBUFC_INCLUDES) \
+			$(PROTOBUF_INCLUDES) \
 			$(EVENT_INCLUDES) \
 			-I$(SRCDIR)/include \
 			-I$(SRCDIR)/internal \
-			-I$(RIAK_PB)/c -I$(SRCDIR) \
+			-I$(RIAK_PB)/c \
+			-I$(SRCDIR) \
 			-DUSE_DEBUG
 
 libriak_c_client_0_5_la_LIBADD = \
-			$(PROTOBUFC_LIBS) $(PROTOBUF_LIBS) $(EVENT_LIBS) \
-			-lpthread
+			$(PROTOBUFC_LIBS) \
+			$(PROTOBUF_LIBS) \
+			$(EVENT_LIBS)
 
 AM_CFLAGS =		-g -Wall
 
@@ -110,8 +114,9 @@ riak_c_example_CPPFLAGS = \
 
 riak_c_example_LDADD = \
 		-lriak_c_client-0.5 \
-		$(PROTOBUFC_LIBS) $(PROTOBUF_LIBS) $(EVENT_LIBS) \
-		-lcunit -lpthread
+		$(PROTOBUFC_LIBS) \
+		$(PROTOBUF_LIBS) \
+		$(EVENT_LIBS)
 
 riak_c_example_DEPENDENCIES = libriak_c_client-0.5.la
 
@@ -138,11 +143,15 @@ riak_c_cunit_CPPFLAGS = -I$(SRCDIR)/include \
 			-I$(SRCDIR)/internal \
 			-I$(RIAK_PB)/c \
 			-I$(SRCDIR) \
-			-I$(TESTCUNITDIR)/include
+			-I$(TESTCUNITDIR)/include \
+			$(EVENT_INCLUDES) \
+			$(CUNIT_INCLUDES)
 
 riak_c_cunit_LDADD =	-lriak_c_client-0.5 \
-			$(PROTOBUFC_LIBS) $(PROTOBUF_LIBS) $(EVENT_LIBS) \
-			-lcunit -lpthread
+			$(PROTOBUFC_LIBS) \
+			$(PROTOBUF_LIBS) \
+			$(EVENT_LIBS) \
+			$(CUNIT_LIBS)
 
 riak_c_cunit_DEPENDENCIES = libriak_c_client-0.5.la
 

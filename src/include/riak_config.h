@@ -23,6 +23,9 @@
 #ifndef _RIAK_CONFIG_H
 #define _RIAK_CONFIG_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 // per-thread
 // do we need a *shared* config to complement?
 
@@ -107,5 +110,9 @@ void
 riak_free_internal(riak_config  *cfg,
                    void        **p);
 #define riak_free(C,P)  riak_free_internal((C),(void**)(P))
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // _RIAK_CONFIG_H

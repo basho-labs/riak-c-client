@@ -23,6 +23,10 @@
 #ifndef _RIAK_PING_MESSAGE_H
 #define _RIAK_PING_MESSAGE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct _riak_ping_response riak_ping_response;
 typedef void (*riak_ping_response_callback)(riak_ping_response *response, void *ptr);
 
@@ -34,5 +38,9 @@ typedef void (*riak_ping_response_callback)(riak_ping_response *response, void *
 void
 riak_free_ping_response(riak_config         *cfg,
                         riak_ping_response **resp);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

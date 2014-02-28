@@ -23,6 +23,10 @@
 #ifndef _RIAK_GET_BUCKETPROPS_MESSAGE_H
 #define _RIAK_GET_BUCKETPROPS_MESSAGE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct _riak_get_bucketprops_response riak_get_bucketprops_response;
 typedef void (*riak_get_bucketprops_response_callback)(riak_get_bucketprops_response *response, void *ptr);
 
@@ -45,5 +49,9 @@ riak_get_bucketprops_response_print(riak_get_bucketprops_response *response,
 void
 riak_get_bucketprops_response_free(riak_config                    *cfg,
                                    riak_get_bucketprops_response **resp);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

@@ -23,6 +23,10 @@
 #ifndef _RIAK_GET_MESSAGE_H
 #define _RIAK_GET_MESSAGE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct _riak_get_response riak_get_response;
 typedef struct _riak_get_options riak_get_options;
 typedef void (*riak_get_response_callback)(riak_get_response *response, void *ptr);
@@ -95,6 +99,14 @@ riak_get_get_deleted(riak_get_response *response);
  */
 riak_int32_t
 riak_get_get_n_content(riak_get_response *response);
+
+/**
+ * @brief Determine if a key has been found
+ * @param response Riak Get Response
+ * @returns True if key is found on the server
+ */
+riak_boolean_t
+riak_get_is_found(riak_get_response *response);
 
 /**
  * @brief Access an array of Riak Objects in a Get response
@@ -374,5 +386,9 @@ riak_get_options_set_sloppy_quorum(riak_get_options *opt,
 void
 riak_get_options_set_n_val(riak_get_options *opt,
                            riak_uint32_t     value);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

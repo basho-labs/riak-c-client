@@ -21,6 +21,7 @@
  *********************************************************************/
 
 #include "riak.h"
+#include "riak_async.h"
 #include "riak_command.h"
 #include "example_call_backs.h"
 #include "../adapters/riak_libevent.h"
@@ -67,16 +68,23 @@ example_log(void            *ptr,
     time_t ltime;
     struct tm result;
     char stime[32];
+    char output[2048];
 
     if (datum->fp == NULL) return;
 
     ltime = time(NULL);
     localtime_r(&ltime, &result);
     strftime(stime, sizeof(stime), "%F %X %Z", &result);
-    fprintf(datum->fp, "%s %s ", stime, riak_log_level_description(level));
-    vfprintf(datum->fp, format, args);
-    fprintf(datum->fp, "\n");
-    fflush(datum->fp);
+    riak_size_t wrote = snprintf(output, sizeof(output), "%s %s ", stime, riak_log_level_description(level));
+    char *pos = output + wrote;
+    wrote += vsnprintf(pos, sizeof(output)-wrote, format, args);
+    if (wrote < sizeof(output)-1) {
+        strcat(output, "\n");
+    }
+    fprintf(datum->fp, "%s", output);
+    if (level == RIAK_LOG_CRITICAL) {
+        fprintf(stderr, "%s", output);
+    }
 }
 
 
@@ -126,9 +134,19 @@ main(int   argc,
     riak_2index_options *index_options;
     riak_search_options *search_options;
     char output[10240];
+    int result = evthread_use_pthreads();
+    if (result < 0) {
+        riak_log_critical_config(cfg, "%s", "Could not use pthreads with libevent");
+        exit(1);
+    }
     struct event_base *base = event_base_new();
     if (base == NULL) {
         riak_log_critical_config(cfg, "%s", "Could not create libevent base");
+        exit(1);
+    }
+    result = evthread_make_base_notifiable(base);
+    if (result) {
+        riak_log_critical_config(cfg, "%s", "Could not initialize libevent base");
         exit(1);
     }
     int it;

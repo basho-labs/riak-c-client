@@ -23,6 +23,10 @@
 #ifndef _RIAK_CONNECTION_H
 #define _RIAK_CONNECTION_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct _riak_connection riak_connection;
 
 /**
@@ -52,5 +56,9 @@ riak_connection_get_fd(riak_connection *cxn);
 
 riak_config*
 riak_connection_get_config(riak_connection *cxn);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // _RIAK_CONNECTION_H

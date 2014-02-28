@@ -23,6 +23,10 @@
 #ifndef _RIAK_DELETE_MESSAGE_H
 #define _RIAK_DELETE_MESSAGE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct _riak_delete_options riak_delete_options;
 typedef struct _riak_delete_response riak_delete_response;
 typedef void (*riak_delete_response_callback)(riak_delete_response *response, void *ptr);
@@ -129,4 +133,9 @@ riak_delete_options_set_sloppy_quorum(riak_delete_options *opt,
 void
 riak_delete_options_set_n_val(riak_delete_options *opt,
                               riak_uint32_t        value);
+
+#ifdef __cplusplus
+}
+#endif
+
 #endif
