@@ -110,7 +110,7 @@ riak_just_open_a_socket(riak_config   *cfg,
             riak_uint16_t port;
             riak_print_host(addrinfo, ip, sizeof(ip), &port);
             close(sock);
-            riak_log_critical_config(cfg, "Could not connect a socket to host %s:%d [%s]\n", ip, port, strerror(errno));
+            riak_log_critical_config(cfg, "Could not connect a socket to host %s:%d [%s]", ip, port, strerror(errno));
             return -1;
         }
     }

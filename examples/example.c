@@ -68,16 +68,23 @@ example_log(void            *ptr,
     time_t ltime;
     struct tm result;
     char stime[32];
+    char output[2048];
 
     if (datum->fp == NULL) return;
 
     ltime = time(NULL);
     localtime_r(&ltime, &result);
     strftime(stime, sizeof(stime), "%F %X %Z", &result);
-    fprintf(datum->fp, "%s %s ", stime, riak_log_level_description(level));
-    vfprintf(datum->fp, format, args);
-    fprintf(datum->fp, "\n");
-    fflush(datum->fp);
+    riak_size_t wrote = snprintf(output, sizeof(output), "%s %s ", stime, riak_log_level_description(level));
+    char *pos = output + wrote;
+    wrote += vsnprintf(pos, sizeof(output)-wrote, format, args);
+    if (wrote < sizeof(output)-1) {
+        strcat(output, "\n");
+    }
+    fprintf(datum->fp, "%s", output);
+    if (level == RIAK_LOG_CRITICAL) {
+        fprintf(stderr, "%s", output);
+    }
 }
 
 
