@@ -29,6 +29,20 @@ struct _riak_counter_update_response {
     RpbCounterUpdateResp **_internal; // Array for many responses
 };
 
+
+struct _riak_counter_update_options {
+    riak_boolean_t has_r;
+    riak_uint32_t r;
+    riak_boolean_t has_pr;
+    riak_uint32_t pr;
+    riak_boolean_t has_basic_quorum;
+    riak_boolean_t basic_quorum;
+    riak_boolean_t has_notfound_ok;
+    riak_boolean_t notfound_ok;
+};
+
+
+
 riak_error
 riak_counter_update_request_encode(riak_operation   *rop,
                                    riak_binary  *bucket,

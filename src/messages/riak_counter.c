@@ -32,19 +32,58 @@
 #include "riak_print-internal.h"
 
 
-/* ------------------------ */
-/* Update Counter functions */
-/* ------------------------ */
+// "COUNTER UPDATE" FUNCTIONS
+//
 
+
+/*
+struct  _RpbCounterUpdateReq
+{
+  ProtobufCMessage base;
+  ProtobufCBinaryData bucket;
+  ProtobufCBinaryData key;
+  int64_t amount;
+  protobuf_c_boolean has_w;
+  uint32_t w;
+  protobuf_c_boolean has_dw;
+  uint32_t dw;
+  protobuf_c_boolean has_pw;
+  uint32_t pw;
+  protobuf_c_boolean has_returnvalue;
+  protobuf_c_boolean returnvalue;
+};
+#define RPB_COUNTER_UPDATE_REQ__INIT \
+ { PROTOBUF_C_MESSAGE_INIT (&rpb_counter_update_req__descriptor) \
+    , {0,NULL}, {0,NULL}, 0, 0,0, 0,0, 0,0, 0,0 }
+
+
+struct  _RpbCounterUpdateResp
+{
+  ProtobufCMessage base;
+  protobuf_c_boolean has_value;
+  int64_t value;
+};
+
+
+curl -i http://localhost:10018/buckets/new_hotness/props -X \
+      PUT -d '{"props":{"allow_mult":true}}' \
+      -H "Content-Type: application/json"
+
+curl -i http://localhost:10018/buckets/new_hotness/counters/riak-counters-blog-post-views \
+      -X POST -d "1"
+
+curl -i http://localhost:10018/buckets/new_hotness/counters/riak-counters-blog-post-views
+
+*/
 riak_error
 riak_counter_update_request_encode(riak_operation  *rop,
-                        riak_binary      *bucket,
-                        riak_binary      *key,
-                        riak_get_options *get_options,
-                        riak_pb_message **req) {
+                                   riak_binary      *bucket,
+                                   riak_binary      *key,
+                                   riak_get_options *get_options,
+                                   riak_pb_message **req) {
 
     riak_config *cfg = riak_operation_get_config(rop);
-    RpbGetReq getmsg = RPB_GET_REQ__INIT;
+    RpbGetReq getmsg = RPB_COUNTER_UPDATE_REQ__INIT;
 
     riak_operation_set_bucket(rop, bucket);
     riak_operation_set_key(rop, key);
@@ -92,6 +131,7 @@ riak_counter_update_request_encode(riak_operation  *rop,
     return ERIAK_OK;
 }
 
+/*
 riak_error
 riak_counter_update_response_decode(riak_operation     *rop,
                          riak_pb_message    *pbresp,
@@ -188,9 +228,36 @@ riak_counter_update_response_free(riak_config        *cfg,
 }
 
 
-/* ------------------------ */
-/* Get Counter functions    */
-/* ------------------------ */
+
+// "COUNTER GET" FUNCTIONS
+
+
+struct  _RpbCounterGetReq
+{
+  ProtobufCMessage base;
+  ProtobufCBinaryData bucket;
+  ProtobufCBinaryData key;
+  protobuf_c_boolean has_r;
+  uint32_t r;
+  protobuf_c_boolean has_pr;
+  uint32_t pr;
+  protobuf_c_boolean has_basic_quorum;
+  protobuf_c_boolean basic_quorum;
+  protobuf_c_boolean has_notfound_ok;
+  protobuf_c_boolean notfound_ok;
+};
+#define RPB_COUNTER_GET_REQ__INIT \
+ { PROTOBUF_C_MESSAGE_INIT (&rpb_counter_get_req__descriptor) \
+    , {0,NULL}, {0,NULL}, 0,0, 0,0, 0,0, 0,0 }
+
+
+struct  _RpbCounterGetResp
+{
+  ProtobufCMessage base;
+  protobuf_c_boolean has_value;
+  int64_t value;
+};
+
 
 riak_error
 riak_counter_get_request_encode(riak_operation  *rop,
@@ -200,7 +267,7 @@ riak_counter_get_request_encode(riak_operation  *rop,
                         riak_pb_message **req) {
 
     riak_config *cfg = riak_operation_get_config(rop);
-    RpbGetReq getmsg = RPB_GET_REQ__INIT;
+    RpbGetReq getmsg = RPB_COUNTER_GET_REQ__INIT;
 
     riak_operation_set_bucket(rop, bucket);
     riak_operation_set_key(rop, key);
@@ -342,5 +409,5 @@ riak_counter_get_response_free(riak_config        *cfg,
     rpb_get_resp__free_unpacked(response->_internal, cfg->pb_allocator);
     riak_free(cfg, resp);
 }
-
+*/
 

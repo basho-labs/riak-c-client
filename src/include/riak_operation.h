@@ -38,10 +38,10 @@ typedef void (*riak_response_callback)(void *response, void *ptr);
  */
 riak_error
 riak_operation_new(riak_connection        *cxn,
-                    riak_operation       **rop,
-                    riak_response_callback response_cb,
-                    riak_response_callback error_cb,
-                    void                  *cb_data);
+                   riak_operation       **rop,
+                   riak_response_callback response_cb,
+                   riak_response_callback error_cb,
+                   void                  *cb_data);
 
 /**
  * @brief Set the event's callback data

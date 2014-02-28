@@ -24,6 +24,8 @@
 #define _RIAK_COUNTER_MESSAGE_H
 
 typedef struct _riak_counter_update_response riak_counter_update_response;
+typedef struct _riak_couhter_update_options riak_counter_update_options;
+
 typedef struct _riak_counter_get_response riak_counter_get_response;
 
 typedef void (*riak_counter_update_response_callback)(riak_counter_update_response *response, void *ptr);
