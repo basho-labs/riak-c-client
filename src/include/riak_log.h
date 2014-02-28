@@ -23,6 +23,10 @@
 #ifndef _RIAK_LOG_H
 #define _RIAK_LOG_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * @brief Add a record to the Riak log
  * @param cfg Riak Configuration
@@ -97,6 +101,10 @@ riak_log_internal(riak_config         *cfg,
         __func__, sizeof(__func__)-1, __LINE__, (format), __VA_ARGS__)
 #else
 #define riak_log_debug_config(cxn,format, ...) ((void)cxn)
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif //_RIAK_LOG_H

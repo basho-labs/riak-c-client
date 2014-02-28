@@ -26,6 +26,10 @@
 int
 main(int argc, char* argv[])
 {
-    evthread_use_pthreads();
+    evthread_enable_lock_debuging();
+    int result = evthread_use_pthreads();
+    if (result < 0) {
+        fprintf(stderr, "Could not use pthreads!");
+    }
     return CommandLineTestRunner::RunAllTests(argc, argv);
 }

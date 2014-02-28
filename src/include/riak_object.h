@@ -27,6 +27,10 @@ typedef struct _riak_pair riak_pair;
 typedef struct _riak_link riak_link;
 typedef struct _riak_object riak_object;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * @brief Construct a new Riak Object
  * @param cfg Riak Configuration
@@ -569,5 +573,9 @@ riak_error
 riak_pair_set_value(riak_config *cfg,
                     riak_pair   *pair,
                     riak_binary *value);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // _RIAK_OBJECT_H

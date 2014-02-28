@@ -56,6 +56,14 @@ RiakCTestConnection::RiakCTestConnection(RiakCTest& state) : _state(state),
     if (err) {
         throw new RiakCTestError("Could not set up connection");
     }
+    _base = event_base_new();
+    if (_base == NULL) {
+        throw new RiakCTestError("Could not allocate libevent base");
+    }
+    int result = evthread_make_base_notifiable(_base);
+    if (result) {
+        throw new RiakCTestError("Could not make libevent base ready for pthreads");
+    }
 }
 
 RiakCTestConnection::RiakCTestConnection(RiakCTest& state,
@@ -70,6 +78,8 @@ RiakCTestConnection::RiakCTestConnection(RiakCTest& state,
 
 RiakCTestConnection::~RiakCTestConnection() {
     riak_connection_free(&_cxn);
+    event_base_free(_base);
+    _base = NULL;
 }
 
 riak_error
@@ -78,7 +88,7 @@ RiakCTestConnection::asyncCreateEvent() {
     if (err) {
         return err;
     }
-    err = riak_libevent_new(&_rev, _rop, _state.getLibeventBase());
+    err = riak_libevent_new(&_rev, _rop, _base);
     if (err) {
         return err;
     }
@@ -91,8 +101,28 @@ RiakCTestConnection::asyncCreateEvent() {
 
 riak_error
 RiakCTestConnection::asyncSendMessage() {
-    return riak_libevent_send(_rop, _rev);
+    fprintf(stderr, "Event Send on TID %llu\n", (riak_uint64_t)pthread_self());
+    riak_error err = riak_libevent_send(_rop, _rev);
+    if (err == ERIAK_OK) {
+        int result = asyncEventLoop();
+        fprintf(stderr, "Event Loop on TID %llu returned %d\n", (riak_uint64_t)pthread_self(), result);
+        switch(result) {
+        case -1:
+            err = ERIAK_EVENT;
+            break;
+        case 1:
+            //err = ERIAK_NO_EVENT;
+            break;
+        default:
+            break;
+        }
+    }
+    return err;
 }
 
-
+int
+RiakCTestConnection::asyncEventLoop() {
+    fprintf(stderr, "Event Loop on TID %llu\n", (riak_uint64_t)pthread_self());
+    return event_base_dispatch(_base);
+}
 

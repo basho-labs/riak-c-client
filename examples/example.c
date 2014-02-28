@@ -23,6 +23,7 @@
 #include "riak.h"
 #include "riak_command.h"
 #include "example_call_backs.h"
+#include "riak_async.h"
 #include "../adapters/riak_libevent.h"
 #include <time.h>
 
@@ -98,6 +99,7 @@ main(int   argc,
 #ifdef _RIAK_DEBUG
     event_enable_debug_mode();
 #endif
+    evthread_use_pthreads();
 
     // a riak_config serves as your per-thread state to interact with Riak
     riak_config *cfg;

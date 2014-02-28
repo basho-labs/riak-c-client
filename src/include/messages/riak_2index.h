@@ -23,6 +23,10 @@
 #ifndef _riak_2index_MESSAGE_H
 #define _riak_2index_MESSAGE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct _riak_2index_response riak_2index_response;
 typedef struct _riak_2index_options riak_2index_options;
 typedef void (*riak_2index_response_callback)(riak_2index_response *response, void *ptr);
@@ -506,5 +510,9 @@ riak_2index_options_set_term_regex(riak_config         *cfg,
 void
 riak_2index_options_set_pagination_sort(riak_2index_options *opt,
                                          riak_boolean_t      value);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

@@ -32,6 +32,7 @@ Doxygen generated docs located [here](http://basho.github.io/riak-c-client/globa
 * protobuf-2.5.0
 * protobuf-c-0.15
 * cunit
+* cpputest-3.5
 * pkg-config
 * pthreads
 * doxygen (if you are building docs)
@@ -49,12 +50,15 @@ The riak-c-client depends on [riak_pb](https://github.com/basho/riak_pb), which 
 Be sure Xcode, command-line tools and [Home Brew](http://brew.sh/) installed first.
 
 ```
-brew install git automake autoconf libtool pkg-config protobuf protobuf-c libevent cunit doxygen
+brew tap homebrew/versions
+brew install gcc48
+brew install cpputest --cc=gcc-4.8
+brew install git automake autoconf libtool pkg-config protobuf protobuf-c libevent cunit cpputest doxygen
 
 git clone https://github.com/basho/riak-c-client
 cd riak-c-client
 ./autogen.sh
-./configure
+CC=gcc-4.8 CCC=g++-4.8 ./configure
 make
 make check
 doxygen
@@ -96,6 +100,15 @@ LD_LIBRARY_PATH=/usr/local/protobuf-2.5.0/lib:/usr/local/lib make check
 sudo make install
 cd ..
  
+wget https://github.com/cpputest/cpputest/archive/v3.5.tar.gz
+tar fx v3.5.tar.gz
+cd cpputest-3.5
+./configure
+make
+make check
+sudo make install
+cd ..
+
 git clone https://github.com/basho/riak-c-client
 cd riak-c-client
 ./autogen.sh
@@ -139,6 +152,15 @@ cd ..
 wget http://downloads.sourceforge.net/project/cunit/CUnit/2.1-2/CUnit-2.1-2-src.tar.bz2
 tar fx CUnit-2.1-2-src.tar.bz2
 cd CUnit-2.1-2
+./configure
+make
+make check
+sudo make install
+cd ..
+
+wget https://github.com/cpputest/cpputest/archive/v3.5.tar.gz
+tar fx v3.5
+cd cpputest-3.5
 ./configure
 make
 make check
@@ -203,6 +225,15 @@ cd CUnit-2.1-2
 make
 make check
 sudo make install
+cd ..
+
+wget https://github.com/cpputest/cpputest/archive/v3.5.tar.gz
+tar fx v3.5.tar.gz
+cd cpputest-3.5
+./configure
+gmake
+gmake check
+sudo gmake install
 cd ..
 
 git clone https://github.com/basho/riak-c-client

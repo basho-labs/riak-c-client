@@ -4,6 +4,7 @@ SRCDIR = $(top_srcdir)/src
 RIAK_PB = $(top_srcdir)/riak_pb
 EXAMPLESDIR = $(top_srcdir)/examples
 TESTCUNITDIR = $(top_srcdir)/test/cunit
+TESTCPPUTESTDIR = $(top_srcdir)/test/cpputest
 
 include_HEADERS =	src/include/riak.h \
 			src/include/riak_binary.h \
@@ -76,11 +77,13 @@ libriak_c_client_0_5_la_SOURCES = \
 			riak_pb/c/riak_yokozuna.pb-c.c
 
 libriak_c_client_0_5_la_CPPFLAGS = \
-			$(PROTOBUFC_INCLUDES) $(PROTOBUF_INCLUDES) \
-			$(EVENT_INCLUDES) \
+			$(PROTOBUFC_INCLUDES) \
+			$(PROTOBUF_INCLUDES) \
+			$(EVENT_CFLAGS) \
 			-I$(SRCDIR)/include \
 			-I$(SRCDIR)/internal \
-			-I$(RIAK_PB)/c -I$(SRCDIR) \
+			-I$(RIAK_PB)/c \
+			-I$(SRCDIR) \
 			-DUSE_DEBUG
 
 libriak_c_client_0_5_la_LIBADD = \
@@ -110,12 +113,13 @@ riak_c_example_CPPFLAGS = \
 
 riak_c_example_LDADD = \
 		-lriak_c_client-0.5 \
-		$(PROTOBUFC_LIBS) $(PROTOBUF_LIBS) $(EVENT_LIBS) \
-		-lcunit -lpthread
+		$(PROTOBUFC_LIBS) \
+		$(PROTOBUF_LIBS) \
+		$(EVENT_LIBS)
 
 riak_c_example_DEPENDENCIES = libriak_c_client-0.5.la
 
-check_PROGRAMS = riak_c_cunit
+check_PROGRAMS = riak_c_cunit riak_c_cpputest
 riak_c_cunit_SOURCES = 	test/cunit/registry.c \
 			test/cunit/test_2index.c \
 			test/cunit/test_binary.c \
@@ -138,18 +142,47 @@ riak_c_cunit_CPPFLAGS = -I$(SRCDIR)/include \
 			-I$(SRCDIR)/internal \
 			-I$(RIAK_PB)/c \
 			-I$(SRCDIR) \
-			-I$(TESTCUNITDIR)/include
+			-I$(TESTCUNITDIR)/include \
+			$(CUNIT_INCLUDES)
 
 riak_c_cunit_LDADD =	-lriak_c_client-0.5 \
-			$(PROTOBUFC_LIBS) $(PROTOBUF_LIBS) $(EVENT_LIBS) \
-			-lcunit -lpthread
+			$(PROTOBUFC_LIBS) \
+			$(PROTOBUF_LIBS) \
+			$(CUNIT_LIBS)
 
 riak_c_cunit_DEPENDENCIES = libriak_c_client-0.5.la
-
-TESTS = riak_c_cunit
-
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = riak-c-client-async.pc \
 			riak-c-client.pc
+
+riak_c_cpputest_SOURCES = 	test/cpputest/TestRunner.cpp \
+            test/cpputest/RiakCTest.cpp \
+            test/cpputest/RiakCTestConnection.cpp \
+            test/cpputest/RiakCTestServerInfo.cpp \
+            test/cpputest/RiakCTestLists.cpp \
+            test/cpputest/test_logging.c
+
+#riak_c_cpputest_CXXFLAGS = -include `pkg-config cpputest --variable=prefix`/include/CppUTest/MemoryLeakDetectorNewMacros.h
+
+#riak_c_cpputest_CFLAGS = -include $(CPPUTEST_HOME)/include/CppUTest/MemoryLeakDetectorMallocMacros.h
+
+riak_c_cpputest_CPPFLAGS = -I$(SRCDIR)/include \
+			-I$(SRCDIR)/internal \
+			-I$(SRCDIR)/proto/include \
+			-I$(SRCDIR) \
+			-I$(TESTCPPUTESTDIR)/include \
+			$(EVENT_INCLUDES) \
+			$(EVENT_CFLAGS)
+
+riak_c_cpputest_LDADD =	-lriak_c_client-0.5 \
+			$(PROTOBUFC_LIBS) \
+			$(PROTOBUF_LIBS) \
+			$(EVENT_LIBS) \
+			$(CPPUTEST_LIBS)
+
+riak_c_cpputest_DEPENDENCIES = libriak_c_client-0.5.la
+
+TESTS = riak_c_cunit riak_c_cpputest
+
 

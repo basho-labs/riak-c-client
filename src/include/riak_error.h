@@ -23,6 +23,10 @@
 #ifndef _RIAK_ERROR_H
 #define _RIAK_ERROR_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef enum riak_error_enum {
     ERIAK_OK = 0,
     ERIAK_OUT_OF_RANGE,
@@ -32,6 +36,7 @@ typedef enum riak_error_enum {
     ERIAK_READ,
     ERIAK_WRITE,
     ERIAK_EVENT,
+    ERIAK_NO_EVENT,
     ERIAK_NO_PING,
     ERIAK_LOGGING,
     ERIAK_UNINITIALIZED,
@@ -49,7 +54,8 @@ static const char* errmsgs[] = {
     "Out of Memory",
     "Read error",
     "Write error",
-    "Riak Connection error",
+    "Asynchronous event error",
+    "No registered asynchronous event error",
     "Ping failure error",
     "Logging failure",
     "Uninitialized Value",
@@ -103,5 +109,9 @@ riak_server_error_get_errmsg(riak_server_error *err);
 
 const char*
 riak_strerror(riak_error err);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // _RIAK_ERROR_H

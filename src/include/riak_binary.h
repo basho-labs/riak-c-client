@@ -24,6 +24,9 @@
 #ifndef _RIAK_BINARY_H
 #define _RIAK_BINARY_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 typedef struct _riak_binary riak_binary;
 
 /**
@@ -128,5 +131,9 @@ riak_size_t
 riak_binary_hex_print(riak_binary  *bin,
                       char         *target,
                       riak_uint32_t len);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // _RIAK_BINARY_H

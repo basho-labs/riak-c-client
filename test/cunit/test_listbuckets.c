@@ -62,10 +62,16 @@ test_listbuckets_response_decode() {
         CU_ASSERT_FATAL(err == ERIAK_OK)
     }
     CU_ASSERT_EQUAL_FATAL(riak_listbuckets_get_n_buckets(response), 3);
-    riak_binary** buckets = riak_listbuckets_get_buckets(response);
-    CU_ASSERT_EQUAL_FATAL(memcmp(riak_binary_data(buckets[0]), "twitter", riak_binary_len(buckets[0])),0)
-    CU_ASSERT_EQUAL_FATAL(memcmp(riak_binary_data(buckets[1]), "foo", riak_binary_len(buckets[1])),0)
-    CU_ASSERT_EQUAL_FATAL(memcmp(riak_binary_data(buckets[2]), "test", riak_binary_len(buckets[2])),0)
+    riak_binary* bucket0, *bucket1, *bucket2;
+    err = riak_listbuckets_get_bucket(response, &bucket0, 0);
+    CU_ASSERT_FATAL(err == ERIAK_OK)
+    err = riak_listbuckets_get_bucket(response, &bucket1, 1);
+    CU_ASSERT_FATAL(err == ERIAK_OK)
+    err = riak_listbuckets_get_bucket(response, &bucket2, 2);
+    CU_ASSERT_FATAL(err == ERIAK_OK)
+    CU_ASSERT_EQUAL_FATAL(memcmp(riak_binary_data(bucket0), "twitter", riak_binary_len(bucket0)),0)
+    CU_ASSERT_EQUAL_FATAL(memcmp(riak_binary_data(bucket1), "foo", riak_binary_len(bucket1)),0)
+    CU_ASSERT_EQUAL_FATAL(memcmp(riak_binary_data(bucket2), "test", riak_binary_len(bucket2)),0)
 
     riak_operation_free(&rop);
     riak_connection_free(&cxn);

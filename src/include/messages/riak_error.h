@@ -23,6 +23,10 @@
 #ifndef _RIAK_ERROR_MESSAGE_H
 #define _RIAK_ERROR_MESSAGE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct _riak_error_response riak_error_response;
 
 /**
@@ -33,5 +37,9 @@ typedef struct _riak_error_response riak_error_response;
 void
 riak_free_error_response(riak_config         *cfg,
                          riak_error_response **resp);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

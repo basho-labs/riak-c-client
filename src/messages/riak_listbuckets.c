@@ -194,7 +194,13 @@ riak_listbuckets_get_n_buckets(riak_listbuckets_response *response) {
     return response->n_buckets;
 }
 
-riak_binary**
-riak_listbuckets_get_buckets(riak_listbuckets_response *response) {
-    return response->buckets;
+riak_error
+riak_listbuckets_get_bucket(riak_listbuckets_response *response,
+                            riak_binary **bucket,
+                            riak_uint32_t n) {
+    if (n >= response->n_buckets) {
+        return ERIAK_OUT_OF_RANGE;
+    }
+    *bucket = response->buckets[n];
+    return ERIAK_OK;
 }

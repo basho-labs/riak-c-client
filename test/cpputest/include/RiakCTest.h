@@ -56,46 +56,40 @@ public:
     RiakCTest();
     virtual ~RiakCTest();
 
-    riak_config*       getConfig()       { return _cfg; }
-    struct event_base* getLibeventBase() { return _base; }
+    riak_config* getConfig() { return _cfg; }
 
     /**
      * @brief Spawn a pile of threads, fire the event loop and join on them
      * @param f Function pointer for thread to spawn
      * @param args Arguments to pass to `f`
      */
-    void
-    threadRunner(riak_test_pthread_fun f,
-                 RiakCTestAsyncArgs*   args);
+    void threadRunner(riak_test_pthread_fun f,
+                      RiakCTestAsyncArgs*   args);
 
     /**
      * @brief Generate Random ASCII strings
      * @param len How long to make the string
      * @returns Random string of length `len`
      */
-    static std::string
-    randomString(riak_uint32_t len);
+    static std::string randomString(riak_uint32_t len);
 
     /**
      * @brief Throw lots of rubbish into Riak
      * @param conn Riak Test Connection
      * @param db Reference to map of stored data
      */
-    void
-    loadDb(RiakCTestConnection* conn,
-           riak_test_db*        db);
+    void loadDb(RiakCTestConnection* conn,
+                riak_test_db*        db);
 
     /**
      * @brief Nuke everything in Riak with the RIAK_TEST_BUCKET_PREFIX
      * @param conn Riak Test Connection
      */
-    void
-    cleanupDb(RiakCTestConnection* conn);
+    void cleanupDb(RiakCTestConnection* conn);
 
 protected:
-    riak_config*       _cfg;
-    test_log_data      _log_state;
-    struct event_base* _base; // async-only
+    riak_config*  _cfg;
+    test_log_data _log_state;
 };
 
 #endif // _RIAK_C_TEST_H

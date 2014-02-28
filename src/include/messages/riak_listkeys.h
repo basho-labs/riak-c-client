@@ -23,6 +23,10 @@
 #ifndef _RIAK_LISTKEYS_MESSAGE_H
 #define _RIAK_LISTKEYS_MESSAGE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct _riak_listkeys_response riak_listkeys_response;
 typedef void (*riak_listkeys_response_callback)(riak_listkeys_response *response, void *ptr);
 
@@ -57,9 +61,17 @@ riak_listkeys_get_n_keys(riak_listkeys_response *response);
 /**
  * @brief Access the list of keys in a bucket
  * @param response List Keys response message
+ * @param key Returned key
+ * @param n Index of key to return
  * @returns An array of keys in a bucket
  */
-riak_binary**
-riak_listkeys_get_keys(riak_listkeys_response *response);
+riak_error
+riak_listkeys_get_key(riak_listkeys_response *response,
+                      riak_binary           **key,
+                      riak_uint32_t           n);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

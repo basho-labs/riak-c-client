@@ -61,9 +61,13 @@ test_listkeys_response_decode() {
         CU_ASSERT_FATAL(err == ERIAK_OK)
     }
     CU_ASSERT_EQUAL_FATAL(riak_listkeys_get_n_keys(response), 2);
-    riak_binary** keys = riak_listkeys_get_keys(response);
-    CU_ASSERT_EQUAL_FATAL(memcmp(riak_binary_data(keys[0]), "393310013865066496", riak_binary_len(keys[0])),0)
-    CU_ASSERT_EQUAL_FATAL(memcmp(riak_binary_data(keys[1]), "bam", riak_binary_len(keys[1])),0)
+    riak_binary *key0, *key1;
+    err = riak_listkeys_get_key(response, &key0, 0);
+    CU_ASSERT_FATAL(err == ERIAK_OK)
+    err = riak_listkeys_get_key(response, &key1, 1);
+    CU_ASSERT_FATAL(err == ERIAK_OK)
+    CU_ASSERT_EQUAL_FATAL(memcmp(riak_binary_data(key0), "393310013865066496", riak_binary_len(key0)),0)
+    CU_ASSERT_EQUAL_FATAL(memcmp(riak_binary_data(key1), "bam", riak_binary_len(key1)),0)
 
     riak_operation_free(&rop);
     riak_connection_free(&cxn);

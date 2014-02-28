@@ -6,17 +6,22 @@ AC_CANONICAL_SYSTEM
 AM_INIT_AUTOMAKE([foreign subdir-objects])
 AC_CONFIG_MACRO_DIR([m4])
 
+AC_PROG_CXX
 AC_PROG_CC
 AC_PROG_CC_STDC
 AC_PROG_LIBTOOL
 LT_INIT
 
-PKG_CHECK_MODULES([EVENT], [libevent])
-EVENT_INCLUDES=`pkg-config libevent --cflags-only-I`
+PKG_CHECK_MODULES([EVENT], [libevent_pthreads])
+EVENT_INCLUDES=`pkg-config libevent_pthreads --cflags-only-I`
 PKG_CHECK_MODULES([PROTOBUFC], [libprotobuf-c])
 PROTOBUFC_INCLUDES=`pkg-config libprotobuf-c --cflags-only-I`
 PKG_CHECK_MODULES([PROTOBUF], [protobuf])
 PROTOBUF_INCLUDES=`pkg-config protobuf --cflags-only-I`
+PKG_CHECK_MODULES([CUNIT], [cunit])
+CUNIT_INCLUDES=`pkg-config cunit --cflags-only-I`
+PKG_CHECK_MODULES([CPPUTEST], [cpputest])
+CPPUTEST_INCLUDES=`pkg-config cpputest --cflags-only-I`
 
 AC_TYPE_SIZE_T
 AC_TYPE_UINT8_T

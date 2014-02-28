@@ -41,14 +41,9 @@ RiakCTest::RiakCTest() {
     if (err) {
         throw new RiakCTestError("Could not set up logging");
     }
-    _base = event_base_new();
-    if (_base == NULL) {
-        throw new RiakCTestError("Could not allocate libevent base");
-    }
 }
 
 RiakCTest::~RiakCTest() {
-    event_base_free(_base);
     riak_config_free(&_cfg);
 }
 
@@ -73,10 +68,7 @@ RiakCTest::threadRunner(riak_test_pthread_fun f,
             FAIL("Could not spawn ping receive thread");
         }
         fprintf(stderr, "Spawned TID %llu\n", (riak_uint64_t)tid[i]);
-
     }
-    fprintf(stderr, "Event Loop on TID %llu\n", (riak_uint64_t)pthread_self());
-    event_base_dispatch(_base);
 
     for(int i = 0; i < sizeof(result)/sizeof(void*); i++) {
         int status = pthread_join(tid[i], &result[i]);

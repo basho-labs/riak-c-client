@@ -44,6 +44,10 @@
 #include "riak_messages.h"
 #include "riak_log.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //
 // Basic Synchronous Operations
 //
@@ -376,5 +380,9 @@ riak_error
 riak_write(riak_operation *rop,
            riak_io_cb      write_cb,
            void           *write_cb_data);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // _RIAK_H

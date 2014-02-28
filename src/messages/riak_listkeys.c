@@ -197,13 +197,14 @@ riak_listkeys_get_n_keys(riak_listkeys_response *response) {
     return response->n_keys;
 }
 
-/**
- * @brief Access the list of keys in a bucket
- * @param response List Keys response message
- * @returns An array of keys in a bucket
- */
-riak_binary**
-riak_listkeys_get_keys(riak_listkeys_response *response) {
-    return response->keys;
+riak_error
+riak_listkeys_get_key(riak_listkeys_response *response,
+                      riak_binary           **key,
+                      riak_uint32_t           n) {
+    if (n >= response->n_keys) {
+        return ERIAK_OUT_OF_RANGE;
+    }
+    *key = response->keys[n];
+    return ERIAK_OK;
 }
 

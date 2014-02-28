@@ -23,6 +23,10 @@
 #ifndef _RIAK_LISTBUCKETS_MESSAGE_H
 #define _RIAK_LISTBUCKETS_MESSAGE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct _riak_listbuckets_response riak_listbuckets_response;
 typedef void (*riak_listbuckets_response_callback)(riak_listbuckets_response *response, void *ptr);
 
@@ -57,9 +61,18 @@ riak_listbuckets_get_n_buckets(riak_listbuckets_response *response);
 /**
  * @brief Access the list of buckets on a node
  * @param response List buckets response message
- * @returns An array of buckets on a node
+ * @param bucket Returned bucket name
+ * @param n Index of bucket to return
+ * @returns Error Code
  */
-riak_binary**
-riak_listbuckets_get_buckets(riak_listbuckets_response *response);
+
+riak_error
+riak_listbuckets_get_bucket(riak_listbuckets_response *response,
+                            riak_binary **bucket,
+                            riak_uint32_t n);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

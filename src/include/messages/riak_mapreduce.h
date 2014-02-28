@@ -23,6 +23,10 @@
 #ifndef _RIAK_MAPREDUCE_H
 #define _RIAK_MAPREDUCE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct _riak_mapreduce_response riak_mapreduce_response;
 typedef struct _riak_mapreduce_message riak_mapreduce_message;
 typedef void (*riak_mapreduce_response_callback)(riak_mapreduce_response *response, void *ptr);
@@ -104,5 +108,9 @@ riak_mapreduce_message_get_has_done(riak_mapreduce_message *msg);
  */
 riak_boolean_t
 riak_mapreduce_message_get_done(riak_mapreduce_message *msg);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // _RIAK_MAPREDUCE_H

@@ -78,7 +78,7 @@ riak_test_listbuckets_cb(riak_listbuckets_response *response,
     riak_config      *cfg = riak_connection_get_config(cxn);
     char buffer[10240];
     riak_listbuckets_response_print(response, buffer, sizeof(buffer));
-    //fprintf(stderr, "TID %llu - %s\n", (riak_uint64_t)pthread_self(), buffer);
+    fprintf(stderr, "TID %llu - %s\n", (riak_uint64_t)pthread_self(), buffer);
     if (riak_listbuckets_get_n_buckets(response) < RIAK_TEST_MAX_BUCKETS) {
         FAIL("Wrong number of buckets returned");
     }
@@ -167,7 +167,7 @@ riak_test_listkeys_thread(void *ptr) {
     }
     err = conn->asyncSendMessage();
     if (err) {
-        FAIL("Could not send request");
+        FAIL(riak_strerror(err));
     }
     return NULL;
 }

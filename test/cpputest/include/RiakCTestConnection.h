@@ -49,27 +49,16 @@ public:
      * @param portnum Port number for Protocol Buffers
      */
     RiakCTestConnection(RiakCTest& state,
-                       const char*       hostname,
-                       const char*       portnum);
+                       const char* hostname,
+                       const char* portnum);
 
     virtual ~RiakCTestConnection();
+
 
     /**
      * @brief Setup the a testing connection
      */
     RiakCTestConnection();
-
-    /**
-     * @brief Create a Riak Operation and Libevent Event
-     * @returns Error Code
-     */
-    riak_error asyncCreateEvent();
-
-    /**
-     * @brief Send an asynchronous message
-     * @returns Error Code
-     */
-    riak_error asyncSendMessage();
 
     /**
      * @brief Access the Riak Opration (for async)
@@ -89,11 +78,34 @@ public:
      */
     riak_config* getConfig() { return _state.getConfig(); }
 
+    //
+    // A S Y N C H
+    //
+
+    /**
+     * @brief Create a Riak Operation and Libevent Event
+     * @returns Error Code
+     */
+    riak_error asyncCreateEvent();
+
+    /**
+     * @brief Send an asynchronous message
+     * @returns Error Code
+     */
+    riak_error asyncSendMessage();
+
+    /**
+     * @brief Fire off the asynchronous event loop
+     * @returns 0 if successful, -1 if an error occurred, or 1 if no events were registered
+     */
+    int asyncEventLoop();
+
 protected:
-    RiakCTest&   _state;
-    riak_connection* _cxn;
-    riak_operation*  _rop; // async-only
-    riak_libevent*   _rev; // async-only
+    RiakCTest&         _state;
+    riak_connection*   _cxn;
+    riak_operation*    _rop; // async-only
+    riak_libevent*     _rev; // async-only
+    struct event_base* _base; // async-only
 };
 
 #endif /* _RIAK_TEST_CONNECTION_H_ */
