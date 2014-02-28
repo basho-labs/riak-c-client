@@ -21,17 +21,16 @@
  *********************************************************************/
 
 #include "riak.h"
-#include <event2/dns.h>
-#include <event2/bufferevent.h>
-#include <event2/buffer.h>
-#include <event2/util.h>
-#include <event2/event.h>
 
-typedef struct _riak_libevent {
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+struct _riak_libevent {
     struct event_base  *base;
     struct bufferevent *bevent;
     riak_operation     *rop;
-} riak_libevent;
+};
 
 /**
  * @brief Called by Libevent each time a connection is established
@@ -47,9 +46,9 @@ riak_libevent_connection_cb(struct bufferevent *bev,
     if (events & BEV_EVENT_CONNECTED) {
          riak_log_debug(cxn, "%s","Connect okay.");
     } else if (events & (BEV_EVENT_ERROR|BEV_EVENT_EOF)) {
-         char *reason = "BEV_EVENT_ERROR";
+         char *reason = (char*)"BEV_EVENT_ERROR";
          if (events & BEV_EVENT_ERROR) {
-            reason = "BEV_EVENT_EOF";
+            reason = (char*)"BEV_EVENT_EOF";
             int err = bufferevent_socket_get_dns_error(bev);
             if (err)
                 riak_log_error(cxn, "DNS error: %s", evutil_gai_strerror(err));
@@ -163,7 +162,7 @@ riak_libevent_new(riak_libevent    **rev_target,
 
     rev->bevent = bufferevent_socket_new(rev->base,
                                          riak_connection_get_fd(cxn),
-                                         BEV_OPT_CLOSE_ON_FREE|BEV_OPT_DEFER_CALLBACKS);
+                                         BEV_OPT_CLOSE_ON_FREE|BEV_OPT_DEFER_CALLBACKS|BEV_OPT_THREADSAFE);
     if (rev->bevent == NULL) {
         riak_log_critical_config(cfg,
                                  "Could not create bufferevent [fd %d]",
@@ -204,9 +203,14 @@ riak_libevent_free(riak_config    *cfg,
 
 riak_error
 riak_libevent_send(riak_operation *rop,
-                    riak_libevent *rev) {
+                   riak_libevent  *rev) {
 
     return riak_write(rop,
                       riak_libevent_write_cb,
                       (void*)rev);
 }
+#ifdef __cplusplus
+}
+
+#endif
+

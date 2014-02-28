@@ -23,6 +23,9 @@
 #ifndef _RIAK_BUCKETPROPS_H
 #define _RIAK_BUCKETPROPS_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 typedef enum _riak_bucket_repl_mode {
     RIAK_BUCKETPROPS_REPL_FALSE = 0,
     RIAK_BUCKETPROPS_REPL_REALTIME = 1,
@@ -790,5 +793,9 @@ riak_error
 riak_modfun_set_function(riak_config  *cfg,
                          riak_modfun *mod_fun,
                          riak_binary  *value);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // _RIAK_BUCKETPROPS_H

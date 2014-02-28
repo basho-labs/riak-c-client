@@ -21,6 +21,7 @@
  *********************************************************************/
 
 #include "riak.h"
+#include "riak_async.h"
 #include "riak_command.h"
 #include "example_call_backs.h"
 #include "../adapters/riak_libevent.h"
@@ -126,9 +127,19 @@ main(int   argc,
     riak_2index_options *index_options;
     riak_search_options *search_options;
     char output[10240];
+    int result = evthread_use_pthreads();
+    if (result < 0) {
+        riak_log_critical_config(cfg, "%s", "Could not use pthreads with libevent");
+        exit(1);
+    }
     struct event_base *base = event_base_new();
     if (base == NULL) {
         riak_log_critical_config(cfg, "%s", "Could not create libevent base");
+        exit(1);
+    }
+    result = evthread_make_base_notifiable(base);
+    if (result) {
+        riak_log_critical_config(cfg, "%s", "Could not initialize libevent base");
         exit(1);
     }
     int it;

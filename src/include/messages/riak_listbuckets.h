@@ -23,6 +23,10 @@
 #ifndef _RIAK_LISTBUCKETS_MESSAGE_H
 #define _RIAK_LISTBUCKETS_MESSAGE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct _riak_listbuckets_response riak_listbuckets_response;
 typedef void (*riak_listbuckets_response_callback)(riak_listbuckets_response *response, void *ptr);
 
@@ -61,5 +65,9 @@ riak_listbuckets_get_n_buckets(riak_listbuckets_response *response);
  */
 riak_binary**
 riak_listbuckets_get_buckets(riak_listbuckets_response *response);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

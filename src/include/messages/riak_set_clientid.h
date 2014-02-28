@@ -23,6 +23,10 @@
 #ifndef _RIAK_SET_CLIENTID_MESSAGE_H
 #define _RIAK_SET_CLIENTID_MESSAGE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct _riak_set_clientid_response riak_set_clientid_response;
 typedef void (*riak_set_clientid_response_callback)(riak_set_clientid_response *response, void *ptr);
 
@@ -35,5 +39,8 @@ void
 riak_set_clientid_response_free(riak_config                 *cfg,
                                 riak_set_clientid_response **resp);
 
+#ifdef __cplusplus
+}
+#endif
 
 #endif

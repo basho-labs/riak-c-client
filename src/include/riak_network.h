@@ -23,6 +23,10 @@
 #ifndef _RIAK_NETWORK_H
 #define _RIAK_NETWORK_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * @brief Turns ASCII host/port into addrinfo struct
  * @param cfg Riak Configuration
@@ -61,5 +65,9 @@ riak_print_host(riak_addrinfo *addrinfo,
                 char          *target,
                 int            len,
                 riak_uint16_t *port);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // _RIAK_NETWORK_H

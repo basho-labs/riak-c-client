@@ -23,6 +23,10 @@
 #ifndef _RIAK_SEARCH_H
 #define _RIAK_SEARCH_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct _riak_search_options riak_search_options;
 typedef struct _riak_search_response riak_search_response;
 typedef struct _riak_search_doc riak_search_doc;
@@ -348,5 +352,9 @@ riak_error
 riak_search_options_set_presort(riak_config         *cfg,
                                 riak_search_options *opt,
                                 riak_binary         *value);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // _RIAK_SEARCH_H

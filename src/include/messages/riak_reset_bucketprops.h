@@ -23,6 +23,10 @@
 #ifndef _RIAK_RESET_BUCKETPROPS_MESSAGE_H
 #define _RIAK_RESET_BUCKETPROPS_MESSAGE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct _riak_reset_bucketprops_response riak_reset_bucketprops_response;
 typedef void (*riak_reset_bucketprops_response_callback)(riak_reset_bucketprops_response *response, void *ptr);
 
@@ -34,5 +38,9 @@ typedef void (*riak_reset_bucketprops_response_callback)(riak_reset_bucketprops_
 void
 riak_reset_bucketprops_response_free(riak_config                      *cfg,
                                      riak_reset_bucketprops_response **resp);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

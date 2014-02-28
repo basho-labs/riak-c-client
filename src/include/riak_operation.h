@@ -23,6 +23,10 @@
 #ifndef RIAK_OPERATION_H_
 #define RIAK_OPERATION_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct _riak_operation riak_operation;
 
 // Generic placeholder for message-specific callbacks
@@ -151,5 +155,9 @@ riak_operation_get_key(riak_operation *rop);
  */
 riak_binary*
 riak_operation_get_index(riak_operation *rop);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

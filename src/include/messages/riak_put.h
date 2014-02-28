@@ -23,6 +23,10 @@
 #ifndef _RIAK_PUT_MESSAGE_H
 #define _RIAK_PUT_MESSAGE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct _riak_put_response riak_put_response;
 typedef struct _riak_put_options riak_put_options;
 typedef void (*riak_put_response_callback)(riak_put_response *response, void *ptr);
@@ -414,4 +418,9 @@ riak_put_options_set_sloppy_quorum(riak_put_options *opt,
 void
 riak_put_options_set_n_val(riak_put_options *opt,
                            riak_uint32_t     value);
+
+#ifdef __cplusplus
+}
+#endif
+
 #endif

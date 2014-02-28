@@ -23,6 +23,10 @@
 #ifndef _RIAK_GET_MESSAGE_H
 #define _RIAK_GET_MESSAGE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct _riak_get_response riak_get_response;
 typedef struct _riak_get_options riak_get_options;
 typedef void (*riak_get_response_callback)(riak_get_response *response, void *ptr);
@@ -374,5 +378,9 @@ riak_get_options_set_sloppy_quorum(riak_get_options *opt,
 void
 riak_get_options_set_n_val(riak_get_options *opt,
                            riak_uint32_t     value);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

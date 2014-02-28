@@ -23,6 +23,10 @@
 #ifndef _RIAK_LISTKEYS_MESSAGE_H
 #define _RIAK_LISTKEYS_MESSAGE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct _riak_listkeys_response riak_listkeys_response;
 typedef void (*riak_listkeys_response_callback)(riak_listkeys_response *response, void *ptr);
 
@@ -61,5 +65,9 @@ riak_listkeys_get_n_keys(riak_listkeys_response *response);
  */
 riak_binary**
 riak_listkeys_get_keys(riak_listkeys_response *response);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

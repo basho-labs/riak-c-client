@@ -23,6 +23,10 @@
 #ifndef _RIAK_SERVERINFO_MESSAGE_H
 #define _RIAK_SERVERINFO_MESSAGE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct _riak_serverinfo_response riak_serverinfo_response;
 typedef void (*riak_serverinfo_response_callback)(riak_serverinfo_response *response, void *ptr);
 
@@ -77,5 +81,9 @@ riak_serverinfo_get_has_server_version(riak_serverinfo_response *resp);
  */
 riak_binary*
 riak_serverinfo_get_server_version(riak_serverinfo_response *resp);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

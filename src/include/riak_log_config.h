@@ -25,6 +25,10 @@
 
 #include <stdarg.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // Levels correspond to RFC 5424
 // http://en.wikipedia.org/wiki/Syslog#Severity_levels
 typedef enum {
@@ -84,5 +88,9 @@ typedef void (*riak_log_fn)(void            *ptr,
                             riak_uint32_t    line,
                             const char      *format,
                             va_list          args);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // _RIAK_LOG_CONFIG_H
