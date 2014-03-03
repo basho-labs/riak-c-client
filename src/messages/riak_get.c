@@ -174,7 +174,7 @@ riak_get_response_free(riak_config        *cfg,
     if (response->n_content > 0) {
         riak_object_free_array(cfg, &(response->content), response->n_content);
     }
-    riak_free(cfg, &(response->vclock));
+    riak_binary_free(cfg, &(response->vclock));
     rpb_get_resp__free_unpacked(response->_internal, cfg->pb_allocator);
     riak_free(cfg, resp);
 }
@@ -187,6 +187,10 @@ riak_get_options_new(riak_config *cfg) {
 void
 riak_get_options_free(riak_config       *cfg,
                       riak_get_options **opt) {
+    if (opt == NULL) return;
+    riak_get_options* options = *opt;
+    if (options == NULL) return;
+    riak_binary_free(cfg, &(options->if_modified));
     riak_free(cfg, opt);
 }
 
