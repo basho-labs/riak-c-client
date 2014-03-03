@@ -22,3 +22,9 @@
 
 void
 test_listkeys_response_decode();
+
+void
+test_integration_listkeys();
+
+void
+test_integration_async_listkeys();
