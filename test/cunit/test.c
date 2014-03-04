@@ -126,8 +126,7 @@ test_async_disconnect(test_async_connection **conn_out) {
     test_async_connection *conn = *conn_out;
     riak_operation_free(&(conn->rop));
     riak_connection_free(&(conn->cxn));
-    //TODO: Fix this freeing of the event
-    //riak_libevent_free(conn->cfg, &(conn->rev));
+    riak_libevent_free(conn->cfg, &(conn->rev));
     event_base_free(conn->base);
     conn->base = NULL;
     riak_free(conn->cfg, conn_out);

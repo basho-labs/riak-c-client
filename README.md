@@ -31,7 +31,7 @@ Doxygen generated docs located [here](http://basho.github.io/riak-c-client/globa
 * libevent-2.0.21
 * protobuf-2.5.0
 * protobuf-c-0.15
-* cunit
+* cunit-2.1-2
 * pkg-config
 * pthreads
 * doxygen (if you are building docs)
@@ -67,7 +67,7 @@ make install
 
 ```
 sudo apt-get update
-sudo apt-get install build-essential git automake libtool libcunit1-dev doxygen
+sudo apt-get install build-essential git automake libtool doxygen
 
 wget https://protobuf.googlecode.com/files/protobuf-2.5.0.tar.gz
 tar fx protobuf-2.5.0.tar.gz
@@ -96,6 +96,14 @@ LD_LIBRARY_PATH=/usr/local/protobuf-2.5.0/lib:/usr/local/lib make check
 sudo make install
 cd ..
  
+wget http://sourceforge.net/projects/cunit/files/CUnit/2.1-2/CUnit-2.1-2-src.tar.bz2
+tar fx CUnit-2.1-2
+./configure
+make
+make check
+sudo make install
+cd ..
+
 git clone https://github.com/basho/riak-c-client
 cd riak-c-client
 ./autogen.sh

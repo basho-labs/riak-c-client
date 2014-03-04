@@ -135,6 +135,7 @@ riak_libevent_result_cb(struct bufferevent *bev,
 
     if (done_streaming) {
         bufferevent_free(bev);
+        event->bevent = NULL;
     }
 }
 
@@ -169,6 +170,12 @@ riak_libevent_new(riak_libevent    **rev_target,
                                  riak_connection_get_fd(cxn));
         return ERIAK_OUT_OF_MEMORY;
     }
+    if (bufferevent_base_set(base, rev->bevent) < 0) {
+        riak_log_critical_config(cfg,
+                                 "Could not set the base on bufferevent [fd %d]",
+                                 riak_connection_get_fd(cxn));
+        return ERIAK_EVENT;
+    }
     int enabled = bufferevent_enable(rev->bevent, EV_READ|EV_WRITE);
     if (enabled != 0) {
         riak_log_critical_config(cfg,
@@ -196,9 +203,9 @@ riak_libevent_free(riak_config    *cfg,
     riak_libevent *rev = *rev_target;
     if (rev->bevent) {
         bufferevent_free(rev->bevent);
+        rev->bevent = NULL;
     }
     riak_free(cfg, rev_target);
-    //if (cfg->base != NULL) event_base_free(cfg->base);
 }
 
 riak_error
