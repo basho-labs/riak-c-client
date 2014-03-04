@@ -56,9 +56,9 @@ riak_libevent_connection_cb(struct bufferevent *bev,
 #ifdef _RIAK_DEBUG
          struct evbuffer *ev_read  = bufferevent_get_input(bev);
          struct evbuffer *ev_write = bufferevent_get_output(bev);
-#endif
          riak_log_debug(cxn, "Closing because of %s [read event=%p, write event=%p]",
                  reason, (void*)ev_read, (void*)ev_write);
+#endif
          bufferevent_free(bev);
          event_base_loopexit(bufferevent_get_base(bev), NULL);
     } else if (events & BEV_EVENT_TIMEOUT) {

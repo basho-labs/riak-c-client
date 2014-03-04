@@ -118,7 +118,6 @@ test_listkeys_async_cb(riak_listkeys_response *response,
 }
 
 typedef struct _test_async_pthread_listkey_args {
-    test_async_connection  *conn;  // MUST BE FIRST
     riak_binary            *bucket;
     riak_uint32_t           timeout;
 } test_async_pthread_listkey_args;
@@ -129,11 +128,10 @@ typedef struct _test_async_pthread_listkey_args {
  */
 void*
 test_listkeys_async_thread(void *ptr) {
-    // Make thread-local copy
-    test_async_pthread_listkey_args args;
-    memcpy(&args, ptr, sizeof(test_async_pthread_listkey_args));
-    test_async_connection *conn = args.conn;
-    riak_error err = riak_async_register_listkeys(conn->rop, args.bucket, args.timeout, (riak_response_callback)test_listkeys_async_cb);
+    test_async_pthread *state = (test_async_pthread*)ptr;
+    test_async_connection *conn = state->conn;
+    test_async_pthread_listkey_args *args = (test_async_pthread_listkey_args*)(state->args);
+    riak_error err = riak_async_register_listkeys(conn->rop, args->bucket, args->timeout, (riak_response_callback)test_listkeys_async_cb);
     if (err) {
         return (void*)riak_strerror(err);
     }
@@ -159,7 +157,7 @@ test_integration_async_listkeys() {
     test_async_pthread_listkey_args args;
     args.bucket = db->bucket;  // Just pick a random bucket
     args.timeout = 5000;
-    err = test_async_thread_runner(cfg, test_listkeys_async_thread, (test_async_pthread_args*)&args);
+    err = test_async_thread_runner(cfg, test_listkeys_async_thread, (void*)&args);
     CU_ASSERT_FATAL(err == ERIAK_OK)
 
     test_cleanup_db(cxn);

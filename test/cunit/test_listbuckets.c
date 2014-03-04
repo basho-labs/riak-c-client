@@ -123,10 +123,8 @@ test_listbuckets_async_cb(riak_listbuckets_response *response,
  */
 void*
 test_listbuckets_async_thread(void *ptr) {
-    // Make thread-local copy
-    test_async_pthread_args args;
-    memcpy(&args, ptr, sizeof(test_async_pthread_args));
-    test_async_connection *conn = args.conn;
+    test_async_pthread *state = (test_async_pthread*)ptr;
+    test_async_connection *conn = state->conn;
     riak_error err = riak_async_register_listbuckets(conn->rop, (riak_response_callback)test_listbuckets_async_cb);
     if (err) {
         return (void*)riak_strerror(err);
@@ -150,8 +148,7 @@ test_integration_async_listbuckets() {
     test_bucket_key_value *db = NULL;
     err = test_load_db(cfg, cxn, &db);
 
-    test_async_pthread_args args;
-    err = test_async_thread_runner(cfg, test_listbuckets_async_thread, &args);
+    err = test_async_thread_runner(cfg, test_listbuckets_async_thread, NULL);
     CU_ASSERT_FATAL(err == ERIAK_OK)
 
     test_cleanup_db(cxn);

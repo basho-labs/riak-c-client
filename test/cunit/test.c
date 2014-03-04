@@ -82,13 +82,6 @@ riak_test_error_cb(void *resp,
 riak_error
 test_async_connect(riak_config            *cfg,
                    test_async_connection **conn_out) {
-    evthread_enable_lock_debuging();
-    int result = evthread_use_pthreads();
-    if (result < 0) {
-        fprintf(stderr, "Could not use pthreads for libevent\n");
-        return ERIAK_EVENT;
-    }
-
     *conn_out = riak_config_clean_allocate(cfg, sizeof(test_async_connection));
     if (*conn_out == NULL) {
         return ERIAK_OUT_OF_MEMORY;
@@ -111,7 +104,7 @@ test_async_connect(riak_config            *cfg,
         fprintf(stderr, "Could not allocate a Libevent base\n");
         return ERIAK_EVENT;
     }
-    result = evthread_make_base_notifiable(conn->base);
+    int result = evthread_make_base_notifiable(conn->base);
     if (result) {
         fprintf(stderr, "Could not set libevent base to be notifiable\n");
         return ERIAK_EVENT;
@@ -144,37 +137,36 @@ test_async_disconnect(test_async_connection **conn_out) {
 riak_error
 test_async_thread_runner(riak_config             *cfg,
                          test_async_pthread_fun   f,
-                         test_async_pthread_args *args) {
-    test_async_connection* conn[RIAK_TEST_NUM_THREADS];
-    pthread_t tid[RIAK_TEST_NUM_THREADS];
-    void *result[RIAK_TEST_NUM_THREADS];
-    for(int i = 0; i < sizeof(conn)/sizeof(test_async_connection*); i++) {
-        riak_error err = test_async_connect(cfg, &(conn[i]));
+                         void                    *args) {
+    test_async_pthread state[RIAK_TEST_NUM_THREADS];
+    riak_error err = ERIAK_OK;
+    for(int i = 0; i < RIAK_TEST_NUM_THREADS; i++) {
+        err = test_async_connect(cfg, &(state[i].conn));
         if (err) {
             return err;
         }
+        state[i].args = args;
 
-        args->conn = conn[i];
-        int status = pthread_create(&tid[i], NULL, f, args);
+        int status = pthread_create(&(state[i].tid), NULL, f, &(state[i]));
         if (status != 0) {
             return ERIAK_THREAD;
         }
-        fprintf(stderr, "Spawned TID %llu\n", (riak_uint64_t)tid[i]);
+        fprintf(stderr, "Spawned TID %ull\n", (riak_uint64_t)(state[i].tid));
     }
 
-    for(int i = 0; i < sizeof(result)/sizeof(void*); i++) {
-        int status = pthread_join(tid[i], &result[i]);
+    for(int i = 0; i < RIAK_TEST_NUM_THREADS; i++) {
+        int status = pthread_join(state[i].tid, &(state[i].result));
         if (status != 0) {
-            return ERIAK_THREAD;
+            err = ERIAK_THREAD;
         }
-        if (result[i] != NULL) {
-            fprintf(stderr, "THREAD ERROR: %s\n", (char*)result[i]);
+        if (state[i].result != NULL) {
+            fprintf(stderr, "THREAD ERROR: %s\n", (char*)(state[i].result));
         }
     }
-    for(int i = 0; i < sizeof(conn)/sizeof(test_async_connection*); i++) {
-        test_async_disconnect(&(conn[i]));
+    for(int i = 0; i < RIAK_TEST_NUM_THREADS; i++) {
+        test_async_disconnect(&(state[i].conn));
     }
-    return ERIAK_OK;
+    return err;
 }
 
 char*
@@ -196,6 +188,7 @@ riak_error
 test_load_db(riak_config            *cfg,
              riak_connection        *cxn,
              test_bucket_key_value **root) {
+    fprintf(stderr, "Beginning load of Riak\n");
     for (int b = 0; b < RIAK_TEST_MAX_BUCKETS; b++) {
         char *suffix = test_random_string(cfg, 20);
         if (suffix == NULL) {
@@ -258,6 +251,7 @@ test_load_db(riak_config            *cfg,
             riak_object_free(cfg, &obj);
         }
     }
+    fprintf(stderr, "Completed load of Riak\n");
     return ERIAK_OK;
 }
 
@@ -266,6 +260,7 @@ test_cleanup_db(riak_connection* cxn) {
     // Bail if there is no connection
     if (cxn == NULL) return ERIAK_CONNECT;
 
+    fprintf(stderr, "Beginning cleanup of Riak\n");
     const int prefixlen = strlen(RIAK_TEST_BUCKET_PREFIX);
     riak_listbuckets_response *response = NULL;
     riak_listbuckets(cxn, &response);
@@ -300,22 +295,23 @@ test_cleanup_db(riak_connection* cxn) {
             }
         }
     }
+    fprintf(stderr, "Completed cleanup of Riak\n");
     return ERIAK_OK;
 }
 
 int
 test_async_event_loop(test_async_connection *conn) {
-    fprintf(stderr, "Event Loop on TID %llu\n", (riak_uint64_t)pthread_self());
+    fprintf(stderr, "Event Loop on TID %ull with base %x and connection %x\n", (riak_uint64_t)pthread_self(), conn->base, conn);
     return event_base_dispatch(conn->base);
 }
 
 riak_error
 test_async_send_message(test_async_connection *conn) {
-    fprintf(stderr, "Event Send on TID %llu\n", (riak_uint64_t)pthread_self());
+    fprintf(stderr, "Event Send on TID %ull\n", (riak_uint64_t)pthread_self());
     riak_error err = riak_libevent_send(conn->rop, conn->rev);
     if (err == ERIAK_OK) {
         int result = test_async_event_loop(conn);
-        fprintf(stderr, "Event Loop on TID %llu returned %d\n", (riak_uint64_t)pthread_self(), result);
+        fprintf(stderr, "Event Loop on TID %ull returned %d\n", (riak_uint64_t)pthread_self(), result);
         switch(result) {
         case -1:
             err = ERIAK_EVENT;

@@ -31,7 +31,7 @@
 #ifndef _RIAK_C_TEST_H
 #define _RIAK_C_TEST_H
 
-#define RIAK_TEST_NUM_THREADS   20
+#define RIAK_TEST_NUM_THREADS   10
 #define RIAK_TEST_BUCKET_PREFIX "riak_c_test_"
 
 #define RIAK_TEST_MAX_BUCKETS   50
@@ -84,9 +84,12 @@ typedef struct _test_async_connection {
     struct event_base *base;
 } test_async_connection;
 
-typedef struct _test_async_args {
+typedef struct _test_async_pthread {
     test_async_connection *conn;
-} test_async_pthread_args;
+    pthread_t              tid;
+    void                  *result;
+    void                  *args;
+} test_async_pthread;
 
 typedef void*(*test_async_pthread_fun)(void*);
 
@@ -121,13 +124,13 @@ test_random_string(riak_config  *cfg,
  * @brief Fire off the asynchronous thread
  * @param cfg Riak Configuration
  * @param f Thread function to run
- * @param args Arguments passed to the thread with test_async_connection always being the first element
+ * @param args Arguments passed to the thread
  * @returns Error Code
  */
 riak_error
 test_async_thread_runner(riak_config             *cfg,
                          test_async_pthread_fun   f,
-                         test_async_pthread_args *args);
+                         void                    *args);
 
 /**
  * @brief Queue up asynchronous message and fire event loop

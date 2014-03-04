@@ -28,6 +28,7 @@
 #include <CUnit/Automated.h>
 #include <CUnit/Basic.h>
 #include "riak.h"
+#include "test.h"
 #include "test_2index.h"
 #include "test_binary.h"
 #include "test_config.h"
@@ -50,6 +51,14 @@ int
 main(int   argc,
      char *argv[])
 {
+    event_enable_debug_mode();
+    evthread_enable_lock_debuging();
+    int result = evthread_use_pthreads();
+    if (result < 0) {
+        fprintf(stderr, "Could not use pthreads for libevent\n");
+        return ERIAK_EVENT;
+    }
+
     CU_ErrorCode cuerr = CU_initialize_registry();
     if (cuerr != CUE_SUCCESS) {
         fprintf(stderr, "Could not initialize cuint testing registry\n");
