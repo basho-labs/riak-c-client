@@ -162,8 +162,6 @@ main(int argc, char *argv[])
                                   "bar",
                                   "/Users/dparfitt/basho/riak-c-client/test/ssl_tests/certs/cacert.pem");
 
-    // riak-admin security enable
-    // ./dev/dev1/bin/riak-admin security add-user foo password=bar
     err = riak_secure_connection_new(cfg,
                                      &cxn,
                                      riak_host,
@@ -172,7 +170,7 @@ main(int argc, char *argv[])
                                      creds
                                      );
 
-    printf("DONE\n");
+    printf("Connected w/ SSL\n");
     if (err) {
         fprintf(stderr, "Cannot connect to Riak on %s:%s\n", riak_host, riak_port);
         exit(1);

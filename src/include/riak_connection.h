@@ -59,8 +59,6 @@ riak_secure_connection_new(riak_config               *cfg,
                            );
 
 
-
-
 /**
  * @brief Cleanup memory used by a Riak Connection
  * @param re Riak Connection
@@ -68,20 +66,50 @@ riak_secure_connection_new(riak_config               *cfg,
 void
 riak_connection_free(riak_connection** re);
 
+
+/**
+ * @brief return the file descriptor in use by the Riak Connection
+ * @param cxn Riak Connection
+ * @returns active socket
+ */
 riak_socket_t
 riak_connection_get_fd(riak_connection *cxn);
 
+/**
+ * @brief return the riak_config in use by the Riak Connection
+ * @param cxn Riak Connection
+ * @returns active riak_config
+ */
 riak_config*
 riak_connection_get_config(riak_connection *cxn);
 
+
+/**
+ * @brief return the SSL object in use by the Riak Connection
+ * @param cxn Riak Connection
+ * @returns active SSL object
+ */
 SSL*
 riak_connection_get_ssl(riak_connection *cxn);
 
-#ifdef __cplusplus
-}
-#endif
+/**
+ * @brief has a secure connection been established?
+ * @param cxn Riak Connection
+ * @returns set to RIAK_TRUE after a successful SSL/TLS handshake
+ */
+riak_boolean_t
+riak_connection_is_secure(riak_connection *cxn);
 
 
+/**
+ * @brief Create new Riak security credentials. Once created, the struct is immutable.
+ * @param cfg Riak Config
+ * @param creds_target the riak_security_credentials struct to allocate
+ * @param username Riak username
+ * @param password Riak password
+ * @param cacertfile full path to a certificate authority file
+ * @returns a riak_error upon failure
+ */
 riak_error
 riak_security_credentials_new(riak_config *cfg,
                               riak_security_credentials **creds_target,
@@ -89,7 +117,48 @@ riak_security_credentials_new(riak_config *cfg,
                               char *password,
                               char *cacertfile);
 
+/**
+ * @brief Free an allocated riak_security_credentials struct
+ * @param cfg Riak Config
+ * @param creds the riak_security_credentials to free
+ */
 void riak_security_credentials_free(riak_config *cfg,
                                     riak_security_credentials **creds);
+
+
+
+/**
+ * @brief returns a copy of the username specified in the supplied credentials
+ * @param creds Riak Security Credentials
+ * @returns a riak_binary with specified username
+ */
+riak_binary*
+riak_security_credentials_get_username(riak_config *cfg,
+                                       riak_security_credentials *creds);
+
+/**
+ * @brief returns a copy of the password specified in the supplied credentials
+ * @param cxn Riak Security Credentials
+ * @returns set to RIAK_TRUE after a successful SSL/TLS handshake
+ */
+riak_binary*
+riak_security_credentials_get_password(riak_config *cfg,
+                                       riak_security_credentials *creds);
+
+/**
+ * @brief returns a copy of the cacertfile path in the supplied credentials
+ * @param cxn Riak Security Credentials
+ * @returns set to RIAK_TRUE after a successful SSL/TLS handshake
+ */
+riak_binary*
+riak_security_credentials_get_cacertfile(riak_config *cfg,
+                                         riak_security_credentials *creds);
+
+
+#ifdef __cplusplus
+}
+#endif
+
+
 
 #endif // _RIAK_CONNECTION_H

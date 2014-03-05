@@ -68,8 +68,7 @@ riak_ping(riak_connection *cxn);
 riak_error
 riak_auth(riak_connection *cxn,
           riak_binary     *user,
-          riak_binary     *password,
-          riak_auth_response **response);
+          riak_binary     *password);
 
 /**
  * @brief Send a Server Info Request

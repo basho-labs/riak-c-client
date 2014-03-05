@@ -37,24 +37,11 @@ riak_auth_request_encode(riak_operation   *rop,
                         riak_binary       *user,
                         riak_binary       *password,
                         riak_pb_message  **req) {
-
     riak_config *cfg = riak_operation_get_config(rop);
     RpbAuthReq authmsg = RPB_AUTH_REQ__INIT;
 
-/*
-  struct  _RpbAuthReq
-  {
-    ProtobufCMessage base;
-    ProtobufCBinaryData user;
-    ProtobufCBinaryData password;
-  };
-*/
-
     riak_binary_copy_to_pb(&(authmsg.user), user);
     riak_binary_copy_to_pb(&(authmsg.password), password);
-
-    printf("Auth w/ user %s\n", authmsg.user.data);
-    printf("Auth w/ password %s\n", authmsg.password.data);
 
     riak_uint32_t msglen = rpb_auth_req__get_packed_size(&authmsg);
     riak_uint8_t* msgbuf = (riak_uint8_t*)(cfg->malloc_fn)(msglen);
@@ -70,9 +57,7 @@ riak_auth_request_encode(riak_operation   *rop,
     }
     *req = request;
     riak_operation_set_response_decoder(rop, (riak_response_decoder)riak_auth_response_decode);
-    printf("ENCODE COMPLETE\n");
     return ERIAK_OK;
-
 }
 
 
@@ -82,12 +67,10 @@ riak_auth_response_decode(riak_operation      *rop,
                           riak_pb_message     *pbresp,
                           riak_auth_response **resp,
                           riak_boolean_t      *done) {
-    printf("DECODING MESSAGE\n");
     riak_config *cfg = riak_operation_get_config(rop);
     riak_auth_response *response = (riak_auth_response*)(cfg->malloc_fn)(sizeof(riak_auth_response));
     *done = RIAK_TRUE;
     if (response == NULL) {
-        //response->success = RIAK_FALSE;
         return ERIAK_OUT_OF_MEMORY;
     }
     response->success = RIAK_TRUE;
