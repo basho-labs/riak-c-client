@@ -152,8 +152,7 @@ riak_auth(riak_connection *cxn,
         return err;
     }
 
-    riak_ping_response *response = NULL;
-
+    riak_auth_response *response = NULL;
     err = riak_auth_request_encode(rop, user, password, &(rop->pb_request));
     if (err) {
         return err;

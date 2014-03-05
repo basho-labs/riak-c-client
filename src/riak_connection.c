@@ -241,15 +241,16 @@ riak_secure_connection_new(riak_config       *cfg,
       return handshake_result;
     }
 
+    // set is_secure to true to let the auth request use the SSL bio
+    cxn->is_secure = RIAK_TRUE;
+
     // handshake has succeeded, now try to auth against Riak
     riak_error auth_err = riak_ssl_auth(cfg, cxn, creds);
     if(auth_err != ERIAK_OK) {
+      cxn->is_secure = RIAK_FALSE;
       BIO_free_all(bio);
       return auth_err;
     }
-
-    // ssl handshake + auth tests succeed
-    cxn->is_secure = RIAK_TRUE;
     return ERIAK_OK;
 }
 
