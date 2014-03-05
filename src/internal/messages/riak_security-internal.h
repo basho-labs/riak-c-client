@@ -23,14 +23,28 @@ struct _riak_auth_response {
 };
 
 
+/**
+ * @brief Create an auth request
+ * @param rop Riak Operation
+ * @param user Username
+ * @param password Password
+ * @param req Returned PBC request
+ * @return Error if out of memory
+ */
 
-// TODO: fix naming of riak_encode/riak_decode
 riak_error
 riak_auth_request_encode(riak_operation   *rop,
                          riak_binary       *user,
                          riak_binary       *password,
                          riak_pb_message  **req);
 
+/**
+ * @brief Translate PBC message to Riak message
+ * @param rop Riak Operation
+ * @param pbresp Protocol Buffer message
+ * @param done Returned flag set to true if finished streaming
+ * @return Error if permission denied
+ */
 riak_error
 riak_auth_response_decode(riak_operation      *rop,
                           riak_pb_message     *pbresp,

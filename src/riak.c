@@ -158,8 +158,8 @@ riak_auth(riak_connection *cxn,
         return err;
     }
     err = riak_sync_request(&rop, (void**)&response);
-    if (err) {
-        return err;
+    if(err) {
+        return ERIAK_AUTH_ERROR;
     }
     return ERIAK_OK;
 }

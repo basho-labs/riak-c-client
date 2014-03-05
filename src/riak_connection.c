@@ -171,7 +171,7 @@ riak_ssl_auth(riak_config *cfg,
     riak_binary_free(cfg, &user_bin);
     riak_binary_free(cfg, &pass_bin);
     if(result != ERIAK_OK) {
-      return ERIAK_TLS_ERROR;
+      return result;
     }
     return ERIAK_OK;
 }

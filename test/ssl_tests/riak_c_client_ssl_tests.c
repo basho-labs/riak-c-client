@@ -159,7 +159,7 @@ main(int argc, char *argv[])
     riak_security_credentials_new(cfg,
                                   &creds,
                                   "foo",
-                                  "bar",
+                                  "bar2",
                                   "/Users/dparfitt/basho/riak-c-client/test/ssl_tests/certs/cacert.pem");
 
     err = riak_secure_connection_new(cfg,
@@ -170,7 +170,7 @@ main(int argc, char *argv[])
                                      creds
                                      );
 
-    printf("Connected w/ SSL\n");
+    printf("ERR = %d\n", err);
     if (err) {
         fprintf(stderr, "Cannot connect to Riak on %s:%s\n", riak_host, riak_port);
         exit(1);
