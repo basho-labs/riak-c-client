@@ -166,6 +166,7 @@ main(int argc, char *argv[])
                                      &cxn,
                                      riak_host,
                                      riak_port,
+                                     NULL, // default resolver
                                      creds
                                      );
 

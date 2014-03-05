@@ -63,6 +63,7 @@ riak_secure_connection_new(riak_config               *cfg,
                            riak_connection          **cxn,
                            const char                *hostname,
                            const char                *portnum,
+                           riak_addr_resolver        resolver,
                            riak_security_credentials *creds
                            );
 

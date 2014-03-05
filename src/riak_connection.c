@@ -186,6 +186,7 @@ riak_secure_connection_new(riak_config       *cfg,
                            riak_connection  **cxn_target,
                            const char        *hostname,
                            const char        *portnum,
+                           riak_addr_resolver resolver,
                            riak_security_credentials *creds) {
     if(creds == NULL) {
       riak_log_critical_config(cfg, "%s", "SSL Configuration not specified");
@@ -194,7 +195,7 @@ riak_secure_connection_new(riak_config       *cfg,
 
     riak_connection *cxn = (riak_connection*)(cfg->malloc_fn)(sizeof(riak_connection));
     if (cxn == NULL) {
-        riak_log_critical_config(cfg, "%s", "Could not allocate a riak_connection");
+        riak_log_critical_config(cfg, "%s", "Could not allocate a secure riak_connection");
         return ERIAK_OUT_OF_MEMORY;
     }
     cxn->is_secure = RIAK_FALSE;
@@ -202,29 +203,32 @@ riak_secure_connection_new(riak_config       *cfg,
     *cxn_target = cxn;
     cxn->config = cfg;
 
+    if (resolver == NULL) {
+        resolver = getaddrinfo;
+    }
+
     riak_strlcpy(cxn->hostname, hostname, sizeof(cxn->hostname));
     riak_strlcpy(cxn->portnum, portnum, sizeof(cxn->portnum));
 
-    int hostportlen = strlen(hostname) + strlen(portnum) + 1;
-    char hp[hostportlen];
-    if(sprintf(hp,"%s:%s", hostname, portnum) != hostportlen) {
-      return ERIAK_OUT_OF_MEMORY;
+    riak_error err = riak_resolve_address(cfg, resolver, hostname, portnum, &(cxn->addrinfo));
+    if (err) {
+        return ERIAK_DNS_RESOLUTION;
+    }
+
+    // TODO: Implement retry logic
+    cxn->fd = riak_just_open_a_socket(cfg, cxn->addrinfo);
+    if (cxn->fd < 0) {
+        riak_log_critical_config(cfg, "%s", "Could not just open a socket");
+        return ERIAK_CONNECT;
     }
 
     BIO *bio;
 
-    // TODO: have SSL use an existing fd as in riak_connection_new
-    bio = BIO_new_connect(hp);
+    bio=BIO_new(BIO_s_socket());
+    BIO_set_fd(bio, cxn->fd, BIO_NOCLOSE);
 
     if(NULL == bio) {
         riak_log_critical_config(cfg, "%s", "Failed to initialize OpenSSL BIO");
-        return ERIAK_TLS_ERROR;
-    }
-
-    if (BIO_do_connect(bio) <= 0) {
-        riak_log_critical_config(cfg, "%s", "OpenSSL BIO can't connect");
-        ERR_print_errors_fp(stderr);
-        BIO_free_all(bio);
         return ERIAK_TLS_ERROR;
     }
 
@@ -285,20 +289,24 @@ void riak_connection_free(riak_connection** cxn_target) {
         close(cxn->fd);
     }
 
-    if(cxn->ssl_context) {
-      SSL_CTX_free(cxn->ssl_context);
-    }
-
-    if(cxn->ssl_bio) {
-      // TODO
-      // segfault freeing the BIO.. wtf?
-      //BIO_free(cxn->ssl_bio);
-    }
 
     if(cxn->ssl) {
       SSL_free(cxn->ssl);
     }
 
+    /*if(cxn->ssl_bio) {
+      see the man page for SSL_free
+      "SSL_free() also calls the free()ing procedures for indirectly affected items,
+      if applicable: the buffering BIO, the read and write BIOs, cipher lists specially
+      created for this ssl, the SSL_SESSION. Do not explicitly free these indirectly freed
+      up items before or after calling SSL_free(), as trying to free things twice may
+      lead to program failure."
+      BIO_free_all(cxn->ssl_bio);
+    }*/
+
+    if(cxn->ssl_context) {
+      SSL_CTX_free(cxn->ssl_context);
+    }
 
     if (cxn->addrinfo != NULL) freeaddrinfo(cxn->addrinfo);
     riak_free(cfg, cxn_target);
