@@ -158,9 +158,9 @@ riak_ssl_auth(riak_config *cfg,
 
     riak_binary *user_bin = riak_binary_copy_from_string(cfg, creds->username);
     riak_binary *pass_bin = riak_binary_copy_from_string(cfg, creds->password);
-    riak_auth_response *auth_response = NULL;
+    riak_auth_response *unused = NULL;
     printf("Calling Riak AUTH\n");
-    riak_error result = riak_auth(cxn, user_bin, pass_bin, auth_response);
+    riak_error result = riak_auth(cxn, user_bin, pass_bin, unused);
     printf("AUTH RESULT = %d\n", result);
     riak_binary_free(cfg, &user_bin);
     riak_binary_free(cfg, &pass_bin);

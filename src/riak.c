@@ -57,7 +57,9 @@ riak_sync_ssl_read_cb(void       *ptr,
     riak_connection *cxn = riak_operation_get_connection(rop);
     //riak_socket_t     fd = riak_connection_get_fd(cxn);
     SSL             *ssl = riak_connection_get_ssl(cxn);
+    printf("SSL READ 2\n");
     riak_ssize_t  result = SSL_read(ssl, data, size);
+    printf("SSL READ 3\n");
     if (result < 0) {
         char message[256];
         strerror_r(errno, message, sizeof(message));
@@ -84,10 +86,8 @@ riak_ssize_t
 riak_sync_ssl_write_cb(void       *ptr,
                        void       *data,
                        riak_size_t size) {
-    printf("Here\n");
     riak_operation  *rop = (riak_operation*)ptr;
     riak_connection *cxn = riak_operation_get_connection(rop);
-    //riak_socket_t    fd  = riak_connection_get_fd(cxn);
     SSL             *ssl = riak_connection_get_ssl(cxn);
     return SSL_write(ssl, data, size);
 }
@@ -106,9 +106,9 @@ riak_sync_request(riak_operation **rop_target,
         printf("non-ssl write\n");
        riak_write(rop, riak_sync_write_cb, rop); 
     } else {
-      printf("writing to SSL\n");
+       printf("riak_sync_request:writing to SSL\n");
        riak_write(rop, riak_sync_ssl_write_cb, rop); 
-      printf("done writing to SSL\n");
+       printf("riak_sync_request:done writing to SSL\n");
     }
     if (err) {
         riak_log_critical(cxn, "%s", "Could not send request");
@@ -120,10 +120,14 @@ riak_sync_request(riak_operation **rop_target,
       err = riak_read(rop, &done_streaming, riak_sync_read_cb, rop);
     } else {
       err = riak_read(rop, &done_streaming, riak_sync_ssl_read_cb, rop);
+      printf("riak_sync_request:riak_read complete\n");
     }
 
+    printf("riak_sync_request:trace 1\n");
     *response = rop->response;
+    printf("riak_sync_request:trace 2\n");
     riak_operation_free(rop_target);
+    printf("riak_sync_request:trace 3\n");
     return err;
 }
 
@@ -153,13 +157,15 @@ riak_error
 riak_auth(riak_connection *cxn,
           riak_binary     *user,
           riak_binary     *password,
-          riak_auth_response **response) {
+          riak_auth_response **x) {
     printf("Preparing AUTH request\n");
     riak_operation *rop = NULL;
     riak_error err = riak_operation_new(cxn, &rop, NULL, NULL, NULL);
     if (err) {
         return err;
     }
+
+    riak_ping_response *response = NULL;
 
     printf("Encoding AUTH request\n");
 
@@ -168,15 +174,11 @@ riak_auth(riak_connection *cxn,
         return err;
     }
     printf("Sending AUTH request\n");
-    err = riak_sync_request(&rop, (void**)response);
+    err = riak_sync_request(&rop, (void**)&response);
     printf("AUTH ERR = %d\n",err);
-    /*if (err) {
+    if (err) {
         return err;
-    }*/
-
-    //if (*response->success != RIAK_TRUE) {
-    //  return ERIAK_TLS_ERROR;
-    //}
+    }
     return ERIAK_OK;
 }
 
