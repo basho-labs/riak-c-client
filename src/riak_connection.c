@@ -112,44 +112,39 @@ riak_ssl_handshake(riak_config *cfg,
     SSL_CTX * ctx = SSL_CTX_new(SSLv23_client_method());
 
     if (NULL == ctx) {
-        printf("ctx is NULL\n");
+      riak_log_critical_config(cfg, "%s", "SSL ctx is null");
         return ERIAK_TLS_ERROR;
     }
 
-    if(sc->cacertfile == NULL) {
-      printf("Invalid CACERT file");
-    }
-    printf("Using %s\n", sc->cacertfile);
-
+    // TODO: check cacert file pointer first
     if(!SSL_CTX_load_verify_locations(ctx, sc->cacertfile, NULL)) {
-        printf("Couldn't load .crt\n");
+        riak_log_critical_config(cfg, "%s", "Can't load cacert file");
         return ERIAK_TLS_ERROR;
-    } else {
-      printf("cacerts loaded\n");
     }
 
-    printf("FOO1\n");
     ssl = SSL_new(ctx);
     SSL_set_bio(ssl,bio,bio);
     SSL_set_connect_state(ssl);
-    printf("FOO2\n");
-    int hr = SSL_do_handshake(ssl);
-    printf("HR  = %d\n", hr);
-    int ec = SSL_get_error(ssl, hr);
-    printf("EC = %d\n", ec);
-    printf("Error: %s\n", ERR_reason_error_string(ec));
-
-    if(hr <= 0) {
-        printf("Handshake failed; boo!\n");
-        return ERIAK_TLS_ERROR;
+    int handshake_response = SSL_do_handshake(ssl);
+    if(handshake_response <= 0) {
+      int ec = SSL_get_error(ssl, handshake_response);
+      //TODO
+      printf("Error: %s\n", ERR_reason_error_string(ec));
+      //riak_log_critical_config(cfg, "%s", "Can't load cacert file");
+      return ERIAK_TLS_ERROR;
     }
+
 
     if(!(SSL_get_peer_certificate != NULL && SSL_get_verify_result(ssl) == X509_V_OK)) {
         long l = SSL_get_verify_result(ssl);
+        // TODO
         printf("Certificate verification error: %s\n", X509_verify_cert_error_string(l));
+        //riak_log_critical_config(cfg, "%s", "Can't load cacert file");
         return ERIAK_TLS_ERROR;
     }
-    printf("SETTING SSL\n");
+
+    // store SSL info in the riak_connection
+    // freed in riak_connection_free
     cxn->ssl_bio = bio;
     cxn->ssl = ssl;
     cxn->ssl_context = ctx;
@@ -186,8 +181,7 @@ riak_secure_connection_new(riak_config       *cfg,
                            riak_security_credentials *creds) {
     if(creds == NULL) {
       riak_log_critical_config(cfg, "%s", "SSL Configuration not specified");
-      // TODO
-      exit(-1);
+      return ERIAK_TLS_ERROR;
     }
 
     // TODO: resolver is unused..
@@ -205,13 +199,11 @@ riak_secure_connection_new(riak_config       *cfg,
     riak_strlcpy(cxn->portnum, portnum, sizeof(cxn->portnum));
 
     int hostportlen = strlen(hostname) + strlen(portnum) + 1;
-    //char *hp = (cfg->malloc_fn)(hostportlen);
     char hp[hostportlen];
     if(sprintf(hp,"%s:%s", hostname, portnum) != hostportlen) {
       return ERIAK_OUT_OF_MEMORY;
     }
 
-    printf("SSL connection to [%s]\n", hp);
     BIO *bio;
 
     // TODO: have SSL use an existing fd as in riak_connection_new
@@ -227,31 +219,26 @@ riak_secure_connection_new(riak_config       *cfg,
         ERR_print_errors_fp(stderr);
         BIO_free_all(bio);
         return ERIAK_TLS_ERROR;
-    } else {
-      printf("BIO CONNECTED\n");
     }
 
-    printf("Performing handshake\n");
-    riak_error handshake_result = riak_ssl_handshake(cfg, cxn, creds, bio);
-    printf("HANDSHAKE RESULT = %d\n", handshake_result);
 
     riak_error starttls_err = starttls(cfg, bio);
     if(starttls_err != ERIAK_OK) {
-      printf("STARTTLS ERROR\n");
+      riak_log_critical_config(cfg, "%s", "StartTLS handshake failed");
       return starttls_err;
     }
 
-    if(cxn->ssl == NULL) {
-      printf("SSL IS NULL\n");
-    } else {
-      printf("SSL is NOT NULL\n");
+    riak_error handshake_result = riak_ssl_handshake(cfg, cxn, creds, bio);
+    if(handshake_result != ERIAK_OK) {
+      riak_log_critical_config(cfg, "%s", "SSL handshake failed");
+      return handshake_result;
     }
-    printf("STARTTLS successful, trying auth\n");
 
-    /*riak_error auth_err = riak_ssl_auth(cfg, cxn, creds);
+    printf("STARTTLS successful, trying auth\n");
+    riak_error auth_err = riak_ssl_auth(cfg, cxn, creds);
     if(auth_err != ERIAK_OK) {
       return auth_err;
-    }*/
+    }
 
     return ERIAK_OK;
 }
