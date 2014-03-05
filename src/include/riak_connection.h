@@ -33,7 +33,7 @@ typedef struct _riak_security_credentials riak_security_credentials;
 
 
 /**
- * @brief Construct a Riak event
+ * @brief Construct a Riak connection
  * @param cfg Riak config for memory allocation
  * @param cxn Riak Connection (out)
  * @param hostname Name of Riak server
@@ -49,12 +49,20 @@ riak_connection_new(riak_config       *cfg,
                     riak_addr_resolver resolver);
 
 
+/**
+ * @brief Construct a secure Riak connection
+ * @param cfg Riak config for memory allocation
+ * @param cxn Riak Connection (out)
+ * @param hostname Name of Riak server
+ * @param portnum Riak PBC port number
+ * @param creds Riak Security Credentials
+ * @returns Error code
+ */
 riak_error
 riak_secure_connection_new(riak_config               *cfg,
                            riak_connection          **cxn,
                            const char                *hostname,
                            const char                *portnum,
-                           riak_addr_resolver         resolver,
                            riak_security_credentials *creds
                            );
 

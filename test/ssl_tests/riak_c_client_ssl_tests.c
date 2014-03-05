@@ -159,14 +159,13 @@ main(int argc, char *argv[])
     riak_security_credentials_new(cfg,
                                   &creds,
                                   "foo",
-                                  "bar2",
+                                  "bar",
                                   "/Users/dparfitt/basho/riak-c-client/test/ssl_tests/certs/cacert.pem");
 
     err = riak_secure_connection_new(cfg,
                                      &cxn,
                                      riak_host,
                                      riak_port,
-                                     NULL,
                                      creds
                                      );
 

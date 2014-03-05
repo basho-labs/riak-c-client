@@ -71,6 +71,8 @@ riak_connection_new(riak_config       *cfg,
     return ERIAK_OK;
 }
 
+
+// send a RpbStartTLS message to Riak without using protobuf-c
 riak_error starttls(riak_config *cfg,
                     BIO *bio) {
     unsigned char b[1024];
@@ -100,7 +102,8 @@ riak_error starttls(riak_config *cfg,
   return ERIAK_OK;
 }
 
-
+// after starttls has been called,
+// perform an SSL handshake and verify cacert
 riak_error
 riak_ssl_handshake(riak_config *cfg,
                    riak_connection *cxn,
@@ -141,6 +144,7 @@ riak_ssl_handshake(riak_config *cfg,
         return ERIAK_TLS_ERROR;
     }
 
+    // TODO
     if(!(SSL_get_peer_certificate != NULL && SSL_get_verify_result(ssl) == X509_V_OK)) {
         long l = SSL_get_verify_result(ssl);
         riak_log_critical_config(cfg,
@@ -160,6 +164,8 @@ riak_ssl_handshake(riak_config *cfg,
     return ERIAK_OK;
 }
 
+
+// send a Riak auth request over an SSL connection
 riak_error
 riak_ssl_auth(riak_config *cfg,
               riak_connection *cxn,
@@ -181,14 +187,11 @@ riak_secure_connection_new(riak_config       *cfg,
                            riak_connection  **cxn_target,
                            const char        *hostname,
                            const char        *portnum,
-                           riak_addr_resolver resolver,
                            riak_security_credentials *creds) {
     if(creds == NULL) {
       riak_log_critical_config(cfg, "%s", "SSL Configuration not specified");
       return ERIAK_TLS_ERROR;
     }
-
-    // TODO: resolver is unused..
 
     riak_connection *cxn = (riak_connection*)(cfg->malloc_fn)(sizeof(riak_connection));
     if (cxn == NULL) {
