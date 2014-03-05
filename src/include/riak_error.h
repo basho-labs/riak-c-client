@@ -64,7 +64,7 @@ static const char* errmsgs[] = {
     "An error was returned from the server",
     "Message Format Error",
     "Error establishing SSL/TLS connection",
-    "Error authorizing to Riak",
+    "Riak authorization error",
     "SENTINEL FOR LAST ERROR MESSAGE"
 };
 #endif

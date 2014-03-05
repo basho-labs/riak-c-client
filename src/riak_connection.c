@@ -144,8 +144,7 @@ riak_ssl_handshake(riak_config *cfg,
         return ERIAK_TLS_ERROR;
     }
 
-    // TODO
-    if(!(SSL_get_peer_certificate != NULL && SSL_get_verify_result(ssl) == X509_V_OK)) {
+    if(!(SSL_get_peer_certificate(ssl) != NULL && SSL_get_verify_result(ssl) == X509_V_OK)) {
         long l = SSL_get_verify_result(ssl);
         riak_log_critical_config(cfg,
                                  "%s:%s",

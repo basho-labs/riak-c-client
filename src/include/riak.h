@@ -61,7 +61,7 @@ riak_error
 riak_ping(riak_connection *cxn);
 
 /**
- * @brief Send an AUTH Request <- TODO: THIS WON'T BE PUBLIC
+ * @brief Send an AUTH Request
  * @param cxn Riak Connection
  * @return UNDEFINED
  */
