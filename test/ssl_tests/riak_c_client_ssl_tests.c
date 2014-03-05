@@ -160,7 +160,7 @@ main(int argc, char *argv[])
                                   &creds,
                                   "foo",
                                   "bar",
-                                  "/Users/dparfitt/basho/riak-c-client/test/ssl_tests/certs/cacert.pem");
+                                  "./test/ssl_tests/certs/cacert.pem");
 
     err = riak_secure_connection_new(cfg,
                                      &cxn,
