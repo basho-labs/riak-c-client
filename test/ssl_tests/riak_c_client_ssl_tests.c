@@ -151,7 +151,7 @@ main(int argc, char *argv[])
     //  Riak from a pre-built package or source build using "make rel"
     // 10017 is the default port if you have built from source
     //  using "make devrel"
-    const char* riak_port = "10017";
+    const char* riak_port = "8087";
 
 
     riak_security_credentials *creds = NULL;
@@ -160,7 +160,7 @@ main(int argc, char *argv[])
                                   &creds,
                                   "foo",
                                   "bar",
-                                  "/Users/dparfitt/basho/testcerts/cacert.pem");
+                                  "/Users/dparfitt/basho/riak-c-client/test/ssl_tests/certs/cacert.pem");
 
     // riak-admin security enable
     // ./dev/dev1/bin/riak-admin security add-user foo password=bar

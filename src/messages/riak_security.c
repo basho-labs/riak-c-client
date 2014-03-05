@@ -44,6 +44,9 @@ riak_auth_request_encode(riak_operation   *rop,
     riak_binary_copy_to_pb(&authmsg.user, user);
     riak_binary_copy_to_pb(&authmsg.password, password);
 
+    printf("Auth w/ user %s\n", riak_binary_data(user));
+    printf("Auth w/ password %s\n", riak_binary_data(password));
+
     riak_uint32_t msglen = rpb_auth_req__get_packed_size (&authmsg);
     riak_uint8_t* msgbuf = (riak_uint8_t*)(cfg->malloc_fn)(msglen);
 

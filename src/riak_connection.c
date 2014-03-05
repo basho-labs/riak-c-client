@@ -158,9 +158,10 @@ riak_ssl_auth(riak_config *cfg,
 
     riak_binary *user_bin = riak_binary_copy_from_string(cfg, creds->username);
     riak_binary *pass_bin = riak_binary_copy_from_string(cfg, creds->password);
-
+    riak_auth_response *auth_response = NULL;
     printf("Calling Riak AUTH\n");
-    riak_error result = riak_auth(cxn, user_bin, pass_bin);
+    riak_error result = riak_auth(cxn, user_bin, pass_bin, auth_response);
+    printf("AUTH RESULT = %d\n", result);
     riak_binary_free(cfg, &user_bin);
     riak_binary_free(cfg, &pass_bin);
     if(result != ERIAK_OK) {
@@ -199,7 +200,8 @@ riak_secure_connection_new(riak_config       *cfg,
     riak_strlcpy(cxn->portnum, portnum, sizeof(cxn->portnum));
 
     int hostportlen = strlen(hostname) + strlen(portnum) + 1;
-    char *hp = (cfg->malloc_fn)(hostportlen);
+    //char *hp = (cfg->malloc_fn)(hostportlen);
+    char hp[hostportlen+1];
     if(sprintf(hp,"%s:%s", hostname, portnum) != hostportlen) {
       return ERIAK_OUT_OF_MEMORY;
     }
@@ -207,10 +209,9 @@ riak_secure_connection_new(riak_config       *cfg,
     printf("SSL connection to %s\n", hp);
     BIO *bio;
 
+    // TODO: have SSL use an existing fd as in riak_connection_new
     bio = BIO_new_connect(hp);
-    // TODO: make sure this free() isn't screwing anything up down the line w/
-    // the BIO
-    free(hp);
+
     if (NULL == bio) {
         riak_log_critical_config(cfg, "%s", "Failed to initialize OpenSSL BIO");
         return ERIAK_TLS_ERROR;

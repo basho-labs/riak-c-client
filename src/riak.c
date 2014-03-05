@@ -149,7 +149,8 @@ riak_ping(riak_connection *cxn) {
 riak_error
 riak_auth(riak_connection *cxn,
           riak_binary     *user,
-          riak_binary     *password) {
+          riak_binary     *password,
+          riak_auth_response **response) {
     printf("Preparing AUTH request\n");
     riak_operation *rop = NULL;
     riak_error err = riak_operation_new(cxn, &rop, NULL, NULL, NULL);
@@ -157,7 +158,6 @@ riak_auth(riak_connection *cxn,
         return err;
     }
 
-    riak_auth_response *response = NULL;
     printf("Encoding AUTH request\n");
 
     err = riak_auth_request_encode(rop, user, password, &(rop->pb_request));
@@ -165,14 +165,15 @@ riak_auth(riak_connection *cxn,
         return err;
     }
     printf("Sending AUTH request\n");
-    err = riak_sync_request(&rop, (void**)&response);
+    err = riak_sync_request(&rop, (void**)response);
     printf("AUTH ERR = %d\n",err);
     /*if (err) {
         return err;
     }*/
-    if (response->success != RIAK_TRUE) {
-      return ERIAK_TLS_ERROR;
-    }
+
+    //if (*response->success != RIAK_TRUE) {
+    //  return ERIAK_TLS_ERROR;
+    //}
     return ERIAK_OK;
 }
 
