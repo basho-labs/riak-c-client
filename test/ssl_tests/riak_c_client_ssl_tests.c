@@ -146,7 +146,7 @@ main(int argc, char *argv[])
     riak_connection *cxn = NULL;
 
     // Create a connection with the default address resolver
-    const char* riak_host = "localhost";
+    const char* riak_host = "127.0.0.1";
     // 8087 is the default protocol buffers port if you are using
     //  Riak from a pre-built package or source build using "make rel"
     // 10017 is the default port if you have built from source

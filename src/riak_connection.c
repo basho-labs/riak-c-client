@@ -109,7 +109,6 @@ riak_ssl_handshake(riak_config *cfg,
     SSL_library_init();
 
     struct _riak_security_credentials *sc = creds;
-    //SSL_CTX * ctx = SSL_CTX_new(SSLv23_client_method());
     SSL_CTX * ctx = SSL_CTX_new(SSLv23_client_method());
 
     if (NULL == ctx) {
@@ -120,14 +119,20 @@ riak_ssl_handshake(riak_config *cfg,
     if(sc->cacertfile == NULL) {
       printf("Invalid CACERT file");
     }
+    printf("Using %s\n", sc->cacertfile);
+
     if(!SSL_CTX_load_verify_locations(ctx, sc->cacertfile, NULL)) {
         printf("Couldn't load .crt\n");
         return ERIAK_TLS_ERROR;
+    } else {
+      printf("cacerts loaded\n");
     }
 
+    printf("FOO1\n");
     ssl = SSL_new(ctx);
     SSL_set_bio(ssl,bio,bio);
     SSL_set_connect_state(ssl);
+    printf("FOO2\n");
     int hr = SSL_do_handshake(ssl);
     printf("HR  = %d\n", hr);
     int ec = SSL_get_error(ssl, hr);
@@ -144,7 +149,7 @@ riak_ssl_handshake(riak_config *cfg,
         printf("Certificate verification error: %s\n", X509_verify_cert_error_string(l));
         return ERIAK_TLS_ERROR;
     }
-
+    printf("SETTING SSL\n");
     cxn->ssl_bio = bio;
     cxn->ssl = ssl;
     cxn->ssl_context = ctx;
@@ -201,18 +206,18 @@ riak_secure_connection_new(riak_config       *cfg,
 
     int hostportlen = strlen(hostname) + strlen(portnum) + 1;
     //char *hp = (cfg->malloc_fn)(hostportlen);
-    char hp[hostportlen+1];
+    char hp[hostportlen];
     if(sprintf(hp,"%s:%s", hostname, portnum) != hostportlen) {
       return ERIAK_OUT_OF_MEMORY;
     }
 
-    printf("SSL connection to %s\n", hp);
+    printf("SSL connection to [%s]\n", hp);
     BIO *bio;
 
     // TODO: have SSL use an existing fd as in riak_connection_new
     bio = BIO_new_connect(hp);
 
-    if (NULL == bio) {
+    if(NULL == bio) {
         riak_log_critical_config(cfg, "%s", "Failed to initialize OpenSSL BIO");
         return ERIAK_TLS_ERROR;
     }
@@ -222,18 +227,31 @@ riak_secure_connection_new(riak_config       *cfg,
         ERR_print_errors_fp(stderr);
         BIO_free_all(bio);
         return ERIAK_TLS_ERROR;
+    } else {
+      printf("BIO CONNECTED\n");
     }
+
+    printf("Performing handshake\n");
+    riak_error handshake_result = riak_ssl_handshake(cfg, cxn, creds, bio);
+    printf("HANDSHAKE RESULT = %d\n", handshake_result);
 
     riak_error starttls_err = starttls(cfg, bio);
     if(starttls_err != ERIAK_OK) {
+      printf("STARTTLS ERROR\n");
       return starttls_err;
     }
 
+    if(cxn->ssl == NULL) {
+      printf("SSL IS NULL\n");
+    } else {
+      printf("SSL is NOT NULL\n");
+    }
     printf("STARTTLS successful, trying auth\n");
-    riak_error auth_err = riak_ssl_auth(cfg, cxn, creds);
+
+    /*riak_error auth_err = riak_ssl_auth(cfg, cxn, creds);
     if(auth_err != ERIAK_OK) {
       return auth_err;
-    }
+    }*/
 
     return ERIAK_OK;
 }

@@ -84,6 +84,7 @@ riak_ssize_t
 riak_sync_ssl_write_cb(void       *ptr,
                        void       *data,
                        riak_size_t size) {
+    printf("Here\n");
     riak_operation  *rop = (riak_operation*)ptr;
     riak_connection *cxn = riak_operation_get_connection(rop);
     //riak_socket_t    fd  = riak_connection_get_fd(cxn);
@@ -98,20 +99,22 @@ riak_sync_request(riak_operation **rop_target,
     riak_operation *rop = *rop_target;
     riak_connection *cxn = riak_operation_get_connection(rop);
     riak_operation_set_cb_data(rop, rop);
-
+    printf("Sync request\n");
     riak_error err = ERIAK_OK;
     SSL* ssl = riak_connection_get_ssl(cxn);
     if(ssl == NULL) {
+        printf("non-ssl write\n");
        riak_write(rop, riak_sync_write_cb, rop); 
     } else {
+      printf("writing to SSL\n");
        riak_write(rop, riak_sync_ssl_write_cb, rop); 
+      printf("done writing to SSL\n");
     }
     if (err) {
         riak_log_critical(cxn, "%s", "Could not send request");
         riak_operation_free(rop_target);
         return err;
     }
-
     riak_boolean_t done_streaming;
     if(ssl == NULL) {
       err = riak_read(rop, &done_streaming, riak_sync_read_cb, rop);
