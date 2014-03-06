@@ -104,7 +104,7 @@ EXTRA_DIST =	$(SRCDIR)/include $(SRCDIR)/internal $(SRCDIR)/adapters \
 		$(EXAMPLESDIR)/riak_command.h \
 		$(TESTCUNITDIR)/include
 
-bin_PROGRAMS = riak_c_example riak_ssl_test
+bin_PROGRAMS = riak_c_example
 riak_c_example_SOURCES = examples/example.c \
 			examples/example_call_backs.c \
 			examples/riak_command.c
@@ -127,6 +127,8 @@ riak_c_example_LDADD = \
 		$(OPENSSL_LIBS) \
 		$(OPENSSL_LDFLAGS) \
 		-lcunit -lpthread
+
+riak_c_example_DEPENDENCIES = libriak_c_client-0.5.la
 
 check_PROGRAMS = riak_c_cunit
 riak_c_cunit_SOURCES = 	test/cunit/registry.c \
