@@ -58,12 +58,10 @@ test_integration_ping() {
  */
 void
 test_ping_async_cb(riak_ping_response *response,
-                  void               *ptr) {
-    riak_operation   *rop = (riak_operation*)ptr;
-    riak_connection  *cxn = riak_operation_get_connection(rop);
-    riak_config      *cfg = riak_connection_get_config(cxn);
-    riak_log_notice(cxn, "%s", "Asynchronous PONG");
-    riak_free_ping_response(cfg, &response);
+                   void               *ptr) {
+    test_async_connection *conn = (test_async_connection*)ptr;
+    riak_log_notice(conn->cxn, "%s", "Asynchronous PONG");
+    riak_free_ping_response(conn->cfg, &response);
 }
 
 /**

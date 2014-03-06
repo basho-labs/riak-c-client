@@ -34,8 +34,10 @@
 #define RIAK_TEST_NUM_THREADS   10
 #define RIAK_TEST_BUCKET_PREFIX "riak_c_test_"
 
-#define RIAK_TEST_MAX_BUCKETS   50
-#define RIAK_TEST_MAX_KEYS      50
+#define RIAK_TEST_MAX_BUCKETS       50
+#define RIAK_TEST_MAX_KEYS          50
+#define RIAK_TEST_BUCKET_KEY_LEN    20
+#define RIAK_TEST_VALUE_LEN         200
 
 #define RIAK_TEST_HOST          "RIAK_TEST_HOST"
 #define RIAK_TEST_PB_PORT       "RIAK_TEST_PB_PORT"
@@ -44,7 +46,7 @@
 /**
  * @brief Set up testing environment
  * @param cfg Returned Riak Configuration
-  * @returns Error Code
+ * @returns Error Code
  */
 riak_error
 test_setup(riak_config **cfg);
@@ -82,6 +84,8 @@ typedef struct _test_async_connection {
     riak_operation    *rop;
     riak_libevent     *rev;
     struct event_base *base;
+    riak_error         err;     // Returned from callback
+    char               err_msg[1024]; // Optionally returned by callback
 } test_async_connection;
 
 typedef struct _test_async_pthread {

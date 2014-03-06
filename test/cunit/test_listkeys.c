@@ -108,13 +108,16 @@ test_integration_listkeys() {
 void
 test_listkeys_async_cb(riak_listkeys_response *response,
                        void                   *ptr) {
-    riak_operation  *rop = (riak_operation*)ptr;
-    riak_connection *cxn = riak_operation_get_connection(rop);
-    riak_config     *cfg = riak_connection_get_config(cxn);
+    test_async_connection *conn = (test_async_connection*)ptr;
     char output[10240];
     riak_listkeys_response_print(response, output, sizeof(output));
     fprintf(stderr, "%s", output);
-    riak_listkeys_response_free(cfg, &response);
+    riak_uint32_t num = riak_listkeys_get_n_keys(response);
+    if (num < RIAK_TEST_MAX_BUCKETS) {
+        conn->err = ERIAK_OUT_OF_RANGE;
+        snprintf(conn->err_msg, sizeof(conn->err_msg), "Only %ul keys were returned", num);
+    }
+    riak_listkeys_response_free(conn->cfg, &response);
 }
 
 typedef struct _test_async_pthread_listkey_args {

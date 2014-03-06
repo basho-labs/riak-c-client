@@ -99,6 +99,7 @@ test_integration_listbuckets() {
     fprintf(stderr, "%s", output);
     riak_listbuckets_response_free(cfg, &response);
 
+    test_bkv_free(cfg, &db);
     test_cleanup_db(cxn);
     test_disconnect(cfg, &cxn);
     test_cleanup(&cfg);
@@ -107,14 +108,17 @@ test_integration_listbuckets() {
 
 void
 test_listbuckets_async_cb(riak_listbuckets_response *response,
-                      void                      *ptr) {
-    riak_operation  *rop = (riak_operation*)ptr;
-    riak_connection *cxn = riak_operation_get_connection(rop);
-    riak_config     *cfg = riak_connection_get_config(cxn);
+                          void                      *ptr) {
+    test_async_connection *conn = (test_async_connection*)ptr;
     char output[10240];
     riak_listbuckets_response_print(response, output, sizeof(output));
     fprintf(stderr, "%s", output);
-    riak_listbuckets_response_free(cfg, &response);
+    riak_uint32_t num = riak_listbuckets_get_n_buckets(response);
+    if (num < RIAK_TEST_MAX_BUCKETS) {
+        conn->err = ERIAK_OUT_OF_RANGE;
+        snprintf(conn->err_msg, sizeof(conn->err_msg), "Only %ul buckets were returned", num);
+    }
+    riak_listbuckets_response_free(conn->cfg, &response);
 }
 
 /**

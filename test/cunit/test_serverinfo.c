@@ -153,13 +153,11 @@ test_integration_server_info() {
 void
 test_serverinfo_async_cb(riak_serverinfo_response *response,
                          void                     *ptr) {
-    riak_operation   *rop = (riak_operation*)ptr;
-    riak_connection  *cxn = riak_operation_get_connection(rop);
-    riak_config      *cfg = riak_connection_get_config(cxn);
+    test_async_connection *conn = (test_async_connection*)ptr;
     char buffer[1024];
     riak_serverinfo_response_print(response, buffer, sizeof(buffer));
     fprintf(stderr, "ASYNCHRONOUS %s", buffer);
-    riak_serverinfo_response_free(cfg, &response);
+    riak_serverinfo_response_free(conn->cfg, &response);
 }
 
 /**

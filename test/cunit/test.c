@@ -69,14 +69,15 @@ test_cleanup(riak_config **cfg) {
 void
 riak_test_error_cb(void *resp,
                    void *ptr) {
-    riak_operation *rop = (riak_operation*)ptr;
+    test_async_connection *conn = (test_async_connection*)ptr;
     char message[1024];
-    riak_server_error *error = riak_operation_get_server_error(rop);
+    riak_server_error *error = riak_operation_get_server_error(conn->rop);
     if (error) {
         riak_binary_print(riak_server_error_get_errmsg(error), message, sizeof(message));
-        fprintf(stderr, "ERROR: %s\n", message);
+        fprintf(stderr, "SERVER ERROR: %s\n", message);
+        conn->err      = ERIAK_SERVER_ERROR;
+        strncpy(conn->err_msg, message, sizeof(conn->err_msg));
     }
-    //TODO: How do we bail from this callback?
 }
 
 riak_error
@@ -87,7 +88,9 @@ test_async_connect(riak_config            *cfg,
         return ERIAK_OUT_OF_MEMORY;
     }
     test_async_connection *conn = *conn_out;
-    conn->cfg = cfg;
+    conn->cfg        = cfg;
+    conn->err        = ERIAK_OK; // Returned error state
+    conn->err_msg[0] = '\0';
     riak_error err = test_connect(cfg, &(conn->cxn));
     if (err) {
         fprintf(stderr, "Could not connect to Riak\n");
@@ -116,7 +119,7 @@ test_async_connect(riak_config            *cfg,
         return err;
     }
     riak_operation_set_error_cb(conn->rop, riak_test_error_cb);
-    riak_operation_set_cb_data(conn->rop, conn->rop);
+    riak_operation_set_cb_data(conn->rop, conn);
 
     return err;
 }
@@ -150,7 +153,9 @@ test_async_thread_runner(riak_config             *cfg,
         if (status != 0) {
             return ERIAK_THREAD;
         }
-        fprintf(stderr, "Spawned TID %ull\n", (riak_uint64_t)(state[i].tid));
+#ifdef _RIAK_DEBUG
+        fprintf(stderr, "Spawned TID %llu\n", (riak_int64_t)(state[i].tid));
+#endif
     }
 
     for(int i = 0; i < RIAK_TEST_NUM_THREADS; i++) {
@@ -160,6 +165,11 @@ test_async_thread_runner(riak_config             *cfg,
         }
         if (state[i].result != NULL) {
             fprintf(stderr, "THREAD ERROR: %s\n", (char*)(state[i].result));
+            err = ERIAK_THREAD;
+        }
+        if (state[i].conn->err) {
+            fprintf(stderr, "CALLBACK ERROR: %s\n", state[i].conn->err_msg);
+            err = state[i].conn->err;
         }
     }
     for(int i = 0; i < RIAK_TEST_NUM_THREADS; i++) {
@@ -189,18 +199,18 @@ test_load_db(riak_config            *cfg,
              test_bucket_key_value **root) {
     fprintf(stderr, "Beginning load of Riak\n");
     for (int b = 0; b < RIAK_TEST_MAX_BUCKETS; b++) {
-        char *suffix = test_random_string(cfg, 20);
+        char *suffix = test_random_string(cfg, RIAK_TEST_BUCKET_KEY_LEN);
         if (suffix == NULL) {
             return ERIAK_OUT_OF_MEMORY;
         }
         char bucket[128];
         snprintf(bucket, sizeof(bucket), "%s%s", RIAK_TEST_BUCKET_PREFIX, suffix);
         for(int k = 0; k < RIAK_TEST_MAX_KEYS; k++) {
-            char *key = test_random_string(cfg, 20);
+            char *key = test_random_string(cfg, RIAK_TEST_BUCKET_KEY_LEN);
             if (key == NULL) {
                 return ERIAK_OUT_OF_MEMORY;
             }
-            char *value = test_random_string(cfg, 200);
+            char *value = test_random_string(cfg, RIAK_TEST_VALUE_LEN);
             if (value == NULL) {
                 return ERIAK_OUT_OF_MEMORY;
             }
@@ -234,7 +244,6 @@ test_load_db(riak_config            *cfg,
             }
             riak_put_response *response = NULL;
             err = test_bkv_add(cfg, root, bucket_bin, key_bin, value_bin);
-            //fprintf(stderr, "%s\t%s\t%s\n", bucket, key, value);
             err = riak_put(cxn, obj, NULL, &response);
             if (err) {
                 return err;
@@ -262,13 +271,15 @@ test_cleanup_db(riak_connection* cxn) {
     fprintf(stderr, "Beginning cleanup of Riak\n");
     const int prefixlen = strlen(RIAK_TEST_BUCKET_PREFIX);
     riak_listbuckets_response *response = NULL;
-    riak_listbuckets(cxn, &response);
+    riak_error err = riak_listbuckets(cxn, &response);
+    if (err) {
+        return err;
+    }
     riak_uint32_t num_buckets = riak_listbuckets_get_n_buckets(response);
     riak_binary **buckets = riak_listbuckets_get_buckets(response);
     if (buckets == NULL) {
         return ERIAK_OUT_OF_RANGE;
     }
-    riak_error err = ERIAK_OK;
     for(int b = 0; b < num_buckets; b++) {
         riak_binary* bucket = buckets[b];
         if (riak_binary_len(bucket) < prefixlen) continue;
@@ -286,9 +297,9 @@ test_cleanup_db(riak_connection* cxn) {
             }
             for(int k = 0; k < num_keys; k++) {
                 riak_binary *key = keys[k];
-                //fprintf(stderr, "DEL %s\t%s\n", riak_binary_data(bucket), riak_binary_data(key));
                 err = riak_delete(cxn, bucket, key, NULL);
                 if (err) {
+                    fprintf(stderr, "DELETE Failed and leftover data may remain\n");
                     return err;
                 }
             }
@@ -300,17 +311,23 @@ test_cleanup_db(riak_connection* cxn) {
 
 int
 test_async_event_loop(test_async_connection *conn) {
-    fprintf(stderr, "Event Loop on TID %ull with base %x and connection %x\n", (riak_uint64_t)pthread_self(), conn->base, conn);
+#ifdef _RIAK_DEBUG
+    fprintf(stderr, "Event Loop on TID %llu with base %llx and connection %llx\n", (riak_int64_t)pthread_self(), (riak_int64_t)conn->base, (riak_int64_t)conn);
+#endif
     return event_base_dispatch(conn->base);
 }
 
 riak_error
 test_async_send_message(test_async_connection *conn) {
-    fprintf(stderr, "Event Send on TID %ull\n", (riak_uint64_t)pthread_self());
+#ifdef _RIAK_DEBUG
+    fprintf(stderr, "Event Send on TID %llu\n", (riak_int64_t)pthread_self());
+#endif
     riak_error err = riak_libevent_send(conn->rop, conn->rev);
     if (err == ERIAK_OK) {
         int result = test_async_event_loop(conn);
-        fprintf(stderr, "Event Loop on TID %ull returned %d\n", (riak_uint64_t)pthread_self(), result);
+#ifdef _RIAK_DEBUG
+        fprintf(stderr, "Event Loop on TID %llu returned %d\n", (riak_int64_t)pthread_self(), result);
+#endif
         switch(result) {
         case -1:
             err = ERIAK_EVENT;
