@@ -43,6 +43,8 @@ struct _riak_command {
     riak_boolean_t needs_value;
     // True if --index is required
     riak_boolean_t needs_index;
+    // security credentials
+    riak_security_credentials *creds;
 };
 
 static riak_command s_commands[] = {
@@ -65,15 +67,18 @@ static riak_command s_commands[] = {
 
     // These options don't set a flag.
     // We distinguish them by their indices.
-    {"async",        "Asynchronous messaging", "",       'a', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
-    {"bucket",       "",                       "name",   'b', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
-    {"host",         "",                       "name",   'h', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
-    {"index",        "",                       "name",   'x', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
-    {"iterate",      "",                       "times",  'i', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
-    {"key",          "",                       "name",   'k', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
-    {"port",         "",                       "number", 'p', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
-    {"timeout",      "",                       "secs",   't', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
-    {"value",        "",                       "val",    'v', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
+    {"username",    "",                        "username",   'U', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
+    {"password",    "",                        "password",   'P', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
+    {"cacerts",     "",                        "cacertfile", 'C', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
+    {"async",        "Asynchronous messaging", "",           'a', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
+    {"bucket",       "",                       "name",       'b', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
+    {"host",         "",                       "name",       'h', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
+    {"index",        "",                       "name",       'x', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
+    {"iterate",      "",                       "times",      'i', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
+    {"key",          "",                       "name",       'k', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
+    {"port",         "",                       "number",     'p', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
+    {"timeout",      "",                       "secs",       't', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
+    {"value",        "",                       "val",        'v', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
     {NULL, NULL, NULL, 0, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE}
 };
 
@@ -199,7 +204,7 @@ riak_parse_args(int           argc,
     args->has_key    = RIAK_FALSE;
     args->has_value  = RIAK_FALSE;
     args->has_index  = RIAK_FALSE;
-
+    args->is_secure  = RIAK_FALSE;
     strcpy(args->host, "localhost");
     strcpy(args->portnum, "10017");
 
@@ -278,6 +283,25 @@ riak_parse_args(int           argc,
                 printf ("option -x with value `%s'\n", optarg);
                 riak_strlcpy(args->index, optarg, sizeof(args->index));
                 args->has_index = RIAK_TRUE;
+                break;
+
+            case 'U':
+                riak_strlcpy(args->username, optarg, sizeof(args->username));
+                // specify username/password/cacertfile signals that we should try
+                // to connect via TLS. I'm sure if you forget to specify any of the
+                // 3 param, the program will crash and kittens will cry.
+                args->is_secure = RIAK_TRUE;
+                printf ("option -U with value `%s'\n", optarg);
+                break;
+            case 'P':
+                riak_strlcpy(args->password, optarg, sizeof(args->password));
+                args->is_secure = RIAK_TRUE;
+                printf ("option -P with value `%s'\n", optarg);
+                break;
+            case 'C':
+                riak_strlcpy(args->cacertfile, optarg, sizeof(args->cacertfile));
+                args->is_secure = RIAK_TRUE;
+                printf ("option -C with value `%s'\n", optarg);
                 break;
 
             case '?':

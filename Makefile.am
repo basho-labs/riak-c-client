@@ -116,6 +116,7 @@ riak_c_example_CPPFLAGS = \
 			-I$(RIAK_PB)/c \
 			-I$(SRCDIR)/adapters \
 			-I$(SRCDIR) \
+			$(OPENSSL_INCLUDES)
 			-Iexamples
 
 riak_c_example_LDADD = \
@@ -124,37 +125,8 @@ riak_c_example_LDADD = \
 		$(PROTOBUF_LIBS) \
 		$(EVENT_LIBS)
 		$(OPENSSL_LIBS) \
+		$(OPENSSL_LDFLAGS) \
 		-lcunit -lpthread
-
-riak_c_example_DEPENDENCIES = libriak_c_client-0.5.la
-
-
-
-
-
-riak_ssl_test_SOURCES = ./test/ssl_tests/riak_c_client_ssl_tests.c
-
-riak_ssl_test_CPPFLAGS = \
-			-DUSE_DEBUG -D_RIAK_DEBUG \
-			-I$(SRCDIR)/include \
-			-I$(SRCDIR)/internal \
-			-I$(RIAK_PB)/c \
-			-I$(SRCDIR)/adapters \
-			-I$(SRCDIR)
-			$(OPENSSL_INCLUDES)
-
-riak_ssl_test_LDADD = \
-		-lriak_c_client-0.5 \
-			$(PROTOBUFC_LIBS) \
-			$(PROTOBUF_LIBS) \
-			$(EVENT_LIBS) \
-			$(OPENSSL_LIBS) \
-			$(OPENSSL_LDFLAGS) \
-		-lcunit -lpthread
-riak_ssl_test_DEPENDENCIES = libriak_c_client-0.5.la
-
-
-
 
 check_PROGRAMS = riak_c_cunit
 riak_c_cunit_SOURCES = 	test/cunit/registry.c \

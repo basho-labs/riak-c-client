@@ -73,6 +73,10 @@ typedef struct {
     char              key[1024];
     char              value[1024];
     char              index[1024];
+    riak_boolean_t    is_secure;
+    char              username[100];
+    char              password[100];
+    char              cacertfile[255];
 } riak_args;
 
 void
