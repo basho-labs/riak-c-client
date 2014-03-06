@@ -92,7 +92,7 @@ libriak_c_client_0_5_la_CPPFLAGS = \
 libriak_c_client_0_5_la_LIBADD = \
 			$(PROTOBUFC_LIBS) \
 			$(PROTOBUF_LIBS) \
-			$(EVENT_LIBS)
+			$(EVENT_LIBS)   \
 			$(OPENSSL_LIBS) \
 			$(OPENSSL_LDFLAGS) \
 			-lpthread
