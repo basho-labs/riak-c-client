@@ -335,7 +335,23 @@ riak_security_credentials_new(riak_config *cfg,
     }
     memset((void*)creds, '\0', sizeof(riak_security_credentials));
     *creds_target = creds;
-    // default to SSLV23, but allow it to be changed later
+    
+    if(username == NULL || strlen(username) == 0) {
+        riak_log_critical_config(cfg, "%s", "Username not specified");
+        return ERIAK_AUTH_ERROR;
+    }
+    if(password == NULL || strlen(password) == 0) {
+        riak_log_critical_config(cfg, "%s", "Password not specified");
+        return ERIAK_AUTH_ERROR;
+    }
+    if(cacertfile == NULL || strlen(cacertfile) == 0) {
+        riak_log_critical_config(cfg, "%s", "CA Cert file not specified");                
+        return ERIAK_AUTH_ERROR;
+    }
+    if(ssl_method == NULL) {
+        riak_log_critical_config(cfg, "%s", "SSL method not specified");
+        return ERIAK_AUTH_ERROR;
+    }
     creds->ssl_method = ssl_method;
     riak_strlcpy(creds->username, username, sizeof(creds->username));
     riak_strlcpy(creds->password, password, sizeof(creds->password));
