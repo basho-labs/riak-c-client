@@ -79,6 +79,7 @@ static riak_command s_commands[] = {
     {"port",         "",                       "number",     'p', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
     {"timeout",      "",                       "secs",       't', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
     {"value",        "",                       "val",        'v', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
+    {"secure",       "",                       "",           'S', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
     {NULL, NULL, NULL, 0, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE}
 };
 
@@ -207,6 +208,9 @@ riak_parse_args(int           argc,
     args->is_secure  = RIAK_FALSE;
     strcpy(args->host, "localhost");
     strcpy(args->portnum, "10017");
+    int has_username = 0;
+    int has_password = 0;
+    int has_cacerts  = 0;
 
     char optstring[128];
     struct option *long_options = NULL;
@@ -287,23 +291,23 @@ riak_parse_args(int           argc,
 
             case 'U':
                 riak_strlcpy(args->username, optarg, sizeof(args->username));
-                // specify username/password/cacertfile signals that we should try
-                // to connect via TLS. I'm sure if you forget to specify any of the
-                // 3 param, the program will crash and kittens will cry.
-                args->is_secure = RIAK_TRUE;
+                has_username = RIAK_TRUE;
                 printf ("option -U with value `%s'\n", optarg);
                 break;
             case 'P':
                 riak_strlcpy(args->password, optarg, sizeof(args->password));
-                args->is_secure = RIAK_TRUE;
+                has_password = RIAK_TRUE;
                 printf ("option -P with value `%s'\n", optarg);
                 break;
             case 'C':
                 riak_strlcpy(args->cacertfile, optarg, sizeof(args->cacertfile));
-                args->is_secure = RIAK_TRUE;
+                has_cacerts = RIAK_TRUE;
                 printf ("option -C with value `%s'\n", optarg);
                 break;
-
+            case 'S':
+                printf("option -S\n");
+                args->is_secure = RIAK_TRUE;
+                break;
             case '?':
                 /* getopt_long already printed an error message. */
                 operation = -1;
@@ -313,6 +317,13 @@ riak_parse_args(int           argc,
                 return -1;
         }
     }
+    if(args->is_secure) {
+        if(!(has_username && has_password && has_cacerts)) {
+            fprintf(stderr, "Username, password and cacertfile must be specified to use a secure connection\n");
+            exit(-1);
+        }
+    }
+
     args->operation = operation;
     if (argument_check(stderr, argv[0], s_commands, args) < 0) {
         operation = -1;
