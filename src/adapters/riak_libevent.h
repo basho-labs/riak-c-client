@@ -56,9 +56,9 @@ riak_libevent_connection_cb(struct bufferevent *bev,
 #ifdef _RIAK_DEBUG
          struct evbuffer *ev_read  = bufferevent_get_input(bev);
          struct evbuffer *ev_write = bufferevent_get_output(bev);
-#endif
          riak_log_debug(cxn, "Closing because of %s [read event=%p, write event=%p]",
                  reason, (void*)ev_read, (void*)ev_write);
+#endif
          bufferevent_free(bev);
          event_base_loopexit(bufferevent_get_base(bev), NULL);
     } else if (events & BEV_EVENT_TIMEOUT) {
@@ -135,6 +135,7 @@ riak_libevent_result_cb(struct bufferevent *bev,
 
     if (done_streaming) {
         bufferevent_free(bev);
+        event->bevent = NULL;
     }
 }
 
@@ -169,6 +170,12 @@ riak_libevent_new(riak_libevent    **rev_target,
                                  riak_connection_get_fd(cxn));
         return ERIAK_OUT_OF_MEMORY;
     }
+    if (bufferevent_base_set(base, rev->bevent) < 0) {
+        riak_log_critical_config(cfg,
+                                 "Could not set the base on bufferevent [fd %d]",
+                                 riak_connection_get_fd(cxn));
+        return ERIAK_EVENT;
+    }
     int enabled = bufferevent_enable(rev->bevent, EV_READ|EV_WRITE);
     if (enabled != 0) {
         riak_log_critical_config(cfg,
@@ -196,9 +203,9 @@ riak_libevent_free(riak_config    *cfg,
     riak_libevent *rev = *rev_target;
     if (rev->bevent) {
         bufferevent_free(rev->bevent);
+        rev->bevent = NULL;
     }
     riak_free(cfg, rev_target);
-    //if (cfg->base != NULL) event_base_free(cfg->base);
 }
 
 riak_error

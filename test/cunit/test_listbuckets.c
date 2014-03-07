@@ -30,6 +30,7 @@
 #include "riak.h"
 #include "riak_messages-internal.h"
 #include "riak_operation-internal.h"
+#include "test.h"
 
 void
 test_listbuckets_response_decode() {
@@ -72,4 +73,90 @@ test_listbuckets_response_decode() {
     riak_listbuckets_response_free(cfg, &response);
     riak_config_free(&cfg);
     CU_PASS("test_listbuckets_response_decode passed")
+}
+
+void
+test_integration_listbuckets() {
+    riak_config     *cfg;
+    riak_connection *cxn = NULL;
+
+    riak_error err = test_setup(&cfg);
+    CU_ASSERT_FATAL(err == ERIAK_OK)
+
+    err = test_connect(cfg, &cxn);
+    CU_ASSERT_FATAL(err == ERIAK_OK)
+
+    test_bucket_key_value *db = NULL;
+    err = test_load_db(cfg, cxn, &db);
+    CU_ASSERT_FATAL(err == ERIAK_OK)
+
+    riak_listbuckets_response *response = NULL;
+    err = riak_listbuckets(cxn, &response);
+    CU_ASSERT_FATAL(err == ERIAK_OK)
+
+    char output[10240];
+    riak_listbuckets_response_print(response, output, sizeof(output));
+    fprintf(stderr, "%s", output);
+    riak_listbuckets_response_free(cfg, &response);
+
+    test_bkv_free(cfg, &db);
+    test_cleanup_db(cxn);
+    test_disconnect(cfg, &cxn);
+    test_cleanup(&cfg);
+    CU_PASS("test_integration_listbuckets passed")
+}
+
+void
+test_listbuckets_async_cb(riak_listbuckets_response *response,
+                          void                      *ptr) {
+    test_async_connection *conn = (test_async_connection*)ptr;
+    char output[10240];
+    riak_listbuckets_response_print(response, output, sizeof(output));
+    fprintf(stderr, "%s", output);
+    riak_uint32_t num = riak_listbuckets_get_n_buckets(response);
+    if (num < RIAK_TEST_MAX_BUCKETS) {
+        conn->err = ERIAK_OUT_OF_RANGE;
+        snprintf(conn->err_msg, sizeof(conn->err_msg), "Only %ul buckets were returned", num);
+    }
+    riak_listbuckets_response_free(conn->cfg, &response);
+}
+
+/**
+ * @brief Encode and Send a List Buckets request
+ * @param args Parameters required to create List Buckets request
+ */
+void*
+test_listbuckets_async_thread(void *ptr) {
+    test_async_pthread *state = (test_async_pthread*)ptr;
+    test_async_connection *conn = state->conn;
+    riak_error err = riak_async_register_listbuckets(conn->rop, (riak_response_callback)test_listbuckets_async_cb);
+    if (err) {
+        return (void*)riak_strerror(err);
+    }
+    err = test_async_send_message(conn);
+    if (err) {
+        return (void*)"Could not send request";
+    }
+    return NULL;
+}
+
+void
+test_integration_async_listbuckets() {
+    riak_config           *cfg;
+    riak_error err = test_setup(&cfg);
+    CU_ASSERT_FATAL(err == ERIAK_OK)
+
+    riak_connection *cxn = NULL;
+    err = test_connect(cfg, &cxn);
+    CU_ASSERT_FATAL(err == ERIAK_OK)
+    test_bucket_key_value *db = NULL;
+    err = test_load_db(cfg, cxn, &db);
+
+    err = test_async_thread_runner(cfg, test_listbuckets_async_thread, NULL);
+    CU_ASSERT_FATAL(err == ERIAK_OK)
+
+    test_cleanup_db(cxn);
+    test_disconnect(cfg, &cxn);
+    test_cleanup(&cfg);
+    CU_PASS("test_integration_async_listbuckets passed")
 }

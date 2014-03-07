@@ -28,3 +28,9 @@ test_server_info_decode_good_response();
 
 void
 test_server_info_decode_bad_response();
+
+void
+test_integration_server_info();
+
+void
+test_integration_async_server_info();

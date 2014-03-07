@@ -61,10 +61,8 @@ test_build_binary_shallow() {
     // Should point the same memory
     CU_ASSERT_EQUAL(data, ptr)
     riak_binary_free(cfg, &bin);
-    riak_binary *shallow = riak_binary_new(cfg, 6, ptr);
+    riak_binary *shallow = riak_binary_new_shallow(cfg, 6, ptr);
     bin = riak_binary_copy_shallow(cfg, shallow);
-    data = riak_binary_data(bin);
-    CU_ASSERT_EQUAL(data, ptr)
     data = riak_binary_data(bin);
     CU_ASSERT_EQUAL(data, ptr)
     riak_binary_free(cfg, &bin);

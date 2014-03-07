@@ -121,9 +121,11 @@ riak_c_example_LDADD = \
 riak_c_example_DEPENDENCIES = libriak_c_client-0.5.la
 
 check_PROGRAMS = riak_c_cunit
-riak_c_cunit_SOURCES = 	test/cunit/registry.c \
+riak_c_cunit_SOURCES = test/cunit/test.c \
+			test/cunit/registry.c \
 			test/cunit/test_2index.c \
 			test/cunit/test_binary.c \
+			test/cunit/test_bucket_key_value.c \
 			test/cunit/test_bucketprops.c \
 			test/cunit/test_clientid.c \
 			test/cunit/test_config.c \
@@ -135,6 +137,7 @@ riak_c_cunit_SOURCES = 	test/cunit/registry.c \
 			test/cunit/test_listbuckets.c \
 			test/cunit/test_listkeys.c \
 			test/cunit/test_object.c \
+			test/cunit/test_ping.c \
 			test/cunit/test_put.c \
 			test/cunit/test_search.c \
 			test/cunit/test_serverinfo.c

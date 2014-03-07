@@ -30,6 +30,7 @@
 #include "riak.h"
 #include "riak_messages-internal.h"
 #include "riak_operation-internal.h"
+#include "test.h"
 
 void
 test_server_info_encode_request() {
@@ -119,3 +120,74 @@ test_server_info_decode_bad_response() {
     CU_ASSERT_FATAL(err != ERIAK_OK)
     CU_PASS("test_server_info_decode_bad_response passed")
 }
+
+void
+test_integration_server_info() {
+    riak_config     *cfg;
+    riak_connection *cxn = NULL;
+
+    riak_error err = test_setup(&cfg);
+    CU_ASSERT_FATAL(err == ERIAK_OK)
+
+    err = test_connect(cfg, &cxn);
+    CU_ASSERT_FATAL(err == ERIAK_OK)
+
+    riak_serverinfo_response *response = NULL;
+    err = riak_serverinfo(cxn, &response);
+    CU_ASSERT_FATAL(err == ERIAK_OK)
+
+    char buffer[1024];
+    riak_serverinfo_response_print(response, buffer, sizeof(buffer));
+    fprintf(stderr, "%s", buffer);
+    riak_serverinfo_response_free(cfg, &response);
+    test_disconnect(cfg, &cxn);
+    test_cleanup(&cfg);
+    CU_PASS("test_integration_server_info passed")
+}
+
+/**
+ * @brief Callback for Server Info message
+ * @param response Server Info response
+ * @parm ptr Riak Operation
+ */
+void
+test_serverinfo_async_cb(riak_serverinfo_response *response,
+                         void                     *ptr) {
+    test_async_connection *conn = (test_async_connection*)ptr;
+    char buffer[1024];
+    riak_serverinfo_response_print(response, buffer, sizeof(buffer));
+    fprintf(stderr, "ASYNCHRONOUS %s", buffer);
+    riak_serverinfo_response_free(conn->cfg, &response);
+}
+
+/**
+ * @brief Encode and Send a Server Info request
+ * @param args Parameters required to create Server Info request
+ */
+void*
+test_serverinfo_async_thread(void *ptr) {
+    test_async_pthread *state = (test_async_pthread*)ptr;
+    test_async_connection *conn = state->conn;
+    riak_error err = riak_async_register_serverinfo(conn->rop, (riak_response_callback)test_serverinfo_async_cb);
+    if (err) {
+        return (void*)riak_strerror(err);
+    }
+    err = test_async_send_message(conn);
+    if (err) {
+        return (void*)"Could not send request";
+    }
+    return NULL;
+}
+void
+test_integration_async_server_info() {
+    riak_config           *cfg;
+    riak_error err = test_setup(&cfg);
+    CU_ASSERT_FATAL(err == ERIAK_OK)
+
+    err = test_async_thread_runner(cfg, test_serverinfo_async_thread, NULL);
+    CU_ASSERT_FATAL(err == ERIAK_OK)
+
+    test_cleanup(&cfg);
+    CU_PASS("test_integration_async_server_info passed")
+}
+

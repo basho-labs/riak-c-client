@@ -28,6 +28,7 @@
 #include <CUnit/Automated.h>
 #include <CUnit/Basic.h>
 #include "riak.h"
+#include "test.h"
 #include "test_2index.h"
 #include "test_binary.h"
 #include "test_config.h"
@@ -37,6 +38,7 @@
 #include "test_clientid.h"
 #include "test_delete.h"
 #include "test_get.h"
+#include "test_ping.h"
 #include "test_put.h"
 #include "test_listbuckets.h"
 #include "test_listkeys.h"
@@ -49,6 +51,14 @@ int
 main(int   argc,
      char *argv[])
 {
+    event_enable_debug_mode();
+    evthread_enable_lock_debuging();
+    int result = evthread_use_pthreads();
+    if (result < 0) {
+        fprintf(stderr, "Could not use pthreads for libevent\n");
+        return ERIAK_EVENT;
+    }
+
     CU_ErrorCode cuerr = CU_initialize_registry();
     if (cuerr != CUE_SUCCESS) {
         fprintf(stderr, "Could not initialize cuint testing registry\n");
@@ -61,6 +71,7 @@ main(int   argc,
     CU_pSuite connection_suite = CU_add_suite("riak_connection", init_fn, cleanup_fn);
     CU_pSuite operation_suite = CU_add_suite("riak_operation", init_fn, cleanup_fn);
     CU_pSuite messages_suite = CU_add_suite("riak_messages", init_fn, cleanup_fn);
+    CU_pSuite integration_suite = CU_add_suite("integration_suite", init_fn, cleanup_fn);
     CU_ADD_TEST(binary_suite, test_build_binary);
     CU_ADD_TEST(binary_suite, test_build_binary_shallow);
     CU_ADD_TEST(binary_suite, test_build_binary_with_null);
@@ -146,13 +157,20 @@ main(int   argc,
     CU_ADD_TEST(messages_suite, test_riak_object_links);
     CU_ADD_TEST(messages_suite, test_riak_object_usermeta);
     CU_ADD_TEST(messages_suite, test_riak_object_indexes);
-
-
+    CU_ADD_TEST(integration_suite, test_integration_ping);
+    CU_ADD_TEST(integration_suite, test_integration_async_ping);
+    CU_ADD_TEST(integration_suite, test_integration_server_info);
+    CU_ADD_TEST(integration_suite, test_integration_async_server_info);
+    CU_ADD_TEST(integration_suite, test_integration_listbuckets);
+    CU_ADD_TEST(integration_suite, test_integration_async_listbuckets);
+    CU_ADD_TEST(integration_suite, test_integration_listkeys);
+    CU_ADD_TEST(integration_suite, test_integration_async_listkeys);
 
     // Run all tests using the CUnit Basic interface
     CU_basic_set_mode(CU_BRM_VERBOSE);
     CU_basic_run_tests();
 
-    void CU_cleanup_registry();
-    return 0;
+    int failures = CU_get_number_of_failures();
+    CU_cleanup_registry();
+    return failures;
 }

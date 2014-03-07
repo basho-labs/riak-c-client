@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * test_listbuckets.h:  Riak C Unit testing for List Buckets Message
+ * test_ping.h:  Riak C Unit testing for Ping Message
  *
  * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.
  *
@@ -21,10 +21,7 @@
  *********************************************************************/
 
 void
-test_listbuckets_response_decode();
+test_integration_ping();
 
 void
-test_integration_listbuckets();
-
-void
-test_integration_async_listbuckets();
+test_integration_async_ping();
