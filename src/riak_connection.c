@@ -138,7 +138,11 @@ riak_ssl_handshake(riak_config *cfg,
 
     int handshake_response = SSL_do_handshake(ssl);
     if(handshake_response <= 0) {
-        riak_log_critical_config(cfg, "%s:%s", "SSL handshake error", SSL_get_error(ssl, handshake_response));
+        int error_code = SSL_get_error(ssl, handshake_response);
+        riak_log_critical_config(cfg,
+                                 "%s:%s",
+                                 "SSL handshake error", 
+                                 ERR_reason_error_string(error_code));
         SSL_CTX_free(ctx);
         SSL_free(ssl);
         return ERIAK_TLS_ERROR;
@@ -193,7 +197,7 @@ riak_secure_connection_new(riak_config       *cfg,
       return ERIAK_TLS_ERROR;
     }
 
-    riak_connection *cxn = (riak_connection*)(cfg->malloc_fn)(sizeof(riak_connection));
+    riak_connection *cxn = (riak_connection*)riak_config_clean_allocate(cfg, sizeof(riak_connection));
     if (cxn == NULL) {
         riak_log_critical_config(cfg, "%s", "Could not allocate a secure riak_connection");
         return ERIAK_OUT_OF_MEMORY;
@@ -218,13 +222,17 @@ riak_secure_connection_new(riak_config       *cfg,
     // TODO: Implement retry logic
     cxn->fd = riak_just_open_a_socket(cfg, cxn->addrinfo);
     if (cxn->fd < 0) {
-        riak_log_critical_config(cfg, "%s", "Could not just open a socket");
+        riak_log_critical_config(cfg, "%s", "Could not just open a secure socket");
         return ERIAK_CONNECT;
     }
 
     BIO *bio;
 
     bio=BIO_new(BIO_s_socket());
+    if(bio == NULL) {
+        riak_log_critical_config(cfg, "%s", "Error creating OpenSSL socket BIO");
+        return ERIAK_CONNECT;
+    }
     BIO_set_fd(bio, cxn->fd, BIO_NOCLOSE);
 
     if(NULL == bio) {
@@ -239,12 +247,12 @@ riak_secure_connection_new(riak_config       *cfg,
       return starttls_err;
     }
 
-    riak_error handshake_result = riak_ssl_handshake(cfg, cxn, creds, bio);
-    if(handshake_result != ERIAK_OK) {
+    riak_error handshake_err = riak_ssl_handshake(cfg, cxn, creds, bio);
+    if(handshake_err != ERIAK_OK) {
       // ssl + ssl_ctx have already been freed as a result of riak_ssl_handshake
       BIO_free_all(bio);
       riak_log_critical_config(cfg, "%s", "SSL handshake failed");
-      return handshake_result;
+      return handshake_err;
     }
 
     // set is_secure to true to let the auth request use the SSL bio
@@ -318,7 +326,8 @@ riak_security_credentials_new(riak_config *cfg,
                               riak_security_credentials **creds_target,
                               char *username,
                               char *password,
-                              char *cacertfile) {
+                              char *cacertfile,
+                              const SSL_METHOD *ssl_method) {
     riak_security_credentials *creds= (riak_security_credentials*)(cfg->malloc_fn)(sizeof(riak_security_credentials));
     if (creds == NULL) {
         riak_log_critical_config(cfg, "%s", "Could not allocate riak_security_credentials");
@@ -326,13 +335,27 @@ riak_security_credentials_new(riak_config *cfg,
     }
     memset((void*)creds, '\0', sizeof(riak_security_credentials));
     *creds_target = creds;
-    // TODO: should we allow this to be passed in with riak_security_creds?
-    creds->ssl_method = SSLv23_client_method();
+    // default to SSLV23, but allow it to be changed later
+    creds->ssl_method = ssl_method;
     riak_strlcpy(creds->username, username, sizeof(creds->username));
     riak_strlcpy(creds->password, password, sizeof(creds->password));
     riak_strlcpy(creds->cacertfile, cacertfile, sizeof(creds->cacertfile));
     return ERIAK_OK;
 }
+
+void
+riak_security_credentials_set_ssl_method(riak_config *cfg,
+                                         riak_security_credentials *creds,
+                                         const SSL_METHOD *m) {
+    creds->ssl_method = m;
+}
+
+const SSL_METHOD*
+riak_security_credentials_get_ssl_method(riak_config *cfg,
+                                         riak_security_credentials *creds) {
+    return creds->ssl_method;
+}
+
 
 void riak_security_credentials_free(riak_config *cfg,
                                     riak_security_credentials **creds) {

@@ -124,7 +124,8 @@ riak_security_credentials_new(riak_config *cfg,
                               riak_security_credentials **creds_target,
                               char *username,
                               char *password,
-                              char *cacertfile);
+                              char *cacertfile,
+                              const SSL_METHOD *ssl_method);
 
 /**
  * @brief Free an allocated riak_security_credentials struct
@@ -135,6 +136,15 @@ void riak_security_credentials_free(riak_config *cfg,
                                     riak_security_credentials **creds);
 
 
+
+void
+riak_security_credentials_set_ssl_method(riak_config *cfg,
+                                         riak_security_credentials *creds,
+                                         const SSL_METHOD *m);
+    
+const SSL_METHOD*
+riak_security_credentials_get_ssl_method(riak_config *cfg,
+                                         riak_security_credentials *creds);
 
 /**
  * @brief returns a copy of the username specified in the supplied credentials

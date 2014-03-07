@@ -125,8 +125,7 @@ riak_c_example_LDADD = \
 		$(PROTOBUF_LIBS) \
 		$(EVENT_LIBS)
 		$(OPENSSL_LIBS) \
-		$(OPENSSL_LDFLAGS) \
-		-lcunit -lpthread
+		$(OPENSSL_LDFLAGS)
 
 riak_c_example_DEPENDENCIES = libriak_c_client-0.5.la
 
@@ -162,8 +161,7 @@ riak_c_cunit_LDADD =	-lriak_c_client-0.5 \
 			$(PROTOBUF_LIBS) \
 			$(EVENT_LIBS) \
 			$(CUNIT_LIBS)
-			$(OPENSSL_LIBS) \
-			-lcunit -lpthread
+			$(OPENSSL_LIBS)
 
 riak_c_cunit_DEPENDENCIES = libriak_c_client-0.5.la
 

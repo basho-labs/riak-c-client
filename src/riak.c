@@ -43,7 +43,6 @@ riak_sync_read_cb(void       *ptr,
         char message[256];
         strerror_r(errno, message, sizeof(message));
         printf("%s\n", message);
-        abort();
     }
     return result;
 }
@@ -61,7 +60,6 @@ riak_sync_ssl_read_cb(void       *ptr,
         char message[256];
         strerror_r(errno, message, sizeof(message));
         printf("%s\n", message);
-        abort();
     }
     return result;
 }

@@ -26,7 +26,7 @@
 #include "example_call_backs.h"
 #include "../adapters/riak_libevent.h"
 #include <time.h>
-
+#include <openssl/ssl.h>
 
 //********************************************************************/
 // Logging struct(s)/functions
@@ -178,7 +178,8 @@ main(int   argc,
                                             &creds,
                                             args.username,
                                             args.password,
-                                            args.cacertfile);
+                                            args.cacertfile,
+                                            SSLv23_client_method());
             err = riak_secure_connection_new(cfg,
                                              &cxn,
                                              args.host,
