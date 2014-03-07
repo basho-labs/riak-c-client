@@ -20,12 +20,14 @@
  *
  *********************************************************************/
 
+
 #ifndef _RIAK_NETWORK_H
 #define _RIAK_NETWORK_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
 
 /**
  * @brief Turns ASCII host/port into addrinfo struct
@@ -52,6 +54,7 @@ riak_resolve_address(riak_config      *cfg,
 riak_socket_t
 riak_just_open_a_socket(riak_config  *cfg,
                         riak_addrinfo *addrinfo);
+
 
 /**
  * @brief Prints a human-readable version of addrinfo
