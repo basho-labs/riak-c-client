@@ -180,7 +180,7 @@ riak_listkeys_response_free(riak_config             *cfg,
     if (response == NULL) return;
     int i;
     for(i = 0; i < response->n_keys; i++) {
-        riak_response_free(cfg, &(response->keys[i]));
+        riak_binary_free(cfg, &(response->keys[i]));
     }
     riak_free(cfg, &(response->keys));
     if (response->n_responses > 0) {
