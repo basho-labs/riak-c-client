@@ -36,7 +36,7 @@ typedef void (*riak_ping_response_callback)(riak_ping_response *response, void *
  * @param resp Ping PBC Response
  */
 void
-riak_free_ping_response(riak_config         *cfg,
+riak_ping_response_free(riak_config         *cfg,
                         riak_ping_response **resp);
 
 #ifdef __cplusplus

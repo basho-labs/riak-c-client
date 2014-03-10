@@ -35,7 +35,7 @@ typedef struct _riak_error_response riak_error_response;
  * @param resp Error structure to be freed
  */
 void
-riak_free_error_response(riak_config         *cfg,
+riak_error_response_free(riak_config         *cfg,
                          riak_error_response **resp);
 
 #ifdef __cplusplus

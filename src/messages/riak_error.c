@@ -32,7 +32,7 @@
 #include "riak_print-internal.h"
 
 riak_error
-riak_decode_error_response(riak_operation       *rop,
+riak_error_response_decode(riak_operation       *rop,
                            riak_pb_message      *pbresp,
                            riak_error_response **resp,
                            riak_boolean_t       *done) {
@@ -79,7 +79,7 @@ riak_decode_error_response(riak_operation       *rop,
 }
 
 void
-riak_free_error_response(riak_config          *cfg,
+riak_error_response_free(riak_config          *cfg,
                          riak_error_response **resp) {
     riak_error_response *response = *resp;
     if (response == NULL) return;

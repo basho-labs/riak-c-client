@@ -152,7 +152,7 @@ struct _riak_ping_response {
  * @return Error if out of memory
  */
 riak_error
-riak_decode_error_response(riak_operation       *rop,
+riak_error_response_decode(riak_operation       *rop,
                            riak_pb_message      *pbresp,
                            riak_error_response **resp,
                            riak_boolean_t       *done);
@@ -164,7 +164,7 @@ riak_decode_error_response(riak_operation       *rop,
  * @return Error if out of memory
  */
 riak_error
-riak_encode_ping_request(riak_operation   *rop,
+riak_ping_request_encode(riak_operation   *rop,
                          riak_pb_message **req);
 
 /**
@@ -176,7 +176,7 @@ riak_encode_ping_request(riak_operation   *rop,
  * @return Error if out of memory
  */
 riak_error
-riak_decode_ping_response(riak_operation      *rop,
+riak_ping_response_decode(riak_operation      *rop,
                           riak_pb_message     *pbresp,
                           riak_ping_response **resp,
                           riak_boolean_t      *done);

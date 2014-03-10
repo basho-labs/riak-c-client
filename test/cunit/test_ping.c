@@ -61,7 +61,7 @@ test_ping_async_cb(riak_ping_response *response,
                    void               *ptr) {
     test_async_connection *conn = (test_async_connection*)ptr;
     riak_log_notice(conn->cxn, "%s", "Asynchronous PONG");
-    riak_free_ping_response(conn->cfg, &response);
+    riak_ping_response_free(conn->cfg, &response);
 }
 
 /**

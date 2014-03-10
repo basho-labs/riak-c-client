@@ -88,7 +88,7 @@ riak_ping(riak_connection *cxn) {
         return err;
     }
     riak_ping_response *response = NULL;
-    err = riak_encode_ping_request(rop, &(rop->pb_request));
+    err = riak_ping_request_encode(rop, &(rop->pb_request));
     if (err) {
         return err;
     }
@@ -481,7 +481,7 @@ riak_read(riak_operation *rop,
             return ERIAK_READ;
         }
         if (msgid == MSG_RPBERRORRESP) {
-            result = riak_decode_error_response(rop, pbresp, &err_response, done_streaming);
+            result = riak_error_response_decode(rop, pbresp, &err_response, done_streaming);
             // Convert error response to a null-terminated string
             char errmsg[2048];
             riak_binary_print(err_response->errmsg, errmsg, sizeof(errmsg));
