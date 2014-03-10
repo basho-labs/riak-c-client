@@ -526,11 +526,11 @@ main(int   argc,
 
     // cleanup
     event_base_free(base);
-    riak_free(cfg, &bucket_bin);
-    riak_free(cfg, &key_bin);
-    riak_free(cfg, &value_bin);
-    riak_free(cfg, &index_bin);
-    riak_free(cfg, &content_type);
+    riak_binary_free(cfg, &bucket_bin);
+    riak_binary_free(cfg, &key_bin);
+    riak_binary_free(cfg, &value_bin);
+    riak_binary_free(cfg, &index_bin);
+    riak_binary_free(cfg, &content_type);
     riak_config_free(&cfg);
 
     return 0;

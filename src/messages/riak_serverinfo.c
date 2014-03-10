@@ -114,8 +114,8 @@ riak_serverinfo_response_free(riak_config               *cfg,
     riak_serverinfo_response *response = *resp;
     if (response == NULL) return;
     rpb_get_server_info_resp__free_unpacked(response->_internal, cfg->pb_allocator);
-    riak_free(cfg, &(response->node));
-    riak_free(cfg, &(response->server_version));
+    riak_binary_free(cfg, &(response->node));
+    riak_binary_free(cfg, &(response->server_version));
     riak_free(cfg, resp);
 }
 

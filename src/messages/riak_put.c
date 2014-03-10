@@ -127,6 +127,8 @@ riak_free_put_request(riak_config        *cfg,
                       riak_put_response **resp) {
     riak_put_response *response = *resp;
     if (response == NULL) return;
+    riak_binary_free(cfg, &(response->key));
+    riak_binary_free(cfg, &(response->vclock));
     rpb_put_resp__free_unpacked(response->_internal, cfg->pb_allocator);
     riak_free(cfg, resp);
 }

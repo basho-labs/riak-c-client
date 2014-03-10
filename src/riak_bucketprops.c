@@ -120,8 +120,8 @@ void
 riak_modfun_free(riak_config   *cfg,
                   riak_modfun **mod_fun_target) {
     riak_modfun *mod_fun = *mod_fun_target;
-    riak_free(cfg, &(mod_fun->module));
-    riak_free(cfg, &(mod_fun->function));
+    riak_binary_free(cfg, &(mod_fun->module));
+    riak_binary_free(cfg, &(mod_fun->function));
     riak_free(cfg, mod_fun_target);
 }
 
@@ -319,7 +319,7 @@ riak_commit_hooks_free(riak_config        *cfg,
     riak_commit_hook **hook = *hook_target;
     int i;
     for(i = 0; i < num_hooks; i++) {
-        riak_free(cfg, &(hook[i]->name));
+        riak_binary_free(cfg, &(hook[i]->name));
         riak_modfun_free(cfg, &(hook[i]->modfun));
         riak_free(cfg, &(hook[i]));
     }
@@ -761,12 +761,12 @@ void
 riak_bucketprops_free(riak_config       *cfg,
                       riak_bucketprops **props) {
     riak_bucketprops* prop = *props;
-    riak_free(cfg, &(prop->backend));
+    riak_binary_free(cfg, &(prop->backend));
     riak_modfun_free(cfg, &(prop->chash_keyfun));
     riak_modfun_free(cfg, &(prop->linkfun));
     riak_commit_hooks_free(cfg, &(prop->precommit), prop->n_precommit);
     riak_commit_hooks_free(cfg, &(prop->postcommit), prop->n_postcommit);
-    riak_free(cfg, &(prop->search_index));
+    riak_binary_free(cfg, &(prop->search_index));
     riak_free(cfg, props);
 }
 
