@@ -31,7 +31,7 @@
 #include "riak_print-internal.h"
 
 riak_error
-riak_encode_ping_request(riak_operation   *rop,
+riak_ping_request_encode(riak_operation   *rop,
                          riak_pb_message **req) {
     riak_config *cfg = riak_operation_get_config(rop);
     riak_pb_message* request = riak_pb_message_new(cfg, MSG_RPBPINGREQ, 0, NULL);
@@ -39,14 +39,14 @@ riak_encode_ping_request(riak_operation   *rop,
         return ERIAK_OUT_OF_MEMORY;
     }
     *req = request;
-    riak_operation_set_response_decoder(rop, (riak_response_decoder)riak_decode_ping_response);
+    riak_operation_set_response_decoder(rop, (riak_response_decoder)riak_ping_response_decode);
 
     return ERIAK_OK;
 }
 
 
 riak_error
-riak_decode_ping_response(riak_operation      *rop,
+riak_ping_response_decode(riak_operation      *rop,
                           riak_pb_message     *pbresp,
                           riak_ping_response **resp,
                           riak_boolean_t      *done) {
@@ -63,7 +63,7 @@ riak_decode_ping_response(riak_operation      *rop,
 }
 
 void
-riak_free_ping_response(riak_config         *cfg,
+riak_ping_response_free(riak_config         *cfg,
                         riak_ping_response **resp) {
     riak_free(cfg, resp);
 }
