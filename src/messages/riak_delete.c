@@ -159,8 +159,10 @@ riak_delete_options_print(riak_delete_options  *opt,
 
 void
 riak_delete_options_free(riak_config  *cfg,
-                 riak_delete_options **opt) {
-    riak_free(cfg, opt);
+                 riak_delete_options **options) {
+    riak_delete_options *opt = *options;
+    riak_binary_free(cfg, &(opt->vclock));
+    riak_free(cfg, options);
 }
 
 //
@@ -228,7 +230,7 @@ riak_delete_options_set_vclock(riak_config      *cfg,
                             riak_binary      *value) {
     opt->has_vclock = RIAK_TRUE;
     if (opt->vclock) {
-        riak_free(cfg, &opt->vclock);
+        riak_binary_free(cfg, &opt->vclock);
     }
     opt->vclock = riak_binary_copy(cfg, value);
 }

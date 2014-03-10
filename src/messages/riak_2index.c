@@ -306,12 +306,12 @@ riak_2index_options_free(riak_config          *cfg,
 
     riak_2index_options *opt = *options;
 
-    riak_free(cfg, &(opt->key));
-    riak_free(cfg, &(opt->range_min));
-    riak_free(cfg, &(opt->range_max));
-    riak_free(cfg, &(opt->type));
-    riak_free(cfg, &(opt->continuation));
-    riak_free(cfg, &(opt->term_regex));
+    riak_binary_free(cfg, &(opt->key));
+    riak_binary_free(cfg, &(opt->range_min));
+    riak_binary_free(cfg, &(opt->range_max));
+    riak_binary_free(cfg, &(opt->type));
+    riak_binary_free(cfg, &(opt->continuation));
+    riak_binary_free(cfg, &(opt->term_regex));
     riak_free(cfg, options);
 }
 

@@ -177,7 +177,7 @@ riak_listbuckets_response_free(riak_config                *cfg,
     if (response == NULL) return;
     int i;
     for(i = 0; i < response->n_buckets; i++) {
-        riak_free(cfg, &(response->buckets[i]));
+        riak_binary_free(cfg, &(response->buckets[i]));
     }
     riak_free(cfg, &(response->buckets));
     if (response->n_responses > 0) {
