@@ -24,13 +24,27 @@
 #define _RIAK_CONNECTION_INTERNAL_H
 
 #define RIAK_HOST_MAX_LEN   256
+#define RIAK_CRED_MAX_LEN   256
+
+#include <openssl/ssl.h>
 
 struct _riak_connection {
-    riak_config   *config;
-    char           hostname[RIAK_HOST_MAX_LEN];
-    char           portnum[RIAK_HOST_MAX_LEN]; // Keep as a string for debugging
-    riak_addrinfo *addrinfo;
-    riak_socket_t  fd;
+    riak_config      *config;
+    char              hostname[RIAK_HOST_MAX_LEN];
+    char              portnum[RIAK_HOST_MAX_LEN]; // Keep as a string for debugging
+    riak_addrinfo    *addrinfo;
+    riak_socket_t     fd;
+    riak_boolean_t    is_secure;
+    SSL              *ssl;
+    BIO              *ssl_bio;
+    SSL_CTX          *ssl_context;
+};
+
+struct _riak_security_credentials {
+    char          username[RIAK_CRED_MAX_LEN];
+    char          password[RIAK_CRED_MAX_LEN];
+    char          cacertfile[RIAK_CRED_MAX_LEN];
+    const SSL_METHOD    *ssl_method;
 };
 
 #endif // _RIAK_CONNECTION_INTERNAL_H

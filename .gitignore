@@ -50,3 +50,10 @@ missing
 */.dirstamp
 test/cunit/.deps
 test/cunit/.dirstamp
+
+
+*.swp
+*.Plo
+.dirstamp
+*.pc
+*.Po

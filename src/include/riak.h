@@ -61,6 +61,16 @@ riak_error
 riak_ping(riak_connection *cxn);
 
 /**
+ * @brief Send an AUTH Request
+ * @param cxn Riak Connection
+ * @return UNDEFINED
+ */
+riak_error
+riak_auth(riak_connection *cxn,
+          riak_binary     *user,
+          riak_binary     *password);
+
+/**
  * @brief Send a Server Info Request
  * @param cxn Riak Connection
  * @param response Returned Fetched data

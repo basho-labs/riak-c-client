@@ -31,6 +31,7 @@ dist_msginclude_DATA =	src/include/messages/riak_2index.h \
 			src/include/messages/riak_listkeys.h \
 			src/include/messages/riak_mapreduce.h \
 			src/include/messages/riak_ping.h \
+			src/include/messages/riak_security.h \
 			src/include/messages/riak_put.h \
 			src/include/messages/riak_reset_bucketprops.h \
 			src/include/messages/riak_search.h \
@@ -64,6 +65,7 @@ libriak_c_client_0_5_la_SOURCES = \
 			src/messages/riak_listkeys.c \
 			src/messages/riak_mapreduce.c \
 			src/messages/riak_ping.c \
+			src/messages/riak_security.c \
 			src/messages/riak_put.c \
 			src/messages/riak_reset_bucketprops.c \
 			src/messages/riak_search.c \
@@ -80,6 +82,7 @@ libriak_c_client_0_5_la_CPPFLAGS = \
 			$(PROTOBUFC_INCLUDES) \
 			$(PROTOBUF_INCLUDES) \
 			$(EVENT_INCLUDES) \
+			$(OPENSSL_INCLUDES) \
 			-I$(SRCDIR)/include \
 			-I$(SRCDIR)/internal \
 			-I$(RIAK_PB)/c \
@@ -89,7 +92,10 @@ libriak_c_client_0_5_la_CPPFLAGS = \
 libriak_c_client_0_5_la_LIBADD = \
 			$(PROTOBUFC_LIBS) \
 			$(PROTOBUF_LIBS) \
-			$(EVENT_LIBS)
+			$(EVENT_LIBS)   \
+			$(OPENSSL_LIBS) \
+			$(OPENSSL_LDFLAGS) \
+			-lpthread
 
 AM_CFLAGS =		-g -Wall
 
@@ -110,6 +116,7 @@ riak_c_example_CPPFLAGS = \
 			-I$(RIAK_PB)/c \
 			-I$(SRCDIR)/adapters \
 			-I$(SRCDIR) \
+			$(OPENSSL_INCLUDES)
 			-Iexamples
 
 riak_c_example_LDADD = \
@@ -117,6 +124,8 @@ riak_c_example_LDADD = \
 		$(PROTOBUFC_LIBS) \
 		$(PROTOBUF_LIBS) \
 		$(EVENT_LIBS)
+		$(OPENSSL_LIBS) \
+		$(OPENSSL_LDFLAGS)
 
 riak_c_example_DEPENDENCIES = libriak_c_client-0.5.la
 
@@ -155,6 +164,7 @@ riak_c_cunit_LDADD =	-lriak_c_client-0.5 \
 			$(PROTOBUF_LIBS) \
 			$(EVENT_LIBS) \
 			$(CUNIT_LIBS)
+			$(OPENSSL_LIBS)
 
 riak_c_cunit_DEPENDENCIES = libriak_c_client-0.5.la
 

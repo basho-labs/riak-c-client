@@ -26,7 +26,7 @@
 #include "example_call_backs.h"
 #include "../adapters/riak_libevent.h"
 #include <time.h>
-
+#include <openssl/ssl.h>
 
 //********************************************************************/
 // Logging struct(s)/functions
@@ -172,7 +172,24 @@ main(int   argc,
         riak_libevent    *event = NULL;
         riak_operation   *rop   = NULL;
         // Create a connection with the default address resolver
-        err = riak_connection_new(cfg, &cxn, args.host, args.portnum, NULL);
+        if(args.is_secure) {
+            riak_security_credentials *creds = NULL;
+            riak_security_credentials_new(cfg,
+                                            &creds,
+                                            args.username,
+                                            args.password,
+                                            args.cacertfile,
+                                            SSLv23_client_method());
+            err = riak_secure_connection_new(cfg,
+                                             &cxn,
+                                             args.host,
+                                             args.portnum,
+                                             NULL, // default resolver
+                                             creds
+                                             );
+        } else {
+          err = riak_connection_new(cfg, &cxn, args.host, args.portnum, NULL);
+        }
         if (err) {
             exit(1);
         }

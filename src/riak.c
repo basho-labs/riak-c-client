@@ -43,10 +43,28 @@ riak_sync_read_cb(void       *ptr,
         char message[256];
         strerror_r(errno, message, sizeof(message));
         printf("%s\n", message);
-        abort();
     }
     return result;
 }
+
+
+riak_ssize_t
+riak_sync_ssl_read_cb(void       *ptr,
+                  void       *data,
+                  riak_size_t size) {
+    riak_operation  *rop = (riak_operation*)ptr;
+    riak_connection *cxn = riak_operation_get_connection(rop);
+    SSL             *ssl = riak_connection_get_ssl(cxn);
+    riak_ssize_t  result = SSL_read(ssl, data, size);
+    if (result < 0) {
+        char message[256];
+        strerror_r(errno, message, sizeof(message));
+        printf("%s\n", message);
+    }
+    return result;
+}
+
+
 
 riak_ssize_t
 riak_sync_write_cb(void       *ptr,
@@ -58,22 +76,42 @@ riak_sync_write_cb(void       *ptr,
     return write(fd, data, size);
 }
 
+
+riak_ssize_t
+riak_sync_ssl_write_cb(void       *ptr,
+                       void       *data,
+                       riak_size_t size) {
+    riak_operation  *rop = (riak_operation*)ptr;
+    riak_connection *cxn = riak_operation_get_connection(rop);
+    SSL             *ssl = riak_connection_get_ssl(cxn);
+    return SSL_write(ssl, data, size);
+}
+
+
 static riak_error
 riak_sync_request(riak_operation **rop_target,
                   void           **response) {
-    riak_operation  *rop = *rop_target;
+    riak_operation *rop = *rop_target;
     riak_connection *cxn = riak_operation_get_connection(rop);
     riak_operation_set_cb_data(rop, rop);
-
-    riak_error err = riak_write(rop, riak_sync_write_cb, rop);
+    riak_error err = ERIAK_OK;
+    riak_boolean_t secure = riak_connection_is_secure(cxn);
+    if(secure) {
+       riak_write(rop, riak_sync_ssl_write_cb, rop);
+    } else {
+       riak_write(rop, riak_sync_write_cb, rop); 
+    }
     if (err) {
         riak_log_critical(cxn, "%s", "Could not send request");
         riak_operation_free(rop_target);
         return err;
     }
-
     riak_boolean_t done_streaming;
-    err = riak_read(rop, &done_streaming, riak_sync_read_cb, rop);
+    if(secure) {
+      err = riak_read(rop, &done_streaming, riak_sync_ssl_read_cb, rop);
+    } else {
+      err = riak_read(rop, &done_streaming, riak_sync_read_cb, rop);
+    }
 
     *response = rop->response;
     riak_operation_free(rop_target);
@@ -101,6 +139,29 @@ riak_ping(riak_connection *cxn) {
     }
     return ERIAK_OK;
 }
+
+riak_error
+riak_auth(riak_connection *cxn,
+          riak_binary     *user,
+          riak_binary     *password) {
+    riak_operation *rop = NULL;
+    riak_error err = riak_operation_new(cxn, &rop, NULL, NULL, NULL);
+    if (err) {
+        return err;
+    }
+
+    riak_auth_response *response = NULL;
+    err = riak_auth_request_encode(rop, user, password, &(rop->pb_request));
+    if (err) {
+        return err;
+    }
+    err = riak_sync_request(&rop, (void**)&response);
+    if(err) {
+        return ERIAK_AUTH_ERROR;
+    }
+    return ERIAK_OK;
+}
+
 
 riak_error
 riak_serverinfo(riak_connection           *cxn,
