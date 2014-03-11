@@ -59,7 +59,7 @@ typedef struct _riak_command riak_command;
 
 typedef struct {
     int               operation;
-    riak_boolean_t    async;
+    riak_boolean_t    threaded;
     riak_int32_t      iterate;
     riak_int32_t      port;
     riak_int32_t      timeout;
