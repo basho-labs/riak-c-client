@@ -32,14 +32,13 @@ typedef void (*riak_serverinfo_response_callback)(riak_serverinfo_response *resp
 
 /**
  * @brief Print a summary of a `riak_serverinfo_response`
+ * @param state Riak Print State
  * @param response Result from a Server Info request
- * @param target Location of string to be formatted
- * @param len Number of free bytes
+ * @returns Number of bytes written
  */
-void
-riak_serverinfo_response_print(riak_serverinfo_response *response,
-                               char                     *target,
-                               riak_size_t               len);
+riak_int32_t
+riak_serverinfo_response_print(riak_print_state         *state,
+                               riak_serverinfo_response *response);
 
 /**
  * @brief Free memory from response

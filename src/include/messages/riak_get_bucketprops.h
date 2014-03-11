@@ -32,14 +32,12 @@ typedef void (*riak_get_bucketprops_response_callback)(riak_get_bucketprops_resp
 
 /**
  * @brief Print a summary of a `riak_get_bucketprops_response`
+ * @param state Riak Print State
  * @param response Result from a get_bucketprops request
- * @param target Location of string to be formatted
- * @param len Number of free bytes
  */
-void
-riak_get_bucketprops_response_print(riak_get_bucketprops_response *response,
-                                    char                          *target,
-                                    riak_size_t                    len);
+riak_int32_t
+riak_get_bucketprops_response_print(riak_print_state              *state,
+                                    riak_get_bucketprops_response *response);
 
 /**
  * @brief Free memory from response
@@ -54,4 +52,4 @@ riak_get_bucketprops_response_free(riak_config                    *cfg,
 }
 #endif
 
-#endif
+#endif // _RIAK_GET_BUCKETPROPS_MESSAGE_H

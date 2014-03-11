@@ -167,19 +167,15 @@ riak_pairs_copy_array_from_pb(riak_config  *cfg,
 
 /**
  * @brief Print out a series of Riak Key/Value Pair
+ * @param state Riak Print State
  * @param pair Array of Riak Key/Value Pair to print
  * @param num_pairs Number of arrays in Riak Key/Value Pair
- * @param target Where to write the output (out)
- * @param len Max allowed bytes to write (out)
- * @param total Running total of bytes written (out)
  * @returns Number of bytes written
  */
 riak_int32_t
-riak_pairs_print(riak_pair   **pair,
-                 riak_uint32_t num_pairs,
-                 char        **target,
-                 riak_int32_t *len,
-                 riak_int32_t *total);
+riak_pairs_print(riak_print_state *state,
+                 riak_pair       **pair,
+                 riak_uint32_t     num_pairs);
 
 /**
  * @brief Deallocate any claimed memory by Riak Key/Value Pair

@@ -29,7 +29,6 @@
 #include "riak_config-internal.h"
 #include "riak_operation-internal.h"
 #include "riak_bucketprops-internal.h"
-#include "riak_print-internal.h"
 
 riak_error
 riak_delete_request_encode(riak_operation      *rop,
@@ -127,34 +126,33 @@ riak_delete_options_new(riak_config *cfg) {
     return o;
 }
 
-int
-riak_delete_options_print(riak_delete_options  *opt,
-                       char              *target,
-                       riak_int32_t       len) {
-    riak_int32_t total = 0;
+riak_int32_t
+riak_delete_options_print(riak_print_state *state,
+                          riak_delete_options  *opt) {
+    riak_int32_t wrote = 0;
     if (opt->has_vclock) {
-        riak_print_binary("Vector Clock", opt->vclock, &target, &len, &total);
+        wrote += riak_print_label_binary(state, "Vector Clock", opt->vclock);
     }
     if (opt->has_w) {
-        riak_print_int("W", opt->w, &target, &len, &total);
+        wrote += riak_print_label_int(state, "W", opt->w);
     }
     if (opt->has_dw) {
-        riak_print_int("DW", opt->dw, &target, &len, &total);
+        wrote += riak_print_label_int(state, "DW", opt->dw);
     }
     if (opt->has_pw) {
-        riak_print_int("PW", opt->pw, &target, &len, &total);
+        wrote += riak_print_label_int(state, "PW", opt->pw);
     }
     if (opt->has_timeout) {
-        riak_print_int("Timeout", opt->timeout, &target, &len, &total);
+        wrote += riak_print_label_int(state, "Timeout", opt->timeout);
     }
     if( opt->sloppy_quorum) {
-        riak_print_bool("Sloppy Quorum", opt->sloppy_quorum, &target, &len, &total);
+        wrote += riak_print_label_bool(state, "Sloppy Quorum", opt->sloppy_quorum);
     }
     if (opt->has_n_val) {
-        riak_print_int("N Values", opt->n_val, &target, &len, &total);
+        wrote += riak_print_label_int(state, "N Values", opt->n_val);
     }
 
-    return total;
+    return wrote;
 }
 
 void

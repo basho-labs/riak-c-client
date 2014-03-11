@@ -26,7 +26,6 @@
 #include "riak_binary-internal.h"
 #include "riak_object-internal.h"
 #include "riak_config-internal.h"
-#include "riak_print-internal.h"
 
 //
 // P A I R S
@@ -128,21 +127,18 @@ riak_pairs_copy_array_from_pb(riak_config  *cfg,
 }
 
 riak_int32_t
-riak_pairs_print(riak_pair   **pair,
-                 riak_uint32_t num_pairs,
-                 char        **target,
-                 riak_int32_t *len,
-                 riak_int32_t *total) {
+riak_pairs_print(riak_print_state *state,
+                 riak_pair       **pair,
+                 riak_uint32_t     num_pairs) {
     riak_int32_t wrote = 0;
-    if (*len > 0) {
-        riak_int32_t i;
-        for(i = 0; i < num_pairs; i++) {
-            wrote += riak_print_binary("key", pair[i]->key, target, len, total);
-            if (pair[i]->has_value) {
-                wrote += riak_print_binary("value", pair[i]->value, target, len, total);
-            }
+
+    for(int i = 0; i < num_pairs; i++) {
+        wrote += riak_print_label_binary(state, "Key", pair[i]->key);
+        if (pair[i]->has_value) {
+            wrote += riak_print_label_binary(state, "Value", pair[i]->value);
         }
     }
+
     return wrote;
 }
 
@@ -314,35 +310,20 @@ riak_links_free(riak_config  *cfg,
     riak_free(cfg, *link_target);
 }
 
-int
-riak_links_print(riak_link    *link,
-                 char         *target,
-                 riak_uint32_t len) {
-    int total = 0;
-    int wrote = 0;
-    char buffer[2048];
+riak_int32_t
+riak_links_print(riak_print_state *state,
+                 riak_link        *link) {
+    riak_int32_t wrote = 0;
     if (link->has_bucket) {
-        riak_binary_print(link->bucket, buffer, sizeof(buffer));
-        wrote = snprintf(target, len, "Link buffer: %s\n", buffer);
-        len -= wrote;
-        target += wrote;
-        total += wrote;
+        wrote += riak_print_label_binary(state, "Link Bucket", link->bucket);
     }
     if (link->has_key) {
-        riak_binary_print(link->key, buffer, sizeof(buffer));
-        wrote = snprintf(target, len, "Link Key: %s\n", buffer);
-        len -= wrote;
-        target += wrote;
-        total += wrote;
+        wrote += riak_print_label_binary(state, "Link Key", link->key);
     }
     if (link->has_tag) {
-        riak_binary_print(link->tag, buffer, sizeof(buffer));
-        wrote = snprintf(target, len, "Link Tag: %s\n", target);
-        len -= wrote;
-        target += wrote;
-        total += wrote;
+        wrote += riak_print_label_binary(state, "Link Tag", link->tag);
     }
-    return total;
+    return wrote;
 }
 
 riak_boolean_t
@@ -587,87 +568,44 @@ riak_object_new_from_pb(riak_config  *cfg,
     return err;
 }
 
-int
-riak_object_print(riak_object  *obj,
-                  char         *target,
-                  riak_uint32_t len) {
-    char buffer[2048];
-    riak_binary_print(obj->bucket, buffer, sizeof(buffer));
-    int total = 0;
-    int wrote = snprintf(target, len, "Bucket: %s\n", buffer);
-    len -= wrote;
-    target += wrote;
-    total += wrote;
+riak_int32_t
+riak_object_print(riak_print_state *state,
+                  riak_object      *obj) {
+    riak_int32_t wrote = 0;
+    wrote += riak_print_label_binary(state, "Bucket", obj->bucket);
+
     if (obj->has_key) {
-        riak_binary_print(obj->key, buffer, sizeof(buffer));
-        wrote = snprintf(target, len, "Key: %s\n", buffer);
-        len -= wrote;
-        target += wrote;
-        total += wrote;
+        wrote += riak_print_label_binary(state, "Key", obj->key);
     }
-    // TODO: Bigger buffer for full value
-    riak_binary_print(obj->value, buffer, sizeof(buffer));
-    wrote = snprintf(target, len, "Value: %s\n", buffer);
-    len -= wrote;
-    target += wrote;
-    total += wrote;
+    wrote += riak_print_label_binary(state, "Value", obj->value);
+
     if (obj->has_charset) {
-        riak_binary_print(obj->charset, buffer, sizeof(buffer));
-        wrote = snprintf(target, len, "Charset: %s\n", buffer);
-        len -= wrote;
-        target += wrote;
-        total += wrote;
+        wrote += riak_print_label_binary(state, "Charset", obj->charset);
     }
     if (obj->has_last_mod) {
-        time_t mod = (time_t)(obj->last_mod);
-        strftime(buffer, 1024, "%Y-%m-%d %H:%M:%S", localtime(&mod));
-        wrote = snprintf(target, len, "Last Mod: %s\n", buffer);
-        len -= wrote;
-        target += wrote;
-        total += wrote;
+        wrote += riak_print_label_time(state, "Last Mod", obj->last_mod);
     }
     if (obj->has_last_mod_usecs) {
-        wrote = snprintf(target, len, "Last Mod uSecs: %d\n", obj->last_mod_usecs);
-        len -= wrote;
-        target += wrote;
-        total += wrote;
+        wrote += riak_print_label_int(state, "Last Mod uSecs", obj->last_mod_usecs);
     }
     if (obj->has_content_type) {
-        riak_binary_print(obj->content_type, buffer, sizeof(buffer));
-        wrote = snprintf(target, len, "Content Type: %s\n", buffer);
-        len -= wrote;
-        target += wrote;
-        total += wrote;
+        wrote += riak_print_label_binary(state, "Content Type", obj->content_type);
     }
     if (obj->has_content_encoding) {
-        riak_binary_print(obj->encoding, buffer, sizeof(buffer));
-        wrote = snprintf(target, len, "Content Encoding: %s\n", buffer);
-        len -= wrote;
-        target += wrote;
-        total += wrote;
+        wrote += riak_print_label_binary(state, "Content Encoding", obj->encoding);
     }
     if (obj->has_deleted) {
-        wrote = snprintf(target, len, "Deleted: %s\n", (obj->deleted) ? "true" : "false");
-        len -= wrote;
-        target += wrote;
-        total += wrote;
+        wrote += riak_print_label_bool(state, "Deleted", obj->deleted);
     }
     if (obj->has_vtag) {
-        riak_binary_print(obj->vtag, buffer, sizeof(buffer));
-        wrote = snprintf(target, len, "VTag: %s\n", buffer);
-        len -= wrote;
-        target += wrote;
-        total += wrote;
+        wrote += riak_print_label_binary(state, "VTag", obj->vtag);
     }
 
     int i;
     for(i = 0; i < obj->n_links; i++) {
-        wrote = riak_links_print(obj->links[i], target, len);
-        len -= wrote;
-        target += wrote;
-        total += wrote;
+        wrote += riak_links_print(state, obj->links[i]);
     }
-    return total;
+    return wrote;
 }
 
 void

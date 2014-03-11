@@ -28,7 +28,6 @@
 #include "riak_utils-internal.h"
 #include "riak_config-internal.h"
 #include "riak_operation-internal.h"
-#include "riak_print-internal.h"
 
 riak_error
 riak_put_request_encode(riak_operation   *rop,
@@ -193,35 +192,24 @@ riak_put_response_decode(riak_operation     *rop,
     return ERIAK_OK;
 }
 
-void
-riak_put_response_print(riak_put_response *response,
-                        char              *target,
-                        riak_size_t        len) {
+riak_int32_t
+riak_put_response_print(riak_print_state  *state,
+                        riak_put_response *response) {
 
-    char buffer[1024];
-    riak_int32_t wrote;
-    riak_int32_t left_to_write = len;
-    if ((left_to_write > 0) && (response->has_vclock)) {
-        riak_binary_hex_print(response->vclock, buffer, sizeof(buffer));
-        wrote = snprintf(target, left_to_write, "V-Clock: %s\n", buffer);
-        left_to_write -= wrote;
-        target += wrote;
+    riak_int32_t wrote = 0;
+    if (response->has_vclock) {
+        wrote += riak_print_label_binary_hex(state, "V-Clock", response->vclock);
     }
-    if ((left_to_write > 0) && (response->has_key)) {
-        riak_binary_print(response->key, buffer, sizeof(buffer));
-        wrote = snprintf(target, left_to_write, "Key: %s\n", buffer);
-        left_to_write -= wrote;
-        target += wrote;
+    if (response->has_key) {
+        wrote += riak_print_label_binary_hex(state, "Key", response->key);
     }
-    if (left_to_write > 0) {
-        wrote = snprintf(target, left_to_write, "Objects: %d\n", response->n_content);
-        left_to_write -= wrote;
-        target += wrote;
-    }
+    wrote += riak_print_label_int(state, "Num Objects", response->n_content);
     riak_uint32_t i;
-    for(i = 0; (i < response->n_content) && (left_to_write > 0); i++) {
-        wrote = riak_object_print(response->content[i], target, left_to_write);
+    for(i = 0; (i < response->n_content) && (riak_print_len(state) > 0); i++) {
+        wrote += riak_object_print(state, response->content[i]);
     }
+
+    return wrote;
 }
 
 void
@@ -277,49 +265,48 @@ riak_put_options_new(riak_config *cfg) {
     return o;
 }
 
-int
-riak_put_options_print(riak_put_options  *opt,
-                       char              *target,
-                       riak_int32_t       len) {
-    riak_int32_t total = 0;
+riak_int32_t
+riak_put_options_print(riak_print_state *state,
+                       riak_put_options *opt) {
+    riak_int32_t wrote = 0;
     if (opt->has_vclock) {
-        riak_print_binary("Vector Clock", opt->vclock, &target, &len, &total);
+        wrote += riak_print_label_binary(state, "Vector Clock", opt->vclock);
     }
     if (opt->has_w) {
-        riak_print_int("W", opt->w, &target, &len, &total);
+        wrote += riak_print_label_int(state, "W", opt->w);
     }
     if (opt->has_dw) {
-        riak_print_int("DW", opt->dw, &target, &len, &total);
+        wrote += riak_print_label_int(state, "DW", opt->dw);
     }
     if( opt->return_body) {
-        riak_print_bool("Return Body", opt->return_body, &target, &len, &total);
+        wrote += riak_print_label_bool(state, "Return Body", opt->return_body);
     }
     if (opt->has_pw) {
-        riak_print_int("PW", opt->pw, &target, &len, &total);
+        wrote += riak_print_label_int(state, "PW", opt->pw);
     }
     if( opt->if_not_modified) {
-        riak_print_bool("If not Modified", opt->if_not_modified, &target, &len, &total);
+        wrote += riak_print_label_bool(state, "If not Modified", opt->if_not_modified);
     }
     if( opt->if_none_match) {
-        riak_print_bool("If None Match", opt->if_none_match, &target, &len, &total);
+        wrote += riak_print_label_bool(state, "If None Match", opt->if_none_match);
     }
     if( opt->return_head) {
-        riak_print_bool("Return Head", opt->return_head, &target, &len, &total);
+        wrote += riak_print_label_bool(state, "Return Head", opt->return_head);
     }
     if (opt->has_timeout) {
-        riak_print_int("Timeout", opt->timeout, &target, &len, &total);
+        wrote += riak_print_label_int(state, "Timeout", opt->timeout);
     }
     if( opt->asis) {
-        riak_print_bool("As-is", opt->asis, &target, &len, &total);
+        wrote += riak_print_label_bool(state, "As-is", opt->asis);
     }
     if( opt->sloppy_quorum) {
-        riak_print_bool("Sloppy Quorum", opt->sloppy_quorum, &target, &len, &total);
+        wrote += riak_print_label_bool(state, "Sloppy Quorum", opt->sloppy_quorum);
     }
     if (opt->has_n_val) {
-        riak_print_int("N Values", opt->n_val, &target, &len, &total);
+        wrote += riak_print_label_int(state, "N Values", opt->n_val);
     }
 
-    return total;
+    return wrote;
 }
 
 void

@@ -29,7 +29,6 @@
 #include "riak_config-internal.h"
 #include "riak_operation-internal.h"
 #include "riak_bucketprops-internal.h"
-#include "riak_print-internal.h"
 
 riak_error
 riak_get_bucketprops_request_encode(riak_operation   *rop,
@@ -101,9 +100,8 @@ riak_get_bucketprops_response_free(riak_config                    *cfg,
     riak_free(cfg, resp);
 }
 
-void
-riak_get_bucketprops_response_print(riak_get_bucketprops_response *response,
-                                    char                          *target,
-                                    riak_size_t                    len) {
-    riak_bucketprops_print(response->props, target, len);
+riak_int32_t
+riak_get_bucketprops_response_print(riak_print_state              *state,
+                                    riak_get_bucketprops_response *response) {
+    return riak_bucketprops_print(state, response->props);
 }

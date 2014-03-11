@@ -29,7 +29,6 @@
 #include "riak_config-internal.h"
 #include "riak_operation-internal.h"
 #include "riak_bucketprops-internal.h"
-#include "riak_print-internal.h"
 
 riak_error
 riak_mapreduce_request_encode(riak_operation   *rop,
@@ -137,26 +136,27 @@ riak_mapreduce_response_decode(riak_operation           *rop,
 }
 
 riak_int32_t
-riak_mapreduce_response_print(riak_mapreduce_response *response,
-                              char                   **target,
-                              riak_int32_t            *len,
-                              riak_int32_t            *total)  {
+riak_mapreduce_response_print(riak_print_state        *state,
+                              riak_mapreduce_response *response) {
     riak_int32_t wrote = 0;
 
-    wrote += riak_print_int("n_responses", response->n_responses, target, len, total);
+    wrote += riak_print_label_int(state, "Num Responses", response->n_responses);
     int i;
     if (response->msg == NULL) {
         return wrote;
     }
-    for(i = 0; (*len > 0) && (i < response->n_responses); i++) {
+    for(i = 0; (riak_print_len(state) > 0) && (i < response->n_responses); i++) {
         riak_mapreduce_message *msg = response->msg[i];
-        wrote += riak_print_int("Response", i, target, len, total);
-        wrote += riak_print_bool("has_phase", msg->has_phase, target, len, total);
-        wrote += riak_print_int("phase", msg->phase, target, len, total);
-        wrote += riak_print_bool("has_response", msg->has_phase, target, len, total);
-        wrote += riak_print_binary("response", msg->response, target, len, total);
-        wrote += riak_print_bool("has_done", msg->has_phase, target, len, total);
-        wrote += riak_print_bool("done", msg->done, target, len, total);
+        wrote += riak_print_label_int(state, "Response", i);
+        if (msg->has_phase) {
+            wrote += riak_print_label_int(state, "phase", msg->phase);
+        }
+        if (msg->has_response) {
+            wrote += riak_print_label_binary(state, "response", msg->response);
+        }
+        if (msg->has_done) {
+            wrote += riak_print_label_bool(state, "done", msg->done);
+        }
     }
 
     return wrote;

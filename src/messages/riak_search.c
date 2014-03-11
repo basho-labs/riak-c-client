@@ -29,8 +29,6 @@
 #include "riak_config-internal.h"
 #include "riak_operation-internal.h"
 #include "riak_bucketprops-internal.h"
-#include "riak_print-internal.h"
-
 
 riak_error
 riak_search_request_encode(riak_operation      *rop,
@@ -151,24 +149,22 @@ riak_search_response_decode(riak_operation           *rop,
 }
 
 riak_int32_t
-riak_search_response_print(riak_search_response *response,
-                           char                **target,
-                           riak_int32_t         *len,
-                           riak_int32_t         *total)  {
+riak_search_response_print(riak_print_state     *state,
+                           riak_search_response *response) {
     riak_int32_t wrote = 0;
 
-    wrote += riak_print_bool("has_max_score", response->has_max_score, target, len, total);
-    wrote += riak_print_float("max_score", response->max_score, target, len, total);
-    wrote += riak_print_bool("has_num_found", response->has_num_found, target, len, total);
-    wrote += riak_print_int("num_found", response->num_found, target, len, total);
-    wrote += riak_print_int("n_docs", response->n_docs, target, len, total);
+    wrote += riak_print_label_bool(state, "has_max_score", response->has_max_score);
+    wrote += riak_print_label_float(state, "max_score", response->max_score);
+    wrote += riak_print_label_bool(state, "has_num_found", response->has_num_found);
+    wrote += riak_print_label_int(state, "num_found", response->num_found);
+    wrote += riak_print_label_int(state, "n_docs", response->n_docs);
     if (response->docs == NULL) {
         return wrote;
     }
-    for(int i = 0; (*len > 0) && (i < response->n_docs); i++) {
-        wrote += riak_print_int("Document", i, target, len, total);
-        wrote += riak_print_int("n_fields", response->docs[i].n_fields, target, len, total);
-        wrote += riak_pairs_print(response->docs[i].fields,response->docs[i].n_fields, target, len, total);
+    for(int i = 0; (riak_print_len(state) > 0) && (i < response->n_docs); i++) {
+        wrote += riak_print_label_int(state, "Document", i);
+        wrote += riak_print_label_int(state, "n_fields", response->docs[i].n_fields);
+        wrote += riak_pairs_print(state, response->docs[i].fields, response->docs[i].n_fields);
     }
 
     return wrote;

@@ -56,15 +56,13 @@ riak_bucketprops_free(riak_config        *cfg,
 
 /**
  * @brief Print contents of a Riak Bucket Property object to a string
+ * @param state Riak Print State
  * @param props Bucket Property object to print
- * @param target Location to write formatted string
- * @param len Maximum number of bytes to write
  * @return Number of bytes written
  */
 riak_int32_t
-riak_bucketprops_print(riak_bucketprops *prop,
-                       char             *target,
-                       riak_int32_t      len);
+riak_bucketprops_print(riak_print_state *state,
+                       riak_bucketprops *prop);
 
 
 /**

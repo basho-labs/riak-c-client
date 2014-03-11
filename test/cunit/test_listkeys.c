@@ -94,7 +94,9 @@ test_integration_listkeys() {
     CU_ASSERT_EQUAL(response->n_keys, 50)
 
     char output[10240];
-    riak_listkeys_response_print(response, output, sizeof(output));
+    riak_print_state print_state;
+    riak_print_init(&print_state, output, sizeof(output));
+    riak_listkeys_response_print(&print_state, response);
     fprintf(stderr, "%s", output);
     riak_listkeys_response_free(cfg, &response);
 
@@ -110,7 +112,9 @@ test_listkeys_async_cb(riak_listkeys_response *response,
                        void                   *ptr) {
     test_async_connection *conn = (test_async_connection*)ptr;
     char output[10240];
-    riak_listkeys_response_print(response, output, sizeof(output));
+    riak_print_state print_state;
+    riak_print_init(&print_state, output, sizeof(output));
+    riak_listkeys_response_print(&print_state, response);
     fprintf(stderr, "%s", output);
     riak_uint32_t num = riak_listkeys_get_n_keys(response);
     if (num < RIAK_TEST_MAX_BUCKETS) {

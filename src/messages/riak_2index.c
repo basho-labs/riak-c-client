@@ -29,7 +29,6 @@
 #include "riak_config-internal.h"
 #include "riak_operation-internal.h"
 #include "riak_bucketprops-internal.h"
-#include "riak_print-internal.h"
 
 riak_error
 riak_2index_request_encode(riak_operation      *rop,
@@ -207,23 +206,22 @@ riak_2index_response_decode(riak_operation        *rop,
 }
 
 riak_int32_t
-riak_2index_response_print(riak_2index_response *response,
-                           char                   **target,
-                           riak_int32_t            *len,
-                           riak_int32_t            *total)  {
+riak_2index_response_print(riak_print_state     *state,
+                           riak_2index_response *response) {
+
     riak_int32_t wrote = 0;
 
-    wrote += riak_print_int("n_keys", response->n_keys, target, len, total);
+    wrote += riak_print_label_int(state, "n_keys", response->n_keys);
     int i;
-    for(i = 0; (*len > 0) && (i < response->n_keys); i++) {
-        wrote += riak_print_binary("key", response->keys[i], target, len, total);
+    for(i = 0; (riak_print_len(state) > 0) && (i < response->n_keys); i++) {
+        wrote += riak_print_label_binary(state, "key", response->keys[i]);
     }
-    wrote += riak_print_int("n_results", response->n_results, target, len, total);
-    wrote += riak_pairs_print(response->results, response->n_results, target, len, total);
-    wrote += riak_print_bool("has_continuation", response->has_continuation, target, len, total);
-    wrote += riak_print_binary("continuation", response->continuation, target, len, total);
-    wrote += riak_print_bool("has_done", response->has_done, target, len, total);
-    wrote += riak_print_bool("done", response->done, target, len, total);
+    wrote += riak_print_label_int(state, "n_results", response->n_results);
+    wrote += riak_pairs_print(state, response->results, response->n_results);
+    wrote += riak_print_label_bool(state, "has_continuation", response->has_continuation);
+    wrote += riak_print_label_binary(state, "continuation", response->continuation);
+    wrote += riak_print_label_bool(state, "has_done", response->has_done);
+    wrote += riak_print_label_bool(state, "done", response->done);
 
     return wrote;
 }

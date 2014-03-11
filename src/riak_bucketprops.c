@@ -26,8 +26,7 @@
 #include "riak_binary-internal.h"
 #include "riak_bucketprops-internal.h"
 #include "riak_config-internal.h"
-#include "riak_print-internal.h"
-
+#
 static const char* riak_bucketprops_repl[] = {
     "False",
     "Real time",
@@ -125,30 +124,23 @@ riak_modfun_free(riak_config   *cfg,
     riak_free(cfg, mod_fun_target);
 }
 
+/**
+ * @brief: Print out an Erlang Module/Function
+ * @param state Riak Print State
+ * @param name Name of Module/Function
+ * @param mod_fun The mod/fun data structure to be printed
+ * @returns Number of bytes written
+ */
 riak_int32_t
-riak_modfun_print_internal(char           *name,
-                           riak_modfun   *mod_fun,
-                           char          **target,
-                           riak_int32_t   *len,
-                           riak_int32_t   *total) {
+riak_modfun_print(riak_print_state *state,
+                  char             *name,
+                  riak_modfun      *mod_fun) {
 
     riak_int32_t wrote = 0;
-    wrote += riak_print_label(name, target, len, total);
-    wrote += riak_print_binary("Module", mod_fun->module, target, len, total);
-    wrote += riak_print_binary("Function", mod_fun->function, target, len, total);
+    wrote += riak_print(state, "%s: ", name);
+    wrote += riak_print_label_binary(state, "Module", mod_fun->module);
+    wrote += riak_print_label_binary(state, "Function", mod_fun->function);
     return wrote;
-}
-
-riak_int32_t
-riak_modfun_print(riak_modfun  *mod_fun,
-                  char         *target,
-                  riak_int32_t  len) {
-    riak_int32_t total = 0;
-    return riak_modfun_print_internal("Mod Fun",
-                                       mod_fun,
-                                       &target,
-                                       &len,
-                                       &total);
 }
 
 riak_binary*
@@ -277,23 +269,19 @@ riak_commit_hooks_copy_from_pb(riak_config         *cfg,
 }
 
 riak_int32_t
-riak_commit_hooks_print_internal(char              *name,
-                                 riak_commit_hook **hooks,
-                                 riak_int32_t       num_hooks,
-                                 char             **target,
-                                 riak_int32_t      *len,
-                                 riak_int32_t      *total) {
+riak_commit_hooks_print(riak_print_state *state,
+                        char              *name,
+                        riak_commit_hook **hooks,
+                        riak_int32_t       num_hooks) {
 
-    char buffer[256];
     riak_int32_t wrote = 0;
     riak_int32_t i;
     for(i = 0; i < num_hooks; i++) {
-        snprintf(buffer, sizeof(buffer), "Hook %d", i);
-        wrote += riak_print_label(buffer, target, len, total);
+        wrote += riak_print(state, "Hook %d\n", i);
         if (hooks[i]->has_name) {
-            wrote += riak_print_binary("Name", hooks[i]->name, target, len, total);
+            wrote += riak_print_label_binary(state, "Name", hooks[i]->name);
         }
-        wrote += riak_modfun_print_internal("Mod Fun", hooks[i]->modfun, target, len, total);
+        wrote += riak_modfun_print(state, "Mod Fun", hooks[i]->modfun);
     }
     return wrote;
 }
@@ -665,96 +653,86 @@ riak_bucketprops_quorum(riak_uint32_t q) {
 }
 
 riak_int32_t
-riak_bucketprops_print(riak_bucketprops *prop,
-                        char            *target,
-                        riak_int32_t     len) {
-    riak_int32_t total = 0;
+riak_bucketprops_print(riak_print_state *state,
+                       riak_bucketprops *prop) {
+    riak_int32_t wrote = 0;
 
     if (prop->has_n_val) {
-        riak_print_int("N", prop->n_val, &target, &len, &total);
+        wrote += riak_print_label_int(state, "N", prop->n_val);
     }
     if (prop->has_allow_mult) {
-        riak_print_bool("Allow Multiple", prop->allow_mult, &target, &len, &total);
+        wrote += riak_print_label_bool(state, "Allow Multiple", prop->allow_mult);
     }
     if (prop->has_last_write_wins) {
-        riak_print_bool("LWW", prop->last_write_wins, &target, &len, &total);
+        wrote += riak_print_label_bool(state, "LWW", prop->last_write_wins);
     }
 
     if (prop->has_has_precommit && prop->has_precommit){
-        riak_print_int("# Precommit Hooks", prop->n_precommit, &target, &len, &total);
-        riak_commit_hooks_print_internal("Precommit Hooks",
+        wrote += riak_print_label_int(state, "# Precommit Hooks", prop->n_precommit);
+        wrote += riak_commit_hooks_print(state, "Precommit Hooks",
                                          prop->precommit,
-                                         prop->n_precommit,
-                                         &target,
-                                         &len,
-                                         &total);
+                                         prop->n_precommit);
     }
     if (prop->has_has_postcommit && prop->has_postcommit) {
-        riak_print_int("# Postcommit Hooks", prop->n_postcommit, &target, &len, &total);
-        riak_commit_hooks_print_internal("Postcommit Hooks",
+        wrote += riak_print_label_int(state, "# Postcommit Hooks", prop->n_postcommit);
+        wrote += riak_commit_hooks_print(state, "Postcommit Hooks",
                                          prop->postcommit,
-                                         prop->n_postcommit,
-                                         &target,
-                                         &len,
-                                         &total);
+                                         prop->n_postcommit);
     }
 
     if (prop->has_old_vclock) {
-        riak_print_int("Old Vclock", prop->old_vclock, &target, &len, &total);
+        wrote += riak_print_label_int(state, "Old Vclock", prop->old_vclock);
     }
     if (prop->has_young_vclock) {
-        riak_print_int("Young Vclock", prop->young_vclock, &target, &len, &total);
+        wrote += riak_print_label_int(state, "Young Vclock", prop->young_vclock);
     }
     if (prop->has_big_vclock) {
-        riak_print_int("Big Vclock", prop->big_vclock, &target, &len, &total);
+        wrote += riak_print_label_int(state, "Big Vclock", prop->big_vclock);
     }
     if (prop->has_small_vclock) {
-        riak_print_int("Small Vclock", prop->small_vclock, &target, &len, &total);
+        wrote += riak_print_label_int(state, "Small Vclock", prop->small_vclock);
     }
     if (prop->has_pr) {
-        riak_print_string("PR", riak_bucketprops_quorum(prop->pr), &target, &len, &total);
+        wrote += riak_print_label_string(state, "PR", riak_bucketprops_quorum(prop->pr));
     }
     if (prop->has_r) {
-        riak_print_string("R", riak_bucketprops_quorum(prop->r), &target, &len, &total);
+        wrote += riak_print_label_string(state, "R", riak_bucketprops_quorum(prop->r));
     }
     if (prop->has_w) {
-        riak_print_string("W", riak_bucketprops_quorum(prop->w), &target, &len, &total);
+        wrote += riak_print_label_string(state, "W", riak_bucketprops_quorum(prop->w));
     }
     if (prop->has_pw) {
-        riak_print_string("PW", riak_bucketprops_quorum(prop->pw), &target, &len, &total);
+        wrote += riak_print_label_string(state, "PW", riak_bucketprops_quorum(prop->pw));
     }
     if (prop->has_dw) {
-        riak_print_string("DW", riak_bucketprops_quorum(prop->dw), &target, &len, &total);
+        wrote += riak_print_label_string(state, "DW", riak_bucketprops_quorum(prop->dw));
     }
     if (prop->has_rw) {
-        riak_print_string("RW", riak_bucketprops_quorum(prop->rw), &target, &len, &total);
+        wrote += riak_print_label_string(state, "RW", riak_bucketprops_quorum(prop->rw));
     }
     if (prop->has_basic_quorum) {
-        riak_print_bool("Basic Quorum", prop->basic_quorum, &target, &len, &total);
+        wrote += riak_print_label_bool(state, "Basic Quorum", prop->basic_quorum);
     }
     if (prop->has_notfound_ok) {
-        riak_print_bool("Not Found OK", prop->notfound_ok, &target, &len, &total);
+        wrote += riak_print_label_bool(state, "Not Found OK", prop->notfound_ok);
     }
     if (prop->has_backend) {
-        riak_print_binary("Backend", prop->backend, &target, &len, &total);
+        wrote += riak_print_label_binary(state, "Backend", prop->backend);
     }
     if (prop->has_search) {
-        riak_print_bool("Search", prop->search, &target, &len, &total);
+        wrote += riak_print_label_bool(state, "Search", prop->search);
     }
     if (prop->repl >= RIAK_BUCKETPROPS_REPL_FALSE &&
         prop->repl <= RIAK_BUCKETPROPS_REPL_TRUE) {
-        riak_print_string("Repl: ", (char*)riak_bucketprops_repl[prop->repl],
-                          &target,
-                          &len,
-                          &total);
+        wrote += riak_print_label_string(state, "Repl", (char*)riak_bucketprops_repl[prop->repl]);
     }
     if (prop->has_search_index) {
-        riak_print_binary("YZ Index", prop->search_index, &target, &len, &total);
+        wrote += riak_print_label_binary(state, "YZ Index", prop->search_index);
     }
-    riak_modfun_print_internal("C Hash Key Fun", prop->chash_keyfun, &target, &len, &total);
-    riak_modfun_print_internal("Link Fun", prop->linkfun, &target, &len, &total);
+    wrote += riak_modfun_print(state, "C Hash Key Fun", prop->chash_keyfun);
+    wrote += riak_modfun_print(state, "Link Fun", prop->linkfun);
 
-    return total;
+    return wrote;
 }
 
 void

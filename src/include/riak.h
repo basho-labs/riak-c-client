@@ -39,6 +39,7 @@
 #include "riak_binary.h"
 #include "riak_connection.h"
 #include "riak_operation.h"
+#include "riak_print.h"
 #include "riak_object.h"
 #include "riak_bucketprops.h"
 #include "riak_messages.h"

@@ -148,7 +148,7 @@ riak_binary_copy_to_pb(ProtobufCBinaryData *to,
 
 //TODO: Figure out clean way to print UTF-8 encoding
 riak_size_t
-riak_binary_print(riak_binary *bin,
+riak_binary_print(riak_binary  *bin,
                   char         *target,
                   riak_uint32_t len) {
     riak_size_t i = 0;

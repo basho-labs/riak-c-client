@@ -32,14 +32,13 @@ typedef void (*riak_get_clientid_response_callback)(riak_get_clientid_response *
 
 /**
  * @brief Print a summary of a `riak_get_clientid_response`
+ * @param state Riak Print State
  * @param response Result from a client id request
- * @param target Location of string to be formatted
- * @param len Number of free bytes
+ * @returns Number of bytes written
  */
-void
-riak_get_clientid_response_print(riak_get_clientid_response *response,
-                                 char                       *target,
-                                 riak_size_t                 len);
+riak_int32_t
+riak_get_clientid_response_print(riak_print_state           *state,
+                                 riak_get_clientid_response *response);
 
 /**
  * @brief Free memory from response

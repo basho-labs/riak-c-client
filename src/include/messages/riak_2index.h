@@ -20,8 +20,8 @@
  *
  *********************************************************************/
 
-#ifndef _riak_2index_MESSAGE_H
-#define _riak_2index_MESSAGE_H
+#ifndef _RIAK_2INDEX_MESSAGE_H
+#define _RIAK_2INDEX_MESSAGE_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -42,18 +42,13 @@ riak_2index_response_free(riak_config           *cfg,
 
 /**
  * @brief Print out a Secondary Index Response
+ * @param state Riak Print State
  * @param response the Secondary Index response to print
- * @param target Location to write the string (in/out)
- * @param len Remaining available bytes to write (in/out)
- * @param total Running total of bytes written (in/out)
  * @returns Total number of bytes written
  */
 riak_int32_t
-riak_2index_response_print(riak_2index_response *response,
-                           char                **target,
-                           riak_int32_t         *len,
-                           riak_int32_t         *total);
-
+riak_2index_response_print(riak_print_state     *state,
+                           riak_2index_response *response);
 
 /**
  * @brief Access the number of key in a Secondary Index response
@@ -515,4 +510,4 @@ riak_2index_options_set_pagination_sort(riak_2index_options *opt,
 }
 #endif
 
-#endif
+#endif // _RIAK_2INDEX_MESSAGE_H
