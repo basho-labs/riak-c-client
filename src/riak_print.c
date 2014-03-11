@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * utils.c: Riak C Client Utilities
+ * riak_print.c: Riak C Client Printing Utilities
  *
  * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.
  *
@@ -119,9 +119,6 @@ riak_print_label_binary_hex(riak_print_state *state,
         wrote += riak_print_binary_hex(state, value);
     }
     wrote += riak_print(state, "%s", "\n");
-
-    return wrote;
-
 
     return wrote;
 }
