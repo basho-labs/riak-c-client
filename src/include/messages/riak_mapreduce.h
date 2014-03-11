@@ -42,16 +42,13 @@ riak_mapreduce_response_free(riak_config              *cfg,
 
 /**
  * @brief Print out a Map/Reduce Response
+ * @param state Riak Print State
  * @param response the Map/Reduce response to print
- * @param target Location to write the string (in/out)
- * @param len Remaining available bytes to write (in/out)
- * @param total Running total of bytes written (in/out)
+ * @returns Number of bytes written
  */
 riak_int32_t
-riak_mapreduce_response_print(riak_mapreduce_response *response,
-                              char                   **target,
-                              riak_int32_t            *len,
-                              riak_int32_t            *total);
+riak_mapreduce_response_print(riak_print_state        *state,
+                              riak_mapreduce_response *response);
 
 /**
  * @brief Access the array of received map/reduce messages

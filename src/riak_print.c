@@ -23,190 +23,151 @@
 #include <time.h>
 #include "riak.h"
 #include "riak_binary-internal.h"
-#include "riak_print-internal.h"
+#include "riak_print.h"
+
 
 void
-riak_print_init(riak_print_state *state,
-                char             *location,
-                riak_int32_t      maxlen) {
-    memset((void*)state, '\0', sizeof(riak_print_state));
+riak_print_init(riak_print_state  *state,
+                char              *location,
+                riak_int32_t       maxlen) {
+    memset(state, '\0', sizeof(riak_print_state));
     state->start  = location;
     state->target = location;
-    state->len    = maxlen;
+    state->len    = maxlen-1;  // Leave room for NULL
+    state->total  = maxlen;
+    state->wrote  = 0;
 }
 
 riak_int32_t
-riak_print_int(char         *name,
-               riak_int32_t  value,
-               char        **target,
-               riak_int32_t *len,
-               riak_int32_t *total) {
+riak_print(riak_print_state *state,
+           const char       *format,
+           ...) {
     riak_int32_t wrote = 0;
-    if (*len > 0) {
-        wrote = snprintf(*target, *len, "%s: %d\n", name, value);
-        *len -= wrote;
-        *target += wrote;
-        *total += wrote;
+    if (state->len > 0) {
+        va_list va;
+        va_start(va, format);
+        wrote = vsnprintf(state->target, state->len, format, va);
+        if (wrote > 0) {
+            state->len    -= wrote;
+            state->target += wrote;
+            state->wrote  += wrote;
+        }
+        va_end(va);
+    }
+
+    return wrote;
+}
+
+riak_int32_t
+riak_print_len(riak_print_state *state) {
+    return state->len;
+}
+
+riak_int32_t
+riak_print_label_int(riak_print_state *state,
+                     char             *name,
+                     riak_int32_t      value) {
+
+    return riak_print(state, "%s: %d\n", name, value);
+}
+
+riak_int32_t
+riak_print_label_float(riak_print_state *state,
+                       char             *name,
+                       riak_float32_t    value) {
+    return riak_print(state, "%s: %f\n", name, value);
+}
+
+riak_int32_t
+riak_print_label_bool(riak_print_state *state,
+                      char             *name,
+                      riak_boolean_t    value) {
+    return riak_print(state, "%s: %s\n", name, (value ? "true" : "false"));
+}
+
+
+riak_int32_t
+riak_print_label_binary(riak_print_state *state,
+                        char             *name,
+                        riak_binary      *value) {
+    riak_int32_t wrote = riak_print(state, "%s: ", name);
+    if (state->len > 0) {
+        wrote += riak_print_binary(state, value);
+    }
+    wrote += riak_print(state, "%s", "\n");
+
+    return wrote;
+}
+
+riak_int32_t
+riak_print_binary(riak_print_state *state,
+                  riak_binary      *bin) {
+    riak_size_t wrote = riak_binary_print(bin, state->target, state->len);
+    state->len    -= wrote;
+    state->target += wrote;
+    state->wrote  += wrote;
+
+    return wrote;
+}
+
+riak_int32_t
+riak_print_label_binary_hex(riak_print_state *state,
+                            char             *name,
+                            riak_binary      *value) {
+    riak_int32_t wrote = riak_print(state, "%s: ", name);
+    if (state->len > 0) {
+        wrote += riak_print_binary_hex(state, value);
+    }
+    wrote += riak_print(state, "%s", "\n");
+
+    return wrote;
+
+
+    return wrote;
+}
+
+riak_int32_t
+riak_print_binary_hex(riak_print_state *state,
+                      riak_binary      *bin) {
+    riak_size_t wrote = riak_binary_hex_print(bin, state->target, state->len);
+    state->len    -= wrote;
+    state->target += wrote;
+    state->wrote  += wrote;
+
+    return wrote;
+}
+
+riak_int32_t
+riak_print_label_raw_hex_array(riak_print_state *state,
+                               riak_uint8_t     *value,
+                               riak_int32_t      value_len) {
+    riak_int32_t wrote = 0;
+    wrote += riak_print(state, "%s", "0x");
+    for (riak_int32_t bytes = 0; state->len > 0 && bytes < value_len; bytes++) {
+        wrote += riak_print(state, "%02x", value[bytes]);
     }
     return wrote;
 }
 
 riak_int32_t
-riak_print_float(char          *name,
-                 riak_float32_t value,
-                 char         **target,
-                 riak_int32_t  *len,
-                 riak_int32_t  *total) {
-    riak_int32_t wrote = 0;
-    if (*len > 0) {
-        wrote = snprintf(*target, *len, "%s: %f\n", name, value);
-        *len -= wrote;
-        *target += wrote;
-        *total += wrote;
-    }
-    return wrote;
+riak_print_label_string(riak_print_state *state,
+                        char             *name,
+                        char             *value) {
+    return riak_print(state, "%s: %s\n", name, value);
 }
 
 riak_int32_t
-riak_print_bool(char           *name,
-                riak_boolean_t  value,
-                char          **target,
-                riak_int32_t   *len,
-                riak_int32_t   *total) {
-    riak_int32_t wrote = 0;
-    if (*len > 0) {
-        wrote = snprintf(*target, *len, "%s: %s\n",
-                         name, (value ? "true" : "false"));
-        *len -= wrote;
-        *target += wrote;
-        *total += wrote;
-    }
-    return wrote;
-}
-
-riak_int32_t
-riak_print_binary(char         *name,
-                  riak_binary  *value,
-                  char        **target,
-                  riak_int32_t *len,
-                  riak_int32_t *total) {
-    char buffer[2048];
-    riak_int32_t wrote = 0;
-    if (*len > 0) {
-        riak_binary_print(value, buffer, sizeof(buffer));
-        wrote = snprintf(*target, *len, "%s: %s\n", name, buffer);
-        *len -= wrote;
-        *target += wrote;
-        *total += wrote;
-    }
-    return wrote;
-}
-
-riak_int32_t
-riak_print_binary_hex(char         *name,
-                      riak_binary  *value,
-                      char        **target,
-                      riak_int32_t *len,
-                      riak_int32_t *total) {
-    char buffer[2048];
-    riak_int32_t wrote = 0;
-    if (*len > 0) {
-        riak_binary_hex_print(value, buffer, sizeof(buffer));
-        wrote = snprintf(*target, *len, "%s: %s\n", name, buffer);
-        *len -= wrote;
-        *target += wrote;
-        *total += wrote;
-    }
-    return wrote;
-}
-
-
-static inline int
-riak_print_convert_byte(riak_uint8_t  b,
-                        char        **target,
-                        riak_int32_t *len) {
-
-    if (*len < 6) return 0;
-
-    static char hex[] = "0123456789abcdef";
-    int nibble = (b & 0xf0) >> 4;
-    **target   = '0';
-    (*target)++;
-    **target   = 'x';
-    (*target)++;
-    **target   = hex[nibble];
-    (*target)++;
-    nibble     = (b & 0x0f);
-    **target   = hex[nibble];
-    (*target)++;
-    **target   = ',';
-    (*target)++;
-    **target   = '\0';
-
-    return 5;
-}
-
-riak_int32_t
-riak_print_raw_hex_array(riak_uint8_t *value,
-                         riak_int32_t  value_len,
-                         char        **target,
-                         riak_int32_t *len,
-                         riak_int32_t *total) {
-    riak_int32_t bytes = 0;
-    riak_int32_t wrote = 0;
-    for (; *len > 0 && bytes < value_len; bytes++) {
-        wrote += riak_print_convert_byte(value[bytes], target, len);
-    }
-    return wrote;
-}
-
-riak_int32_t
-riak_print_label(char         *value,
-                 char        **target,
-                 riak_int32_t *len,
-                 riak_int32_t *total) {
-    riak_int32_t wrote = 0;
-    if (*len > 0) {
-        wrote = snprintf(*target, *len, "%s\n", value);
-        *len -= wrote;
-        *target += wrote;
-        *total += wrote;
-    }
-    return wrote;
-}
-
-riak_int32_t
-riak_print_string(char         *name,
-                  char         *value,
-                  char        **target,
-                  riak_int32_t *len,
-                  riak_int32_t *total) {
-    riak_int32_t wrote = 0;
-    if (*len > 0) {
-        wrote = snprintf(*target, *len, "%s: %s\n", name,value);
-        *len -= wrote;
-        *target += wrote;
-        *total += wrote;
-    }
-    return wrote;
-}
-
-riak_int32_t
-riak_print_time(char         *name,
-                riak_int32_t  value,
-                char        **target,
-                riak_int32_t *len,
-                riak_int32_t *total) {
+riak_print_label_time(riak_print_state *state,
+                      char             *name,
+                      riak_int32_t      value) {
     char buffer[256];
     riak_int32_t wrote = 0;
-    if (*len > 0) {
+    if (state->len > 0) {
         time_t mod = (time_t)value;
         strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", localtime(&mod));
-        wrote = snprintf(*target, *len, "%s: %s\n", name, buffer);
-        *len -= wrote;
-        *target += wrote;
-        *total += wrote;
+        wrote = riak_print_label_string(state, name, buffer);
     }
+
     return wrote;
 }
 

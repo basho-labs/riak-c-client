@@ -28,7 +28,6 @@
 #include "riak_utils-internal.h"
 #include "riak_config-internal.h"
 #include "riak_operation-internal.h"
-#include "riak_print-internal.h"
 
 riak_error
 riak_get_clientid_request_encode(riak_operation   *rop,
@@ -78,15 +77,10 @@ riak_get_clientid_response_decode(riak_operation              *rop,
     return ERIAK_OK;
 }
 
-void
-riak_get_clientid_response_print(riak_get_clientid_response *response,
-                                 char                       *target,
-                                 riak_size_t                 len) {
-    char buffer[2048];
-    riak_binary_hex_print(response->client_id, buffer, sizeof(buffer));
-    if (len > 0) {
-        snprintf(target, len, "client_id = %s\n", buffer);
-    }
+riak_int32_t
+riak_get_clientid_response_print(riak_print_state           *state,
+                                 riak_get_clientid_response *response) {
+    return riak_print_label_binary_hex(state, "client_id", response->client_id);
 }
 
 void

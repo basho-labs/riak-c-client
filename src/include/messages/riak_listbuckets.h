@@ -32,14 +32,13 @@ typedef void (*riak_listbuckets_response_callback)(riak_listbuckets_response *re
 
 /**
  * @brief Print a summary of a `riak_listbuckets_response`
+ * @param state Riak Print State
  * @param response Result from a List buckets request
- * @param target Location of string to be formatted
- * @param len Number of free bytes
+ * @returns Number of bytes written
  */
-void
-riak_listbuckets_response_print(riak_listbuckets_response *response,
-                                char                      *target,
-                                riak_size_t                len);
+riak_int32_t
+riak_listbuckets_response_print(riak_print_state          *state,
+                                riak_listbuckets_response *response);
 
 /**
  * @brief Free listbuckets response

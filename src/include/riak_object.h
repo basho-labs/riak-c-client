@@ -50,15 +50,13 @@ riak_object_free(riak_config *cfg,
 
 /**
  * @brief Print contents of a Riak Object to a string
+ * @param state Riak Printing State
  * @param obj Object to print
- * @param target Location to write formatted string
- * @param len Number of bytes to write
  * @return Number of bytes written
  */
-int
-riak_object_print(riak_object  *obj,
-                  char         *target,
-                  riak_uint32_t len);
+riak_int32_t
+riak_object_print(riak_print_state *state,
+                  riak_object      *obj);
 
 /**
  * @brief Allocate an array of `riak_object` pointers

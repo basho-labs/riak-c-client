@@ -32,14 +32,13 @@ typedef void (*riak_listkeys_response_callback)(riak_listkeys_response *response
 
 /**
  * @brief Print a summary of a `riak_listkeys_response`
+ * @param state Riak Print State
  * @param response Result from a Listkeys request
- * @param target Location of string to be formatted
- * @param len Number of free bytes
+ * @returns Number of Bytes Written
  */
-void
-riak_listkeys_response_print(riak_listkeys_response *response,
-                             char                   *target,
-                             riak_size_t             len);
+riak_int32_t
+riak_listkeys_response_print(riak_print_state       *state,
+                             riak_listkeys_response *response);
 
 /**
  * @brief Free listkeys response

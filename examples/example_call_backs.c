@@ -57,7 +57,10 @@ example_serverinfo_cb(riak_serverinfo_response *response,
     riak_config     *cfg = riak_connection_get_config(cxn);
     riak_log_debug(cxn, "%s", "example_serverinfo_cb");
     char output[10240];
-    riak_serverinfo_response_print(response, output, sizeof(output));
+    riak_print_state print_state;
+    riak_print_init(&print_state, output, sizeof(output));
+    riak_serverinfo_response_print(&print_state, response);
+
     riak_log_debug(cxn, "%s", output);
     riak_serverinfo_response_free(cfg, &response);
 }
@@ -70,7 +73,10 @@ example_listbucket_cb(riak_listbuckets_response *response,
     riak_config     *cfg = riak_connection_get_config(cxn);
     riak_log_debug(cxn, "%s", "example_listbucket_cb");
     char output[10240];
-    riak_listbuckets_response_print(response, output, sizeof(output));
+    riak_print_state print_state;
+    riak_print_init(&print_state, output, sizeof(output));
+    riak_listbuckets_response_print(&print_state, response);
+
     riak_log_debug(cxn, "%s", output);
     riak_listbuckets_response_free(cfg, &response);
 }
@@ -83,9 +89,11 @@ example_listkey_cb(riak_listkeys_response *response,
     riak_config     *cfg = riak_connection_get_config(cxn);
     riak_log_debug(cxn, "%s", "listkey_cb");
     char output[10240];
-    riak_listkeys_response_print(response, output, sizeof(output));
+    riak_print_state print_state;
+    riak_print_init(&print_state, output, sizeof(output));
+    riak_listkeys_response_print(&print_state, response);
+
     riak_log_debug(cxn, "%s", output);
-    fflush(stdout);
     riak_listkeys_response_free(cfg, (riak_listkeys_response**)&(response));
 }
 
@@ -97,7 +105,10 @@ example_get_cb(riak_get_response *response,
     riak_config     *cfg = riak_connection_get_config(cxn);
     riak_log_debug(cxn, "%s", "example_get_cb");
     char output[10240];
-    riak_print_get_response(response, output, sizeof(output));
+    riak_print_state print_state;
+    riak_print_init(&print_state, output, sizeof(output));
+    riak_get_response_print(&print_state, response);
+
     riak_log_debug(cxn, "%s", output);
     riak_get_response_free(cfg, &response);
 }
@@ -110,7 +121,10 @@ example_put_cb(riak_put_response *response,
     riak_config     *cfg = riak_connection_get_config(cxn);
     riak_log_debug(cxn, "%s", "example_put_cb");
     char output[10240];
-    riak_put_response_print(response, output, sizeof(output));
+    riak_print_state print_state;
+    riak_print_init(&print_state, output, sizeof(output));
+    riak_put_response_print(&print_state, response);
+
     riak_log_debug(cxn, "%s", output);
     riak_put_response_free(cfg, &response);
 }
@@ -133,7 +147,10 @@ example_getclientid_cb(riak_get_clientid_response *response,
     riak_config     *cfg = riak_connection_get_config(cxn);
     riak_log_debug(cxn, "%s", "example_getclientid_cb");
     char output[10240];
-    riak_get_clientid_response_print(response, output, sizeof(output));
+    riak_print_state print_state;
+    riak_print_init(&print_state, output, sizeof(output));
+    riak_get_clientid_response_print(&print_state, response);
+
     riak_log_debug(cxn, "%s", output);
     riak_get_clientid_response_free(cfg, &response);
 }
@@ -156,9 +173,11 @@ example_getbucketprops_cb(riak_get_bucketprops_response *response,
     riak_config     *cfg = riak_connection_get_config(cxn);
     riak_log_debug(cxn, "%s", "example_getbucketprops_cb");
     char output[10240];
-    riak_get_bucketprops_response_print(response, output, sizeof(output));
+    riak_print_state print_state;
+    riak_print_init(&print_state, output, sizeof(output));
+    riak_get_bucketprops_response_print(&print_state, response);
+
     riak_log_debug(cxn, "%s", output);
-    fflush(stdout);
     riak_get_bucketprops_response_free(cfg, &response);
 }
 
@@ -190,12 +209,11 @@ example_mapreduce_cb(riak_mapreduce_response *response,
     riak_config     *cfg = riak_connection_get_config(cxn);
     riak_log_debug(cxn, "%s", "example_mapreduce_cb");
     char output[10240];
-    riak_int32_t available = sizeof(output);
-    riak_int32_t written = 0;
-    char *target = output;
-    riak_mapreduce_response_print(response, &target, &available, &written);
+    riak_print_state print_state;
+    riak_print_init(&print_state, output, sizeof(output));
+    riak_mapreduce_response_print(&print_state, response);
+
     riak_log_debug(cxn, "%s", output);
-    fflush(stdout);
     riak_mapreduce_response_free(cfg, &response);
 }
 
@@ -207,12 +225,11 @@ example_2index_cb(riak_2index_response *response,
     riak_config     *cfg = riak_connection_get_config(cxn);
     riak_log_debug(cxn, "%s", "example_2index_cb");
     char output[10240];
-    riak_int32_t available = sizeof(output);
-    riak_int32_t written = 0;
-    char *target = output;
-    riak_2index_response_print(response, &target, &available, &written);
+    riak_print_state print_state;
+    riak_print_init(&print_state, output, sizeof(output));
+    riak_2index_response_print(&print_state, response);
+
     riak_log_debug(cxn, "%s", output);
-    fflush(stdout);
     riak_2index_response_free(cfg, &response);
 }
 
@@ -224,11 +241,10 @@ example_search_cb(riak_search_response *response,
     riak_config     *cfg = riak_connection_get_config(cxn);
     riak_log_debug(cxn, "%s", "example_search_cb");
     char output[10240];
-    riak_int32_t available = sizeof(output);
-    riak_int32_t written = 0;
-    char *target = output;
-    riak_search_response_print(response, &target, &available, &written);
+    riak_print_state print_state;
+    riak_print_init(&print_state, output, sizeof(output));
+    riak_search_response_print(&print_state, response);
+
     riak_log_debug(cxn, "%s", output);
-    fflush(stdout);
     riak_search_response_free(cfg, &response);
 }

@@ -43,17 +43,13 @@ riak_search_response_free(riak_config           *cfg,
 
 /**
  * @brief Print out a Riak Search Response
+ * @param state Riak Print State
  * @param response the Riak Search response to print
- * @param target Location to write the string (in/out)
- * @param len Remaining available bytes to write (in/out)
- * @param total Running total of bytes written (in/out)
  * @returns Number of bytes written
  */
 riak_int32_t
-riak_search_response_print(riak_search_response *response,
-                           char                **target,
-                           riak_int32_t         *len,
-                           riak_int32_t         *total);
+riak_search_response_print(riak_print_state     *state,
+                           riak_search_response *response);
 
 /**
  * @brief Access the number of documents in a Search response

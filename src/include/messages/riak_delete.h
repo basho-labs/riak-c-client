@@ -59,15 +59,13 @@ riak_delete_options_free(riak_config *cfg,
 
 /**
  * @brief Print contents of a Riak Delete Options to a string
- * @param obj Object to print
- * @param target Location to write formatted string
- * @param len Number of bytes to write
- * @return Number of bytes written
+ * @param state Riak Print State
+ * @param opt the Delete Option to print
+ * @returns Total number of bytes written
  */
-int
-riak_delete_options_print(riak_delete_options *opt,
-                          char                *target,
-                          riak_int32_t         len);
+riak_int32_t
+riak_delete_options_print(riak_print_state    *state,
+                          riak_delete_options *opt);
 
 /**
  * @brief Set the Vector Clock on a delete operation
@@ -138,4 +136,4 @@ riak_delete_options_set_n_val(riak_delete_options *opt,
 }
 #endif
 
-#endif
+#endif // _RIAK_DELETE_MESSAGE_H

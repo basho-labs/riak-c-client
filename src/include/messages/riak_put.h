@@ -33,14 +33,13 @@ typedef void (*riak_put_response_callback)(riak_put_response *response, void *pt
 
 /**
  * @brief Print a summary of a `riak_put_response`
+ * @param state Riak Print State
  * @param response Result from a Put request
- * @param target Location of string to be formatted
- * @param len Number of free bytes
+ * @returns Number of bytes written
  */
-void
-riak_put_response_print(riak_put_response *response,
-                        char              *target,
-                        riak_size_t        len);
+riak_int32_t
+riak_put_response_print(riak_print_state  *state,
+                        riak_put_response *response);
 
 /**
  * @brief Free put response
@@ -70,15 +69,13 @@ riak_put_options_free(riak_config       *cfg,
 
 /**
  * @brief Print contents of a Riak Put Options to a string
+ * @param state Riak Print State
  * @param obj Object to print
- * @param target Location to write formatted string
- * @param len Number of bytes to write
  * @return Number of bytes written
  */
-int
-riak_put_options_print(riak_put_options *opt,
-                       char             *target,
-                       riak_int32_t      len);
+riak_int32_t
+riak_put_options_print(riak_print_state *state,
+                       riak_put_options *opt);
 
 /**
  * @brief Determine if Vector Clock is in a Put response

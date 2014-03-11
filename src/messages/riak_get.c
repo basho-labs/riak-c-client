@@ -29,7 +29,6 @@
 #include "riak_config-internal.h"
 #include "riak_operation-internal.h"
 #include "riak_bucketprops-internal.h"
-#include "riak_print-internal.h"
 
 riak_error
 riak_get_request_encode(riak_operation  *rop,
@@ -146,24 +145,20 @@ riak_get_response_decode(riak_operation     *rop,
     return ERIAK_OK;
 }
 
-int
-riak_print_get_response(riak_get_response *response,
-                        char              *target,
-                        riak_size_t        len) {
-    riak_int32_t left_to_write = len;
+riak_int32_t
+riak_get_response_print(riak_print_state  *state,
+                        riak_get_response *response) {
     riak_int32_t wrote = 0;
-    riak_print_binary_hex("V-Clock", response->vclock, &target, &left_to_write, &wrote);
-    riak_print_bool("Unmodified", response->unmodified, &target, &left_to_write, &wrote);
-    riak_print_bool("Deleted", response->deleted, &target, &left_to_write, &wrote);
-    riak_print_int("Objects", response->n_content, &target, &left_to_write, &wrote);
+    wrote += riak_print_label_binary_hex(state, "V-Clock", response->vclock);
+    wrote += riak_print_label_bool(state, "Unmodified", response->unmodified);
+    wrote += riak_print_label_bool(state, "Deleted", response->deleted);
+    wrote += riak_print_label_int(state, "Objects", response->n_content);
 
     riak_uint32_t i;
-    for(i = 0; (i < response->n_content) && (left_to_write > 0); i++) {
-        wrote = riak_object_print(response->content[i], target, left_to_write);
-        left_to_write -= wrote;
-        target += wrote;
+    for(i = 0; (i < response->n_content) && (riak_print_len(state) > 0); i++) {
+        wrote += riak_object_print(state, response->content[i]);
     }
-    return len-left_to_write;
+    return wrote;
 }
 
 void
@@ -194,43 +189,42 @@ riak_get_options_free(riak_config       *cfg,
     riak_free(cfg, opt);
 }
 
-int
-riak_get_options_print(riak_get_options *opt,
-                       char             *target,
-                       riak_int32_t      len) {
-    riak_int32_t total = 0;
+riak_int32_t
+riak_get_options_print(riak_print_state *state,
+                       riak_get_options *opt) {
+    riak_int32_t wrote = 0;
     if (opt->has_r) {
-        riak_print_int("R", opt->r, &target, &len, &total);
+        wrote += riak_print_label_int(state, "R", opt->r);
     }
     if (opt->has_pr) {
-        riak_print_int("PR", opt->pr, &target, &len, &total);
+        wrote += riak_print_label_int(state, "PR", opt->pr);
     }
     if (opt->has_basic_quorum) {
-        riak_print_bool("Basic Quorum", opt->basic_quorum, &target, &len, &total);
+        wrote += riak_print_label_bool(state, "Basic Quorum", opt->basic_quorum);
     }
     if (opt->has_notfound_ok) {
-        riak_print_bool("Not Found OK", opt->notfound_ok, &target, &len, &total);
+        wrote += riak_print_label_bool(state, "Not Found OK", opt->notfound_ok);
     }
     if (opt->has_if_modified) {
-        riak_print_binary("If Modified", opt->if_modified, &target, &len, &total);
+        wrote += riak_print_label_binary(state, "If Modified", opt->if_modified);
     }
     if (opt->has_head) {
-        riak_print_bool("Head", opt->head, &target, &len, &total);
+        wrote += riak_print_label_bool(state, "Head", opt->head);
     }
     if (opt->has_deletedvclock) {
-        riak_print_bool("Deleted VClock", opt->deletedvclock, &target, &len, &total);
+        wrote += riak_print_label_bool(state, "Deleted VClock", opt->deletedvclock);
     }
     if (opt->has_timeout) {
-        riak_print_int("Timeout", opt->timeout, &target, &len, &total);
+        wrote += riak_print_label_int(state, "Timeout", opt->timeout);
     }
     if (opt->has_sloppy_quorum) {
-        riak_print_bool("Sloppy Quorum", opt->sloppy_quorum, &target, &len, &total);
+        wrote += riak_print_label_bool(state, "Sloppy Quorum", opt->sloppy_quorum);
     }
     if (opt->has_n_val) {
-        riak_print_int("N Val", opt->n_val, &target, &len, &total);
+        wrote += riak_print_label_int(state, "N Val", opt->n_val);
     }
 
-    return total;
+    return wrote;
 }
 
 riak_boolean_t

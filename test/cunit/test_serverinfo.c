@@ -136,9 +136,11 @@ test_integration_server_info() {
     err = riak_serverinfo(cxn, &response);
     CU_ASSERT_FATAL(err == ERIAK_OK)
 
-    char buffer[1024];
-    riak_serverinfo_response_print(response, buffer, sizeof(buffer));
-    fprintf(stderr, "%s", buffer);
+    char output[1024];
+    riak_print_state print_state;
+    riak_print_init(&print_state, output, sizeof(output));
+    riak_serverinfo_response_print(&print_state, response);
+    fprintf(stderr, "%s", output);
     riak_serverinfo_response_free(cfg, &response);
     test_disconnect(cfg, &cxn);
     test_cleanup(&cfg);
@@ -154,9 +156,11 @@ void
 test_serverinfo_async_cb(riak_serverinfo_response *response,
                          void                     *ptr) {
     test_async_connection *conn = (test_async_connection*)ptr;
-    char buffer[1024];
-    riak_serverinfo_response_print(response, buffer, sizeof(buffer));
-    fprintf(stderr, "ASYNCHRONOUS %s", buffer);
+    char output[1024];
+    riak_print_state print_state;
+    riak_print_init(&print_state, output, sizeof(output));
+    riak_serverinfo_response_print(&print_state, response);
+    fprintf(stderr, "ASYNCHRONOUS %s", output);
     riak_serverinfo_response_free(conn->cfg, &response);
 }
 

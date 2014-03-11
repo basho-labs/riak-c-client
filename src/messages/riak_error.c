@@ -29,7 +29,6 @@
 #include "riak_config-internal.h"
 #include "riak_operation-internal.h"
 #include "riak_bucketprops-internal.h"
-#include "riak_print-internal.h"
 
 riak_error
 riak_error_response_decode(riak_operation       *rop,

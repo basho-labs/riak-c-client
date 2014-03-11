@@ -28,7 +28,6 @@
 #include "riak_utils-internal.h"
 #include "riak_config-internal.h"
 #include "riak_operation-internal.h"
-#include "riak_print-internal.h"
 
 riak_error
 riak_listbuckets_request_encode(riak_operation   *rop,
@@ -146,28 +145,19 @@ riak_listbuckets_response_decode(riak_operation             *rop,
     return ERIAK_OK;
 }
 
-void
-riak_listbuckets_response_print(riak_listbuckets_response *response,
-                                char                      *target,
-                                riak_size_t                len) {
-    int i;
-    riak_size_t wrote = 0;
-    riak_int32_t left_to_write = len;
-    char name[2048];
-    if (left_to_write > 0) {
-        wrote = snprintf(target, left_to_write, "n_buckets = %d\n", response->n_buckets);
-        left_to_write -= wrote;
-        target += wrote;
+riak_int32_t
+riak_listbuckets_response_print(riak_print_state          *state,
+                                riak_listbuckets_response *response) {
+    riak_int32_t wrote = 0;
+    wrote += riak_print_label_int(state, "Num Buckets", response->n_buckets);
+    for(int i = 0; (riak_print_len(state) > 0) && (i < response->n_buckets); i++) {
+        wrote += riak_print(state, "%d - ", i);
+        wrote += riak_print_binary(state, response->buckets[i]);
+        wrote += riak_print(state, "%s", "\n");
     }
-    for(i = 0; (left_to_write > 0) && (i < response->n_buckets); i++) {
-        riak_binary_print(response->buckets[i], name, sizeof(name));
-        wrote = snprintf(target, left_to_write, "%d - %s\n", i, name);
-        left_to_write -= wrote;
-        target += wrote;
-    }
-    if (left_to_write > 0) {
-        snprintf(target, left_to_write, "done = %d", response->done);
-    }
+    wrote += riak_print_label_bool(state, "Done", response->done);
+
+    return wrote;
 }
 
 void

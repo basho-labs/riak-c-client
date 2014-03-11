@@ -28,7 +28,6 @@
 #include "riak_utils-internal.h"
 #include "riak_config-internal.h"
 #include "riak_operation-internal.h"
-#include "riak_print-internal.h"
 
 riak_error
 riak_serverinfo_request_encode(riak_operation   *rop,
@@ -87,25 +86,17 @@ riak_serverinfo_response_decode(riak_operation            *rop,
     return ERIAK_OK;
 }
 
-void
-riak_serverinfo_response_print(riak_serverinfo_response *response,
-                               char                     *target,
-                               riak_size_t               len) {
-    riak_int32_t left_to_write = len;
-    riak_int32_t wrote;
-    char buffer[1024];
-    if ((response->has_node) && (left_to_write > 0)) {
-        riak_binary_print(response->node, buffer, sizeof(buffer));
-        wrote = snprintf(target, left_to_write, "Node: %s\n", buffer);
-        left_to_write -= wrote;
-        target += wrote;
+riak_int32_t
+riak_serverinfo_response_print(riak_print_state         *state,
+                               riak_serverinfo_response *response) {
+    riak_int32_t wrote = 0;
+    if (response->has_node) {
+        wrote += riak_print_label_binary(state, "Node", response->node);
     }
-    if ((response->has_server_version) && (left_to_write > 0)) {
-        riak_binary_print(response->server_version, buffer, sizeof(buffer));
-        wrote = snprintf(target, left_to_write, "Version: %s\n", buffer);
-        left_to_write -= wrote;
-        target += wrote;
+    if (response->has_server_version) {
+        wrote += riak_print_label_binary(state, "Version", response->server_version);
     }
+    return wrote;
 }
 
 void

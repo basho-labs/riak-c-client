@@ -121,7 +121,7 @@ riak_binary_print(riak_binary  *bin,
                   riak_uint32_t len);
 
 /**
- * @brief Hexidecimal representation of a binary object
+ * @brief Hexadecimal representation of a binary object
  * @param bin Riak Binary
  * @param target Where to write the output
  * @param len Maximum allowed number of bytes to write

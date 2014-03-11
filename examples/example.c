@@ -134,6 +134,9 @@ main(int   argc,
     riak_2index_options *index_options;
     riak_search_options *search_options;
     char output[10240];
+    riak_print_state print_state;
+    riak_print_init(&print_state, output, sizeof(output));
+
     int result = evthread_use_pthreads();
     if (result < 0) {
         riak_log_critical_config(cfg, "%s", "Could not use pthreads with libevent");
@@ -215,7 +218,7 @@ main(int   argc,
             } else {
                 riak_serverinfo_response *serverinfo_response = NULL;
                 err = riak_serverinfo(cxn, &serverinfo_response);
-                riak_serverinfo_response_print(serverinfo_response, output, sizeof(output));
+                riak_serverinfo_response_print(&print_state, serverinfo_response);
                 printf("%s\n", output);
                 riak_serverinfo_response_free(cfg, &serverinfo_response);
             }
@@ -238,7 +241,7 @@ main(int   argc,
                 riak_get_response *get_response = NULL;
                 err = riak_get(cxn, bucket_bin, key_bin, get_options, &get_response);
                 if (err == ERIAK_OK) {
-                    riak_print_get_response(get_response, output, sizeof(output));
+                    riak_get_response_print(&print_state, get_response);
                     printf("%s\n", output);
                 }
                 riak_get_response_free(cfg, &get_response);
@@ -280,7 +283,7 @@ main(int   argc,
                 riak_put_response *put_response = NULL;
                 err = riak_put(cxn, obj, put_options, &put_response);
                 if (err == ERIAK_OK) {
-                    riak_put_response_print(put_response, output, sizeof(output));
+                    riak_put_response_print(&print_state, put_response);
                     printf("%s\n", output);
                 }
                 riak_put_response_free(cfg, &put_response);
@@ -318,7 +321,7 @@ main(int   argc,
                 riak_listbuckets_response *bucket_response = NULL;
                 err = riak_listbuckets(cxn, &bucket_response);
                 if (err == ERIAK_OK) {
-                    riak_listbuckets_response_print(bucket_response, output, sizeof(output));
+                    riak_listbuckets_response_print(&print_state, bucket_response);
                     printf("%s\n", output);
                 }
                 riak_listbuckets_response_free(cfg, &bucket_response);
@@ -335,7 +338,7 @@ main(int   argc,
                 riak_listkeys_response *key_response = NULL;
                 err = riak_listkeys(cxn, bucket_bin, args.timeout * 1000, &key_response);
                 if (err == ERIAK_OK) {
-                    riak_listkeys_response_print(key_response, output, sizeof(output));
+                    riak_listkeys_response_print(&print_state, key_response);
                     printf("%s\n", output);
                 }
                 riak_listkeys_response_free(cfg, &key_response);
@@ -352,7 +355,7 @@ main(int   argc,
                 riak_get_clientid_response *getcli_response = NULL;
                 err = riak_get_clientid(cxn, &getcli_response);
                 if (err == ERIAK_OK) {
-                    riak_get_clientid_response_print(getcli_response, output, sizeof(output));
+                    riak_get_clientid_response_print(&print_state, getcli_response);
                     printf("%s\n", output);
                 }
                 riak_get_clientid_response_free(cfg, &getcli_response);
@@ -382,7 +385,7 @@ main(int   argc,
                 riak_get_bucketprops_response *bucket_response = NULL;
                 err = riak_get_bucketprops(cxn, bucket_bin, &bucket_response);
                 if (err == ERIAK_OK) {
-                    riak_get_bucketprops_response_print(bucket_response, output, sizeof(output));
+                    riak_get_bucketprops_response_print(&print_state, bucket_response);
                     printf("%s\n", output);
                 }
                 riak_get_bucketprops_response_free(cfg, &bucket_response);
@@ -433,16 +436,12 @@ main(int   argc,
                 err = riak_async_register_mapreduce(rop, content_type, value_bin, RIAK_FALSE, (riak_response_callback)example_mapreduce_cb);
             } else {
                 riak_mapreduce_response *mapred_response = NULL;
-                 err = riak_mapreduce(cxn, content_type, value_bin, &mapred_response);
-                 if (err == ERIAK_OK) {
-                     riak_int32_t len   = sizeof(output);
-                     riak_int32_t total = 0;
-                     char *target       = output;
-                     riak_mapreduce_response_print(mapred_response, &target, &len, &total);
-                     printf("%s\n", output);
-                 
-                     riak_mapreduce_response_free(cfg, &mapred_response);
-                 }
+                err = riak_mapreduce(cxn, content_type, value_bin, &mapred_response);
+                if (err == ERIAK_OK) {
+                    riak_mapreduce_response_print(&print_state, mapred_response);
+                    printf("%s\n", output);
+                }
+                riak_mapreduce_response_free(cfg, &mapred_response);
             }
             if (err) {
                 fprintf(stderr, "Map/Reduce Problems [%s]\n", riak_strerror(err));
@@ -464,10 +463,7 @@ main(int   argc,
                 riak_2index_response *index_response = NULL;
                 err = riak_2index(cxn, bucket_bin, index_bin, index_options, &index_response);
                 if (err == ERIAK_OK) {
-                    riak_int32_t len   = sizeof(output);
-                    riak_int32_t total = 0;
-                    char *target       = output;
-                    riak_2index_response_print(index_response, &target, &len, &total);
+                    riak_2index_response_print(&print_state, index_response);
                     printf("%s\n", output);
                 }
                 riak_2index_response_free(cfg, &index_response);
@@ -492,10 +488,7 @@ main(int   argc,
                 riak_search_response *search_response = NULL;
                 err = riak_search(cxn, bucket_bin, value_bin, search_options, &search_response);
                 if (err == ERIAK_OK) {
-                    riak_int32_t len   = sizeof(output);
-                    riak_int32_t total = 0;
-                    char *target       = output;
-                    riak_search_response_print(search_response, &target, &len, &total);
+                    riak_search_response_print(&print_state, search_response);
                     printf("%s\n", output);
                 }
                 riak_search_response_free(cfg, &search_response);

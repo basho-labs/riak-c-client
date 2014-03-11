@@ -28,7 +28,6 @@
 #include "riak_utils-internal.h"
 #include "riak_config-internal.h"
 #include "riak_operation-internal.h"
-#include "riak_print-internal.h"
 
 riak_error
 riak_listkeys_request_encode(riak_operation   *rop,
@@ -149,28 +148,20 @@ riak_listkeys_response_decode(riak_operation          *rop,
     return ERIAK_OK;
 }
 
-void
-riak_listkeys_response_print(riak_listkeys_response *response,
-                             char                   *target,
-                             riak_size_t             len) {
-    int i;
-    riak_size_t wrote = 0;
-    riak_int32_t left_to_write = len;
-    char name[2048];
-    if (left_to_write > 0) {
-        wrote = snprintf(target, left_to_write, "n_keys = %d\n", response->n_keys);
-        left_to_write -= wrote;
-        target += wrote;
+riak_int32_t
+riak_listkeys_response_print(riak_print_state       *state,
+                             riak_listkeys_response *response) {
+    riak_int32_t wrote = 0;
+
+    wrote += riak_print_label_int(state, "Num Keys", response->n_keys);
+    for(int i = 0; (riak_print_len(state) > 0) && (i < response->n_keys); i++) {
+        wrote += riak_print(state, "%d - ", i);
+        wrote += riak_print_binary(state, response->keys[i]);
+        wrote += riak_print(state, "%s", "\n");
     }
-    for(i = 0; (left_to_write > 0) && (i < response->n_keys); i++) {
-        riak_binary_print(response->keys[i], name, sizeof(name));
-        wrote = snprintf(target, left_to_write, "%d - %s\n", i, name);
-        left_to_write -= wrote;
-        target += wrote;
-    }
-    if (left_to_write > 0) {
-        snprintf(target, left_to_write, "done = %d", response->done);
-    }
+    wrote += riak_print_label_bool(state, "Done", response->done);
+
+    return wrote;
 }
 
 void

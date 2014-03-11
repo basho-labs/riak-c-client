@@ -28,7 +28,6 @@
 #include "riak_utils-internal.h"
 #include "riak_config-internal.h"
 #include "riak_operation-internal.h"
-#include "riak_print-internal.h"
 
 riak_pb_message*
 riak_pb_message_new(riak_config  *cfg,
