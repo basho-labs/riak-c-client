@@ -79,6 +79,10 @@ main(int   argc,
 
     // create some sample binary values to use
     riak_binary *bucket_bin   = riak_binary_copy_from_string(cfg, args.bucket); // Not copied
+    riak_binary *bucket_type_bin = NULL;
+    if(args.has_bucket_type) {
+        bucket_type_bin = riak_binary_copy_from_string(cfg, args.bucket_type);
+    }
     riak_binary *key_bin      = riak_binary_copy_from_string(cfg, args.key);   // Not copied
     riak_binary *value_bin    = riak_binary_copy_from_string(cfg, args.value); // Not copied
     riak_binary *index_bin    = riak_binary_copy_from_string(cfg, args.index); // Not copied
@@ -93,7 +97,7 @@ main(int   argc,
     }
 
     // Supporting Options and outputs
-    riak_2index_options *index_options;
+    riak_2i_options *index_options;
     riak_bucketprops    *props;
     riak_delete_options *delete_options;
     riak_get_options    *get_options;
@@ -151,7 +155,11 @@ main(int   argc,
             }
             riak_get_options_set_basic_quorum(get_options, RIAK_TRUE);
             riak_get_options_set_r(get_options, 2);
-            err = riak_async_register_get(rop, bucket_bin, key_bin, get_options, (riak_response_callback)example_get_cb);
+            err = riak_async_register_get(rop,
+                                          bucket_bin,
+                                          bucket_type_bin,
+                                          key_bin, get_options,
+                                          (riak_response_callback)example_get_cb);
             riak_get_options_free(cfg, &get_options);
             if (err) {
                 fprintf(stderr, "Get Problems [%s]\n", riak_strerror(err));
@@ -165,6 +173,9 @@ main(int   argc,
                 return 1;
             }
             riak_object_set_bucket(cfg, obj, riak_binary_copy_from_string(cfg, args.bucket));
+            if (args.has_bucket_type) {
+                riak_object_set_bucket_type(cfg, obj, riak_binary_copy_from_string(cfg, args.bucket_type));
+            }
             if (args.has_key) {
                 riak_object_set_key(cfg, obj, riak_binary_copy_from_string(cfg, args.key));
             }
@@ -198,7 +209,12 @@ main(int   argc,
             }
             riak_delete_options_set_w(delete_options, 1);
             riak_delete_options_set_dw(delete_options, 1);
-            err = riak_async_register_delete(rop, bucket_bin, key_bin, delete_options, (riak_response_callback)example_delete_cb);
+            err = riak_async_register_delete(rop,
+                                             bucket_bin,
+                                             bucket_type_bin,
+                                             key_bin,
+                                             delete_options,
+                                             (riak_response_callback)example_delete_cb);
             riak_delete_options_free(cfg, &delete_options);
             if (err) {
                 fprintf(stderr, "Delete Problems [%s]\n", riak_strerror(err));
@@ -206,14 +222,21 @@ main(int   argc,
             }
             break;
         case RIAK_COMMAND_LISTBUCKETS:
-            err = riak_async_register_listbuckets(rop, (riak_response_callback)example_listbucket_cb);
+            err = riak_async_register_listbuckets(rop,
+                                                  bucket_type_bin,
+                                                  args.timeout * 1000,
+                                                  (riak_response_callback)example_listbucket_cb);
             if (err) {
                 fprintf(stderr, "List Buckets Problems [%s]\n", riak_strerror(err));
                 exit(1);
             }
             break;
         case RIAK_COMMAND_LISTKEYS:
-            err = riak_async_register_listkeys(rop, bucket_bin, args.timeout * 1000, (riak_response_callback)example_listkey_cb);
+            err = riak_async_register_listkeys(rop,
+                                               bucket_bin,
+                                               bucket_type_bin,
+                                               args.timeout * 1000,
+                                               (riak_response_callback)example_listkey_cb);
             if (err) {
                 fprintf(stderr, "List Keys Problems [%s]\n", riak_strerror(err));
                 exit(1);
@@ -268,16 +291,21 @@ main(int   argc,
             }
             break;
         case RIAK_COMMAND_INDEX:
-            index_options = riak_2index_options_new(cfg);
+            index_options = riak_2i_options_new(cfg);
             if (index_options == NULL) {
                 riak_log_critical(cxn, "%s","Could not allocate Riak Secondary Index Options");
                 return 1;
             }
-            riak_2index_options_set_stream(index_options, RIAK_TRUE);
-            riak_2index_options_set_timeout(index_options, 10000);
-            riak_2index_options_set_key(cfg, index_options, value_bin);
-            err = riak_async_register_2index(rop, bucket_bin, index_bin, index_options, (riak_response_callback)example_2index_cb);
-            riak_2index_options_free(cfg, &index_options);
+            riak_2i_options_set_stream(index_options, RIAK_TRUE);
+            riak_2i_options_set_timeout(index_options, 10000);
+            riak_2i_options_set_key(cfg, index_options, value_bin);
+            err = riak_async_register_2i(rop,
+                                         bucket_bin,
+                                         bucket_type_bin,
+                                         index_bin,
+                                         index_options,
+                                         (riak_response_callback)example_2i_cb);
+            riak_2i_options_free(cfg, &index_options);
             if (err) {
                 fprintf(stderr, "Secondary Index Problems [%s]\n", riak_strerror(err));
                 exit(1);

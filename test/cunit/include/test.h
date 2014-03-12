@@ -65,6 +65,7 @@ test_log(void            *ptr,
          riak_uint32_t    line,
          const char      *format,
          va_list          args);
+#define DEFAULT_TIMEOUT         10000
 
 /**
  * @brief Set up testing environment

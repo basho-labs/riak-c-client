@@ -301,6 +301,7 @@ test_get_decode_response() {
 }
 
 void
+<<<<<<< HEAD
 test_integration_get_value() {
     riak_config     *cfg;
     riak_connection *cxn = NULL;

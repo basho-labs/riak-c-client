@@ -21,40 +21,40 @@
  *********************************************************************/
 
 void
-test_2index_options_qtype();
+test_2i_options_qtype();
 
 void
-test_2index_options_key();
+test_2i_options_key();
 
 void
-test_2index_options_range_min();
+test_2i_options_range_min();
 
 void
-test_2index_options_range_max();
+test_2i_options_range_max();
 
 void
-test_2index_options_return_terms();
+test_2i_options_return_terms();
 
 void
-test_2index_options_stream();
+test_2i_options_stream();
 
 void
-test_2index_options_max_results();
+test_2i_options_max_results();
 
 void
-test_2index_options_continuation();
+test_2i_options_continuation();
 
 void
-test_2index_options_timeout();
+test_2i_options_timeout();
 
 void
-test_2index_options_type();
+test_2i_options_type();
 
 void
-test_2index_options_term_regex();
+test_2i_options_term_regex();
 
 void
-test_2index_options_pagination_sort();
+test_2i_options_pagination_sort();
 
 void
-test_2index_response_decode();
+test_2i_response_decode();
