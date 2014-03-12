@@ -25,6 +25,7 @@
 #include <time.h>
 
 typedef struct {
+    char *filename;
     FILE *fp;
 } example_log_data;
 

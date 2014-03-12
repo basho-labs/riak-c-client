@@ -113,11 +113,11 @@ main(int   argc,
         switch (operation) {
         case RIAK_COMMAND_PING:
             err = riak_ping(cxn);
-            printf("PONG\n");
             if (err) {
-                fprintf(stderr, "No Ping [%s]\n", riak_strerror(err));
+                fprintf(stderr, "PANG [%s]\n", riak_strerror(err));
                 exit(1);
             }
+            printf("PONG\n");
             break;
         case RIAK_COMMAND_GETSERVERINFO:
             err = riak_serverinfo(cxn, &serverinfo_response);

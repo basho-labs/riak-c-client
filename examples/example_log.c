@@ -26,10 +26,12 @@
 riak_int32_t
 example_log_init(void *ptr) {
     example_log_data* datum = (example_log_data*)ptr;
-    datum->fp = fopen("riak.log", "w+");
+    datum->filename = "riak.log";
+    datum->fp = fopen(datum->filename, "w+");
     if (datum->fp == NULL) {
         return 1;
     }
+    printf("Log file %s initialized.\n", datum->filename);
     return 0;
 }
 
