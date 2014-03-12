@@ -40,9 +40,10 @@ struct _riak_listkeys_response {
  */
 riak_error
 riak_listkeys_request_encode(riak_operation   *rop,
-                                 riak_binary  *bucket,
-                                 riak_uint32_t timeout,
-                                 riak_pb_message **req);
+                             riak_binary  *bucket,
+                             riak_binary  *bucket_type,
+                             riak_uint32_t timeout,
+                             riak_pb_message **req);
 
 /**
  * @brief Translate PBC listkeys response into Riak structure

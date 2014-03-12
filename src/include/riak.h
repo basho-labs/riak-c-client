@@ -83,6 +83,7 @@ riak_serverinfo(riak_connection           *cxn,
 riak_error
 riak_get(riak_connection           *cxn,
          riak_binary               *bucket,
+         riak_binary               *bucket_type,
          riak_binary               *key,
          riak_get_options          *opts,
          riak_get_response        **response);
@@ -112,6 +113,7 @@ riak_put(riak_connection    *cxn,
 riak_error
 riak_delete(riak_connection     *cxn,
             riak_binary         *bucket,
+            riak_binary         *bucket_type,
             riak_binary         *key,
             riak_delete_options *opts);
 
@@ -123,6 +125,8 @@ riak_delete(riak_connection     *cxn,
  */
 riak_error
 riak_listbuckets(riak_connection            *cxn,
+                 riak_binary                *bucket_type,
+                 riak_uint32_t               timeout,
                  riak_listbuckets_response **repsonse);
 
 /**
@@ -136,6 +140,7 @@ riak_listbuckets(riak_connection            *cxn,
 riak_error
 riak_listkeys(riak_connection         *cxn,
               riak_binary             *bucket,
+              riak_binary             *bucket_type,
               riak_uint32_t            timeout,
               riak_listkeys_response **repsonse);
 
@@ -208,11 +213,12 @@ riak_set_bucketprops(riak_connection                *cxn,
  * @param response Returned bucket properties
  * @return Error code */
 riak_error
-riak_2index(riak_connection       *cxn,
-            riak_binary           *bucket,
-            riak_binary           *index,
-            riak_2index_options   *opts,
-            riak_2index_response **response);
+riak_2i(riak_connection       *cxn,
+        riak_binary           *bucket,
+        riak_binary           *bucket_type,
+        riak_binary           *index,
+        riak_2i_options   *opts,
+        riak_2i_response **response);
 
 /**
  * @brief Synchronous Map/Reduce request
@@ -264,6 +270,7 @@ riak_async_register_serverinfo(riak_operation        *rop,
 riak_error
 riak_async_register_get(riak_operation        *rop,
                         riak_binary           *bucket,
+                        riak_binary           *bucket_type,
                         riak_binary           *key,
                         riak_get_options      *get_options,
                         riak_response_callback cb);
@@ -276,17 +283,21 @@ riak_async_register_put(riak_operation        *rop,
 riak_error
 riak_async_register_delete(riak_operation        *rop,
                            riak_binary           *bucket,
+                           riak_binary           *bucket_type,
                            riak_binary           *key,
                            riak_delete_options   *options,
                            riak_response_callback cb);
 
 riak_error
 riak_async_register_listbuckets(riak_operation        *rop,
+                                riak_binary           *bucket_type,
+                                riak_uint32_t          timeout,
                                 riak_response_callback cb);
 
 riak_error
 riak_async_register_listkeys(riak_operation        *rop,
                              riak_binary           *bucket,
+                             riak_binary           *bucket_types,
                              riak_uint32_t          timeout,
                              riak_response_callback cb );
 
@@ -339,11 +350,12 @@ riak_async_register_mapreduce(riak_operation        *rop,
  * @returns Error Code
  */
 riak_error
-riak_async_register_2index(riak_operation        *rop,
-                           riak_binary           *bucket,
-                           riak_binary           *index,
-                           riak_2index_options   *index_options,
-                           riak_response_callback cb);
+riak_async_register_2i(riak_operation        *rop,
+                       riak_binary           *bucket,
+                       riak_binary           *bucket_type,
+                       riak_binary           *index,
+                       riak_2i_options   *index_options,
+                       riak_response_callback cb);
 
 /**
  * @brief Register an asynchronous Riak Search job

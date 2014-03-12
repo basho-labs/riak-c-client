@@ -126,6 +126,7 @@ riak_serverinfo(riak_connection           *cxn,
 riak_error
 riak_get(riak_connection    *cxn,
          riak_binary        *bucket,
+         riak_binary        *bucket_type,
          riak_binary        *key,
          riak_get_options   *opts,
          riak_get_response **response) {
@@ -133,8 +134,13 @@ riak_get(riak_connection    *cxn,
     riak_error err = riak_operation_new(cxn, &rop, NULL, NULL, NULL);
     if (err) {
         return err;
-    }
-    err = riak_get_request_encode(rop, bucket, key, opts, &(rop->pb_request));
+    }    
+    err = riak_get_request_encode(rop,
+                                  bucket,
+                                  bucket_type,
+                                  key,
+                                  opts,
+                                  &(rop->pb_request));
     if (err) {
         return err;
     }
@@ -171,6 +177,7 @@ riak_put(riak_connection    *cxn,
 riak_error
 riak_delete(riak_connection    *cxn,
            riak_binary         *bucket,
+           riak_binary         *bucket_type,
            riak_binary         *key,
            riak_delete_options *opts) {
     riak_operation *rop = NULL;
@@ -178,7 +185,7 @@ riak_delete(riak_connection    *cxn,
     if (err) {
         return err;
     }
-    err = riak_delete_request_encode(rop, bucket, key, opts, &(rop->pb_request));
+    err = riak_delete_request_encode(rop, bucket, bucket_type, key, opts, &(rop->pb_request));
     if (err) {
         return err;
     }
@@ -193,13 +200,18 @@ riak_delete(riak_connection    *cxn,
 
 riak_error
 riak_listbuckets(riak_connection            *cxn,
+                 riak_binary                *bucket_type,
+                 riak_uint32_t               timeout,
                  riak_listbuckets_response **response) {
     riak_operation *rop = NULL;
     riak_error err = riak_operation_new(cxn, &rop, NULL, NULL, NULL);
     if (err) {
         return err;
     }
-    err = riak_listbuckets_request_encode(rop, &(rop->pb_request));
+    err = riak_listbuckets_request_encode(rop,
+                                          bucket_type,
+                                          timeout,
+                                          &(rop->pb_request));
     if (err) {
         return err;
     }
@@ -213,6 +225,7 @@ riak_listbuckets(riak_connection            *cxn,
 riak_error
 riak_listkeys(riak_connection         *cxn,
               riak_binary             *bucket,
+              riak_binary             *bucket_type,
               riak_uint32_t            timeout,
               riak_listkeys_response **response) {
     riak_operation *rop = NULL;
@@ -220,7 +233,11 @@ riak_listkeys(riak_connection         *cxn,
     if (err) {
         return err;
     }
-    err = riak_listkeys_request_encode(rop, bucket, timeout, &(rop->pb_request));
+    err = riak_listkeys_request_encode(rop,
+                                       bucket,
+                                       bucket_type,
+                                       timeout,
+                                       &(rop->pb_request));
     if (err) {
         return err;
     }
@@ -359,17 +376,23 @@ riak_mapreduce(riak_connection          *cxn,
 }
 
 riak_error
-riak_2index(riak_connection       *cxn,
-            riak_binary           *bucket,
-            riak_binary           *index,
-            riak_2index_options   *opts,
-            riak_2index_response **response) {
+riak_2i(riak_connection       *cxn,
+        riak_binary           *bucket,
+        riak_binary           *bucket_type,
+        riak_binary           *index,
+        riak_2i_options   *opts,
+        riak_2i_response **response) {
     riak_operation *rop = NULL;
     riak_error err = riak_operation_new(cxn, &rop, NULL, NULL, NULL);
     if (err) {
         return err;
     }
-    err = riak_2index_request_encode(rop, bucket, index, opts, &(rop->pb_request));
+    err = riak_2i_request_encode(rop,
+                                 bucket,
+                                 bucket_type,
+                                 index,
+                                 opts,
+                                 &(rop->pb_request));
     if (err) {
         return err;
     }
