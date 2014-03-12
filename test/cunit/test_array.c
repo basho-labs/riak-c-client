@@ -80,7 +80,7 @@ test_array_insert() {
     }
     CU_ASSERT_EQUAL(riak_array_length(ra), 100);
     for(riak_uint64_t i = 1; i <= 100; i++) {
-        riak_uint64_t value = (int)riak_array_pop(ra);
+        riak_uint64_t value = (riak_uint64_t)riak_array_pop(ra);
         CU_ASSERT_EQUAL_FATAL(i,value)
     }
     riak_array_free(&ra);
@@ -184,7 +184,7 @@ test_array_pop() {
     }
     CU_ASSERT_EQUAL(riak_array_length(ra), 100);
     for(riak_uint64_t i = 100; i > 0; i--) {
-        riak_uint64_t value = (int)riak_array_pop(ra);
+        riak_uint64_t value = (riak_uint64_t)riak_array_pop(ra);
         CU_ASSERT_EQUAL_FATAL(i,value)
     }
     CU_ASSERT_EQUAL(riak_array_length(ra), 0);
