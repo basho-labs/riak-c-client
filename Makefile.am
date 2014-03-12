@@ -19,6 +19,7 @@ include_HEADERS =	src/include/riak.h \
 			src/include/riak_object.h \
 			src/include/riak_operation.h \
 			src/include/riak_types.h \
+			src/include/riak_crdt.h \
 			src/adapters/riak_libevent.h
 msgincludedir =		$(includedir)/messages
 dist_msginclude_DATA =	src/include/messages/riak_2index.h \
@@ -54,6 +55,7 @@ libriak_c_client_0_5_la_SOURCES = \
 			src/riak_operation.c \
 			src/riak_print.c \
 			src/riak_utils.c \
+			src/riak_crdt.c \
 			src/messages/riak_2index.c \
 			src/messages/riak_delete.c \
 			src/messages/riak_error.c \

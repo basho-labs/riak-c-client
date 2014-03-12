@@ -43,6 +43,7 @@ typedef enum riak_error_enum {
     ERIAK_SERVER_ERROR,
     ERIAK_MESSAGE_FORMAT,
     ERIAK_THREAD,
+    ERIAK_INVALID_DT,
     ERIAK_LAST_ERRORNUM
 } riak_error;
 
