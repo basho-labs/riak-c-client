@@ -43,12 +43,13 @@ riak_async_register_serverinfo(riak_operation        *rop,
 riak_error
 riak_async_register_get(riak_operation        *rop,
                         riak_binary           *bucket,
+                        riak_binary           *bucket_type,
                         riak_binary           *key,
                         riak_get_options      *get_options,
                         riak_response_callback cb) {
 
     riak_operation_set_response_cb(rop, cb);
-    return riak_get_request_encode(rop, bucket, key, get_options, &(rop->pb_request));
+    return riak_get_request_encode(rop, bucket, bucket_type, key, get_options, &(rop->pb_request));
 }
 
 riak_error
@@ -63,11 +64,12 @@ riak_async_register_put(riak_operation        *rop,
 riak_error
 riak_async_register_delete(riak_operation        *rop,
                            riak_binary           *bucket,
+                           riak_binary           *bucket_type,
                            riak_binary           *key,
                            riak_delete_options   *options,
                            riak_response_callback cb) {
     riak_operation_set_response_cb(rop, cb);
-    return riak_delete_request_encode(rop, bucket, key, NULL, &(rop->pb_request));
+    return riak_delete_request_encode(rop, bucket, bucket_type, key, NULL, &(rop->pb_request));
 }
 
 riak_error

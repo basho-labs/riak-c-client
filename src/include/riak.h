@@ -83,6 +83,7 @@ riak_serverinfo(riak_connection           *cxn,
 riak_error
 riak_get(riak_connection           *cxn,
          riak_binary               *bucket,
+         riak_binary               *bucket_type,
          riak_binary               *key,
          riak_get_options          *opts,
          riak_get_response        **response);
@@ -112,6 +113,7 @@ riak_put(riak_connection    *cxn,
 riak_error
 riak_delete(riak_connection     *cxn,
             riak_binary         *bucket,
+            riak_binary         *bucket_type,
             riak_binary         *key,
             riak_delete_options *opts);
 
@@ -264,6 +266,7 @@ riak_async_register_serverinfo(riak_operation        *rop,
 riak_error
 riak_async_register_get(riak_operation        *rop,
                         riak_binary           *bucket,
+                        riak_binary           *bucket_type,
                         riak_binary           *key,
                         riak_get_options      *get_options,
                         riak_response_callback cb);
@@ -276,6 +279,7 @@ riak_async_register_put(riak_operation        *rop,
 riak_error
 riak_async_register_delete(riak_operation        *rop,
                            riak_binary           *bucket,
+                           riak_binary           *bucket_type,
                            riak_binary           *key,
                            riak_delete_options   *options,
                            riak_response_callback cb);

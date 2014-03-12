@@ -105,6 +105,14 @@ riak_operation_set_bucket(riak_operation *rop,
 }
 
 void
+riak_operation_set_bucket_type(riak_operation *rop,
+                          riak_binary    *bucket_type) {
+    riak_connection *cxn = riak_operation_get_connection(rop);
+    riak_config     *cfg = riak_connection_get_config(cxn);
+    rop->request.bucket_type = riak_binary_copy(cfg, bucket_type);
+}
+
+void
 riak_operation_set_key(riak_operation *rop,
                        riak_binary    *key) {
     riak_connection *cxn = riak_operation_get_connection(rop);
@@ -124,6 +132,12 @@ riak_binary*
 riak_operation_get_bucket(riak_operation *rop) {
     return rop->request.bucket;
 }
+
+riak_binary*
+riak_operation_get_bucket_type(riak_operation *rop) {
+    return rop->request.bucket_type;
+}
+
 
 riak_binary*
 riak_operation_get_key(riak_operation *rop) {

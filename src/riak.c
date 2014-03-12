@@ -126,6 +126,7 @@ riak_serverinfo(riak_connection           *cxn,
 riak_error
 riak_get(riak_connection    *cxn,
          riak_binary        *bucket,
+         riak_binary        *bucket_type,
          riak_binary        *key,
          riak_get_options   *opts,
          riak_get_response **response) {
@@ -134,7 +135,12 @@ riak_get(riak_connection    *cxn,
     if (err) {
         return err;
     }
-    err = riak_get_request_encode(rop, bucket, key, opts, &(rop->pb_request));
+    err = riak_get_request_encode(rop,
+                                  bucket,
+                                  bucket_type,
+                                  key,
+                                  opts,
+                                  &(rop->pb_request));
     if (err) {
         return err;
     }
@@ -171,6 +177,7 @@ riak_put(riak_connection    *cxn,
 riak_error
 riak_delete(riak_connection    *cxn,
            riak_binary         *bucket,
+           riak_binary         *bucket_type,
            riak_binary         *key,
            riak_delete_options *opts) {
     riak_operation *rop = NULL;
@@ -178,7 +185,7 @@ riak_delete(riak_connection    *cxn,
     if (err) {
         return err;
     }
-    err = riak_delete_request_encode(rop, bucket, key, opts, &(rop->pb_request));
+    err = riak_delete_request_encode(rop, bucket, bucket_type, key, opts, &(rop->pb_request));
     if (err) {
         return err;
     }

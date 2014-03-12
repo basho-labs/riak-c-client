@@ -33,6 +33,7 @@
 riak_error
 riak_get_request_encode(riak_operation  *rop,
                         riak_binary      *bucket,
+                        riak_binary      *bucket_type,
                         riak_binary      *key,
                         riak_get_options *get_options,
                         riak_pb_message **req) {
@@ -44,7 +45,9 @@ riak_get_request_encode(riak_operation  *rop,
     riak_operation_set_key(rop, key);
     riak_binary_copy_to_pb(&getmsg.bucket, bucket);
     riak_binary_copy_to_pb(&getmsg.key, key);
-
+    if(bucket_type != NULL) {
+        riak_binary_copy_to_pb(&getmsg.type, bucket_type);
+    }
     // process get options
     if(get_options != NULL) {
         getmsg.has_r = get_options->has_r;

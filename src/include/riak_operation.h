@@ -115,6 +115,16 @@ riak_operation_set_bucket(riak_operation *rop,
                           riak_binary    *bucket);
 
 /**
+ * @brief Set the bucket type on the current operation
+ * @param rop Riak Operation
+ * @param bucket Name of bucket type in Riak
+ */
+void
+riak_operation_set_bucket_type(riak_operation *rop,
+                          riak_binary    *bucket_type);
+
+
+/**
  * @brief Set the bucket on the current operation
  * @param rop Riak Operation
  * @param key Name of key in Riak bucket
@@ -139,6 +149,15 @@ riak_operation_set_index(riak_operation *rop,
  */
 riak_binary*
 riak_operation_get_bucket(riak_operation *rop);
+
+/**
+ * @brief Gets the bucket type on the current operation
+ * @param rop Riak Operation
+ * @returns Name of bucket type in Riak
+ */
+riak_binary*
+riak_operation_get_bucket_type(riak_operation *rop);
+
 
 /**
  * @brief Gets the key on the current operation
