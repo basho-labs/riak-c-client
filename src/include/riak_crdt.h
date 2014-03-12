@@ -34,15 +34,41 @@
 
 typedef enum {DT_COUNTER, DT_FLAG, DT_MAP, DT_REGISTER, DT_SET} riak_datatype_t;
 
-typedef struct _DatatypeUpdate {
-	riak_datatype_t 			   riak_dt;
-	// hash/set
+typedef struct _counter_data {
+	long delta;    // TODO: unsigned?
+} DTCounterData;
+
+typedef struct _flag_data {
+	riak_boolean_t flag;
+} DTFlagData;
+
+typedef struct _map_data {
 	struct _DatatypeUpdate 		  *adds;
 	struct _DatatypeUpdate 		  *removes;
-	struct _DatatypeUpdate 		  *updates; // hash only
-	long 		   				   delta;    // counter // TODO: unsigned?
-	riak_binary                   *value;   // register
-	riak_boolean_t                   flag;     // flag
+	struct _DatatypeUpdate 		  *updates;
+} DTMapData;
+
+typedef struct _register_data {
+	riak_binary *value;
+} DTRegisterData;
+
+typedef struct _set_data {
+	struct _DatatypeUpdate 		  *adds;
+	struct _DatatypeUpdate 		  *removes;
+} DTSetData;
+
+
+// This will be moved to riak_crdt-internal.h
+typedef struct _DatatypeUpdate {
+	riak_datatype_t 			   riak_dt;
+	union  {
+		DTCounterData  *counter_data;
+		DTFlagData     *flag_data;
+		DTMapData      *map_data;
+		DTRegisterData *register_data;
+		DTSetData      *set_data;
+	} dt_data;
+
 } DatatypeUpdate;
 
 riak_boolean_t is_counter_update(DatatypeUpdate *d);
@@ -50,6 +76,19 @@ riak_boolean_t is_flag_update(DatatypeUpdate *d);
 riak_boolean_t is_map_update(DatatypeUpdate *d);
 riak_boolean_t is_register_update(DatatypeUpdate *d);
 riak_boolean_t is_set_update(DatatypeUpdate *d);
+
+
+DatatypeUpdate* new_counter_update();
+DatatypeUpdate* new_flag_update();
+DatatypeUpdate* new_map_update();
+DatatypeUpdate* new_register_update();
+DatatypeUpdate* new_set_update();
+
+void free_counter_update(DatatypeUpdate *d);
+void free_flag_update(DatatypeUpdate *d);
+void free_map_update(DatatypeUpdate *d);
+void free_register_update(DatatypeUpdate *d);
+void free_set_update(DatatypeUpdate *d);
 
 /*
   CRDT Counter Update
@@ -78,7 +117,6 @@ riak_error set_remove(DatatypeUpdate *d, riak_binary *v);
 DatatypeUpdate* set_get_adds(DatatypeUpdate *d);
 // returns HEAD
 DatatypeUpdate* set_get_removes(DatatypeUpdate *d);
-
 
 /*
   CRDT Map Updates

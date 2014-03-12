@@ -46,6 +46,7 @@
 #include "test_mapreduce.h"
 #include "test_search.h"
 #include "test_object.h"
+#include "test_crdt.h"
 
 int
 main(int   argc,
@@ -72,6 +73,7 @@ main(int   argc,
     CU_pSuite operation_suite = CU_add_suite("riak_operation", init_fn, cleanup_fn);
     CU_pSuite messages_suite = CU_add_suite("riak_messages", init_fn, cleanup_fn);
     CU_pSuite integration_suite = CU_add_suite("integration_suite", init_fn, cleanup_fn);
+    CU_pSuite datatype_suite = CU_add_suite("datatype_suite", init_fn, cleanup_fn);
     CU_ADD_TEST(binary_suite, test_build_binary);
     CU_ADD_TEST(binary_suite, test_build_binary_shallow);
     CU_ADD_TEST(binary_suite, test_build_binary_with_null);
@@ -165,6 +167,7 @@ main(int   argc,
     CU_ADD_TEST(integration_suite, test_integration_async_listbuckets);
     CU_ADD_TEST(integration_suite, test_integration_listkeys);
     CU_ADD_TEST(integration_suite, test_integration_async_listkeys);
+    CU_ADD_TEST(datatype_suite, test_crdts);
 
     // Run all tests using the CUnit Basic interface
     CU_basic_set_mode(CU_BRM_VERBOSE);
