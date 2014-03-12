@@ -64,10 +64,12 @@ typedef struct {
     riak_int32_t      port;
     riak_int32_t      timeout;
     riak_boolean_t    has_bucket;
+    riak_boolean_t    has_bucket_type;
     riak_boolean_t    has_key;
     riak_boolean_t    has_value;
     riak_boolean_t    has_index;
     char              bucket[1024];
+    char              bucket_type[1024];
     char              host[256];
     char              portnum[6];
     char              key[1024];

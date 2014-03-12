@@ -218,19 +218,19 @@ example_mapreduce_cb(riak_mapreduce_response *response,
 }
 
 void
-example_2index_cb(riak_2index_response *response,
+example_2i_cb(riak_2i_response *response,
                   void                 *ptr) {
     riak_operation  *rop = (riak_operation*)ptr;
     riak_connection *cxn = riak_operation_get_connection(rop);
     riak_config     *cfg = riak_connection_get_config(cxn);
-    riak_log_debug(cxn, "%s", "example_2index_cb");
+    riak_log_debug(cxn, "%s", "example_2i_cb");
     char output[10240];
     riak_print_state print_state;
     riak_print_init(&print_state, output, sizeof(output));
-    riak_2index_response_print(&print_state, response);
+    riak_2i_response_print(&print_state, response);
 
     riak_log_debug(cxn, "%s", output);
-    riak_2index_response_free(cfg, &response);
+    riak_2i_response_free(cfg, &response);
 }
 
 void
