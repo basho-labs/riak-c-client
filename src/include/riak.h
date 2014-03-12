@@ -44,6 +44,7 @@
 #include "riak_bucketprops.h"
 #include "riak_messages.h"
 #include "riak_log.h"
+#include "riak_array.h"
 
 #ifdef __cplusplus
 extern "C" {

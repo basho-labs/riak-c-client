@@ -30,22 +30,23 @@
 #include "riak.h"
 #include "test.h"
 #include "test_2index.h"
+#include "test_array.h"
 #include "test_binary.h"
+#include "test_bucketprops.h"
+#include "test_clientid.h"
 #include "test_config.h"
 #include "test_connection.h"
-#include "test_operation.h"
-#include "test_serverinfo.h"
-#include "test_clientid.h"
 #include "test_delete.h"
 #include "test_get.h"
-#include "test_ping.h"
-#include "test_put.h"
 #include "test_listbuckets.h"
 #include "test_listkeys.h"
-#include "test_bucketprops.h"
 #include "test_mapreduce.h"
-#include "test_search.h"
 #include "test_object.h"
+#include "test_operation.h"
+#include "test_ping.h"
+#include "test_put.h"
+#include "test_search.h"
+#include "test_serverinfo.h"
 
 int
 main(int   argc,
@@ -66,12 +67,25 @@ main(int   argc,
     }
     CU_InitializeFunc init_fn = NULL;
     CU_CleanupFunc cleanup_fn = NULL;
+    CU_pSuite array_suite = CU_add_suite("riak_array", init_fn, cleanup_fn);
     CU_pSuite binary_suite = CU_add_suite("riak_binary", init_fn, cleanup_fn);
     CU_pSuite config_suite = CU_add_suite("riak_config", init_fn, cleanup_fn);
     CU_pSuite connection_suite = CU_add_suite("riak_connection", init_fn, cleanup_fn);
     CU_pSuite operation_suite = CU_add_suite("riak_operation", init_fn, cleanup_fn);
     CU_pSuite messages_suite = CU_add_suite("riak_messages", init_fn, cleanup_fn);
     CU_pSuite integration_suite = CU_add_suite("integration_suite", init_fn, cleanup_fn);
+    CU_ADD_TEST(array_suite, test_array_empty);
+    CU_ADD_TEST(array_suite, test_array_push);
+    CU_ADD_TEST(array_suite, test_array_insert);
+    CU_ADD_TEST(array_suite, test_array_bad_insert);
+    CU_ADD_TEST(array_suite, test_array_set_get);
+    CU_ADD_TEST(array_suite, test_array_bad_set);
+    CU_ADD_TEST(array_suite, test_array_bad_get);
+    CU_ADD_TEST(array_suite, test_array_pop);
+    CU_ADD_TEST(array_suite, test_array_empty_pop);
+    CU_ADD_TEST(array_suite, test_array_remove);
+    CU_ADD_TEST(array_suite, test_array_bad_remove);
+    CU_ADD_TEST(array_suite, test_array_length);
     CU_ADD_TEST(binary_suite, test_build_binary);
     CU_ADD_TEST(binary_suite, test_build_binary_shallow);
     CU_ADD_TEST(binary_suite, test_build_binary_with_null);
@@ -165,6 +179,11 @@ main(int   argc,
     CU_ADD_TEST(integration_suite, test_integration_async_listbuckets);
     CU_ADD_TEST(integration_suite, test_integration_listkeys);
     CU_ADD_TEST(integration_suite, test_integration_async_listkeys);
+
+    // Only run integration tests if an argument is passed in
+    if (argc < 2) {
+        CU_set_suite_active(integration_suite, CU_FALSE);
+    }
 
     // Run all tests using the CUnit Basic interface
     CU_basic_set_mode(CU_BRM_VERBOSE);

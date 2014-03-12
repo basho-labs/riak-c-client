@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * riak_connection.h: Management of the Riak event
+ * riak_connection.h: Management of the Riak Connection
  *
  * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.
  *
