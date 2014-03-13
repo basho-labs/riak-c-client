@@ -158,6 +158,14 @@ riak_operation_get_bucket(riak_operation *rop);
 riak_binary*
 riak_operation_get_bucket_type(riak_operation *rop);
 
+/**
+ * @brief returns TRUE if bucket_type is defined
+ * @param rop Riak Operation
+ * @returns returns TRUE if bucket_type is defined
+ */
+riak_boolean_t
+riak_operation_has_bucket_type(riak_operation *rop);
+
 
 /**
  * @brief Gets the key on the current operation

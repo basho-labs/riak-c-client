@@ -91,7 +91,7 @@ test_integration_listbuckets() {
     CU_ASSERT_FATAL(err == ERIAK_OK)
 
     riak_listbuckets_response *response = NULL;
-    err = riak_listbuckets(cxn, &response);
+    err = riak_listbuckets(cxn, NULL, DEFAULT_TIMEOUT, &response);
     CU_ASSERT_FATAL(err == ERIAK_OK)
 
     char output[10240];
@@ -135,7 +135,10 @@ void*
 test_listbuckets_async_thread(void *ptr) {
     test_async_pthread *state = (test_async_pthread*)ptr;
     test_async_connection *conn = state->conn;
-    riak_error err = riak_async_register_listbuckets(conn->rop, (riak_response_callback)test_listbuckets_async_cb);
+    riak_error err = riak_async_register_listbuckets(conn->rop,
+                                                     NULL,
+                                                     10000,
+                                                     (riak_response_callback)test_listbuckets_async_cb);
     if (err) {
         return (void*)riak_strerror(err);
     }

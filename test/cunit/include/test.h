@@ -41,7 +41,7 @@
 
 #define RIAK_TEST_HOST          "RIAK_TEST_HOST"
 #define RIAK_TEST_PB_PORT       "RIAK_TEST_PB_PORT"
-
+#define DEFAULT_TIMEOUT         10000
 
 /**
  * @brief Set up testing environment

@@ -141,9 +141,7 @@ riak_get_response_decode(riak_operation     *rop,
                 return err;
             }
             response->content[i]->bucket  = riak_binary_copy(cfg, riak_operation_get_bucket(rop));
-            // TODO: has_bucket_type
-
-            if(riak_operation_get_bucket_type(rop) != NULL) {
+            if(riak_operation_has_bucket_type(rop)) {
                 response->content[i]->bucket_type  = riak_binary_copy(cfg, riak_operation_get_bucket_type(rop));
                 response->content[i]->has_bucket_type = RIAK_TRUE;
             }

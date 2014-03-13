@@ -271,7 +271,7 @@ test_cleanup_db(riak_connection* cxn) {
     fprintf(stderr, "Beginning cleanup of Riak\n");
     const int prefixlen = strlen(RIAK_TEST_BUCKET_PREFIX);
     riak_listbuckets_response *response = NULL;
-    riak_error err = riak_listbuckets(cxn, &response);
+    riak_error err = riak_listbuckets(cxn, NULL, DEFAULT_TIMEOUT, &response);
     if (err) {
         return err;
     }
@@ -286,7 +286,7 @@ test_cleanup_db(riak_connection* cxn) {
         // Does the bucket match the prefix? If so, start nuking
         if (memcmp(riak_binary_data(bucket), RIAK_TEST_BUCKET_PREFIX, prefixlen) == 0) {
             riak_listkeys_response *response;
-            err = riak_listkeys(cxn, bucket, 0, &response);
+            err = riak_listkeys(cxn, bucket, NULL, 0, &response);
             if (err) {
                 return err;
             }
@@ -297,7 +297,7 @@ test_cleanup_db(riak_connection* cxn) {
             }
             for(int k = 0; k < num_keys; k++) {
                 riak_binary *key = keys[k];
-                err = riak_delete(cxn, bucket, key, NULL);
+                err = riak_delete(cxn, bucket, NULL, key, NULL);
                 if (err) {
                     fprintf(stderr, "DELETE Failed and leftover data may remain\n");
                     return err;

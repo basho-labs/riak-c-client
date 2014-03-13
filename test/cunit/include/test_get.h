@@ -42,3 +42,5 @@ void
 test_get_options_n_val();
 void
 test_get_decode_response();
+void
+test_get_bucket_type();

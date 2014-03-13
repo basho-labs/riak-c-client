@@ -139,6 +139,10 @@ riak_operation_get_bucket_type(riak_operation *rop) {
     return rop->request.bucket_type;
 }
 
+riak_boolean_t
+riak_operation_has_bucket_type(riak_operation *rop) {
+    return rop->request.bucket_type != NULL;
+}
 
 riak_binary*
 riak_operation_get_key(riak_operation *rop) {
