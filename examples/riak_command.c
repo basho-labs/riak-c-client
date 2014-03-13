@@ -65,8 +65,8 @@ static riak_command s_commands[] = {
 
     // These options don't set a flag.
     // We distinguish them by their indices.
-    {"async",        "Asynchronous messaging", "",       'a', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
     {"bucket",       "",                       "name",   'b', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
+    {"thread",       "Multi-threaded messaging", "",     'd', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
     {"host",         "",                       "name",   'h', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
     {"index",        "",                       "name",   'x', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
     {"iterate",      "",                       "times",  'i', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
@@ -191,7 +191,7 @@ riak_parse_args(int           argc,
 
     memset((void*)args, '\0', sizeof(riak_args));
     args->operation  = MSG_RPBERRORRESP;
-    args->async      = RIAK_FALSE;
+    args->threaded   = RIAK_FALSE;
     args->iterate    = 1;
     args->port       = 10017;
     args->timeout    = 10;
@@ -231,14 +231,14 @@ riak_parse_args(int           argc,
                 printf ("\n");
                 break;
 
-            case 'a':
-                args->async = RIAK_TRUE;
-                break;
-
             case 'b':
                 printf ("option -b with value `%s'\n", optarg);
                 riak_strlcpy(args->bucket, optarg, sizeof(args->bucket));
                 args->has_bucket = RIAK_TRUE;
+                break;
+
+            case 'd':
+                args->threaded = RIAK_TRUE;
                 break;
 
             case 'h':
