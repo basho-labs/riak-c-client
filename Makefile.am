@@ -96,14 +96,14 @@ libriak_c_client_0_5_la_LIBADD = \
 AM_CFLAGS =		-g -Wall
 
 EXTRA_DIST =	$(SRCDIR)/include $(SRCDIR)/internal $(SRCDIR)/adapters \
-		$(EXAMPLESDIR)/example_call_backs.h \
-		$(EXAMPLESDIR)/riak_command.h \
+		$(EXAMPLESDIR)/include/example_call_backs.h \
+		$(EXAMPLESDIR)/include/riak_command.h \
 		$(TESTCUNITDIR)/include
 
-bin_PROGRAMS = riak_c_example
+bin_PROGRAMS = riak_c_example riak_c_async_example
 riak_c_example_SOURCES = examples/example.c \
-			examples/example_call_backs.c \
-			examples/riak_command.c
+			examples/riak_command.c \
+			examples/example_log.c 
 
 riak_c_example_CPPFLAGS = \
 			-DUSE_DEBUG -D_RIAK_DEBUG \
@@ -112,15 +112,37 @@ riak_c_example_CPPFLAGS = \
 			-I$(RIAK_PB)/c \
 			-I$(SRCDIR)/adapters \
 			-I$(SRCDIR) \
-			-Iexamples
+			-Iexamples/include
 
 riak_c_example_LDADD = \
 		-lriak_c_client-0.5 \
 		$(PROTOBUFC_LIBS) \
-		$(PROTOBUF_LIBS) \
-		$(EVENT_LIBS)
+		$(PROTOBUF_LIBS)
 
-riak_c_example_DEPENDENCIES = libriak_c_client-0.5.la
+riak_c_async_example_DEPENDENCIES = libriak_c_client-0.5.la
+
+riak_c_async_example_SOURCES = examples/async_example.c \
+            examples/riak_command.c \
+            examples/example_call_backs.c \
+            examples/example_log.c 
+
+riak_c_async_example_CPPFLAGS = \
+            -DUSE_DEBUG -D_RIAK_DEBUG \
+            -I$(SRCDIR)/include \
+            -I$(SRCDIR)/internal \
+            -I$(RIAK_PB)/c \
+            -I$(SRCDIR)/adapters \
+            -I$(SRCDIR) \
+            -Iexamples/include \
+            $(EVENT_INCLUDES)
+
+riak_c_async_example_LDADD = \
+        -lriak_c_client-0.5 \
+        $(PROTOBUFC_LIBS) \
+        $(PROTOBUF_LIBS) \
+        $(EVENT_FLAGS)
+
+riak_c_async_example_DEPENDENCIES = libriak_c_client-0.5.la
 
 check_PROGRAMS = riak_c_cunit
 riak_c_cunit_SOURCES = test/cunit/test.c \

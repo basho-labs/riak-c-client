@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * riak_connection.c: Management of the Riak event
+ * riak_connection.c: Management of the Riak Connection
  *
  * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.
  *
@@ -35,12 +35,11 @@ riak_connection_new(riak_config       *cfg,
                     const char        *portnum,
                     riak_addr_resolver resolver) {
 
-    riak_connection *cxn = (riak_connection*)(cfg->malloc_fn)(sizeof(riak_connection));
+    riak_connection *cxn = riak_config_clean_allocate(cfg, sizeof(riak_connection));
     if (cxn == NULL) {
         riak_log_critical_config(cfg, "%s", "Could not allocate a riak_connection");
         return ERIAK_OUT_OF_MEMORY;
     }
-    memset((void*)cxn, '\0', sizeof(riak_connection));
     *cxn_target = cxn;
     cxn->config = cfg;
 
