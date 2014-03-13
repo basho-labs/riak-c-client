@@ -79,7 +79,10 @@ main(int   argc,
 
     // create some sample binary values to use
     riak_binary *bucket_bin   = riak_binary_copy_from_string(cfg, args.bucket); // Not copied
-    riak_binary *bucket_type_bin = riak_binary_copy_from_string(cfg, args.bucket_type); // Not copied
+    riak_binary *bucket_type_bin = NULL;
+    if(args.has_bucket_type) {
+        bucket_type_bin = riak_binary_copy_from_string(cfg, args.bucket_type);
+    }
     riak_binary *key_bin      = riak_binary_copy_from_string(cfg, args.key);   // Not copied
     riak_binary *value_bin    = riak_binary_copy_from_string(cfg, args.value); // Not copied
     riak_binary *index_bin    = riak_binary_copy_from_string(cfg, args.index); // Not copied
