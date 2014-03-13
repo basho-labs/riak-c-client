@@ -41,6 +41,7 @@ riak_put_request_encode(riak_operation   *rop,
     riak_binary_copy_to_pb(&(putmsg.bucket), riak_obj->bucket);
      if(riak_object_has_bucket_type(riak_obj)) {
         riak_binary_copy_to_pb(&putmsg.type, riak_obj->bucket_type);
+        putmsg.has_type = RIAK_TRUE;
     }
 
     // Is the Key provided?

@@ -45,6 +45,7 @@ riak_delete_request_encode(riak_operation      *rop,
     riak_binary_copy_to_pb(&delmsg.key, key);
      if(bucket_type != NULL) {
         riak_binary_copy_to_pb(&delmsg.type, bucket_type);
+        delmsg.has_type = RIAK_TRUE;
     }
     // process delete options
     if (options != NULL) {

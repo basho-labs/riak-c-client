@@ -574,6 +574,9 @@ riak_object_print(riak_print_state *state,
     riak_int32_t wrote = 0;
     wrote += riak_print_label_binary(state, "Bucket", obj->bucket);
 
+    if (obj->has_bucket_type) {
+        wrote += riak_print_label_binary(state, "Bucket type", obj->bucket_type);
+    } 
     if (obj->has_key) {
         wrote += riak_print_label_binary(state, "Key", obj->key);
     }

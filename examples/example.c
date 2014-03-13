@@ -61,6 +61,7 @@ main(int   argc,
 
     // create some sample binary values to use
     riak_binary *bucket_bin   = riak_binary_copy_from_string(cfg, args.bucket); // Not copied
+    riak_binary *bucket_type_bin = riak_binary_copy_from_string(cfg, args.bucket_type);
     riak_binary *key_bin      = riak_binary_copy_from_string(cfg, args.key);   // Not copied
     riak_binary *value_bin    = riak_binary_copy_from_string(cfg, args.value); // Not copied
     riak_binary *index_bin    = riak_binary_copy_from_string(cfg, args.index); // Not copied
@@ -137,7 +138,7 @@ main(int   argc,
             }
             riak_get_options_set_basic_quorum(get_options, RIAK_TRUE);
             riak_get_options_set_r(get_options, 2);
-            err = riak_get(cxn, bucket_bin, key_bin, get_options, &get_response);
+            err = riak_get(cxn, bucket_bin, bucket_type_bin, key_bin, get_options, &get_response);
             if (err == ERIAK_OK) {
                 riak_get_response_print(&print_state, get_response);
                 printf("%s\n", output);
@@ -156,6 +157,9 @@ main(int   argc,
                 return 1;
             }
             riak_object_set_bucket(cfg, obj, riak_binary_copy_from_string(cfg, args.bucket));
+            if (args.has_bucket_type) {
+                riak_object_set_bucket_type(cfg, obj, riak_binary_copy_from_string(cfg, args.bucket_type));
+            }
             if (args.has_key) {
                 riak_object_set_key(cfg, obj, riak_binary_copy_from_string(cfg, args.key));
             }
@@ -195,7 +199,7 @@ main(int   argc,
             }
             riak_delete_options_set_w(delete_options, 1);
             riak_delete_options_set_dw(delete_options, 1);
-            err = riak_delete(cxn, bucket_bin, key_bin, delete_options);
+            err = riak_delete(cxn, bucket_bin, bucket_type_bin, key_bin, delete_options);
             riak_delete_options_free(cfg, &delete_options);
             if (err) {
                 fprintf(stderr, "Delete Problems [%s]\n", riak_strerror(err));
@@ -348,6 +352,7 @@ main(int   argc,
 
     // cleanup
     riak_binary_free(cfg, &bucket_bin);
+    riak_binary_free(cfg, &bucket_type_bin);
     riak_binary_free(cfg, &key_bin);
     riak_binary_free(cfg, &value_bin);
     riak_binary_free(cfg, &index_bin);

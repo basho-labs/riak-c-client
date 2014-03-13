@@ -134,7 +134,7 @@ riak_get(riak_connection    *cxn,
     riak_error err = riak_operation_new(cxn, &rop, NULL, NULL, NULL);
     if (err) {
         return err;
-    }
+    }    
     err = riak_get_request_encode(rop,
                                   bucket,
                                   bucket_type,
