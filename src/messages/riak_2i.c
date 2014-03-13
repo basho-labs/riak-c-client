@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * riak_2index.c: Riak C Client Index Message
+ * riak_2i.c: Riak C Client Index Message
  *
  * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.
  *
@@ -31,10 +31,10 @@
 #include "riak_bucketprops-internal.h"
 
 riak_error
-riak_2index_request_encode(riak_operation      *rop,
+riak_2i_request_encode(riak_operation      *rop,
                            riak_binary         *bucket,
                            riak_binary         *index,
-                           riak_2index_options *index_options,
+                           riak_2i_options *index_options,
                            riak_pb_message    **req) {
     riak_config *cfg = riak_operation_get_config(rop);
     RpbIndexReq twoimsg = RPB_INDEX_REQ__INIT;
@@ -93,15 +93,15 @@ riak_2index_request_encode(riak_operation      *rop,
         return ERIAK_OUT_OF_MEMORY;
     }
     *req = request;
-    riak_operation_set_response_decoder(rop, (riak_response_decoder)riak_2index_response_decode);
+    riak_operation_set_response_decoder(rop, (riak_response_decoder)riak_2i_response_decode);
 
     return ERIAK_OK;
 }
 
 riak_error
-riak_2index_response_decode(riak_operation        *rop,
+riak_2i_response_decode(riak_operation        *rop,
                             riak_pb_message       *pbresp,
-                            riak_2index_response **resp,
+                            riak_2i_response **resp,
                             riak_boolean_t        *done) {
     // decode the PB response etc
     riak_config *cfg = riak_operation_get_config(rop);
@@ -111,10 +111,10 @@ riak_2index_response_decode(riak_operation        *rop,
     }
 
     // Initialize from an existing response
-    riak_2index_response *response = *resp;
+    riak_2i_response *response = *resp;
     // If this is NULL, there was no previous message
     if (response == NULL) {
-        response = (riak_2index_response*)riak_config_clean_allocate(cfg, sizeof(riak_2index_response));
+        response = (riak_2i_response*)riak_config_clean_allocate(cfg, sizeof(riak_2i_response));
         if (response == NULL) {
             return ERIAK_OUT_OF_MEMORY;
         }
@@ -206,8 +206,8 @@ riak_2index_response_decode(riak_operation        *rop,
 }
 
 riak_int32_t
-riak_2index_response_print(riak_print_state     *state,
-                           riak_2index_response *response) {
+riak_2i_response_print(riak_print_state     *state,
+                           riak_2i_response *response) {
 
     riak_int32_t wrote = 0;
 
@@ -227,9 +227,9 @@ riak_2index_response_print(riak_print_state     *state,
 }
 
 void
-riak_2index_response_free(riak_config           *cfg,
-                          riak_2index_response **resp) {
-    riak_2index_response *response = *resp;
+riak_2i_response_free(riak_config           *cfg,
+                          riak_2i_response **resp) {
+    riak_2i_response *response = *resp;
     if (response == NULL) {
         return;
     }
@@ -248,61 +248,61 @@ riak_2index_response_free(riak_config           *cfg,
 }
 
 riak_uint32_t
-riak_2index_get_n_keys(riak_2index_response *response) {
+riak_2i_get_n_keys(riak_2i_response *response) {
     return response->n_keys;
 }
 
 riak_binary**
-riak_2index_get_keys(riak_2index_response *response) {
+riak_2i_get_keys(riak_2i_response *response) {
     return response->keys;
 }
 
 riak_uint32_t
-riak_2index_get_n_results(riak_2index_response *response) {
+riak_2i_get_n_results(riak_2i_response *response) {
     return response->n_results;
 }
 
 riak_pair**
-riak_2index_get_results(riak_2index_response *response) {
+riak_2i_get_results(riak_2i_response *response) {
     return response->results;
 }
 
 riak_boolean_t
-riak_2index_get_has_continuation(riak_2index_response *response) {
+riak_2i_get_has_continuation(riak_2i_response *response) {
     return response->has_continuation;
 }
 
 riak_binary*
-riak_2index_get_continuation(riak_2index_response *response) {
+riak_2i_get_continuation(riak_2i_response *response) {
     return response->continuation;
 }
 
 riak_boolean_t
-riak_2index_get_has_done(riak_2index_response *response) {
+riak_2i_get_has_done(riak_2i_response *response) {
     return response->has_done;
 }
 
 riak_boolean_t
-riak_2index_get_done(riak_2index_response *response) {
+riak_2i_get_done(riak_2i_response *response) {
     return response->done;
 }
 
 
-riak_2index_options*
-riak_2index_options_new(riak_config *cfg) {
-    riak_2index_options* opt = (riak_2index_options*)riak_config_clean_allocate(cfg, sizeof(riak_2index_options));
+riak_2i_options*
+riak_2i_options_new(riak_config *cfg) {
+    riak_2i_options* opt = (riak_2i_options*)riak_config_clean_allocate(cfg, sizeof(riak_2i_options));
     if (opt) {
         // Turn streaming on by default
-        riak_2index_options_set_stream(opt, RIAK_TRUE);
+        riak_2i_options_set_stream(opt, RIAK_TRUE);
     }
     return opt;
 }
 
 void
-riak_2index_options_free(riak_config          *cfg,
-                         riak_2index_options **options) {
+riak_2i_options_free(riak_config          *cfg,
+                         riak_2i_options **options) {
 
-    riak_2index_options *opt = *options;
+    riak_2i_options *opt = *options;
 
     riak_binary_free(cfg, &(opt->key));
     riak_binary_free(cfg, &(opt->range_min));
@@ -314,128 +314,128 @@ riak_2index_options_free(riak_config          *cfg,
 }
 
 riak_boolean_t
-riak_2index_options_get_is_range_query(riak_2index_options *opt) {
+riak_2i_options_get_is_range_query(riak_2i_options *opt) {
     return (opt->qtype == RPB_INDEX_REQ__INDEX_QUERY_TYPE__range) ? RIAK_TRUE : RIAK_FALSE;
 }
 
 riak_boolean_t
-riak_2index_options_get_has_key(riak_2index_options *opt) {
+riak_2i_options_get_has_key(riak_2i_options *opt) {
     return opt->has_key;
 }
 
 riak_binary*
-riak_2index_options_get_key(riak_2index_options *opt) {
+riak_2i_options_get_key(riak_2i_options *opt) {
     return opt->key;
 }
 
 riak_boolean_t
-riak_2index_options_get_has_range_min(riak_2index_options *opt) {
+riak_2i_options_get_has_range_min(riak_2i_options *opt) {
     return opt->has_range_min;
 }
 
 riak_binary*
-riak_2index_options_get_range_min(riak_2index_options *opt) {
+riak_2i_options_get_range_min(riak_2i_options *opt) {
     return opt->range_min;
 }
 
 riak_boolean_t
-riak_2index_options_get_has_range_max(riak_2index_options *opt) {
+riak_2i_options_get_has_range_max(riak_2i_options *opt) {
     return opt->has_range_max;
 }
 
 riak_binary*
-riak_2index_options_get_range_max(riak_2index_options *opt) {
+riak_2i_options_get_range_max(riak_2i_options *opt) {
     return opt->range_max;
 }
 
 riak_boolean_t
-riak_2index_options_get_has_return_terms(riak_2index_options *opt) {
+riak_2i_options_get_has_return_terms(riak_2i_options *opt) {
     return opt->has_return_terms;
 }
 
 riak_boolean_t
-riak_2index_options_get_return_terms(riak_2index_options *opt) {
+riak_2i_options_get_return_terms(riak_2i_options *opt) {
     return opt->return_terms;
 }
 
 riak_boolean_t
-riak_2index_options_get_has_stream(riak_2index_options *opt) {
+riak_2i_options_get_has_stream(riak_2i_options *opt) {
     return opt->has_stream;
 }
 
 riak_boolean_t
-riak_2index_options_get_stream(riak_2index_options *opt) {
+riak_2i_options_get_stream(riak_2i_options *opt) {
     return opt->stream;
 }
 
 riak_boolean_t
-riak_2index_options_get_has_max_results(riak_2index_options *opt) {
+riak_2i_options_get_has_max_results(riak_2i_options *opt) {
     return opt->has_max_results;
 }
 
 riak_uint32_t
-riak_2index_options_get_max_results(riak_2index_options *opt) {
+riak_2i_options_get_max_results(riak_2i_options *opt) {
     return opt->max_results;
 }
 
 riak_boolean_t
-riak_2index_options_get_has_continuation(riak_2index_options *opt) {
+riak_2i_options_get_has_continuation(riak_2i_options *opt) {
     return opt->has_continuation;
 }
 
 riak_binary*
-riak_2index_options_get_continuation(riak_2index_options *opt) {
+riak_2i_options_get_continuation(riak_2i_options *opt) {
     return opt->continuation;
 }
 
 riak_boolean_t
-riak_2index_options_get_has_timeout(riak_2index_options *opt) {
+riak_2i_options_get_has_timeout(riak_2i_options *opt) {
     return opt->has_timeout;
 }
 
 riak_uint32_t
-riak_2index_options_get_timeout(riak_2index_options *opt) {
+riak_2i_options_get_timeout(riak_2i_options *opt) {
     return opt->timeout;
 }
 
 riak_boolean_t
-riak_2index_options_get_has_type(riak_2index_options *opt) {
+riak_2i_options_get_has_type(riak_2i_options *opt) {
     return opt->has_type;
 }
 
 riak_binary*
-riak_2index_options_get_type(riak_2index_options *opt) {
+riak_2i_options_get_type(riak_2i_options *opt) {
     return opt->type;
 }
 
 riak_boolean_t
-riak_2index_options_get_has_term_regex(riak_2index_options *opt) {
+riak_2i_options_get_has_term_regex(riak_2i_options *opt) {
     return opt->has_term_regex;
 }
 
 riak_binary*
-riak_2index_options_get_term_regex(riak_2index_options *opt) {
+riak_2i_options_get_term_regex(riak_2i_options *opt) {
     return opt->term_regex;
 }
 
 riak_boolean_t
-riak_2index_options_get_has_pagination_sort(riak_2index_options *opt) {
+riak_2i_options_get_has_pagination_sort(riak_2i_options *opt) {
     return opt->has_pagination_sort;
 }
 
 riak_boolean_t
-riak_2index_options_get_pagination_sort(riak_2index_options *opt) {
+riak_2i_options_get_pagination_sort(riak_2i_options *opt) {
     return opt->pagination_sort;
 }
 
 void
-riak_2index_options_set_range_query(riak_2index_options *opt) {
+riak_2i_options_set_range_query(riak_2i_options *opt) {
     opt->qtype = RPB_INDEX_REQ__INDEX_QUERY_TYPE__range;
 }
 
 riak_error
-riak_2index_options_set_key(riak_config         *cfg,
-                            riak_2index_options *opt,
+riak_2i_options_set_key(riak_config         *cfg,
+                            riak_2i_options *opt,
                             riak_binary         *value) {
     opt->has_key = RIAK_TRUE;
     opt->key = riak_binary_copy(cfg, value);
@@ -446,8 +446,8 @@ riak_2index_options_set_key(riak_config         *cfg,
 }
 
 riak_error
-riak_2index_options_set_range_min(riak_config         *cfg,
-                                  riak_2index_options *opt,
+riak_2i_options_set_range_min(riak_config         *cfg,
+                                  riak_2i_options *opt,
                                   riak_binary         *value) {
     opt->has_range_min = RIAK_TRUE;
     opt->range_min = riak_binary_copy(cfg, value);
@@ -458,8 +458,8 @@ riak_2index_options_set_range_min(riak_config         *cfg,
 }
 
 riak_error
-riak_2index_options_set_range_max(riak_config         *cfg,
-                                  riak_2index_options *opt,
+riak_2i_options_set_range_max(riak_config         *cfg,
+                                  riak_2i_options *opt,
                                   riak_binary         *value) {
     opt->has_range_max = RIAK_TRUE;
     opt->range_max = riak_binary_copy(cfg, value);
@@ -470,29 +470,29 @@ riak_2index_options_set_range_max(riak_config         *cfg,
 }
 
 void
-riak_2index_options_set_return_terms(riak_2index_options *opt,
+riak_2i_options_set_return_terms(riak_2i_options *opt,
                                      riak_boolean_t       value) {
     opt->has_return_terms = RIAK_TRUE;
     opt->return_terms = value;
 }
 
 void
-riak_2index_options_set_stream(riak_2index_options *opt,
+riak_2i_options_set_stream(riak_2i_options *opt,
                                riak_boolean_t       value) {
     opt->has_stream = RIAK_TRUE;
     opt->stream = value;
 }
 
 void
-riak_2index_options_set_max_results(riak_2index_options *opt,
+riak_2i_options_set_max_results(riak_2i_options *opt,
                                     riak_uint32_t        value) {
     opt->has_max_results = RIAK_TRUE;
     opt->max_results = value;
 }
 
 riak_error
-riak_2index_options_set_continuation(riak_config         *cfg,
-                                     riak_2index_options *opt,
+riak_2i_options_set_continuation(riak_config         *cfg,
+                                     riak_2i_options *opt,
                                      riak_binary         *value) {
     opt->has_continuation = RIAK_TRUE;
     opt->continuation = riak_binary_copy(cfg, value);
@@ -503,15 +503,15 @@ riak_2index_options_set_continuation(riak_config         *cfg,
 }
 
 void
-riak_2index_options_set_timeout(riak_2index_options *opt,
+riak_2i_options_set_timeout(riak_2i_options *opt,
                                 riak_uint32_t        value) {
     opt->has_timeout = RIAK_TRUE;
     opt->timeout = value;
 }
 
 riak_error
-riak_2index_options_set_type(riak_config         *cfg,
-                             riak_2index_options *opt,
+riak_2i_options_set_type(riak_config         *cfg,
+                             riak_2i_options *opt,
                              riak_binary         *value) {
     opt->has_type = RIAK_TRUE;
     opt->type = riak_binary_copy(cfg, value);
@@ -522,8 +522,8 @@ riak_2index_options_set_type(riak_config         *cfg,
 }
 
 riak_error
-riak_2index_options_set_term_regex(riak_config         *cfg,
-                                   riak_2index_options *opt,
+riak_2i_options_set_term_regex(riak_config         *cfg,
+                                   riak_2i_options *opt,
                                    riak_binary         *value) {
     opt->has_term_regex = RIAK_TRUE;
     opt->term_regex = riak_binary_copy(cfg, value);
@@ -534,7 +534,7 @@ riak_2index_options_set_term_regex(riak_config         *cfg,
 }
 
 void
-riak_2index_options_set_pagination_sort(riak_2index_options *opt,
+riak_2i_options_set_pagination_sort(riak_2i_options *opt,
                                          riak_boolean_t       value) {
     opt->has_pagination_sort = RIAK_TRUE;
     opt->pagination_sort = value;

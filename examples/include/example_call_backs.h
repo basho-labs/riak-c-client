@@ -74,7 +74,7 @@ example_mapreduce_cb(riak_mapreduce_response *response,
                      void                    *ptr);
 
 void
-example_2index_cb(riak_2index_response *response,
+example_2i_cb(riak_2i_response *response,
                   void                 *ptr);
 
 void

@@ -79,7 +79,7 @@ main(int   argc,
     }
 
     // Supporting Options and outputs
-    riak_2index_options *index_options;
+    riak_2i_options *index_options;
     riak_bucketprops    *props;
     riak_delete_options *delete_options;
     riak_get_options    *get_options;
@@ -88,7 +88,7 @@ main(int   argc,
     riak_search_options *search_options;
 
     // Every possible message response type
-    riak_2index_response            *index_response = NULL;
+    riak_2i_response            *index_response = NULL;
     riak_get_bucketprops_response   *props_response = NULL;
     riak_get_clientid_response      *getcli_response = NULL;
     riak_get_response               *get_response = NULL;
@@ -314,21 +314,21 @@ main(int   argc,
             }
             break;
         case RIAK_COMMAND_INDEX:
-            index_options = riak_2index_options_new(cfg);
+            index_options = riak_2i_options_new(cfg);
             if (index_options == NULL) {
                 riak_log_critical(cxn, "%s","Could not allocate Riak Secondary Index Options");
                 return 1;
             }
-            riak_2index_options_set_stream(index_options, RIAK_TRUE);
-            riak_2index_options_set_timeout(index_options, 10000);
-            riak_2index_options_set_key(cfg, index_options, value_bin);
-            err = riak_2index(cxn, bucket_bin, index_bin, index_options, &index_response);
+            riak_2i_options_set_stream(index_options, RIAK_TRUE);
+            riak_2i_options_set_timeout(index_options, 10000);
+            riak_2i_options_set_key(cfg, index_options, value_bin);
+            err = riak_2i(cxn, bucket_bin, index_bin, index_options, &index_response);
             if (err == ERIAK_OK) {
-                riak_2index_response_print(&print_state, index_response);
+                riak_2i_response_print(&print_state, index_response);
                 printf("%s\n", output);
             }
-            riak_2index_response_free(cfg, &index_response);
-            riak_2index_options_free(cfg, &index_options);
+            riak_2i_response_free(cfg, &index_response);
+            riak_2i_options_free(cfg, &index_options);
             if (err) {
                 fprintf(stderr, "Secondary Index Problems [%s]\n", riak_strerror(err));
                 exit(1);

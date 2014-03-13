@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * riak_2index.h: Riak C Client Index Message
+ * riak_2i.h: Riak C Client Index Message
  *
  * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.
  *
@@ -20,16 +20,16 @@
  *
  *********************************************************************/
 
-#ifndef _RIAK_2INDEX_MESSAGE_H
-#define _RIAK_2INDEX_MESSAGE_H
+#ifndef _RIAK_2I_MESSAGE_H
+#define _RIAK_2I_MESSAGE_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-typedef struct _riak_2index_response riak_2index_response;
-typedef struct _riak_2index_options riak_2index_options;
-typedef void (*riak_2index_response_callback)(riak_2index_response *response, void *ptr);
+typedef struct _riak_2i_response riak_2i_response;
+typedef struct _riak_2i_options riak_2i_options;
+typedef void (*riak_2i_response_callback)(riak_2i_response *response, void *ptr);
 
 /**
  * @brief Free Secondary Index response
@@ -37,8 +37,8 @@ typedef void (*riak_2index_response_callback)(riak_2index_response *response, vo
  * @param resp Secondary Index response
  */
 void
-riak_2index_response_free(riak_config           *cfg,
-                          riak_2index_response **resp);
+riak_2i_response_free(riak_config           *cfg,
+                          riak_2i_response **resp);
 
 /**
  * @brief Print out a Secondary Index Response
@@ -47,8 +47,8 @@ riak_2index_response_free(riak_config           *cfg,
  * @returns Total number of bytes written
  */
 riak_int32_t
-riak_2index_response_print(riak_print_state     *state,
-                           riak_2index_response *response);
+riak_2i_response_print(riak_print_state     *state,
+                           riak_2i_response *response);
 
 /**
  * @brief Access the number of key in a Secondary Index response
@@ -56,7 +56,7 @@ riak_2index_response_print(riak_print_state     *state,
  * @returns Number of keys
  */
 riak_uint32_t
-riak_2index_get_n_keys(riak_2index_response *response);
+riak_2i_get_n_keys(riak_2i_response *response);
 
 /**
  * @brief Access the keys in a Secondary Index response
@@ -64,7 +64,7 @@ riak_2index_get_n_keys(riak_2index_response *response);
  * @returns Array of keys matching the query
  */
 riak_binary**
-riak_2index_get_keys(riak_2index_response *response);
+riak_2i_get_keys(riak_2i_response *response);
 
 /**
  * @brief Access the number of key/value pairs in a Secondary Index response
@@ -72,7 +72,7 @@ riak_2index_get_keys(riak_2index_response *response);
  * @returns Number of key/value pairs
  */
 riak_uint32_t
-riak_2index_get_n_results(riak_2index_response *response);
+riak_2i_get_n_results(riak_2i_response *response);
 
 /**
  * @brief Access the key/value pairs in a Secondary Index response
@@ -80,7 +80,7 @@ riak_2index_get_n_results(riak_2index_response *response);
  * @returns Array of key/value `return_terms` results
  */
 riak_pair**
-riak_2index_get_results(riak_2index_response *response);
+riak_2i_get_results(riak_2i_response *response);
 
 /**
  * @brief Determine if a Continuation is in a Secondary Index response
@@ -88,7 +88,7 @@ riak_2index_get_results(riak_2index_response *response);
  * @returns True if a Continuation is returned
  */
 riak_boolean_t
-riak_2index_get_has_continuation(riak_2index_response *response);
+riak_2i_get_has_continuation(riak_2i_response *response);
 
 /**
  * @brief Access the Continuation in a Secondary Index response
@@ -96,7 +96,7 @@ riak_2index_get_has_continuation(riak_2index_response *response);
  * @returns True if a Continuation is returned
  */
 riak_binary*
-riak_2index_get_continuation(riak_2index_response *response);
+riak_2i_get_continuation(riak_2i_response *response);
 
 /**
  * @brief Determine if Vector Clock is in a Secondary Index response
@@ -104,7 +104,7 @@ riak_2index_get_continuation(riak_2index_response *response);
  * @returns True if Vector Clock is returned
  */
 riak_boolean_t
-riak_2index_get_has_done(riak_2index_response *response);
+riak_2i_get_has_done(riak_2i_response *response);
 
 /**
  * @brief Access the Done flag in a Secondary Index response
@@ -112,7 +112,7 @@ riak_2index_get_has_done(riak_2index_response *response);
  * @returns Done flag value
  */
 riak_boolean_t
-riak_2index_get_done(riak_2index_response *response);
+riak_2i_get_done(riak_2i_response *response);
 
 /**
  * @brief Determine if Vector Clock is in a Secondary Index response
@@ -120,7 +120,7 @@ riak_2index_get_done(riak_2index_response *response);
  * @returns True if Vector Clock is returned
  */
 riak_boolean_t
-riak_2index_get_has_vclock(riak_2index_response *response);
+riak_2i_get_has_vclock(riak_2i_response *response);
 
 /**
  * @brief Access the Vector Clock in a Secondary Index response
@@ -128,7 +128,7 @@ riak_2index_get_has_vclock(riak_2index_response *response);
  * @returns Vector Clock value
  */
 riak_binary*
-riak_2index_get_vclock(riak_2index_response *response);
+riak_2i_get_vclock(riak_2i_response *response);
 
 /**
  * @brief Determine if Unmodified flag is in a Secondary Index response
@@ -136,7 +136,7 @@ riak_2index_get_vclock(riak_2index_response *response);
  * @returns True if Unmodified flag is returned
  */
 riak_boolean_t
-riak_2index_get_has_unmodified(riak_2index_response *response);
+riak_2i_get_has_unmodified(riak_2i_response *response);
 
 /**
  * @brief Access the Unmodified flag in a Secondary Index response
@@ -144,7 +144,7 @@ riak_2index_get_has_unmodified(riak_2index_response *response);
  * @returns Unmodified flag
  */
 riak_boolean_t
-riak_2index_get_unmodified(riak_2index_response *response);
+riak_2i_get_unmodified(riak_2i_response *response);
 
 /**
  * @brief Access the Deleted flag in a Secondary Index response
@@ -152,7 +152,7 @@ riak_2index_get_unmodified(riak_2index_response *response);
  * @returns Deleted flag
  */
 riak_boolean_t
-riak_2index_get_deleted(riak_2index_response *response);
+riak_2i_get_deleted(riak_2i_response *response);
 
 /**
  * @brief Access the Number of Riak Objects in a Secondary Index response
@@ -160,7 +160,7 @@ riak_2index_get_deleted(riak_2index_response *response);
  * @returns Number of Riak Objects
  */
 riak_int32_t
-riak_2index_get_n_content(riak_2index_response *response);
+riak_2i_get_n_content(riak_2i_response *response);
 
 /**
  * @brief Access an array of Riak Objects in a Secondary Index response
@@ -168,15 +168,15 @@ riak_2index_get_n_content(riak_2index_response *response);
  * @returns Array of Riak Objects (siblings)
  */
 riak_object**
-riak_2index_get_content(riak_2index_response *response);
+riak_2i_get_content(riak_2i_response *response);
 
 /**
  * @brief Construct a new Riak Secondary Index Options object
  * @param cfg Riak Configuration
  * @return Riak Object
  */
-riak_2index_options*
-riak_2index_options_new(riak_config *cfg);
+riak_2i_options*
+riak_2i_options_new(riak_config *cfg);
 
 /**
  * @brief Release claimed memory used by Riak Secondary Index Options
@@ -184,8 +184,8 @@ riak_2index_options_new(riak_config *cfg);
  * @param obj Riak Object to be freed
  */
 void
-riak_2index_options_free(riak_config          *cfg,
-                         riak_2index_options **opt);
+riak_2i_options_free(riak_config          *cfg,
+                         riak_2i_options **opt);
 
 /**
  * @brief Print out a Secondary Index Options
@@ -196,7 +196,7 @@ riak_2index_options_free(riak_config          *cfg,
  * @returns Total number of bytes written
  */
 riak_int32_t
-riak_2index_options_print(riak_2index_response *response,
+riak_2i_options_print(riak_2i_response *response,
                           char                **target,
                           riak_int32_t         *len,
                           riak_int32_t         *total);
@@ -207,7 +207,7 @@ riak_2index_options_print(riak_2index_response *response,
  * @returns True if Secondary Index query (not exact match)
  */
 riak_boolean_t
-riak_2index_options_get_is_range_query(riak_2index_options *opt);
+riak_2i_options_get_is_range_query(riak_2i_options *opt);
 
 /**
  * @brief Determine if the key has been set
@@ -215,7 +215,7 @@ riak_2index_options_get_is_range_query(riak_2index_options *opt);
  * @returns True if key has been set
  */
 riak_boolean_t
-riak_2index_options_get_has_key(riak_2index_options *opt);
+riak_2i_options_get_has_key(riak_2i_options *opt);
 
 /**
  * @brief Access the key on Secondary Index option
@@ -223,7 +223,7 @@ riak_2index_options_get_has_key(riak_2index_options *opt);
  * @returns Read key value
  */
 riak_binary*
-riak_2index_options_get_key(riak_2index_options *opt);
+riak_2i_options_get_key(riak_2i_options *opt);
 
 /**
  * @brief Determine if the range minimum has been set
@@ -231,7 +231,7 @@ riak_2index_options_get_key(riak_2index_options *opt);
  * @returns True if range minimum has been set
  */
 riak_boolean_t
-riak_2index_options_get_has_range_min(riak_2index_options *opt);
+riak_2i_options_get_has_range_min(riak_2i_options *opt);
 
 /**
  * @brief Access the range minimum on Secondary Index option
@@ -239,7 +239,7 @@ riak_2index_options_get_has_range_min(riak_2index_options *opt);
  * @returns Range minimum value
  */
 riak_binary*
-riak_2index_options_get_range_min(riak_2index_options *opt);
+riak_2i_options_get_range_min(riak_2i_options *opt);
 
 /**
  * @brief Determine if the range maximum has been set
@@ -247,7 +247,7 @@ riak_2index_options_get_range_min(riak_2index_options *opt);
  * @returns True if range maximum has been set
  */
 riak_boolean_t
-riak_2index_options_get_has_range_max(riak_2index_options *opt);
+riak_2i_options_get_has_range_max(riak_2i_options *opt);
 
 /**
  * @brief Access the Range maximum on Secondary Index option
@@ -255,7 +255,7 @@ riak_2index_options_get_has_range_max(riak_2index_options *opt);
  * @returns Range maximum value
  */
 riak_binary*
-riak_2index_options_get_range_max(riak_2index_options *opt);
+riak_2i_options_get_range_max(riak_2i_options *opt);
 
 /**
  * @brief Determine if the return terms flag has been set
@@ -263,7 +263,7 @@ riak_2index_options_get_range_max(riak_2index_options *opt);
  * @returns True if return terms flag has been set
  */
 riak_boolean_t
-riak_2index_options_get_has_return_terms(riak_2index_options *opt);
+riak_2i_options_get_has_return_terms(riak_2i_options *opt);
 
 /**
  * @brief Access the Return terms flag on Secondary Index option
@@ -271,7 +271,7 @@ riak_2index_options_get_has_return_terms(riak_2index_options *opt);
  * @returns Return terms flag
  */
 riak_boolean_t
-riak_2index_options_get_return_terms(riak_2index_options *opt);
+riak_2i_options_get_return_terms(riak_2i_options *opt);
 
 /**
  * @brief Determine if the streaming flag has been set
@@ -279,7 +279,7 @@ riak_2index_options_get_return_terms(riak_2index_options *opt);
  * @returns True if streaming flag has been set
  */
 riak_boolean_t
-riak_2index_options_get_has_stream(riak_2index_options *opt);
+riak_2i_options_get_has_stream(riak_2i_options *opt);
 
 /**
  * @brief Access the streaming flag on Secondary Index option
@@ -287,7 +287,7 @@ riak_2index_options_get_has_stream(riak_2index_options *opt);
  * @returns Streaming flag value
  */
 riak_boolean_t
-riak_2index_options_get_stream(riak_2index_options *opt);
+riak_2i_options_get_stream(riak_2i_options *opt);
 
 /**
  * @brief Determine if the maximum results has been set
@@ -295,7 +295,7 @@ riak_2index_options_get_stream(riak_2index_options *opt);
  * @returns True if maximum results has been set
  */
 riak_boolean_t
-riak_2index_options_get_has_max_results(riak_2index_options *opt);
+riak_2i_options_get_has_max_results(riak_2i_options *opt);
 
 /**
  * @brief Access the Maximum results on Secondary Index option
@@ -303,7 +303,7 @@ riak_2index_options_get_has_max_results(riak_2index_options *opt);
  * @returns Maximum results value
  */
 riak_uint32_t
-riak_2index_options_get_max_results(riak_2index_options *opt);
+riak_2i_options_get_max_results(riak_2i_options *opt);
 
 /**
  * @brief Determine if the continuation value has been set
@@ -311,7 +311,7 @@ riak_2index_options_get_max_results(riak_2index_options *opt);
  * @returns True if continuation has been set
  */
 riak_boolean_t
-riak_2index_options_get_has_continuation(riak_2index_options *opt);
+riak_2i_options_get_has_continuation(riak_2i_options *opt);
 
 /**
  * @brief Access the continuation value on Secondary Index option (for pagaination)
@@ -319,7 +319,7 @@ riak_2index_options_get_has_continuation(riak_2index_options *opt);
  * @returns Continuations value
  */
 riak_binary*
-riak_2index_options_get_continuation(riak_2index_options *opt);
+riak_2i_options_get_continuation(riak_2i_options *opt);
 
 /**
  * @brief Determine if the timeout has been set
@@ -327,7 +327,7 @@ riak_2index_options_get_continuation(riak_2index_options *opt);
  * @returns True if timeout has been set
  */
 riak_boolean_t
-riak_2index_options_get_has_timeout(riak_2index_options *opt);
+riak_2i_options_get_has_timeout(riak_2i_options *opt);
 
 /**
  * @brief Access the timeout on Secondary Index option
@@ -335,7 +335,7 @@ riak_2index_options_get_has_timeout(riak_2index_options *opt);
  * @returns Timeoute value
  */
 riak_uint32_t
-riak_2index_options_get_timeout(riak_2index_options *opt);
+riak_2i_options_get_timeout(riak_2i_options *opt);
 
 /**
  * @brief Determine if the type has been set
@@ -343,7 +343,7 @@ riak_2index_options_get_timeout(riak_2index_options *opt);
  * @returns True if type has been set
  */
 riak_boolean_t
-riak_2index_options_get_has_type(riak_2index_options *opt);
+riak_2i_options_get_has_type(riak_2i_options *opt);
 
 /**
  * @brief Access the type (binary or string) on Secondary Index option
@@ -351,7 +351,7 @@ riak_2index_options_get_has_type(riak_2index_options *opt);
  * @returns Type value
  */
 riak_binary*
-riak_2index_options_get_type(riak_2index_options *opt);
+riak_2i_options_get_type(riak_2i_options *opt);
 
 /**
  * @brief Determine if a regular expression has been set
@@ -359,7 +359,7 @@ riak_2index_options_get_type(riak_2index_options *opt);
  * @returns True if regular expression has been set
  */
 riak_boolean_t
-riak_2index_options_get_has_term_regex(riak_2index_options *opt);
+riak_2i_options_get_has_term_regex(riak_2i_options *opt);
 
 /**
  * @brief Access the Search Term Regular Expression on Secondary Index option
@@ -367,7 +367,7 @@ riak_2index_options_get_has_term_regex(riak_2index_options *opt);
  * @returns Search Term Regular Expression
  */
 riak_binary*
-riak_2index_options_get_term_regex(riak_2index_options *opt);
+riak_2i_options_get_term_regex(riak_2i_options *opt);
 
 /**
  * @brief Determine if the pagination sort flag has been set
@@ -375,7 +375,7 @@ riak_2index_options_get_term_regex(riak_2index_options *opt);
  * @returns True if pagination sort has been set
  */
 riak_boolean_t
-riak_2index_options_get_has_pagination_sort(riak_2index_options *opt);
+riak_2i_options_get_has_pagination_sort(riak_2i_options *opt);
 
 /**
  * @brief Access the pagination sort flag on Secondary Index option
@@ -383,14 +383,14 @@ riak_2index_options_get_has_pagination_sort(riak_2index_options *opt);
  * @returns Pagination sort flag
  */
 riak_boolean_t
-riak_2index_options_get_pagination_sort(riak_2index_options *opt);
+riak_2i_options_get_pagination_sort(riak_2i_options *opt);
 
 /**
  * @brief Switch query from index to range query
  * @param opt Riak Secondary Index Option
  */
 void
-riak_2index_options_set_range_query(riak_2index_options *opt);
+riak_2i_options_set_range_query(riak_2i_options *opt);
 
 /**
  * @brief Set the equality query Key on Secondary Index Options
@@ -400,8 +400,8 @@ riak_2index_options_set_range_query(riak_2index_options *opt);
  * @return Error Code
  */
 riak_error
-riak_2index_options_set_key(riak_config         *cfg,
-                            riak_2index_options *opt,
+riak_2i_options_set_key(riak_config         *cfg,
+                            riak_2i_options *opt,
                             riak_binary         *value);
 
 /**
@@ -412,8 +412,8 @@ riak_2index_options_set_key(riak_config         *cfg,
  * @return Error Code
  */
 riak_error
-riak_2index_options_set_range_min(riak_config         *cfg,
-                                  riak_2index_options *opt,
+riak_2i_options_set_range_min(riak_config         *cfg,
+                                  riak_2i_options *opt,
                                   riak_binary         *value);
 
 /**
@@ -424,8 +424,8 @@ riak_2index_options_set_range_min(riak_config         *cfg,
  * @return Error Code
  */
 riak_error
-riak_2index_options_set_range_max(riak_config         *cfg,
-                                  riak_2index_options *opt,
+riak_2i_options_set_range_max(riak_config         *cfg,
+                                  riak_2i_options *opt,
                                   riak_binary         *value);
 
 /**
@@ -434,7 +434,7 @@ riak_2index_options_set_range_max(riak_config         *cfg,
  * @param value True if you want the terms returned
  */
 void
-riak_2index_options_set_return_terms(riak_2index_options *opt,
+riak_2i_options_set_return_terms(riak_2i_options *opt,
                                      riak_boolean_t       value);
 /**
  * @brief Set the streming flag on Secondary Index Options
@@ -442,7 +442,7 @@ riak_2index_options_set_return_terms(riak_2index_options *opt,
  * @param value True if you want the results streamed
  */
 void
-riak_2index_options_set_stream(riak_2index_options *opt,
+riak_2i_options_set_stream(riak_2i_options *opt,
                                riak_boolean_t       value);
 void
 /**
@@ -450,7 +450,7 @@ void
  * @param opt Riak Secondary Index Option
  * @param value Maximum returned results
  */
-riak_2index_options_set_max_results(riak_2index_options *opt,
+riak_2i_options_set_max_results(riak_2i_options *opt,
                                     riak_uint32_t        value);
 
 /**
@@ -461,8 +461,8 @@ riak_2index_options_set_max_results(riak_2index_options *opt,
  * @return Error Code
  */
 riak_error
-riak_2index_options_set_continuation(riak_config         *cfg,
-                                     riak_2index_options *opt,
+riak_2i_options_set_continuation(riak_config         *cfg,
+                                     riak_2i_options *opt,
                                      riak_binary         *value);
 /**
  * @brief Set the timeout on Secondary Index Options
@@ -470,7 +470,7 @@ riak_2index_options_set_continuation(riak_config         *cfg,
  * @param value Timeout in ms
  */
 void
-riak_2index_options_set_timeout(riak_2index_options *opt,
+riak_2i_options_set_timeout(riak_2i_options *opt,
                                 riak_uint32_t        value);
 
 /**
@@ -481,8 +481,8 @@ riak_2index_options_set_timeout(riak_2index_options *opt,
  * @return Error Code
  */
 riak_error
-riak_2index_options_set_type(riak_config         *cfg,
-                             riak_2index_options *opt,
+riak_2i_options_set_type(riak_config         *cfg,
+                             riak_2i_options *opt,
                              riak_binary         *value);
 
 /**
@@ -493,8 +493,8 @@ riak_2index_options_set_type(riak_config         *cfg,
  * @return Error Code
  */
 riak_error
-riak_2index_options_set_term_regex(riak_config         *cfg,
-                                   riak_2index_options *opt,
+riak_2i_options_set_term_regex(riak_config         *cfg,
+                                   riak_2i_options *opt,
                                    riak_binary         *value);
 
 /**
@@ -503,11 +503,11 @@ riak_2index_options_set_term_regex(riak_config         *cfg,
  * @param value True if the paginated results are to be sorted
  */
 void
-riak_2index_options_set_pagination_sort(riak_2index_options *opt,
+riak_2i_options_set_pagination_sort(riak_2i_options *opt,
                                          riak_boolean_t      value);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // _RIAK_2INDEX_MESSAGE_H
+#endif // _RIAK_2I_MESSAGE_H

@@ -213,11 +213,11 @@ riak_set_bucketprops(riak_connection                *cxn,
  * @param response Returned bucket properties
  * @return Error code */
 riak_error
-riak_2index(riak_connection       *cxn,
+riak_2i(riak_connection       *cxn,
             riak_binary           *bucket,
             riak_binary           *index,
-            riak_2index_options   *opts,
-            riak_2index_response **response);
+            riak_2i_options   *opts,
+            riak_2i_response **response);
 
 /**
  * @brief Synchronous Map/Reduce request
@@ -349,10 +349,10 @@ riak_async_register_mapreduce(riak_operation        *rop,
  * @returns Error Code
  */
 riak_error
-riak_async_register_2index(riak_operation        *rop,
+riak_async_register_2i(riak_operation        *rop,
                            riak_binary           *bucket,
                            riak_binary           *index,
-                           riak_2index_options   *index_options,
+                           riak_2i_options   *index_options,
                            riak_response_callback cb);
 
 /**

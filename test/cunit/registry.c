@@ -29,7 +29,7 @@
 #include <CUnit/Basic.h>
 #include "riak.h"
 #include "test.h"
-#include "test_2index.h"
+#include "test_2i.h"
 #include "test_binary.h"
 #include "test_config.h"
 #include "test_connection.h"
@@ -124,18 +124,18 @@ main(int   argc,
     CU_ADD_TEST(messages_suite, test_listkeys_response_decode);
     CU_ADD_TEST(messages_suite, test_bucketprops);
     CU_ADD_TEST(messages_suite, test_mapreduce_response_decode);
-    CU_ADD_TEST(messages_suite, test_2index_options_qtype);
-    CU_ADD_TEST(messages_suite, test_2index_options_key);
-    CU_ADD_TEST(messages_suite, test_2index_options_range_min);
-    CU_ADD_TEST(messages_suite, test_2index_options_range_max);
-    CU_ADD_TEST(messages_suite, test_2index_options_return_terms);
-    CU_ADD_TEST(messages_suite, test_2index_options_max_results);
-    CU_ADD_TEST(messages_suite, test_2index_options_continuation);
-    CU_ADD_TEST(messages_suite, test_2index_options_timeout);
-    CU_ADD_TEST(messages_suite, test_2index_options_type);
-    CU_ADD_TEST(messages_suite, test_2index_options_term_regex);
-    CU_ADD_TEST(messages_suite, test_2index_options_pagination_sort);
-    CU_ADD_TEST(messages_suite, test_2index_response_decode);
+    CU_ADD_TEST(messages_suite, test_2i_options_qtype);
+    CU_ADD_TEST(messages_suite, test_2i_options_key);
+    CU_ADD_TEST(messages_suite, test_2i_options_range_min);
+    CU_ADD_TEST(messages_suite, test_2i_options_range_max);
+    CU_ADD_TEST(messages_suite, test_2i_options_return_terms);
+    CU_ADD_TEST(messages_suite, test_2i_options_max_results);
+    CU_ADD_TEST(messages_suite, test_2i_options_continuation);
+    CU_ADD_TEST(messages_suite, test_2i_options_timeout);
+    CU_ADD_TEST(messages_suite, test_2i_options_type);
+    CU_ADD_TEST(messages_suite, test_2i_options_term_regex);
+    CU_ADD_TEST(messages_suite, test_2i_options_pagination_sort);
+    CU_ADD_TEST(messages_suite, test_2i_response_decode);
     CU_ADD_TEST(messages_suite, test_search_options_rows);
     CU_ADD_TEST(messages_suite, test_search_options_start);
     CU_ADD_TEST(messages_suite, test_search_options_sort);
