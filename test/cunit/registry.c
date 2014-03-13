@@ -120,7 +120,6 @@ main(int   argc,
     CU_ADD_TEST(messages_suite, test_get_options_sloppy_quorum);
     CU_ADD_TEST(messages_suite, test_get_options_n_val);
     CU_ADD_TEST(messages_suite, test_get_decode_response);
-    CU_ADD_TEST(messages_suite, test_get_bucket_type);
     CU_ADD_TEST(messages_suite, test_put_options_vclock);
     CU_ADD_TEST(messages_suite, test_put_options_w);
     CU_ADD_TEST(messages_suite, test_put_options_dw);

@@ -300,8 +300,8 @@ test_get_decode_response() {
     CU_PASS("test_get_decode_response passed")
 }
 
+
 void
-<<<<<<< HEAD
 test_integration_get_value() {
     riak_config     *cfg;
     riak_connection *cxn = NULL;
