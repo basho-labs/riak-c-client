@@ -344,6 +344,7 @@ main(int   argc,
     // cleanup
     event_base_free(base);
     riak_binary_free(cfg, &bucket_bin);
+    riak_binary_free(cfg, &bucket_type_bin);
     riak_binary_free(cfg, &key_bin);
     riak_binary_free(cfg, &value_bin);
     riak_binary_free(cfg, &index_bin);
