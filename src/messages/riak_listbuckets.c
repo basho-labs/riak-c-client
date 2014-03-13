@@ -31,6 +31,8 @@
 
 riak_error
 riak_listbuckets_request_encode(riak_operation   *rop,
+                                riak_binary  *bucket_type,
+                                riak_uint32_t timeout,
                                 riak_pb_message **req) {
     riak_config *cfg = riak_operation_get_config(rop);
     RpbListBucketsReq listbucketsreq = RPB_LIST_BUCKETS_REQ__INIT;
@@ -40,6 +42,14 @@ riak_listbuckets_request_encode(riak_operation   *rop,
     riak_uint8_t *msgbuf = (riak_uint8_t*)(cfg->malloc_fn)(msglen);
     if (msgbuf == NULL) {
         return ERIAK_OUT_OF_MEMORY;
+    }
+    if(bucket_type != NULL) {
+        riak_binary_copy_to_pb(&listbucketsreq.type, bucket_type);
+        listbucketsreq.has_type = RIAK_TRUE;
+    }
+    if (timeout > 0) {
+        listbucketsreq.has_timeout = RIAK_TRUE;
+        listbucketsreq.timeout = timeout;
     }
     rpb_list_buckets_req__pack(&listbucketsreq, msgbuf);
     riak_pb_message* request = riak_pb_message_new(cfg, MSG_RPBLISTBUCKETSREQ, msglen, msgbuf);

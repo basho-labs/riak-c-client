@@ -125,6 +125,8 @@ riak_delete(riak_connection     *cxn,
  */
 riak_error
 riak_listbuckets(riak_connection            *cxn,
+                 riak_binary                *bucket_type,
+                 riak_uint32_t               timeout,
                  riak_listbuckets_response **repsonse);
 
 /**
@@ -138,6 +140,7 @@ riak_listbuckets(riak_connection            *cxn,
 riak_error
 riak_listkeys(riak_connection         *cxn,
               riak_binary             *bucket,
+              riak_binary             *bucket_type,
               riak_uint32_t            timeout,
               riak_listkeys_response **repsonse);
 
@@ -286,11 +289,14 @@ riak_async_register_delete(riak_operation        *rop,
 
 riak_error
 riak_async_register_listbuckets(riak_operation        *rop,
+                                riak_binary           *bucket_type,
+                                riak_uint32_t          timeout,
                                 riak_response_callback cb);
 
 riak_error
 riak_async_register_listkeys(riak_operation        *rop,
                              riak_binary           *bucket,
+                             riak_binary           *bucket_types,
                              riak_uint32_t          timeout,
                              riak_response_callback cb );
 

@@ -74,18 +74,28 @@ riak_async_register_delete(riak_operation        *rop,
 
 riak_error
 riak_async_register_listbuckets(riak_operation        *rop,
+                                riak_binary           *bucket_type,
+                                riak_uint32_t          timeout,
                                 riak_response_callback cb) {
     riak_operation_set_response_cb(rop, cb);
-    return riak_listbuckets_request_encode(rop, &(rop->pb_request));
+    return riak_listbuckets_request_encode(rop,
+                                           bucket_type,
+                                           timeout,
+                                          &(rop->pb_request));
 }
 
 riak_error
 riak_async_register_listkeys(riak_operation        *rop,
                              riak_binary           *bucket,
+                             riak_binary           *bucket_type,
                              riak_uint32_t          timeout,
                              riak_response_callback cb ) {
     riak_operation_set_response_cb(rop, cb);
-    return riak_listkeys_request_encode(rop, bucket, timeout, &(rop->pb_request));
+    return riak_listkeys_request_encode(rop,
+                                        bucket,
+                                        bucket_type,
+                                        timeout,
+                                        &(rop->pb_request));
 }
 
 riak_error

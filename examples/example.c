@@ -207,7 +207,10 @@ main(int   argc,
             }
             break;
         case RIAK_COMMAND_LISTBUCKETS:
-            err = riak_listbuckets(cxn, &bucket_response);
+            err = riak_listbuckets(cxn,
+                                   bucket_type_bin,
+                                   args.timeout * 1000,
+                &bucket_response);
             if (err == ERIAK_OK) {
                 riak_listbuckets_response_print(&print_state, bucket_response);
                 printf("%s\n", output);
@@ -219,7 +222,11 @@ main(int   argc,
             }
             break;
         case RIAK_COMMAND_LISTKEYS:
-            err = riak_listkeys(cxn, bucket_bin, args.timeout * 1000, &key_response);
+            err = riak_listkeys(cxn,
+                                bucket_bin,
+                                bucket_type_bin,
+                                args.timeout * 1000,
+                                &key_response);
             if (err == ERIAK_OK) {
                 riak_listkeys_response_print(&print_state, key_response);
                 printf("%s\n", output);

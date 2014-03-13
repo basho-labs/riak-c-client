@@ -219,14 +219,21 @@ main(int   argc,
             }
             break;
         case RIAK_COMMAND_LISTBUCKETS:
-            err = riak_async_register_listbuckets(rop, (riak_response_callback)example_listbucket_cb);
+            err = riak_async_register_listbuckets(rop,
+                                                  bucket_type_bin,
+                                                  args.timeout * 1000,
+                                                  (riak_response_callback)example_listbucket_cb);
             if (err) {
                 fprintf(stderr, "List Buckets Problems [%s]\n", riak_strerror(err));
                 exit(1);
             }
             break;
         case RIAK_COMMAND_LISTKEYS:
-            err = riak_async_register_listkeys(rop, bucket_bin, args.timeout * 1000, (riak_response_callback)example_listkey_cb);
+            err = riak_async_register_listkeys(rop,
+                                               bucket_bin,
+                                               bucket_type_bin,
+                                               args.timeout * 1000,
+                                               (riak_response_callback)example_listkey_cb);
             if (err) {
                 fprintf(stderr, "List Keys Problems [%s]\n", riak_strerror(err));
                 exit(1);
