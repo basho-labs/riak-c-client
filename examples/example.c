@@ -322,7 +322,12 @@ main(int   argc,
             riak_2i_options_set_stream(index_options, RIAK_TRUE);
             riak_2i_options_set_timeout(index_options, 10000);
             riak_2i_options_set_key(cfg, index_options, value_bin);
-            err = riak_2i(cxn, bucket_bin, index_bin, index_options, &index_response);
+            err = riak_2i(cxn,
+                          bucket_bin,
+                          bucket_type_bin,
+                          index_bin,
+                          index_options,
+                          &index_response);
             if (err == ERIAK_OK) {
                 riak_2i_response_print(&print_state, index_response);
                 printf("%s\n", output);

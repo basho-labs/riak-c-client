@@ -69,14 +69,15 @@ struct _riak_2i_response
 
 riak_error
 riak_2i_request_encode(riak_operation      *rop,
-                           riak_binary         *bucket,
-                           riak_binary         *index,
-                           riak_2i_options *index_options,
-                           riak_pb_message    **req);
+                       riak_binary         *bucket,
+                       riak_binary         *bucket_type,
+                       riak_binary         *index,
+                       riak_2i_options *index_options,
+                       riak_pb_message    **req);
 
 riak_error
 riak_2i_response_decode(riak_operation       *rop,
-                           riak_pb_message       *pbresp,
-                           riak_2i_response **resp,
-                           riak_boolean_t        *done);
+                        riak_pb_message       *pbresp,
+                        riak_2i_response **resp,
+                        riak_boolean_t        *done);
 

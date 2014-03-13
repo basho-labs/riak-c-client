@@ -299,7 +299,12 @@ main(int   argc,
             riak_2i_options_set_stream(index_options, RIAK_TRUE);
             riak_2i_options_set_timeout(index_options, 10000);
             riak_2i_options_set_key(cfg, index_options, value_bin);
-            err = riak_async_register_2i(rop, bucket_bin, index_bin, index_options, (riak_response_callback)example_2i_cb);
+            err = riak_async_register_2i(rop,
+                                         bucket_bin,
+                                         bucket_type_bin,
+                                         index_bin,
+                                         index_options,
+                                         (riak_response_callback)example_2i_cb);
             riak_2i_options_free(cfg, &index_options);
             if (err) {
                 fprintf(stderr, "Secondary Index Problems [%s]\n", riak_strerror(err));

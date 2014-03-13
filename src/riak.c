@@ -377,16 +377,22 @@ riak_mapreduce(riak_connection          *cxn,
 
 riak_error
 riak_2i(riak_connection       *cxn,
-            riak_binary           *bucket,
-            riak_binary           *index,
-            riak_2i_options   *opts,
-            riak_2i_response **response) {
+        riak_binary           *bucket,
+        riak_binary           *bucket_type,
+        riak_binary           *index,
+        riak_2i_options   *opts,
+        riak_2i_response **response) {
     riak_operation *rop = NULL;
     riak_error err = riak_operation_new(cxn, &rop, NULL, NULL, NULL);
     if (err) {
         return err;
     }
-    err = riak_2i_request_encode(rop, bucket, index, opts, &(rop->pb_request));
+    err = riak_2i_request_encode(rop,
+                                 bucket,
+                                 bucket_type,
+                                 index,
+                                 opts,
+                                 &(rop->pb_request));
     if (err) {
         return err;
     }

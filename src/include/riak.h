@@ -214,10 +214,11 @@ riak_set_bucketprops(riak_connection                *cxn,
  * @return Error code */
 riak_error
 riak_2i(riak_connection       *cxn,
-            riak_binary           *bucket,
-            riak_binary           *index,
-            riak_2i_options   *opts,
-            riak_2i_response **response);
+        riak_binary           *bucket,
+        riak_binary           *bucket_type,
+        riak_binary           *index,
+        riak_2i_options   *opts,
+        riak_2i_response **response);
 
 /**
  * @brief Synchronous Map/Reduce request
@@ -350,10 +351,11 @@ riak_async_register_mapreduce(riak_operation        *rop,
  */
 riak_error
 riak_async_register_2i(riak_operation        *rop,
-                           riak_binary           *bucket,
-                           riak_binary           *index,
-                           riak_2i_options   *index_options,
-                           riak_response_callback cb);
+                       riak_binary           *bucket,
+                       riak_binary           *bucket_type,
+                       riak_binary           *index,
+                       riak_2i_options   *index_options,
+                       riak_response_callback cb);
 
 /**
  * @brief Register an asynchronous Riak Search job
