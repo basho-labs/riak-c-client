@@ -92,7 +92,7 @@ test_integration_listkeys() {
     err = riak_listkeys(cxn,
                         db->bucket,
                         NULL,
-                        5000,
+                        DEFAULT_TIMEOUT,
                         &response);
     CU_ASSERT_FATAL(err == ERIAK_OK)
     CU_ASSERT_EQUAL(response->n_keys, 50)
