@@ -20,6 +20,7 @@ include_HEADERS =	src/include/riak.h \
 			src/include/riak_object.h \
 			src/include/riak_operation.h \
 			src/include/riak_types.h \
+			src/include/riak_print.h \
 			src/adapters/riak_libevent.h
 msgincludedir =		$(includedir)/messages
 dist_msginclude_DATA =	src/include/messages/riak_2index.h \
