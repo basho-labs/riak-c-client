@@ -67,6 +67,42 @@ test_log(void            *ptr,
          va_list          args);
 
 /**
+ * @brief Fake a connected socket
+ * @param domain for now usually PF_INET
+ * @param type SOCK_STREAM
+ * @param protocol IPPROTO_IPV4
+ * @returns 0
+ */
+riak_socket_t
+test_dummy_socket(int domain,
+                  int type,
+                  int protocol);
+/**
+ * @brief Fake a successful connection to a fake socket
+ * @param socket Ignored
+ * @param address Ignored
+ * @param address_len Ignored
+ * @returns 0
+ */
+int
+test_dummy_connect(riak_socket_t socket,
+                   const riak_sockaddr *address,
+                   riak_uint32_t address_len);
+
+/**
+ * @brief Fake socket closer
+ * @param socket Ignored
+ * @returns 0
+ */
+int
+test_dummy_close(riak_socket_t socket);
+
+/**
+ * Global testing connection options
+ */
+extern riak_connection_options test_connection_dummy_options;
+
+/**
  * @brief Set up testing environment
  * @param cfg Returned Riak Configuration
  * @returns Error Code
@@ -100,6 +136,10 @@ test_disconnect(riak_config      *cfg,
 */
 void
 test_cleanup(riak_config **cfg);
+
+//
+// A S Y N C H R O N O U S
+//
 
 typedef struct _test_async_connection {
     riak_config       *cfg;

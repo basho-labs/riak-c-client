@@ -31,6 +31,7 @@
 #include "riak.h"
 #include "riak.pb-c.h"
 #include "riak_connection-internal.h"
+#include "test.h"
 
 static int
 test_connection_bad_resolver(const char          *nodename,
@@ -82,8 +83,10 @@ test_connection_with_bad_resolver() {
     riak_error err = riak_config_new_default(&cfg);
     CU_ASSERT_FATAL(err == ERIAK_OK)
     riak_connection *cxn = NULL;
-    err = riak_connection_new(cfg, &cxn, "localhost", "1", test_connection_bad_resolver);
-    CU_ASSERT_FATAL(err == ERIAK_DNS_RESOLUTION)
+    riak_connection_options opts = test_connection_dummy_options;
+    opts.resolver = test_connection_bad_resolver;
+    err = riak_connection_new(cfg, &cxn, "localhost", "1", &opts);
+    CU_ASSERT_EQUAL_FATAL(err, ERIAK_DNS_RESOLUTION)
     riak_free(cfg, &(cxn->addrinfo));
     riak_connection_free(&cxn);
     riak_config_free(&cfg);
@@ -96,11 +99,83 @@ test_connection_with_good_resolver() {
     riak_error err = riak_config_new_default(&cfg);
     CU_ASSERT_FATAL(err == ERIAK_OK)
     riak_connection *cxn = NULL;
-    err = riak_connection_new(cfg, &cxn, "localhost", "1", test_connection_resolver);
-    CU_ASSERT_FATAL(err == ERIAK_CONNECT)
+    riak_connection_options opts = test_connection_dummy_options;
+    opts.resolver = test_connection_resolver;
+    err = riak_connection_new(cfg, &cxn, "localhost", "1", &opts);
+    CU_ASSERT_FATAL(err == ERIAK_OK)
     riak_free(cfg, &(cxn->addrinfo->ai_addr));
     riak_free(cfg, &(cxn->addrinfo));
     riak_connection_free(&cxn);
     riak_config_free(&cfg);
     CU_PASS("test_config_with_connection passed")
 }
+
+void
+test_connection_pool_empty() {
+    riak_config *cfg;
+    riak_error err = riak_config_new_default(&cfg);
+    CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
+
+    riak_connection_pool *pool;
+    err = riak_connection_pool_new(cfg, &pool, NULL, 10, RIAK_FALSE);
+    CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
+
+    riak_connection_pool_free(&pool);
+    CU_PASS("test_connection_pool_empty passed")
+}
+
+void
+test_connection_pool_add() {
+    CU_ASSERT_FATAL(RIAK_FALSE);
+}
+
+void
+test_connection_pool_remove() {
+    CU_ASSERT_FATAL(RIAK_FALSE);
+}
+
+void
+test_connection_pool_lazy_connect() {
+    CU_ASSERT_FATAL(RIAK_FALSE);
+}
+
+void
+test_connection_pool_eager_connect() {
+    CU_ASSERT_FATAL(RIAK_FALSE);
+}
+
+void
+test_connection_pool_get_connection() {
+    CU_ASSERT_FATAL(RIAK_FALSE);
+}
+
+void
+test_connection_pool_no_connections() {
+    CU_ASSERT_FATAL(RIAK_FALSE);
+}
+
+void
+test_connection_pool_exceed_max_connections() {
+    CU_ASSERT_FATAL(RIAK_FALSE);
+}
+
+void
+test_connection_pool_fair_distribution() {
+    CU_ASSERT_FATAL(RIAK_FALSE);
+}
+
+void
+test_integration_connection_pool_single_host() {
+    CU_ASSERT_FATAL(RIAK_FALSE);
+}
+
+void
+test_integration_connection_pool_many_hosts() {
+    CU_ASSERT_FATAL(RIAK_FALSE);
+}
+
+void
+test_integration_connection_pool_max_connections() {
+    CU_ASSERT_FATAL(RIAK_FALSE);
+}
+

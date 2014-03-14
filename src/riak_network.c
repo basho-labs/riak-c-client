@@ -80,12 +80,14 @@ riak_print_host(riak_addrinfo *addrinfo,
 }
 
 riak_socket_t
-riak_just_open_a_socket(riak_config   *cfg,
-                        riak_addrinfo *addrinfo) {
+riak_just_open_a_socket(riak_config    *cfg,
+                        riak_addrinfo  *addrinfo,
+                        riak_socket_fn  socket_fn,
+                        riak_connect_fn connect_fn) {
 
-    riak_socket_t sock = socket(addrinfo->ai_family,
-                                addrinfo->ai_socktype,
-                                addrinfo->ai_protocol);
+    riak_socket_t sock = socket_fn(addrinfo->ai_family,
+                                   addrinfo->ai_socktype,
+                                   addrinfo->ai_protocol);
     if (sock < 0) {
         riak_log_critical_config(cfg, "%s", "Could not just open a socket");
         return -1;
@@ -101,7 +103,7 @@ riak_just_open_a_socket(riak_config   *cfg,
     }
 #endif
 
-    int err = connect(sock, addrinfo->ai_addr, addrinfo->ai_addrlen);
+    int err = connect_fn(sock, addrinfo->ai_addr, addrinfo->ai_addrlen);
     if (err) {
         // Since this is nonblocking, we'll need to treat some errors
         // (like EINTR and EAGAIN) specially.

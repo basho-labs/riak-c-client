@@ -30,6 +30,7 @@
 #include "riak.h"
 #include "riak_messages-internal.h"
 #include "riak_operation-internal.h"
+#include "test.h"
 
 void
 test_operation_new() {
@@ -37,8 +38,8 @@ test_operation_new() {
     riak_error err = riak_config_new_default(&cfg);
     CU_ASSERT_FATAL(err == ERIAK_OK)
     riak_connection *cxn = NULL;
-    err = riak_connection_new(cfg, &cxn, "localhost", "1", NULL);
-    CU_ASSERT_FATAL(err == ERIAK_CONNECT)
+    err = riak_connection_new(cfg, &cxn, "localhost", "1", &test_connection_dummy_options);
+    CU_ASSERT_EQUAL_FATAL(err, ERIAK_OK)
     riak_operation *rop;
     err = riak_operation_new(cxn, &rop, NULL, NULL, NULL);
     riak_operation_free(&rop);
@@ -61,10 +62,10 @@ void
 test_operation_callbacks() {
     riak_config *cfg;
     riak_error err = riak_config_new_default(&cfg);
-    CU_ASSERT_FATAL(err == ERIAK_OK)
+    CU_ASSERT_EQUAL_FATAL(err, ERIAK_OK)
     riak_connection *cxn = NULL;
-    err = riak_connection_new(cfg, &cxn, "localhost", "1", NULL);
-    CU_ASSERT_FATAL(err == ERIAK_CONNECT)
+    err = riak_connection_new(cfg, &cxn, "localhost", "1", &test_connection_dummy_options);
+    CU_ASSERT_EQUAL_FATAL(err, ERIAK_OK)
     riak_operation *rop;
     err = riak_operation_new(cxn, &rop, test_operation_response_cb, test_operation_error_cb, NULL);
     CU_ASSERT_FATAL(rop->response_cb == test_operation_response_cb)

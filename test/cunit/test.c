@@ -31,6 +31,27 @@
 #include "riak_async.h"
 #include "../../src/adapters/riak_libevent.h"
 
+int
+test_dummy_socket(int domain,
+                  int type,
+                  int protocol) {
+    return 0;
+}
+
+int
+test_dummy_connect(int socket,
+                   const riak_sockaddr *address,
+                   riak_uint32_t address_len) {
+    return 0;
+}
+
+int
+test_dummy_close(riak_socket_t socket) {
+    return 0;
+}
+
+riak_connection_options test_connection_dummy_options = { NULL, test_dummy_socket, test_dummy_connect, test_dummy_close };
+
 riak_error
 test_setup(riak_config **cfg) {
     riak_error err = riak_config_new_default(cfg);
@@ -56,6 +77,7 @@ test_connect(riak_config      *cfg,
         pb_port = env_port;
     }
 
+    // Just use all default options
     return riak_connection_new(cfg, cxn, hostname, pb_port, NULL);
 }
 

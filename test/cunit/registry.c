@@ -98,6 +98,15 @@ main(int   argc,
     CU_ADD_TEST(config_suite, test_build_config);
     CU_ADD_TEST(connection_suite, test_connection_with_bad_resolver);
     CU_ADD_TEST(connection_suite, test_connection_with_good_resolver);
+    CU_ADD_TEST(connection_suite, test_connection_pool_empty);
+    CU_ADD_TEST(connection_suite, test_connection_pool_add);
+    CU_ADD_TEST(connection_suite, test_connection_pool_remove);
+    CU_ADD_TEST(connection_suite, test_connection_pool_lazy_connect);
+    CU_ADD_TEST(connection_suite, test_connection_pool_eager_connect);
+    CU_ADD_TEST(connection_suite, test_connection_pool_get_connection);
+    CU_ADD_TEST(connection_suite, test_connection_pool_no_connections);
+    CU_ADD_TEST(connection_suite, test_connection_pool_exceed_max_connections);
+    CU_ADD_TEST(connection_suite, test_connection_pool_fair_distribution);
     CU_ADD_TEST(config_suite, test_config_with_logging);
     CU_ADD_TEST(config_suite, test_config_allocate);
     CU_ADD_TEST(config_suite, test_config_allocate_clean);
@@ -183,6 +192,9 @@ main(int   argc,
     CU_ADD_TEST(integration_suite, test_integration_get_value);
     CU_ADD_TEST(integration_suite, test_integration_async_get_value);
     CU_ADD_TEST(integration_suite, test_integration_async_get_bad_value);
+    CU_ADD_TEST(integration_suite, test_integration_connection_pool_single_host);
+    CU_ADD_TEST(integration_suite, test_integration_connection_pool_many_hosts);
+    CU_ADD_TEST(integration_suite, test_integration_connection_pool_max_connections);
 
     // Only run integration tests if an argument is passed in
     if (argc < 2) {

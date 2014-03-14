@@ -106,7 +106,7 @@ main(int   argc,
         riak_connection  *cxn   = NULL;
         riak_libevent    *event = NULL;
         riak_operation   *rop   = NULL;
-        // Create a connection with the default address resolver
+        // Create a connection with the default options
         err = riak_connection_new(cfg, &cxn, args.host, args.portnum, NULL);
         if (err) {
             exit(1);

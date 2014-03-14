@@ -40,11 +40,19 @@ typedef double              riak_float64_t;
 
 // network types
 typedef struct addrinfo     riak_addrinfo;
+typedef struct sockaddr     riak_sockaddr;
 typedef int                 riak_socket_t;
 typedef int (*riak_addr_resolver)(const char *nodename,
                                   const char *servname,
                                   const riak_addrinfo *hints_in,
                                   riak_addrinfo **res);
+typedef riak_socket_t (*riak_socket_fn)(int domain,
+                                        int type,
+                                        int protocol);
+typedef int (*riak_connect_fn)(riak_socket_t socket,
+                               const riak_sockaddr *address,
+                               riak_uint32_t address_len);
+typedef int (*riak_close_fn)(riak_socket_t socket);
 
 #define RIAK_FALSE          0
 #define RIAK_TRUE           1

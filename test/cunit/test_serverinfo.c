@@ -42,8 +42,8 @@ test_server_info_encode_request() {
     riak_error err = riak_config_new_default(&cfg);
     CU_ASSERT_FATAL(err == ERIAK_OK)
 
-    err = riak_connection_new(cfg, &cxn, "localhost", "1", NULL);
-    CU_ASSERT_FATAL(err == ERIAK_CONNECT)
+    err = riak_connection_new(cfg, &cxn, "localhost", "1", &test_connection_dummy_options);
+    CU_ASSERT_EQUAL_FATAL(err, ERIAK_OK)
     err = riak_operation_new(cxn, &rop, NULL, NULL, NULL);
 
     err = riak_serverinfo_request_encode(rop, &request);
@@ -70,8 +70,8 @@ test_server_info_decode_good_response() {
     riak_error err = riak_config_new_default(&cfg);
     CU_ASSERT_FATAL(err == ERIAK_OK)
 
-    err = riak_connection_new(cfg, &cxn, "localhost", "1", NULL);
-    CU_ASSERT_FATAL(err == ERIAK_CONNECT)
+    err = riak_connection_new(cfg, &cxn, "localhost", "1", &test_connection_dummy_options);
+    CU_ASSERT_EQUAL_FATAL(err, ERIAK_OK)
     err = riak_operation_new(cxn, &rop, NULL, NULL, NULL);
 
     // riak_decode_serverinfo_response
@@ -106,8 +106,8 @@ test_server_info_decode_bad_response() {
     riak_error err = riak_config_new_default(&cfg);
     CU_ASSERT_FATAL(err == ERIAK_OK)
 
-    err = riak_connection_new(cfg, &cxn, "localhost", "1", NULL);
-    CU_ASSERT_FATAL(err == ERIAK_CONNECT)
+    err = riak_connection_new(cfg, &cxn, "localhost", "1", &test_connection_dummy_options);
+    CU_ASSERT_EQUAL_FATAL(err, ERIAK_OK)
     err = riak_operation_new(cxn, &rop, NULL, NULL, NULL);
 
     // riak_decode_serverinfo_response

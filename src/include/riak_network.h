@@ -47,11 +47,15 @@ riak_resolve_address(riak_config      *cfg,
  * @brief Opens a socket and connects to a host
  * @param cfg Riak Configuration
  * @param addrinfo Address of machine to connect to
+ * @param socket_fn Function pointer to `socket`
+ * @param connect_fn Function pointer to `connect`
  * @returns A connect socket file descriptor
  */
 riak_socket_t
-riak_just_open_a_socket(riak_config  *cfg,
-                        riak_addrinfo *addrinfo);
+riak_just_open_a_socket(riak_config     *cfg,
+                        riak_addrinfo   *addrinfo,
+                        riak_socket_fn   socket_fn,
+                        riak_connect_fn  connect_fn);
 
 /**
  * @brief Prints a human-readable version of addrinfo

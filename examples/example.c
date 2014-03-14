@@ -100,7 +100,7 @@ main(int   argc,
     // iterate through argv
     for(it = 0; it < args.iterate; it++) {
         riak_connection  *cxn   = NULL;
-        // Create a connection with the default address resolver
+        // Create a connection with the default options
         err = riak_connection_new(cfg, &cxn, args.host, args.portnum, NULL);
         if (err) {
             exit(1);

@@ -30,6 +30,7 @@
 #include "riak.h"
 #include "riak_messages-internal.h"
 #include "riak_operation-internal.h"
+#include "test.h"
 
 void
 test_set_clientid() {
@@ -41,8 +42,8 @@ test_set_clientid() {
     riak_error err = riak_config_new_default(&cfg);
     CU_ASSERT_FATAL(err == ERIAK_OK)
 
-    err = riak_connection_new(cfg, &cxn, "localhost", "1", NULL);
-    CU_ASSERT_FATAL(err == ERIAK_CONNECT)
+    err = riak_connection_new(cfg, &cxn, "localhost", "1", &test_connection_dummy_options);
+    CU_ASSERT_EQUAL_FATAL(err, ERIAK_OK)
     err = riak_operation_new(cxn, &rop, NULL, NULL, NULL);
     riak_binary clientid;
     clientid.data = (riak_uint8_t*)"test_clientid";
@@ -69,8 +70,8 @@ test_get_clientid() {
     riak_error err = riak_config_new_default(&cfg);
     CU_ASSERT_FATAL(err == ERIAK_OK)
 
-    err = riak_connection_new(cfg, &cxn, "localhost", "1", NULL);
-    CU_ASSERT_FATAL(err == ERIAK_CONNECT)
+    err = riak_connection_new(cfg, &cxn, "localhost", "1", &test_connection_dummy_options);
+    CU_ASSERT_EQUAL_FATAL(err, ERIAK_OK)
     err = riak_operation_new(cxn, &rop, NULL, NULL, NULL);
 
     riak_uint8_t bytes[] = { 0x04,0x0a,0x04,0x00,0x00,0x00,0x00 };
