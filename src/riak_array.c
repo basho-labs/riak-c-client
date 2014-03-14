@@ -24,20 +24,24 @@
 #include "riak_array.h"
 #include "riak_utils-internal.h"
 
-riak_array*
+riak_error
 riak_array_new(riak_config *cfg,
+               riak_array **ra_out,
                riak_size_t  size) {
     riak_array *ra = riak_config_clean_allocate(cfg, sizeof(riak_array));
-    if (ra != NULL) {
-        ra->cfg      = cfg;
-        ra->length   = 0;
-        ra->capacity = size;
-        ra->array    = riak_config_clean_allocate(cfg, sizeof(void*)*size);
-        if (ra->array == NULL) {
-            riak_free(cfg, &ra);
-        }
+    if (ra == NULL) {
+        return ERIAK_OUT_OF_MEMORY;
     }
-    return ra;
+    ra->cfg      = cfg;
+    ra->length   = 0;
+    ra->capacity = size;
+    ra->array    = riak_config_clean_allocate(cfg, sizeof(void*)*size);
+    if (ra->array == NULL) {
+        riak_free(cfg, &ra);
+        return ERIAK_OUT_OF_MEMORY;
+    }
+    *ra_out = ra;
+    return ERIAK_OK;
 }
 
 void

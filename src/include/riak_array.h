@@ -33,11 +33,13 @@ typedef struct _riak_array {
 /**
  * @brief Create yet another generic C data structure
  * @param cfg Riak Configuration
- * @param size Initial size of the array
+ * @param ra Returned Riak Array (out)
+ * @param capacity Initial size of the array
  */
-riak_array*
+riak_error
 riak_array_new(riak_config *cfg,
-               riak_size_t  size);
+               riak_array **ra,
+               riak_size_t  capacity);
 
 /**
  * @brief Free any memory claimed by the array itself
