@@ -98,6 +98,7 @@ cd ..
  
 wget http://sourceforge.net/projects/cunit/files/CUnit/2.1-2/CUnit-2.1-2-src.tar.bz2
 tar fx CUnit-2.1-2-src.tar.bz2
+cd CUnit-2.1-2
 ./configure
 make
 make check
