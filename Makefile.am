@@ -138,10 +138,10 @@ riak_c_async_example_CPPFLAGS = \
             $(EVENT_INCLUDES)
 
 riak_c_async_example_LDADD = \
-        -lriak_c_client-0.5 \
-        $(PROTOBUFC_LIBS) \
-        $(PROTOBUF_LIBS) \
-        $(EVENT_FLAGS)
+	-lriak_c_client-0.5 \
+	$(PROTOBUFC_LIBS) \
+	$(PROTOBUF_LIBS) \
+	$(EVENT_LIBS)
 
 riak_c_async_example_DEPENDENCIES = libriak_c_client-0.5.la
 
