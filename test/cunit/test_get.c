@@ -30,6 +30,7 @@
 #include "riak.h"
 #include "riak_messages-internal.h"
 #include "riak_operation-internal.h"
+#include "test.h"
 
 void
 test_get_options_r() {
@@ -235,8 +236,8 @@ test_get_decode_response() {
     riak_error err = riak_config_new_default(&cfg);
     CU_ASSERT_FATAL(err == ERIAK_OK)
 
-    err = riak_connection_new(cfg, &cxn, "localhost", "1", NULL);
-    CU_ASSERT_FATAL(err == ERIAK_CONNECT)
+    err = riak_connection_new(cfg, &cxn, "localhost", "1", &test_connection_dummy_options);
+    CU_ASSERT_EQUAL_FATAL(err, ERIAK_OK)
     err = riak_operation_new(cxn, &rop, NULL, NULL, NULL);
     CU_ASSERT_FATAL(err == ERIAK_OK)
     riak_binary bucket;

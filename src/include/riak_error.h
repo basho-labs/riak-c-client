@@ -43,6 +43,9 @@ typedef enum riak_error_enum {
     ERIAK_SERVER_ERROR,
     ERIAK_MESSAGE_FORMAT,
     ERIAK_THREAD,
+    ERIAK_MAX_CONNECTIONS,
+    ERIAK_DUPLICATE,
+    ERIAK_NOT_FOUND,
     ERIAK_LAST_ERRORNUM
 } riak_error;
 
@@ -63,6 +66,9 @@ static const char* errmsgs[] = {
     "An error was returned from the server",
     "Message Format Error",
     "Threading Error",
+    "Maximum number of connections reached",
+    "Duplicate Value",
+    "Value not found",
     "SENTINEL FOR LAST ERROR MESSAGE"
 };
 #endif

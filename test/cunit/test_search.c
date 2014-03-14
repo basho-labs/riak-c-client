@@ -31,6 +31,7 @@
 #include "riak_messages-internal.h"
 #include "riak_operation-internal.h"
 #include "riak_object-internal.h"
+#include "test.h"
 
 void
 test_search_options_rows() {
@@ -227,8 +228,8 @@ test_search_decode_response() {
     riak_error err = riak_config_new_default(&cfg);
     CU_ASSERT_FATAL(err == ERIAK_OK)
 
-    err = riak_connection_new(cfg, &cxn, "localhost", "1", NULL);
-    CU_ASSERT_FATAL(err == ERIAK_CONNECT)
+    err = riak_connection_new(cfg, &cxn, "localhost", "1", &test_connection_dummy_options);
+    CU_ASSERT_EQUAL_FATAL(err, ERIAK_OK)
     err = riak_operation_new(cxn, &rop, NULL, NULL, NULL);
     CU_ASSERT_FATAL(err == ERIAK_OK)
 
