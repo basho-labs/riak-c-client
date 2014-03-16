@@ -65,6 +65,31 @@ riak_binary_new_shallow(riak_config  *cfg,
     return b;
 }
 
+int
+riak_binary_compare(riak_binary *bin1,
+                    riak_binary *bin2) {
+    if (bin1->len > bin2->len) {
+        return 1;
+    }
+    if (bin1->len < bin2->len) {
+        return -1;
+    }
+    return memcmp(bin1->data, bin2->data, bin1->len);
+}
+
+int
+riak_binary_compare_string(riak_binary *bin,
+                           const char  *str) {
+    int len = strlen(str);
+    if (bin->len > len) {
+        return 1;
+    }
+    if (bin->len < len) {
+        return -1;
+    }
+    return memcmp(bin->data, str, bin->len);
+}
+
 riak_binary*
 riak_binary_copy(riak_config *cfg,
                  riak_binary *bin) {

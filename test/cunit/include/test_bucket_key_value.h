@@ -24,9 +24,10 @@
 #define _TEST_BUCKET_KEY_VALUE_
 
 typedef struct _test_bucket_key_value {
-    riak_binary *bucket;
-    riak_binary *key;
-    riak_binary *value;
+    riak_binary  *bucket;
+    riak_binary  *key;
+    riak_uint32_t n_objs;
+    riak_object **objs;
     struct _test_bucket_key_value *next;
 } test_bucket_key_value;
 
@@ -36,7 +37,7 @@ typedef struct _test_bucket_key_value {
  * @param root Updated first link in linked list of BKVs
  * @param bucket Name of bucket
  * @param key Name of key
- * @param value Value
+ * @param obj Riak Object (optional)
  * @returns Error Code
  */
 riak_error
@@ -44,7 +45,7 @@ test_bkv_add(riak_config            *cfg,
              test_bucket_key_value **root,
              riak_binary            *bucket,
              riak_binary            *key,
-             riak_binary            *value);
+             riak_object            *obj);
 
 /**
  * @brief Frees the entire linked list of Bucket/Key/Values

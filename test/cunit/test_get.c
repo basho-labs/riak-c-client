@@ -30,6 +30,7 @@
 #include "riak.h"
 #include "riak_messages-internal.h"
 #include "riak_operation-internal.h"
+#include "test.h"
 
 void
 test_get_options_r() {
@@ -297,4 +298,176 @@ test_get_decode_response() {
     riak_get_response_free(cfg, &response);
     riak_config_free(&cfg);
     CU_PASS("test_get_decode_response passed")
+}
+
+void
+test_integration_get_value() {
+    riak_config     *cfg;
+    riak_connection *cxn = NULL;
+
+    riak_error err = test_setup(&cfg);
+    CU_ASSERT_FATAL(err == ERIAK_OK)
+
+    err = test_connect(cfg, &cxn);
+    CU_ASSERT_FATAL(err == ERIAK_OK)
+
+    test_bucket_key_value *db = NULL;
+    err = test_load_db(cfg, cxn, &db, 1, 1);
+    CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
+
+    riak_get_response *response = NULL;
+    err = riak_get(cxn, db->bucket, db->key, NULL, &response);
+    CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
+    riak_uint32_t num = riak_get_get_n_content(response);
+    CU_ASSERT_EQUAL_FATAL(num, 1)
+    riak_object **objs = riak_get_get_content(response);
+    CU_ASSERT_NOT_EQUAL_FATAL(objs, NULL)
+    riak_object *obj = objs[0];
+    riak_object *expected_obj = db->objs[0];
+
+    char output[10240];
+    riak_print_state state;
+    riak_print_init(&state, output, sizeof(output));
+    int result = riak_object_compare_debug(obj, expected_obj, RIAK_FALSE, &state);
+    riak_get_response_print(&state, response);
+    //riak_object_print(&state, expected_obj);
+    //riak_object_print(&state, obj);
+    fprintf(stderr, "%s", output);
+    riak_get_response_free(cfg, &response);
+    CU_ASSERT_EQUAL(result, 0)
+
+    test_bkv_free(cfg, &db);
+    test_cleanup_db(cxn);
+    test_disconnect(cfg, &cxn);
+    test_cleanup(&cfg);
+    CU_PASS("test_integration_get_value passed")
+}
+
+
+void
+test_get_async_cb(riak_get_response *response,
+                  void              *ptr) {
+    test_async_pthread    *state = (test_async_pthread*)ptr;
+    test_async_connection *conn = (test_async_connection*)state->conn;
+    char output[10240];
+    riak_print_state print_state;
+    riak_print_init(&print_state, output, sizeof(output));
+    riak_object *expected = (riak_object*)state->expected;
+
+    riak_uint32_t num = riak_get_get_n_content(response);
+    if (num != 1) {
+        state->err = ERIAK_OUT_OF_RANGE;
+        snprintf(state->err_msg, sizeof(state->err_msg), "Expected 1 result but got %d", num);
+        riak_get_response_free(conn->cfg, &response);
+        return;
+    }
+    riak_object **objs = riak_get_get_content(response);
+    if (objs == NULL) {
+        state->err = ERIAK_OUT_OF_RANGE;
+        snprintf(state->err_msg, sizeof(state->err_msg), "Expected 1 result but got zero");
+        riak_get_response_free(conn->cfg, &response);
+        return;
+    }
+    riak_object *obj = objs[0];
+
+    int result = riak_object_compare_debug(obj, expected, RIAK_FALSE, &print_state);
+    if (result) {
+        state->err = ERIAK_INVALID;
+        snprintf(state->err_msg, sizeof(state->err_msg), "%s", output);
+        riak_get_response_free(conn->cfg, &response);
+        return;
+    }
+    //riak_object_print(&state, expected);
+    riak_get_response_print(&print_state, response);
+    fprintf(stderr, "%s", output);
+    riak_get_response_free(conn->cfg, &response);
+}
+
+typedef struct _test_async_pthread_get_args {
+    riak_binary      *bucket;
+    riak_binary      *key;
+    riak_get_options *opts;
+} test_async_pthread_get_args;
+
+/**
+ * @brief Encode and Send a Get request
+ * @param args Parameters required to create Get request
+ */
+void*
+test_get_async_thread(void *ptr) {
+    test_async_pthread    *state = (test_async_pthread*)ptr;
+    test_async_connection *conn  = state->conn;
+    test_async_pthread_get_args *args = (test_async_pthread_get_args*)(state->args);
+    riak_error err = riak_async_register_get(conn->rop, args->bucket, args->key, args->opts, (riak_response_callback)test_get_async_cb);
+    if (err) {
+        return (void*)riak_strerror(err);
+    }
+    err = test_async_send_message(conn);
+    if (err) {
+        return (void*)"Could not send request";
+    }
+    return NULL;
+}
+
+void
+test_integration_async_get_value() {
+    riak_config           *cfg;
+    riak_error err = test_setup(&cfg);
+    CU_ASSERT_FATAL(err == ERIAK_OK)
+
+    riak_connection *cxn = NULL;
+    err = test_connect(cfg, &cxn);
+    CU_ASSERT_FATAL(err == ERIAK_OK)
+    test_bucket_key_value *db = NULL;
+    err = test_load_db(cfg, cxn, &db, 1, 1);
+    CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
+
+    test_async_pthread_get_args args;
+    args.bucket = db->bucket;  // Just pick a random bucket
+    args.key    = db->key;
+    args.opts   = NULL;
+    riak_object *expected_obj = db->objs[0];
+    CU_ASSERT_NOT_EQUAL_FATAL(expected_obj, NULL)
+    err = test_async_thread_runner(cfg, test_get_async_thread, (void*)&args, (void*)expected_obj);
+    CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
+
+    test_cleanup_db(cxn);
+    test_disconnect(cfg, &cxn);
+    test_cleanup(&cfg);
+    CU_PASS("test_integration_async_get passed")
+}
+
+/**
+ * @brief See if a mismatched option returns ERIAK_INVALID
+ */
+void
+test_integration_async_get_bad_value() {
+    riak_config           *cfg;
+    riak_error err = test_setup(&cfg);
+    CU_ASSERT_FATAL(err == ERIAK_OK)
+
+    riak_connection *cxn = NULL;
+    err = test_connect(cfg, &cxn);
+    CU_ASSERT_FATAL(err == ERIAK_OK)
+    test_bucket_key_value *db = NULL;
+    err = test_load_db(cfg, cxn, &db, 1, 1);
+    CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
+
+    test_async_pthread_get_args args;
+    args.bucket = db->bucket;  // Just pick a random bucket
+    args.key    = db->key;
+    args.opts   = NULL;
+
+    riak_object *expected_obj = db->objs[0];
+    riak_binary *bad = riak_binary_copy_from_string(cfg, "bad");
+    CU_ASSERT_NOT_EQUAL_FATAL(bad,NULL)
+    err = riak_object_set_value(cfg, expected_obj, bad);
+    CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
+    err = test_async_thread_runner(cfg, test_get_async_thread, (void*)&args, (void*)expected_obj);
+    CU_ASSERT_EQUAL_FATAL(err,ERIAK_INVALID)
+
+    test_cleanup_db(cxn);
+    test_disconnect(cfg, &cxn);
+    test_cleanup(&cfg);
+    CU_PASS("test_integration_async_bad_get passed")
 }

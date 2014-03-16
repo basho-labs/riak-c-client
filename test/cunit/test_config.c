@@ -69,6 +69,18 @@ test_log_logger(void            *ptr,
 }
 
 void
+test_stderr_logger(void            *ptr,
+                   riak_log_level_t level,
+                   const char      *file,
+                   riak_size_t      filelen,
+                   const char      *func,
+                   riak_size_t      funclen,
+                   riak_uint32_t    line,
+                   const char      *format,
+                   va_list          args) {
+}
+
+void
 test_config_with_logging() {
     riak_config *cfg;
     riak_error err = riak_config_new_default(&cfg);

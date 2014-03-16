@@ -193,6 +193,7 @@ riak_pair_set_value(riak_config *cfg,
     if (pair->value == NULL) {
         return ERIAK_OUT_OF_MEMORY;
     }
+    pair->has_value = RIAK_TRUE;
     return ERIAK_OK;
 }
 
@@ -275,14 +276,14 @@ riak_links_copy_from_pb(riak_config  *cfg,
             }
         }
         if (pblink[i]->has_key) {
-            pblink[i]->has_key = RIAK_TRUE;
+            link[i]->has_key = RIAK_TRUE;
             link[i]->key = riak_binary_copy_from_pb(cfg, &(pblink[i]->key));
             if (link[i]->key == NULL) {
                 return ERIAK_OUT_OF_MEMORY;
             }
         }
         if (pblink[i]->has_tag) {
-            pblink[i]->has_tag = RIAK_TRUE;
+            link[i]->has_tag = RIAK_TRUE;
             link[i]->tag = riak_binary_copy_from_pb(cfg, &(pblink[i]->tag));
             if (link[i]->tag == NULL) {
                 return ERIAK_OUT_OF_MEMORY;
@@ -568,6 +569,126 @@ riak_object_new_from_pb(riak_config  *cfg,
     return err;
 }
 
+static int
+riak_object_compare_binary(const char             *message,
+                                 riak_print_state *state,
+                                 riak_binary      *bin1,
+                                 riak_binary      *bin2) {
+    int result = riak_binary_compare(bin1, bin2);
+    if (state && result) {
+        riak_print(state, "Object %s differ: ", message);
+        riak_print_binary(state, bin1);
+        riak_print(state, " vs ");
+        riak_print_binary(state, bin2);
+        riak_print(state, "\n");
+    }
+    return result;
+}
+
+static int
+riak_object_compare_int(const char       *message,
+                        riak_print_state *state,
+                        riak_uint32_t     int1,
+                        riak_uint32_t     int2) {
+    int result = (int1 != int2);
+    if (state && result) {
+        riak_print(state, "Object %s differ: %d vs %d\n", message, int1, int2);
+    }
+    return result;
+}
+
+static int
+riak_object_compare_internal(riak_object      *obj1,
+                             riak_object      *obj2,
+                             riak_boolean_t    exact_match,
+                             riak_print_state *debug) {
+    int result = riak_object_compare_binary("Buckets", debug, obj1->bucket, obj2->bucket);
+    if (result) return result;
+    result = riak_object_compare_binary("Keys", debug, obj1->key, obj2->key);
+    if (result) return result;
+    result = riak_object_compare_binary("Values", debug, obj1->value, obj2->value);
+    if (result) return result;
+    result = riak_object_compare_binary("Charset", debug, obj1->charset, obj2->charset);
+    if (result) return result;
+    result = riak_object_compare_binary("Content Types", debug, obj1->content_type, obj2->content_type);
+    if (result) return result;
+    result = riak_object_compare_binary("Encodings", debug, obj1->encoding, obj2->encoding);
+    if (result) return result;
+    if (exact_match) {
+        result = riak_object_compare_binary("VTags", debug, obj1->vtag, obj2->vtag);
+        if (result) return result;
+        result = riak_object_compare_int("Last Modified Dates", debug, obj1->last_mod, obj2->last_mod);
+        if (result) return result;
+        result = riak_object_compare_int("Last Modified uSecs", debug, obj1->last_mod_usecs, obj2->last_mod_usecs);
+        if (result) return result;
+    }
+    result = riak_object_compare_int("Delete Flags", debug, obj1->deleted, obj2->deleted);
+    if (result) return result;
+    result = riak_object_compare_int("Number of Indexes", debug, obj1->n_indexes, obj2->n_indexes);
+    if (result) return result;
+    result = riak_object_compare_int("Number of Links", debug, obj1->n_links, obj2->n_links);
+    if (result) return result;
+    result = riak_object_compare_int("Number of User Metadata", debug, obj1->n_usermeta, obj2->n_usermeta);
+    if (result) return result;
+
+    for(int i = 0; i < obj1->n_indexes; i++) {
+        result = riak_object_compare_int("Index Value Flags", debug, obj1->indexes[i]->has_value, obj2->indexes[i]->has_value);
+        if (result) return result;
+        result = riak_object_compare_binary("Index Keys", debug, obj1->indexes[i]->key, obj2->indexes[i]->key);
+        if (result) return result;
+        if (obj1->indexes[i]->has_value) {
+            result = riak_object_compare_binary("Index Values", debug, obj1->indexes[i]->value, obj2->indexes[i]->value);
+            if (result) return result;
+        }
+    }
+    for(int i = 0; i < obj1->n_links; i++) {
+        result = riak_object_compare_int("Link Bucket Flags", debug, obj1->links[i]->has_bucket, obj2->links[i]->has_bucket);
+        if (result) return result;
+        result = riak_object_compare_int("Link Key Flags", debug, obj1->links[i]->has_key, obj2->links[i]->has_key);
+        if (result) return result;
+        result = riak_object_compare_int("Link Tag Flags", debug, obj1->links[i]->has_tag, obj2->links[i]->has_tag);
+        if (result) return result;
+        if (obj1->links[i]->has_bucket) {
+            result = riak_object_compare_binary("Link Buckets", debug, obj1->links[i]->bucket, obj2->links[i]->bucket);
+            if (result) return result;
+        }
+        if (obj1->links[i]->has_key) {
+            result = riak_object_compare_binary("Link Keys", debug, obj1->links[i]->key, obj2->links[i]->key);
+            if (result) return result;
+        }
+        if (obj1->links[i]->has_tag) {
+            result = riak_object_compare_binary("Link Tags", debug, obj1->links[i]->tag, obj2->links[i]->tag);
+            if (result) return result;
+        }
+    }
+    for(int i = 0; i < obj1->n_usermeta; i++) {
+        result = riak_object_compare_int("User Meta-data Value Flags", debug, obj1->usermeta[i]->has_value, obj2->usermeta[i]->has_value);
+        if (result) return result;
+        result = riak_object_compare_binary("User Meta-data Keys", debug, obj1->usermeta[i]->key, obj2->usermeta[i]->key);
+        if (result) return result;
+        if (obj1->usermeta[i]->has_value) {
+            result = riak_object_compare_binary("User Meta-data Values", debug, obj1->usermeta[i]->value, obj2->usermeta[i]->value);
+            if (result) return result;
+        }
+    }
+    return 0;
+}
+
+int
+riak_object_compare(riak_object   *obj1,
+                    riak_object   *obj2,
+                    riak_boolean_t exact_match) {
+    return riak_object_compare_internal(obj1, obj2, exact_match, NULL);
+}
+
+int
+riak_object_compare_debug(riak_object      *obj1,
+                          riak_object      *obj2,
+                          riak_boolean_t    exact_match,
+                          riak_print_state *state) {
+    return riak_object_compare_internal(obj1, obj2, exact_match, state);
+}
+
 riak_int32_t
 riak_object_print(riak_print_state *state,
                   riak_object      *obj) {
@@ -601,10 +722,13 @@ riak_object_print(riak_print_state *state,
         wrote += riak_print_label_binary(state, "VTag", obj->vtag);
     }
 
-    int i;
-    for(i = 0; i < obj->n_links; i++) {
+    for(int i = 0; i < obj->n_links; i++) {
         wrote += riak_links_print(state, obj->links[i]);
     }
+    wrote += riak_print(state, "%s\n", "User Meta-data");
+    wrote += riak_pairs_print(state, obj->usermeta, obj->n_usermeta);
+    wrote += riak_print(state, "%s\n", "Indexes");
+    wrote += riak_pairs_print(state, obj->indexes, obj->n_indexes);
     return wrote;
 }
 

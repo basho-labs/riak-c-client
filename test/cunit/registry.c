@@ -165,6 +165,9 @@ main(int   argc,
     CU_ADD_TEST(integration_suite, test_integration_async_listbuckets);
     CU_ADD_TEST(integration_suite, test_integration_listkeys);
     CU_ADD_TEST(integration_suite, test_integration_async_listkeys);
+    CU_ADD_TEST(integration_suite, test_integration_get_value);
+    CU_ADD_TEST(integration_suite, test_integration_async_get_value);
+    CU_ADD_TEST(integration_suite, test_integration_async_get_bad_value);
 
     // Run all tests using the CUnit Basic interface
     CU_basic_set_mode(CU_BRM_VERBOSE);

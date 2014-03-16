@@ -42,8 +42,7 @@ riak_sync_read_cb(void       *ptr,
     if (result < 0) {
         char message[256];
         strerror_r(errno, message, sizeof(message));
-        printf("%s\n", message);
-        abort();
+        fprintf(stderr, "%s\n", message);
     }
     return result;
 }

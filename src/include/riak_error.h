@@ -43,6 +43,7 @@ typedef enum riak_error_enum {
     ERIAK_SERVER_ERROR,
     ERIAK_MESSAGE_FORMAT,
     ERIAK_THREAD,
+    ERIAK_INVALID,
     ERIAK_LAST_ERRORNUM
 } riak_error;
 
@@ -63,6 +64,7 @@ static const char* errmsgs[] = {
     "An error was returned from the server",
     "Message Format Error",
     "Threading Error",
+    "Invalid Value",
     "SENTINEL FOR LAST ERROR MESSAGE"
 };
 #endif

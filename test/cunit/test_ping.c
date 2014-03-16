@@ -59,7 +59,8 @@ test_integration_ping() {
 void
 test_ping_async_cb(riak_ping_response *response,
                    void               *ptr) {
-    test_async_connection *conn = (test_async_connection*)ptr;
+    test_async_pthread    *state = (test_async_pthread*)ptr;
+    test_async_connection *conn = (test_async_connection*)state->conn;
     riak_log_notice(conn->cxn, "%s", "Asynchronous PONG");
     riak_ping_response_free(conn->cfg, &response);
 }
@@ -89,7 +90,7 @@ test_integration_async_ping() {
     riak_error err = test_setup(&cfg);
     CU_ASSERT_FATAL(err == ERIAK_OK)
 
-    err = test_async_thread_runner(cfg, test_ping_async_thread, NULL);
+    err = test_async_thread_runner(cfg, test_ping_async_thread, NULL, NULL);
     CU_ASSERT_FATAL(err == ERIAK_OK)
 
     test_cleanup(&cfg);

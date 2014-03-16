@@ -42,6 +42,28 @@
 #define RIAK_TEST_HOST          "RIAK_TEST_HOST"
 #define RIAK_TEST_PB_PORT       "RIAK_TEST_PB_PORT"
 
+/**
+ * @brief Generic logging function which writes to stderr
+ * @param ptr Pointer to user-defined data structure (not used)
+ * @param level Logging level (see `riak_log_level_t`)
+ * @param file Filename where log message is written
+ * @param filelen Length of above
+ * @param func Name of function where log message is
+ * @param funlen Length of above
+ * @param line Line number where log message is
+ * @param format Printf-like formatting string
+ * @param ... Arguments to `format`
+ */
+void
+test_log(void            *ptr,
+         riak_log_level_t level,
+         const char      *file,
+         riak_size_t      filelen,
+         const char      *func,
+         riak_size_t      funclen,
+         riak_uint32_t    line,
+         const char      *format,
+         va_list          args);
 
 /**
  * @brief Set up testing environment
@@ -84,15 +106,16 @@ typedef struct _test_async_connection {
     riak_operation    *rop;
     riak_libevent     *rev;
     struct event_base *base;
-    riak_error         err;     // Returned from callback
-    char               err_msg[1024]; // Optionally returned by callback
 } test_async_connection;
 
 typedef struct _test_async_pthread {
     test_async_connection *conn;
     pthread_t              tid;
-    void                  *result;
+    void                  *pthread_result;
     void                  *args;
+    void                  *expected;      // Expected results for message callback
+    riak_error             err;           // Returned from message callback
+    char                   err_msg[1024]; // Optionally returned by callback
 } test_async_pthread;
 
 typedef void*(*test_async_pthread_fun)(void*);
@@ -125,16 +148,42 @@ test_random_string(riak_config  *cfg,
                    riak_uint32_t len);
 
 /**
+ * @brief Build a random printable riak_binary
+ * @param cfg Riak Configuration
+ * @param len Length of generated string
+ * @returns Random riak_binary
+ */
+riak_binary*
+test_random_binary(riak_config  *cfg,
+                   riak_uint32_t len);
+
+/**
+ * @brief Generate a random integer
+ * @returns Random integer
+ */
+int
+test_random_int();
+
+/**
+ * @brief Generate a random boolean value
+ * @returns True or false
+ */
+riak_boolean_t
+test_random_bool();
+
+/**
  * @brief Fire off the asynchronous thread
  * @param cfg Riak Configuration
  * @param f Thread function to run
  * @param args Arguments passed to the thread
+ * @param expected Optional expected values from the test
  * @returns Error Code
  */
 riak_error
 test_async_thread_runner(riak_config             *cfg,
                          test_async_pthread_fun   f,
-                         void                    *args);
+                         void                    *args,
+                         void                    *expected);
 
 /**
  * @brief Queue up asynchronous message and fire event loop
@@ -149,11 +198,16 @@ test_async_send_message(test_async_connection *conn);
  * @param cfg Riak Configuration
  * @param cxn Riak Connection
  * @param root Returned linked-list of Bucket/Key/Values
+ * @param n_buckets Number of buckets to create
+ * @param n_keys Number of keys to create
+ * @returns Error Code
  */
 riak_error
 test_load_db(riak_config            *cfg,
              riak_connection        *cxn,
-             test_bucket_key_value **root);
+             test_bucket_key_value **root,
+             riak_uint32_t           n_buckets,
+             riak_uint32_t           n_keys);
 
 /**
  * @brief Destroy all buckets starting with RIAK_TEST_BUCKET_PREFIX

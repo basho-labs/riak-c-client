@@ -54,6 +54,26 @@ riak_binary_new_shallow(riak_config  *cfg,
                         riak_uint8_t *data);
 
 /**
+ * @brief Determine if two binaries have the same value
+ * @param bin1 First Riak Binary
+ * @param bin2 Second Riak Binary
+ * @returns 0 if equal, -1 if bin1<bin2, 1 if bin1>bin2
+ */
+int
+riak_binary_compare(riak_binary *bin1,
+                    riak_binary *bin2);
+
+/**
+ * @brief Determine if a binary and a string have the same value
+ * @param bin Riak Binary
+ * @param str NULL-terminated ASCII string
+ * @returns 0 if equal, -1 if bin<str, 1 if bin>str
+ */
+int
+riak_binary_compare_string(riak_binary *bin,
+                           const char  *str);
+
+/**
  * @brief Allocate a new `riak_binary` struct
  * @param cfg Riak Configuration
  * @param bin Original Riak Binary

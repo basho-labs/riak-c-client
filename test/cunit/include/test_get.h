@@ -42,3 +42,9 @@ void
 test_get_options_n_val();
 void
 test_get_decode_response();
+void
+test_integration_get_value();
+void
+test_integration_async_get_value();
+void
+test_integration_async_get_bad_value();

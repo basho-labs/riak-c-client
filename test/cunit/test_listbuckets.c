@@ -87,8 +87,8 @@ test_integration_listbuckets() {
     CU_ASSERT_FATAL(err == ERIAK_OK)
 
     test_bucket_key_value *db = NULL;
-    err = test_load_db(cfg, cxn, &db);
-    CU_ASSERT_FATAL(err == ERIAK_OK)
+    err = test_load_db(cfg, cxn, &db, RIAK_TEST_MAX_BUCKETS, 1);
+    CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
 
     riak_listbuckets_response *response = NULL;
     err = riak_listbuckets(cxn, &response);
@@ -112,7 +112,8 @@ test_integration_listbuckets() {
 void
 test_listbuckets_async_cb(riak_listbuckets_response *response,
                           void                      *ptr) {
-    test_async_connection *conn = (test_async_connection*)ptr;
+    test_async_pthread    *state = (test_async_pthread*)ptr;
+    test_async_connection *conn = (test_async_connection*)state->conn;
     char output[10240];
     riak_print_state print_state;
     riak_print_init(&print_state, output, sizeof(output));
@@ -120,9 +121,10 @@ test_listbuckets_async_cb(riak_listbuckets_response *response,
 
     fprintf(stderr, "%s", output);
     riak_uint32_t num = riak_listbuckets_get_n_buckets(response);
-    if (num < RIAK_TEST_MAX_BUCKETS) {
-        conn->err = ERIAK_OUT_OF_RANGE;
-        snprintf(conn->err_msg, sizeof(conn->err_msg), "Only %ul buckets were returned", num);
+    riak_uint64_t expected = (riak_uint64_t)state->expected;
+    if (num < expected) {
+        state->err = ERIAK_OUT_OF_RANGE;
+        snprintf(state->err_msg, sizeof(state->err_msg), "Only %ul keys were returned", num);
     }
     riak_listbuckets_response_free(conn->cfg, &response);
 }
@@ -156,9 +158,9 @@ test_integration_async_listbuckets() {
     err = test_connect(cfg, &cxn);
     CU_ASSERT_FATAL(err == ERIAK_OK)
     test_bucket_key_value *db = NULL;
-    err = test_load_db(cfg, cxn, &db);
+    err = test_load_db(cfg, cxn, &db, RIAK_TEST_MAX_BUCKETS, 1);
 
-    err = test_async_thread_runner(cfg, test_listbuckets_async_thread, NULL);
+    err = test_async_thread_runner(cfg, test_listbuckets_async_thread, NULL, (void*)RIAK_TEST_MAX_BUCKETS);
     CU_ASSERT_FATAL(err == ERIAK_OK)
 
     test_cleanup_db(cxn);

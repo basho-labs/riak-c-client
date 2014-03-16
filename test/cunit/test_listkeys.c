@@ -85,8 +85,8 @@ test_integration_listkeys() {
     CU_ASSERT_FATAL(err == ERIAK_OK)
 
     test_bucket_key_value *db = NULL;
-    err = test_load_db(cfg, cxn, &db);
-    CU_ASSERT_FATAL(err == ERIAK_OK)
+    err = test_load_db(cfg, cxn, &db, 1, RIAK_TEST_MAX_KEYS);
+    CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
 
     riak_listkeys_response *response = NULL;
     err = riak_listkeys(cxn, db->bucket, 5000, &response);
@@ -110,16 +110,18 @@ test_integration_listkeys() {
 void
 test_listkeys_async_cb(riak_listkeys_response *response,
                        void                   *ptr) {
-    test_async_connection *conn = (test_async_connection*)ptr;
+    test_async_pthread    *state = (test_async_pthread*)ptr;
+    test_async_connection *conn  = state->conn;
     char output[10240];
     riak_print_state print_state;
     riak_print_init(&print_state, output, sizeof(output));
     riak_listkeys_response_print(&print_state, response);
     fprintf(stderr, "%s", output);
     riak_uint32_t num = riak_listkeys_get_n_keys(response);
-    if (num < RIAK_TEST_MAX_BUCKETS) {
-        conn->err = ERIAK_OUT_OF_RANGE;
-        snprintf(conn->err_msg, sizeof(conn->err_msg), "Only %ul keys were returned", num);
+    riak_uint64_t expected = (riak_uint64_t)state->expected;
+    if (num < expected) {
+        state->err = ERIAK_OUT_OF_RANGE;
+        snprintf(state->err_msg, sizeof(state->err_msg), "Only %ul keys were returned", num);
     }
     riak_listkeys_response_free(conn->cfg, &response);
 }
@@ -135,8 +137,8 @@ typedef struct _test_async_pthread_listkey_args {
  */
 void*
 test_listkeys_async_thread(void *ptr) {
-    test_async_pthread *state = (test_async_pthread*)ptr;
-    test_async_connection *conn = state->conn;
+    test_async_pthread    *state = (test_async_pthread*)ptr;
+    test_async_connection *conn  = state->conn;
     test_async_pthread_listkey_args *args = (test_async_pthread_listkey_args*)(state->args);
     riak_error err = riak_async_register_listkeys(conn->rop, args->bucket, args->timeout, (riak_response_callback)test_listkeys_async_cb);
     if (err) {
@@ -157,14 +159,15 @@ test_integration_async_listkeys() {
 
     riak_connection *cxn = NULL;
     err = test_connect(cfg, &cxn);
-    CU_ASSERT_FATAL(err == ERIAK_OK)
+    CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
     test_bucket_key_value *db = NULL;
-    err = test_load_db(cfg, cxn, &db);
+    err = test_load_db(cfg, cxn, &db, 1, RIAK_TEST_MAX_KEYS);
+    CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
 
     test_async_pthread_listkey_args args;
     args.bucket = db->bucket;  // Just pick a random bucket
     args.timeout = 5000;
-    err = test_async_thread_runner(cfg, test_listkeys_async_thread, (void*)&args);
+    err = test_async_thread_runner(cfg, test_listkeys_async_thread, (void*)&args, (void*)RIAK_TEST_MAX_BUCKETS);
     CU_ASSERT_FATAL(err == ERIAK_OK)
 
     test_cleanup_db(cxn);
