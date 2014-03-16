@@ -171,6 +171,7 @@ test_integration_async_listkeys() {
     CU_ASSERT_FATAL(err == ERIAK_OK)
 
     test_cleanup_db(cxn);
+    test_bkv_free(cfg, &db);
     test_disconnect(cfg, &cxn);
     test_cleanup(&cfg);
     CU_PASS("test_integration_async_listkeys passed")

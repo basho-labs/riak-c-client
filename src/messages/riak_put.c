@@ -110,6 +110,7 @@ riak_put_request_encode(riak_operation   *rop,
         return ERIAK_OUT_OF_MEMORY;
     }
     rpb_put_req__pack (&putmsg, msgbuf);
+    riak_object_free_pb(cfg, &content);
 
     riak_pb_message* request = riak_pb_message_new(cfg, MSG_RPBPUTREQ, msglen, msgbuf);
     if (request == NULL) {

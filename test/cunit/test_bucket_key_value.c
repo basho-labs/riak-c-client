@@ -53,8 +53,8 @@ test_bkv_add(riak_config            *cfg,
         return ERIAK_OUT_OF_MEMORY;
     }
     node->next   = *root;
-    node->bucket = bucket;
-    node->key    = key;
+    node->bucket = riak_binary_copy(cfg, bucket);
+    node->key    = riak_binary_copy(cfg, key);
     node->n_objs = 0;
     node->objs   = riak_config_clean_allocate(cfg, sizeof(riak_object*));
     if (node->objs == NULL) {
@@ -71,7 +71,7 @@ test_bkv_add(riak_config            *cfg,
 }
 
 void
-test_bkv_free(riak_config *cfg,
+test_bkv_free(riak_config            *cfg,
               test_bucket_key_value **root) {
     test_bucket_key_value *node = *root;
     while (node != NULL) {

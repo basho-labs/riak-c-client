@@ -308,7 +308,7 @@ riak_links_free(riak_config  *cfg,
         riak_binary_free(cfg, &(link[i]->tag));
         riak_free(cfg, &(link[i]));
     }
-    riak_free(cfg, *link_target);
+    riak_free(cfg, link_target);
 }
 
 riak_int32_t
@@ -754,7 +754,7 @@ riak_object_free(riak_config *cfg,
 
 void
 riak_object_free_pb(riak_config *cfg,
-                    RpbContent   *obj) {
+                    RpbContent  *obj) {
     riak_pairs_free_pb(cfg, &(obj->indexes), obj->n_indexes);
     riak_pairs_free_pb(cfg, &(obj->usermeta), obj->n_usermeta);
     riak_links_free_pb(cfg, &(obj->links), obj->n_links);

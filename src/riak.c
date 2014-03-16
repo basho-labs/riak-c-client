@@ -82,7 +82,8 @@ riak_sync_request(riak_operation **rop_target,
 riak_error
 riak_ping(riak_connection *cxn) {
     riak_operation *rop = NULL;
-    riak_error err = riak_operation_new(cxn, &rop, NULL, NULL, NULL);
+    riak_error err   = riak_operation_new(cxn, &rop, NULL, NULL, NULL);
+    riak_config *cfg = riak_connection_get_config(cxn);
     if (err) {
         return err;
     }
@@ -95,10 +96,10 @@ riak_ping(riak_connection *cxn) {
     if (err) {
         return err;
     }
-    if (response->success != RIAK_TRUE) {
-        return ERIAK_NO_PING;
-    }
-    return ERIAK_OK;
+    err = (response->success) ? ERIAK_OK : ERIAK_NO_PING;
+    riak_free(cfg, &response);
+
+    return err;
 }
 
 riak_error
@@ -173,6 +174,7 @@ riak_delete(riak_connection    *cxn,
            riak_binary         *key,
            riak_delete_options *opts) {
     riak_operation *rop = NULL;
+    riak_config    *cfg = riak_connection_get_config(cxn);
     riak_error err = riak_operation_new(cxn, &rop, NULL, NULL, NULL);
     if (err) {
         return err;
@@ -181,11 +183,12 @@ riak_delete(riak_connection    *cxn,
     if (err) {
         return err;
     }
-    riak_get_response *response = NULL;
+    riak_delete_response *response = NULL;
     err = riak_sync_request(&rop, (void**)&response);
     if (err) {
         return err;
     }
+    riak_delete_response_free(cfg, &response);
 
     return ERIAK_OK;
 }

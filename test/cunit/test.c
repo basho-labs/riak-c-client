@@ -208,7 +208,9 @@ test_random_binary(riak_config  *cfg,
     if (result == NULL) {
         return NULL;
     }
-    return riak_binary_new_shallow(cfg, len, (riak_uint8_t*)result);
+    riak_binary *bin = riak_binary_new(cfg, len, (riak_uint8_t*)result);
+    riak_free(cfg, &result);
+    return bin;
 }
 
 int
@@ -378,11 +380,6 @@ test_load_db(riak_config            *cfg,
             if (key == NULL) {
                 return ERIAK_OUT_OF_MEMORY;
             }
-            riak_binary *value = test_random_binary(cfg, RIAK_TEST_VALUE_LEN);
-            if (value == NULL) {
-                return ERIAK_OUT_OF_MEMORY;
-            }
-
             riak_put_response *response = NULL;
             riak_object *obj;
             riak_error err = test_load_dummy_object(cfg, bucket, key, &obj, root);
@@ -393,16 +390,15 @@ test_load_db(riak_config            *cfg,
             if (err) {
                 return err;
             }
+            riak_binary_free(cfg, &key);
             riak_put_response_free(cfg, &response);
             /*
              * These are now freed in test_bkv_free()
              *
-             * riak_binary_free(cfg, &bucket);
-             * riak_binary_free(cfg, &key);
-             * riak_binary_free(cfg, &value);
              * riak_object_free(cfg, &obj);
              */
         }
+        riak_binary_free(cfg, &bucket);
         riak_free(cfg, &suffix);
     }
     return ERIAK_OK;
@@ -412,15 +408,16 @@ riak_error
 test_cleanup_db(riak_connection* cxn) {
     // Bail if there is no connection
     if (cxn == NULL) return ERIAK_CONNECT;
+    riak_config *cfg = riak_connection_get_config(cxn);
 
     const int prefixlen = strlen(RIAK_TEST_BUCKET_PREFIX);
-    riak_listbuckets_response *response = NULL;
-    riak_error err = riak_listbuckets(cxn, &response);
+    riak_listbuckets_response *bucket_response = NULL;
+    riak_error err = riak_listbuckets(cxn, &bucket_response);
     if (err) {
         return err;
     }
-    riak_uint32_t num_buckets = riak_listbuckets_get_n_buckets(response);
-    riak_binary **buckets = riak_listbuckets_get_buckets(response);
+    riak_uint32_t num_buckets = riak_listbuckets_get_n_buckets(bucket_response);
+    riak_binary **buckets = riak_listbuckets_get_buckets(bucket_response);
     if (buckets == NULL) {
         return ERIAK_OUT_OF_RANGE;
     }
@@ -429,13 +426,13 @@ test_cleanup_db(riak_connection* cxn) {
         if (riak_binary_len(bucket) < prefixlen) continue;
         // Does the bucket match the prefix? If so, start nuking
         if (memcmp(riak_binary_data(bucket), RIAK_TEST_BUCKET_PREFIX, prefixlen) == 0) {
-            riak_listkeys_response *response;
-            err = riak_listkeys(cxn, bucket, 0, &response);
+            riak_listkeys_response *key_response;
+            err = riak_listkeys(cxn, bucket, 0, &key_response);
             if (err) {
                 return err;
             }
-            riak_uint32_t num_keys = riak_listkeys_get_n_keys(response);
-            riak_binary **keys = riak_listkeys_get_keys(response);
+            riak_uint32_t num_keys = riak_listkeys_get_n_keys(key_response);
+            riak_binary **keys = riak_listkeys_get_keys(key_response);
             if (keys == NULL) {
                 return ERIAK_OUT_OF_RANGE;
             }
@@ -447,8 +444,10 @@ test_cleanup_db(riak_connection* cxn) {
                     return err;
                 }
             }
+            riak_listkeys_response_free(cfg, &key_response);
         }
     }
+    riak_listbuckets_response_free(cfg, &bucket_response);
     return ERIAK_OK;
 }
 

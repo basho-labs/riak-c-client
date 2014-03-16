@@ -53,6 +53,6 @@ test_bkv_add(riak_config            *cfg,
  * @param root First link in linked list of BKVs
  */
 void
-test_bkv_free(riak_config *cfg,
+test_bkv_free(riak_config            *cfg,
               test_bucket_key_value **root);
 #endif //_TEST_BUCKET_KEY_VALUE_

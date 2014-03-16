@@ -432,6 +432,7 @@ test_integration_async_get_value() {
     CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
 
     test_cleanup_db(cxn);
+    test_bkv_free(cfg, &db);
     test_disconnect(cfg, &cxn);
     test_cleanup(&cfg);
     CU_PASS("test_integration_async_get passed")
@@ -461,12 +462,16 @@ test_integration_async_get_bad_value() {
     riak_object *expected_obj = db->objs[0];
     riak_binary *bad = riak_binary_copy_from_string(cfg, "bad");
     CU_ASSERT_NOT_EQUAL_FATAL(bad,NULL)
+    riak_binary *cleanup = riak_object_get_value(expected_obj);
+    riak_binary_free(cfg, &cleanup);
     err = riak_object_set_value(cfg, expected_obj, bad);
     CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
     err = test_async_thread_runner(cfg, test_get_async_thread, (void*)&args, (void*)expected_obj);
     CU_ASSERT_EQUAL_FATAL(err,ERIAK_INVALID)
 
+    riak_binary_free(cfg, &bad);
     test_cleanup_db(cxn);
+    test_bkv_free(cfg, &db);
     test_disconnect(cfg, &cxn);
     test_cleanup(&cfg);
     CU_PASS("test_integration_async_bad_get passed")

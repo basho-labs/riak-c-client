@@ -104,6 +104,7 @@ test_integration_listbuckets() {
 
     test_bkv_free(cfg, &db);
     test_cleanup_db(cxn);
+    test_bkv_free(cfg, &db);
     test_disconnect(cfg, &cxn);
     test_cleanup(&cfg);
     CU_PASS("test_integration_listbuckets passed")
@@ -164,6 +165,7 @@ test_integration_async_listbuckets() {
     CU_ASSERT_FATAL(err == ERIAK_OK)
 
     test_cleanup_db(cxn);
+    test_bkv_free(cfg, &db);
     test_disconnect(cfg, &cxn);
     test_cleanup(&cfg);
     CU_PASS("test_integration_async_listbuckets passed")
