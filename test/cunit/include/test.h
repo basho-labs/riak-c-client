@@ -38,6 +38,7 @@
 #define RIAK_TEST_MAX_KEYS          50
 #define RIAK_TEST_BUCKET_KEY_LEN    20
 #define RIAK_TEST_VALUE_LEN         200
+#define RIAK_TEST_NUM_OBJ_EXTRAS    3 // Number of test object indexes, meta-data and links
 
 #define RIAK_TEST_HOST          "RIAK_TEST_HOST"
 #define RIAK_TEST_PB_PORT       "RIAK_TEST_PB_PORT"

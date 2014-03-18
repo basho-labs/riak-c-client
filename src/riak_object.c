@@ -600,7 +600,6 @@ riak_object_compare_int(const char       *message,
 static int
 riak_object_compare_internal(riak_object      *obj1,
                              riak_object      *obj2,
-                             riak_boolean_t    exact_match,
                              riak_print_state *debug) {
     int result = riak_object_compare_binary("Buckets", debug, obj1->bucket, obj2->bucket);
     if (result) return result;
@@ -608,17 +607,28 @@ riak_object_compare_internal(riak_object      *obj1,
     if (result) return result;
     result = riak_object_compare_binary("Values", debug, obj1->value, obj2->value);
     if (result) return result;
+    result = riak_object_compare_int("Charset Flags", debug, obj1->has_charset, obj2->has_charset);
+    if (result) return result;
     result = riak_object_compare_binary("Charset", debug, obj1->charset, obj2->charset);
+    if (result) return result;
+    result = riak_object_compare_int("Content Type Flags", debug, obj1->has_content_type, obj2->has_content_type);
     if (result) return result;
     result = riak_object_compare_binary("Content Types", debug, obj1->content_type, obj2->content_type);
     if (result) return result;
+    result = riak_object_compare_int("Encoding Flags", debug, obj1->has_content_encoding, obj2->has_content_encoding);
+    if (result) return result;
     result = riak_object_compare_binary("Encodings", debug, obj1->encoding, obj2->encoding);
     if (result) return result;
-    if (exact_match) {
+    // Only compare VTag and Lost Modified times if the are both non-NULL
+    if (obj1->has_vtag && obj2->has_vtag) {
         result = riak_object_compare_binary("VTags", debug, obj1->vtag, obj2->vtag);
         if (result) return result;
+    }
+    if (obj1->has_last_mod && obj2->has_last_mod) {
         result = riak_object_compare_int("Last Modified Dates", debug, obj1->last_mod, obj2->last_mod);
         if (result) return result;
+    }
+    if (obj1->has_last_mod_usecs && obj2->has_last_mod_usecs) {
         result = riak_object_compare_int("Last Modified uSecs", debug, obj1->last_mod_usecs, obj2->last_mod_usecs);
         if (result) return result;
     }
@@ -676,17 +686,15 @@ riak_object_compare_internal(riak_object      *obj1,
 
 int
 riak_object_compare(riak_object   *obj1,
-                    riak_object   *obj2,
-                    riak_boolean_t exact_match) {
-    return riak_object_compare_internal(obj1, obj2, exact_match, NULL);
+                    riak_object   *obj2) {
+    return riak_object_compare_internal(obj1, obj2, NULL);
 }
 
 int
 riak_object_compare_debug(riak_object      *obj1,
                           riak_object      *obj2,
-                          riak_boolean_t    exact_match,
                           riak_print_state *state) {
-    return riak_object_compare_internal(obj1, obj2, exact_match, state);
+    return riak_object_compare_internal(obj1, obj2, state);
 }
 
 riak_int32_t
@@ -701,7 +709,7 @@ riak_object_print(riak_print_state *state,
     wrote += riak_print_label_binary(state, "Value", obj->value);
 
     if (obj->has_charset) {
-        wrote += riak_print_label_binary(state, "Charset", obj->charset);
+        wrote += riak_print_label_binary(state, "Charsets", obj->charset);
     }
     if (obj->has_last_mod) {
         wrote += riak_print_label_time(state, "Last Mod", obj->last_mod);

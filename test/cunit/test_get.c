@@ -328,7 +328,7 @@ test_integration_get_value() {
     char output[10240];
     riak_print_state state;
     riak_print_init(&state, output, sizeof(output));
-    int result = riak_object_compare_debug(obj, expected_obj, RIAK_FALSE, &state);
+    int result = riak_object_compare_debug(obj, expected_obj, &state);
     riak_get_response_print(&state, response);
     //riak_object_print(&state, expected_obj);
     //riak_object_print(&state, obj);
@@ -370,7 +370,7 @@ test_get_async_cb(riak_get_response *response,
     }
     riak_object *obj = objs[0];
 
-    int result = riak_object_compare_debug(obj, expected, RIAK_FALSE, &print_state);
+    int result = riak_object_compare_debug(obj, expected, &print_state);
     if (result) {
         state->err = ERIAK_INVALID;
         snprintf(state->err_msg, sizeof(state->err_msg), "%s", output);
@@ -381,6 +381,7 @@ test_get_async_cb(riak_get_response *response,
     riak_get_response_print(&print_state, response);
     fprintf(stderr, "%s", output);
     riak_get_response_free(conn->cfg, &response);
+    state->err = ERIAK_OK;
 }
 
 typedef struct _test_async_pthread_get_args {

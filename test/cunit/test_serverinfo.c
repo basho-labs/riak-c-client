@@ -163,6 +163,7 @@ test_serverinfo_async_cb(riak_serverinfo_response *response,
     riak_serverinfo_response_print(&print_state, response);
     fprintf(stderr, "ASYNCHRONOUS %s", output);
     riak_serverinfo_response_free(conn->cfg, &response);
+    state->err = ERIAK_OK;
 }
 
 /**

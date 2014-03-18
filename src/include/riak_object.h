@@ -45,7 +45,7 @@ riak_object_new(riak_config *cfg);
  * @param obj Riak Object to be freed
  */
 void
-riak_object_free(riak_config *cfg,
+riak_object_free(riak_config  *cfg,
                  riak_object **obj);
 
 /**
@@ -62,26 +62,22 @@ riak_object_print(riak_print_state *state,
  * @brief Compare two Riak Objects
  * @param obj1 First Riak Object
  * @param obj2 Second RiaK Object
- * @param exact_match Set to RIAK_TRUE to compare vtag and modified timestamps
  * @returns 0 if they are equal in value, 1 otherwise
  */
 int
 riak_object_compare(riak_object   *obj1,
-                    riak_object   *obj2,
-                    riak_boolean_t exact_match);
+                    riak_object   *obj2);
 
 /**
  * @brief Compare two Riak Objects and print differences to stderr
  * @param obj1 First Riak Object
  * @param obj2 Second RiaK Object
- * @param exact_match Set to RIAK_TRUE to compare vtag and modified timestamps
  * @param debug Riak Print State where to write the differences
  * @returns 0 if they are equal in value, 1 otherwise
  */
 int
 riak_object_compare_debug(riak_object      *obj1,
                           riak_object      *obj2,
-                          riak_boolean_t    exact_match,
                           riak_print_state *debug);
 
 /**

@@ -63,6 +63,7 @@ test_ping_async_cb(riak_ping_response *response,
     test_async_connection *conn = (test_async_connection*)state->conn;
     riak_log_notice(conn->cxn, "%s", "Asynchronous PONG");
     riak_ping_response_free(conn->cfg, &response);
+    state->err = ERIAK_OK;
 }
 
 /**

@@ -124,6 +124,7 @@ test_listkeys_async_cb(riak_listkeys_response *response,
         snprintf(state->err_msg, sizeof(state->err_msg), "Only %ul keys were returned", num);
     }
     riak_listkeys_response_free(conn->cfg, &response);
+    state->err = ERIAK_OK;
 }
 
 typedef struct _test_async_pthread_listkey_args {

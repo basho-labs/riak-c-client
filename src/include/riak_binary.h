@@ -54,7 +54,7 @@ riak_binary_new_shallow(riak_config  *cfg,
                         riak_uint8_t *data);
 
 /**
- * @brief Determine if two binaries have the same value
+ * @brief Determine if two non-NULL binaries have the same value
  * @param bin1 First Riak Binary
  * @param bin2 Second Riak Binary
  * @returns 0 if equal, -1 if bin1<bin2, 1 if bin1>bin2

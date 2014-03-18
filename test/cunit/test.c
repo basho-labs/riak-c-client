@@ -152,7 +152,7 @@ test_async_thread_runner(riak_config             *cfg,
         }
         state[i].args       = args;
         state[i].expected   = expected;
-        state[i].err        = ERIAK_OK; // Returned error flag
+        state[i].err        = ERIAK_TEST_FAILURE; // Returned error flag
         state[i].err_msg[0] = '\0';
 
         // Pass the whole state to the callback
@@ -173,11 +173,11 @@ test_async_thread_runner(riak_config             *cfg,
             err = ERIAK_THREAD;
         }
         if (state[i].pthread_result != NULL) {
-            fprintf(stderr, "THREAD ERROR: %s\n", (char*)(state[i].pthread_result));
+            riak_log_critical(state[i].conn->cxn, "THREAD ERROR: %s\n", (char*)(state[i].pthread_result));
             err = ERIAK_THREAD;
         }
         if (state[i].err) {
-            fprintf(stderr, "CALLBACK ERROR: %s\n", state[i].err_msg);
+            riak_log_critical(state[i].conn->cxn, "CALLBACK ERROR: %s\n", state[i].err_msg);
             err = state[i].err;
         }
     }
@@ -240,10 +240,21 @@ test_load_dummy_object_field(riak_config      *cfg,
     return err;
 }
 
+/**
+ * @brief Create a simple dummy object to test reading of data
+ * @param cfg Riak Config
+ * @param bucket Riak bucket name
+ * @param key Riak key name
+ * @param num_extras Number of indexes, links and metadata to generate
+ * @param obj_out Returned populated object
+ * @param root Test Bucket/Key/Value to store the generated object
+ * @returns Error Code
+ */
 riak_error
 test_load_dummy_object(riak_config            *cfg,
                        riak_binary            *bucket,
                        riak_binary            *key,
+                       riak_uint32_t           num_extras,
                        riak_object           **obj_out,
                        test_bucket_key_value **root) {
     riak_object *obj = riak_object_new(cfg);
@@ -280,16 +291,17 @@ test_load_dummy_object(riak_config            *cfg,
         fprintf(stderr, "Could not add encoding to dummy object\n");
         return err;
     }
-    err = test_load_dummy_object_field(cfg, obj, 0, riak_object_set_vtag);
-    if (err) {
-        fprintf(stderr, "Could not add vtag to dummy object\n");
-        return err;
-    }
-    riak_object_set_last_mod(obj, test_random_int());
-    riak_object_set_last_mod_usecs(obj, test_random_int());
+    // Since the VTag and last modified stamps are set by Riak, don't put them in a dummy object
+    // err = test_load_dummy_object_field(cfg, obj, 0, riak_object_set_vtag);
+    // if (err) {
+    //     fprintf(stderr, "Could not add vtag to dummy object\n");
+    //     return err;
+    // }
+    // riak_object_set_last_mod(obj, test_random_int());
+    // riak_object_set_last_mod_usecs(obj, test_random_int());
 
     // Add some Links
-    for(int i = 0; i < 3; i++) {
+    for(int i = 0; i < num_extras; i++) {
         riak_link *link = riak_object_new_link(cfg, obj);
         if (link == NULL) {
             return ERIAK_OUT_OF_MEMORY;
@@ -313,7 +325,7 @@ test_load_dummy_object(riak_config            *cfg,
         riak_binary_free(cfg, &tag);
     }
 
-    for(int i = 0; i < 3; i++) {
+    for(int i = 0; i < num_extras; i++) {
         riak_pair *usermeta = riak_object_new_usermeta(cfg, obj);
         if (usermeta == NULL) {
             return ERIAK_OUT_OF_MEMORY;
@@ -331,7 +343,7 @@ test_load_dummy_object(riak_config            *cfg,
     }
 
 #if NEED_TO_SET_UP_2I_INDEXES_FIRST
-    for(int i = 0; i < 3; i++) {
+    for(int i = 0; i < num_extras; i++) {
         riak_pair *index = riak_object_new_index(cfg, obj);
         if (index == NULL) {
             return ERIAK_OUT_OF_MEMORY;
@@ -382,7 +394,7 @@ test_load_db(riak_config            *cfg,
             }
             riak_put_response *response = NULL;
             riak_object *obj;
-            riak_error err = test_load_dummy_object(cfg, bucket, key, &obj, root);
+            riak_error err = test_load_dummy_object(cfg, bucket, key, RIAK_TEST_NUM_OBJ_EXTRAS, &obj, root);
             if (err) {
                 return err;
             }
