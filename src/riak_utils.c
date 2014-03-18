@@ -65,12 +65,10 @@ riak_array_realloc(riak_config *cfg,
                    riak_size_t   size,
                    riak_uint32_t oldnum,
                    riak_uint32_t newnum) {
-    void** new_array = (void**)(cfg->malloc_fn)(newnum*size);
+    void** new_array = (void**)riak_config_clean_allocate(cfg, newnum*size);
     if (new_array == NULL) {
         return NULL;
     }
-    // Just for good measure, clear out memory
-    memset((void*)new_array, '\0', newnum*size);
     memcpy((void*)new_array, (void*)(*from), oldnum*size);
     riak_free(cfg, from);
     *from = new_array;

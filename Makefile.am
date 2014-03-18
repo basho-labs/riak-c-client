@@ -6,6 +6,7 @@ EXAMPLESDIR = $(top_srcdir)/examples
 TESTCUNITDIR = $(top_srcdir)/test/cunit
 
 include_HEADERS =	src/include/riak.h \
+			src/include/riak_array.h \
 			src/include/riak_async.h \
 			src/include/riak_binary.h \
 			src/include/riak_bucketprops.h \
@@ -19,6 +20,7 @@ include_HEADERS =	src/include/riak.h \
 			src/include/riak_object.h \
 			src/include/riak_operation.h \
 			src/include/riak_types.h \
+			src/include/riak_print.h \
 			src/adapters/riak_libevent.h
 msgincludedir =		$(includedir)/messages
 dist_msginclude_DATA =	src/include/messages/riak_2index.h \
@@ -42,6 +44,7 @@ lib_LTLIBRARIES =	libriak_c_client-0.5.la
 libriak_c_client_0_5_la_SOURCES = \
 			src/riak.c \
 			src/riak_async.c \
+			src/riak_array.c \
 			src/riak_binary.c \
 			src/riak_bucketprops.c \
 			src/riak_config.c \
@@ -135,10 +138,10 @@ riak_c_async_example_CPPFLAGS = \
             $(EVENT_INCLUDES)
 
 riak_c_async_example_LDADD = \
-        -lriak_c_client-0.5 \
-        $(PROTOBUFC_LIBS) \
-        $(PROTOBUF_LIBS) \
-        $(EVENT_FLAGS)
+	-lriak_c_client-0.5 \
+	$(PROTOBUFC_LIBS) \
+	$(PROTOBUF_LIBS) \
+	$(EVENT_LIBS)
 
 riak_c_async_example_DEPENDENCIES = libriak_c_client-0.5.la
 
@@ -146,6 +149,7 @@ check_PROGRAMS = riak_c_cunit
 riak_c_cunit_SOURCES = test/cunit/test.c \
 			test/cunit/registry.c \
 			test/cunit/test_2index.c \
+			test/cunit/test_array.c \
 			test/cunit/test_binary.c \
 			test/cunit/test_bucket_key_value.c \
 			test/cunit/test_bucketprops.c \
