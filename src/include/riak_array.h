@@ -35,6 +35,7 @@ typedef struct _riak_array {
  * @param cfg Riak Configuration
  * @param ra Returned Riak Array (out)
  * @param capacity Initial capacity of the array
+ * @returns Error Code
  */
 riak_error
 riak_array_new(riak_config *cfg,
@@ -73,7 +74,7 @@ riak_array_insert(riak_array *ra,
  * @brief Remove an element from a Riak Array
  * @param ra Riak Array
  * @param pos Zero-indexed position within array to remove value
- * @returns ERIAK_OUT_OF_RANGE
+ * @returns Error Code
  */
 riak_error
 riak_array_remove(riak_array *ra,
@@ -83,7 +84,7 @@ riak_array_remove(riak_array *ra,
  * @brief Add an element to an existing array (at the end) and grows the array
  * @param ra Riak Array
  * @param elem Element to be added
- * @returns ERIAK_OUT_OF_MEMORY
+ * @returns Error Code
  */
 riak_error
 riak_array_push(riak_array *ra,
@@ -92,7 +93,7 @@ riak_array_push(riak_array *ra,
 /**
  * @brief Remove an element from a Riak Array (from the end)
  * @param ra Riak Array
- * @returns ERIAK_OUT_OF_RANGE
+ * @returns Error Code
  */
 riak_error
 riak_array_pop(riak_array *ra,
@@ -103,7 +104,7 @@ riak_array_pop(riak_array *ra,
  * @param ra Riak Array
  * @param pos Zero-indexed position within array to get value
  * @param elem Address of element to be returned
- * @returns ERIAK_OUT_OF_RANGE
+ * @returns Error Code
  */
 riak_error
 riak_array_get(riak_array *ra,
@@ -115,7 +116,7 @@ riak_array_get(riak_array *ra,
  * @param ra Riak Array
  * @param pos Zero-indexed position within array to set value
  * @param elem Element to be added
- * @returns ERIAK_OUT_OF_RANGE or ERIAK_OUT_OF_MEMORY
+ * @returns Error Code
  */
 riak_error
 riak_array_set(riak_array *ra,
