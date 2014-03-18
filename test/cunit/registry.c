@@ -86,6 +86,7 @@ main(int   argc,
     CU_ADD_TEST(array_suite, test_array_remove);
     CU_ADD_TEST(array_suite, test_array_bad_remove);
     CU_ADD_TEST(array_suite, test_array_length);
+    CU_ADD_TEST(array_suite, test_array_sort);
     CU_ADD_TEST(binary_suite, test_build_binary);
     CU_ADD_TEST(binary_suite, test_build_binary_shallow);
     CU_ADD_TEST(binary_suite, test_build_binary_with_null);

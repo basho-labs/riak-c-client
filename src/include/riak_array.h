@@ -34,7 +34,7 @@ typedef struct _riak_array {
  * @brief Create yet another generic C data structure
  * @param cfg Riak Configuration
  * @param ra Returned Riak Array (out)
- * @param capacity Initial size of the array
+ * @param capacity Initial capacity of the array
  */
 riak_error
 riak_array_new(riak_config *cfg,
@@ -50,7 +50,7 @@ void
 riak_array_free(riak_array **ra);
 
 /**
- * @brief Access the size of the underlying array
+ * @brief Access the length of the underlying array
  * @param ra Riak Array
  * @returns The number of elements in the Riak Array
  */
@@ -60,7 +60,7 @@ riak_array_length(riak_array *ra);
 /**
  * @brief Add an element to an existing array (shifting other elements forward)
  * @param ra Riak Array
- * @param pos Position within array to set value
+ * @param pos Zero-indexed position within array to insert value
  * @param elem Element to be added
  * @returns Error Code
  */
@@ -72,18 +72,18 @@ riak_array_insert(riak_array *ra,
 /**
  * @brief Remove an element from a Riak Array
  * @param ra Riak Array
- * @param pos Position at which to remove an element
- * @returns The selected element
+ * @param pos Zero-indexed position within array to remove value
+ * @returns ERIAK_OUT_OF_RANGE
  */
-void*
+riak_error
 riak_array_remove(riak_array *ra,
                   riak_size_t pos);
 
 /**
- * @brief Add an element to an existing array (at the end)
+ * @brief Add an element to an existing array (at the end) and grows the array
  * @param ra Riak Array
  * @param elem Element to be added
- * @returns Error Code
+ * @returns ERIAK_OUT_OF_MEMORY
  */
 riak_error
 riak_array_push(riak_array *ra,
@@ -92,32 +92,46 @@ riak_array_push(riak_array *ra,
 /**
  * @brief Remove an element from a Riak Array (from the end)
  * @param ra Riak Array
- * @param pos Position at which to remove an element
- * @returns The selected element
+ * @returns ERIAK_OUT_OF_RANGE
  */
-void*
-riak_array_pop(riak_array *ra);
+riak_error
+riak_array_pop(riak_array *ra,
+               void      **elem);
 
 /**
  * @brief Access an element from a Riak Array
  * @param ra Riak Array
- * @param pos Position at which to retrieve an element
- * @returns The selected element
+ * @param pos Zero-indexed position within array to get value
+ * @param elem Address of element to be returned
+ * @returns ERIAK_OUT_OF_RANGE
  */
-void*
+riak_error
 riak_array_get(riak_array *ra,
-               riak_size_t pos);
+               riak_size_t pos,
+               void      **elem);
 
 /**
- * @brief Add an element to an existing array (at a given position)
+ * @brief Add an element to an existing array at a given position
  * @param ra Riak Array
- * @param pos Position with array to set value
+ * @param pos Zero-indexed position within array to set value
  * @param elem Element to be added
- * @returns Error Code
+ * @returns ERIAK_OUT_OF_RANGE or ERIAK_OUT_OF_MEMORY
  */
 riak_error
 riak_array_set(riak_array *ra,
                riak_size_t pos,
                void       *elem);
+
+typedef int (*riak_array_sort_comparer)(const void *a, const void *b);
+
+/**
+ * @brief Sort the array in place using the supplied element comparer
+ * @param ra Riak Array
+ * @param comparer Function to compare two elements in the array
+ */
+
+void
+riak_array_sort(riak_array              *ra,
+                riak_array_sort_comparer comparer);
 
 #endif // _RIAK_ARRAY_H

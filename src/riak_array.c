@@ -105,18 +105,17 @@ riak_array_insert(riak_array *ra,
     return ERIAK_OK;
 }
 
-void*
+riak_error
 riak_array_remove(riak_array *ra,
                   riak_size_t pos) {
     if ((riak_int64_t)pos > ra->length-1) {
-        return NULL;
+        return ERIAK_OUT_OF_RANGE;
     }
-    void *result = ra->array[pos];
     for(int j = pos; j < ra->length; j++) {
         ra->array[j] = ra->array[j+1];
     }
     ra->length--;
-    return result;
+    return ERIAK_OK;
 }
 
 riak_error
@@ -131,23 +130,27 @@ riak_array_push(riak_array *ra,
     return ERIAK_OK;
 }
 
-void*
-riak_array_pop(riak_array *ra) {
+riak_error
+riak_array_pop(riak_array *ra,
+               void      **elem) {
     if (ra->length > 0) {
         ra->length--;
-        return ra->array[ra->length];
+        *elem = ra->array[ra->length];
+        return ERIAK_OK;
     } else {
-        return NULL;
+        return ERIAK_OUT_OF_RANGE;
     }
 }
 
-void*
+riak_error
 riak_array_get(riak_array *ra,
-               riak_size_t pos) {
+               riak_size_t pos,
+               void      **elem) {
     if ((riak_int64_t)pos > ra->length-1) {
-        return NULL;
+        return ERIAK_OUT_OF_RANGE;
     }
-    return ra->array[pos];
+    *elem = ra->array[pos];
+    return ERIAK_OK;
 }
 
 riak_error
@@ -160,4 +163,11 @@ riak_array_set(riak_array *ra,
     ra->array[pos] = elem;
 
     return ERIAK_OK;
+}
+
+void
+riak_array_sort(riak_array              *ra,
+                riak_array_sort_comparer comparer) {
+
+    qsort(ra->array, ra->length, sizeof(void*), comparer);
 }

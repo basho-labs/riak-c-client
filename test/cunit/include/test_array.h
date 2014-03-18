@@ -55,3 +55,6 @@ test_array_bad_remove();
 
 void
 test_array_length();
+
+void
+test_array_sort();
