@@ -30,10 +30,10 @@ void
 test_connection_pool_empty();
 
 void
-test_connection_pool_add();
+test_connection_pool_add_host();
 
 void
-test_connection_pool_remove();
+test_connection_pool_remove_host();
 
 void
 test_connection_pool_lazy_connect();

@@ -98,8 +98,8 @@ main(int   argc,
     CU_ADD_TEST(connection_suite, test_connection_with_bad_resolver);
     CU_ADD_TEST(connection_suite, test_connection_with_good_resolver);
     CU_ADD_TEST(connection_suite, test_connection_pool_empty);
-    CU_ADD_TEST(connection_suite, test_connection_pool_add);
-    CU_ADD_TEST(connection_suite, test_connection_pool_remove);
+    CU_ADD_TEST(connection_suite, test_connection_pool_add_host);
+    CU_ADD_TEST(connection_suite, test_connection_pool_remove_host);
     CU_ADD_TEST(connection_suite, test_connection_pool_lazy_connect);
     CU_ADD_TEST(connection_suite, test_connection_pool_eager_connect);
     CU_ADD_TEST(connection_suite, test_connection_pool_get_connection);
