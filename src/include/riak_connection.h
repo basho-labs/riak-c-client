@@ -27,6 +27,8 @@
 extern "C" {
 #endif
 
+#define RIAK_CONNECTION_RETRIES     5
+
 typedef struct _riak_connection riak_connection;
 typedef struct _riak_connection_pool riak_connection_pool;
 
@@ -113,7 +115,6 @@ riak_connection_pool_free(riak_connection_pool **pool);
  * @param pool Riak Connection Pool
  * @param hostname Name of Riak server
  * @param portnum Riak PBC port number
- * @param resolver IP Address resolving function (NULL for default)
  * @param max_cxn Maximum allowed number of connections (0 for "unlimited")
  * @returns ERIAK_OUT_OF_MEMORY, ERIAK_DUPLICATE
  */
@@ -121,7 +122,6 @@ riak_error
 riak_connection_pool_add_host(riak_connection_pool *pool,
                               const char           *hostname,
                               const char           *portnum,
-                              riak_addr_resolver    resolver,
                               riak_uint32_t         max_cxns);
 
 /**
@@ -129,7 +129,7 @@ riak_connection_pool_add_host(riak_connection_pool *pool,
  * @param pool Riak Connection Pool
  * @param hostname Name of Riak server
  * @param portnum Riak PBC port number
- * @returns ERIAK_NOT_FOUND
+ * @returns ERIAK_NOT_FOUND, ERIAK_OUT_OF_RANGE
  */
 riak_error
 riak_connection_pool_remove_host(riak_connection_pool *pool,
@@ -140,7 +140,8 @@ riak_connection_pool_remove_host(riak_connection_pool *pool,
  * @brief Get a connection from the pool to use
  * @param pool Riak Connection Pool
  * @returns ERIAK_MAX_CONNECTIONS if connections are left or
- *          ERIAK_UNINITIALIZED if no connections are defined
+ *          ERIAK_UNINITIALIZED if no connections are defined or
+ *          ERIAK_OUT_OF_MEMORY if memory is exhausted
  */
 riak_error
 riak_connection_pool_get(riak_connection_pool *pool,

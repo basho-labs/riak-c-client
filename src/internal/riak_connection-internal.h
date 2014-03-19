@@ -29,6 +29,13 @@
 #define RIAK_CONN_HOST_INIT_SIZE    10
 #define RIAK_CONN_POOL_INIT_SIZE    10
 
+typedef struct _riak_connection_host {
+    char          hostname[RIAK_HOST_MAX_LEN];
+    char          portnum[RIAK_HOST_MAX_LEN]; // Keep as a string for getaddrinfo
+    riak_uint32_t max_cxns;
+    riak_array   *cxns;
+} riak_connection_host;
+
 struct _riak_connection {
     riak_config            *config;
     char                    hostname[RIAK_HOST_MAX_LEN];
@@ -41,16 +48,9 @@ struct _riak_connection {
     struct timeval          last_activity_time;
     struct timezone         last_activity_tz;
 
-    riak_connection_pool    *pool;    // With which pool is this connection associated (NULL for none)
-    riak_boolean_t           active;  // Is connection currently being used?
+    riak_connection_host   *host;   // With which host config is this connection associated (NULL for none)
+    riak_boolean_t          active; // Is connection currently being used? (NEEDED?)
 };
-
-typedef struct _riak_connection_config {
-    char          hostname[RIAK_HOST_MAX_LEN];
-    char          portnum[RIAK_HOST_MAX_LEN]; // Keep as a string for getaddrinfo
-    riak_uint32_t max_cxns;
-    riak_array   *cxns;
-} riak_connection_config;
 
 struct _riak_connection_pool {
     riak_config   *cfg;             // Riak Configuration
@@ -59,6 +59,7 @@ struct _riak_connection_pool {
     riak_array    *available_cxns;  // Queue of available connections
     riak_array    *in_use_cxns;     // Queue of currently in-use connections
     riak_array    *host_configs;    // Queue of host configurations
+    riak_connection_options *opt;   // Optional Connection Options
     riak_int64_t   idx;             // Which config is next in a round robin?
 };
 
@@ -72,11 +73,13 @@ riak_connection_pool_add_connection(riak_connection_pool *pool);
 
 /**
  * @brief Remove an existing connection from the pool
+ * @param pool Riak Connection Pool
  * @param cxn Riak Connection
  * @returns ERIAK_NOT_FOUND
  */
 riak_error
-riak_connection_pool_remove_connection(riak_connection *cxn);
+riak_connection_pool_remove_connection(riak_connection_pool *pool,
+                                       riak_connection      *cxn);
 
 
 #endif // _RIAK_CONNECTION_INTERNAL_H

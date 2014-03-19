@@ -121,7 +121,9 @@ riak_array_remove(riak_array *ra,
 riak_error
 riak_array_push(riak_array *ra,
                 void       *elem) {
+    printf("Adding %x to %x (size =%lld)\n", elem, ra, ra->length);
     riak_error err = riak_array_resize(ra, ra->length + 1);
+    printf("Added %x to %x\n", elem, ra);
     if (err) {
         return err;
     }

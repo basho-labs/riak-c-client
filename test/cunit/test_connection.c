@@ -125,28 +125,112 @@ test_connection_pool_empty() {
 }
 
 void
-test_connection_pool_add() {
-    CU_ASSERT_FATAL(RIAK_FALSE);
+test_connection_pool_add_host() {
+    riak_config *cfg;
+    riak_error err = riak_config_new_default(&cfg);
+    CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
+
+    riak_connection_pool *pool;
+    err = riak_connection_pool_new(cfg, &pool, NULL, 10, RIAK_FALSE);
+    CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
+
+    err = riak_connection_pool_add_host(pool, "localhost", "8888", 0);
+    CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
+    err = riak_connection_pool_add_host(pool, "localhost", "1024", 0);
+    CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
+    err = riak_connection_pool_add_host(pool, "basho.com", "2048", 0);
+    CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
+
+    riak_connection_pool_free(&pool);
+    CU_PASS("test_connection_pool_add passed")
 }
 
 void
-test_connection_pool_remove() {
-    CU_ASSERT_FATAL(RIAK_FALSE);
+test_connection_pool_remove_host() {
+    riak_config *cfg;
+    riak_error err = riak_config_new_default(&cfg);
+    CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
+
+    riak_connection_pool *pool;
+    err = riak_connection_pool_new(cfg, &pool, NULL, 10, RIAK_FALSE);
+    CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
+
+    err = riak_connection_pool_add_host(pool, "localhost", "8888", 0);
+    CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
+    err = riak_connection_pool_add_host(pool, "localhost", "1024", 0);
+    CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
+    err = riak_connection_pool_add_host(pool, "basho.com", "2048", 0);
+    CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
+
+    // Try to remove a non-existent one
+    err = riak_connection_pool_remove_host(pool, "mongodb.com", "666");
+    CU_ASSERT_EQUAL_FATAL(err,ERIAK_NOT_FOUND)
+    err = riak_connection_pool_remove_host(pool, "localhost", "8888");
+    CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
+    err = riak_connection_pool_remove_host(pool, "localhost", "1024");
+    CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
+    err = riak_connection_pool_remove_host(pool, "basho.com", "2048");
+    CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
+    // No one should be swimming in the pool at the moment
+    err = riak_connection_pool_remove_host(pool, "basho.com", "2048");
+    CU_ASSERT_EQUAL_FATAL(err,ERIAK_NOT_FOUND)
+
+    riak_connection_pool_free(&pool);
+    CU_PASS("test_connection_pool_remove_host passed")
 }
 
 void
 test_connection_pool_lazy_connect() {
-    CU_ASSERT_FATAL(RIAK_FALSE);
+    riak_config *cfg;
+    riak_error err = riak_config_new_default(&cfg);
+    CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
+
+    riak_connection_pool *pool;
+    err = riak_connection_pool_new(cfg, &pool, &test_connection_dummy_options, 10, RIAK_TRUE);
+    CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
+
+    riak_connection_pool_free(&pool);
+    CU_PASS("test_connection_pool_lazy_connect passed")
 }
 
 void
 test_connection_pool_eager_connect() {
-    CU_ASSERT_FATAL(RIAK_FALSE);
+     riak_config *cfg;
+     riak_error err = riak_config_new_default(&cfg);
+     CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
+
+     riak_connection_pool *pool;
+     err = riak_connection_pool_new(cfg, &pool, &test_connection_dummy_options, 10, RIAK_FALSE);
+     CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
+
+     riak_connection_pool_free(&pool);
+     CU_PASS("test_connection_pool_eager_connect passed")
 }
 
 void
 test_connection_pool_get_connection() {
-    CU_ASSERT_FATAL(RIAK_FALSE);
+    riak_config *cfg;
+    riak_error err = riak_config_new_default(&cfg);
+    CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
+
+    riak_connection_pool *pool;
+    err = riak_connection_pool_new(cfg, &pool, &test_connection_dummy_options, 10, RIAK_FALSE);
+    CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
+
+    err = riak_connection_pool_add_host(pool, "localhost", "8888", 0);
+    CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
+
+    riak_connection *cxn;
+    err =  riak_connection_pool_get(pool, &cxn);
+    CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
+
+    // One worked, why not two?
+    riak_connection *cxn1;
+    err =  riak_connection_pool_get(pool, &cxn1);
+    CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
+
+    riak_connection_pool_free(&pool);
+    CU_PASS("test_connection_pool_eager_connect passed")
 }
 
 void
