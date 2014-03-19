@@ -155,13 +155,15 @@ test_integration_server_info() {
 void
 test_serverinfo_async_cb(riak_serverinfo_response *response,
                          void                     *ptr) {
-    test_async_connection *conn = (test_async_connection*)ptr;
+    test_async_pthread    *state = (test_async_pthread*)ptr;
+    test_async_connection *conn = (test_async_connection*)state->conn;
     char output[1024];
     riak_print_state print_state;
     riak_print_init(&print_state, output, sizeof(output));
     riak_serverinfo_response_print(&print_state, response);
     fprintf(stderr, "ASYNCHRONOUS %s", output);
     riak_serverinfo_response_free(conn->cfg, &response);
+    state->err = ERIAK_OK;
 }
 
 /**
@@ -188,7 +190,7 @@ test_integration_async_server_info() {
     riak_error err = test_setup(&cfg);
     CU_ASSERT_FATAL(err == ERIAK_OK)
 
-    err = test_async_thread_runner(cfg, test_serverinfo_async_thread, NULL);
+    err = test_async_thread_runner(cfg, test_serverinfo_async_thread, NULL, NULL);
     CU_ASSERT_FATAL(err == ERIAK_OK)
 
     test_cleanup(&cfg);

@@ -45,7 +45,7 @@ riak_object_new(riak_config *cfg);
  * @param obj Riak Object to be freed
  */
 void
-riak_object_free(riak_config *cfg,
+riak_object_free(riak_config  *cfg,
                  riak_object **obj);
 
 /**
@@ -59,6 +59,28 @@ riak_object_print(riak_print_state *state,
                   riak_object      *obj);
 
 /**
+ * @brief Compare two Riak Objects
+ * @param obj1 First Riak Object
+ * @param obj2 Second RiaK Object
+ * @returns 0 if they are equal in value, 1 otherwise
+ */
+int
+riak_object_compare(riak_object   *obj1,
+                    riak_object   *obj2);
+
+/**
+ * @brief Compare two Riak Objects and print differences to stderr
+ * @param obj1 First Riak Object
+ * @param obj2 Second RiaK Object
+ * @param debug Riak Print State where to write the differences
+ * @returns 0 if they are equal in value, 1 otherwise
+ */
+int
+riak_object_compare_debug(riak_object      *obj1,
+                          riak_object      *obj2,
+                          riak_print_state *debug);
+
+/**
  * @brief Allocate an array of `riak_object` pointers
  * @param cfg Riak Configuration
  * @param array Returned array of pointers to `riak_object`s
@@ -67,7 +89,7 @@ riak_object_print(riak_print_state *state,
  * @returns Error Code
  */
 riak_error
-riak_object_new_array(riak_config  *cfg,
+riak_object_new_array(riak_config   *cfg,
                       riak_object ***array,
                       riak_size_t    len);
 

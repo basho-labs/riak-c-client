@@ -180,6 +180,9 @@ main(int   argc,
     CU_ADD_TEST(integration_suite, test_integration_async_listbuckets);
     CU_ADD_TEST(integration_suite, test_integration_listkeys);
     CU_ADD_TEST(integration_suite, test_integration_async_listkeys);
+    CU_ADD_TEST(integration_suite, test_integration_get_value);
+    CU_ADD_TEST(integration_suite, test_integration_async_get_value);
+    CU_ADD_TEST(integration_suite, test_integration_async_get_bad_value);
 
     // Only run integration tests if an argument is passed in
     if (argc < 2) {

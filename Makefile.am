@@ -158,7 +158,8 @@ riak_c_cunit_SOURCES = test/cunit/test.c \
 			test/cunit/test_connection.c \
 			test/cunit/test_delete.c \
 			test/cunit/test_get.c \
-			test/cunit/test_mapreduce.c \
+			test/cunit/test_log.c \
+  			test/cunit/test_mapreduce.c \
 			test/cunit/test_operation.c \
 			test/cunit/test_listbuckets.c \
 			test/cunit/test_listkeys.c \

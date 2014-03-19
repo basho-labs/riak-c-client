@@ -60,7 +60,7 @@ riak_strlcat(char       *dst,
 }
 
 void**
-riak_array_realloc(riak_config *cfg,
+riak_array_realloc(riak_config  *cfg,
                    void       ***from,
                    riak_size_t   size,
                    riak_uint32_t oldnum,

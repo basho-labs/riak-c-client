@@ -29,6 +29,7 @@ extern "C" {
 
 typedef enum riak_error_enum {
     ERIAK_OK = 0,
+    ERIAK_TEST_FAILURE,
     ERIAK_OUT_OF_RANGE,
     ERIAK_DNS_RESOLUTION,
     ERIAK_CONNECT,
@@ -43,12 +44,14 @@ typedef enum riak_error_enum {
     ERIAK_SERVER_ERROR,
     ERIAK_MESSAGE_FORMAT,
     ERIAK_THREAD,
+    ERIAK_INVALID,
     ERIAK_LAST_ERRORNUM
 } riak_error;
 
 #ifdef _RIAK_ERROR_DEFINE_MSGS
 static const char* errmsgs[] = {
     "No Error",
+    "Test Failure",
     "Value out of Range",
     "Problems resolving host name/port number",
     "Connection Error",
@@ -63,6 +66,7 @@ static const char* errmsgs[] = {
     "An error was returned from the server",
     "Message Format Error",
     "Threading Error",
+    "Invalid Value",
     "SENTINEL FOR LAST ERROR MESSAGE"
 };
 #endif

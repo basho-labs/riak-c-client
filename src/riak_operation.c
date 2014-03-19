@@ -134,3 +134,4 @@ riak_binary*
 riak_operation_get_index(riak_operation *rop) {
     return rop->request.index;
 }
+
