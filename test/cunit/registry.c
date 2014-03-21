@@ -45,6 +45,7 @@
 #include "test_ping.h"
 #include "test_put.h"
 #include "test_search.h"
+#include "test_2i.h"
 #include "test_serverinfo.h"
 
 int
@@ -183,7 +184,7 @@ main(int   argc,
     CU_ADD_TEST(integration_suite, test_integration_async_get_value);
     CU_ADD_TEST(integration_suite, test_integration_async_get_bad_value);
 
-    // Only run integration tests if an argument is passed in
+    //Only run integration tests if an argument is passed in
     if (argc < 2) {
         CU_set_suite_active(integration_suite, CU_FALSE);
     }

@@ -38,7 +38,7 @@ test_bkv_add(riak_config            *cfg,
     test_bucket_key_value *node = *root;
     while (obj && node) {
         // If this is a sibling, just add object (value will mismatch)
-        if (riak_binary_compare(node->bucket, bucket) == 0 &&
+        if (riak_binary_compare(node->bucket, bucket_bin) == 0 &&
             riak_binary_compare(node->key, key)) {
             if (riak_array_realloc(cfg, (void***)&node->objs, sizeof(riak_object*), node->n_objs, node->n_objs+1) == NULL) {
                 return ERIAK_OUT_OF_MEMORY;
@@ -54,7 +54,7 @@ test_bkv_add(riak_config            *cfg,
         return ERIAK_OUT_OF_MEMORY;
     }
     node->next   = *root;
-    node->bucket = riak_binary_copy(cfg, bucket);
+    node->bucket = riak_binary_copy(cfg, bucket_bin);
     node->bucket_type = NULL;
     node->key    = riak_binary_copy(cfg, key);
     node->n_objs = 0;

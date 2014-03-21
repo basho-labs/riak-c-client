@@ -252,7 +252,8 @@ test_load_dummy_object_field(riak_config      *cfg,
  */
 riak_error
 test_load_dummy_object(riak_config            *cfg,
-                       riak_binary            *bucket,
+                       riak_binary            *bucket_type_bin,
+                       riak_binary            *bucket_bin,
                        riak_binary            *key,
                        riak_uint32_t           num_extras,
                        riak_object           **obj_out,
@@ -261,7 +262,12 @@ test_load_dummy_object(riak_config            *cfg,
     if (obj == NULL) {
         return ERIAK_OUT_OF_MEMORY;
     }
-    riak_error err = riak_object_set_bucket(cfg, obj, bucket);
+    riak_error err = riak_object_set_bucket(cfg, obj, bucket_bin);
+    if (err) {
+        fprintf(stderr, "Could not add bucket to dummy object\n");
+        return err;
+    }
+    err = riak_object_set_bucket_type(cfg, obj, bucket_type_bin);
     if (err) {
         fprintf(stderr, "Could not add bucket to dummy object\n");
         return err;
@@ -306,7 +312,7 @@ test_load_dummy_object(riak_config            *cfg,
         if (link == NULL) {
             return ERIAK_OUT_OF_MEMORY;
         }
-        err = riak_link_set_bucket(cfg, link, bucket);
+        err = riak_link_set_bucket(cfg, link, bucket_bin);
         if (err) {
             fprintf(stderr, "Could not add bucket to dummy link\n");
             return err;
@@ -335,7 +341,7 @@ test_load_dummy_object(riak_config            *cfg,
             fprintf(stderr, "Could not add key to dummy metadata\n");
             return err;
         }
-        err = riak_pair_set_value(cfg, usermeta, bucket);
+        err = riak_pair_set_value(cfg, usermeta, bucket_bin);
         if (err) {
             fprintf(stderr, "Could not add value to dummy metadata\n");
             return err;
@@ -361,7 +367,7 @@ test_load_dummy_object(riak_config            *cfg,
     }
 #endif
 
-    err = test_bkv_add(cfg, root, bucket, key, obj);
+    err = test_bkv_add(cfg, root, NULL, bucket_bin, key, obj);
     if (err) {
         fprintf(stderr, "Could not add object to internal cache\n");
         return err;
@@ -394,12 +400,11 @@ test_load_db(riak_config            *cfg,
             }
             riak_put_response *response = NULL;
             riak_object *obj;
-            riak_error err = test_load_dummy_object(cfg, bucket, key, RIAK_TEST_NUM_OBJ_EXTRAS, &obj, root);
+            riak_error err = test_load_dummy_object(cfg, NULL, bucket, key, RIAK_TEST_NUM_OBJ_EXTRAS, &obj, root);
             if (err) {
                 return err;
             }
-            riak_put_response *response = NULL;
-            err = test_bkv_add(cfg, root, NULL, bucket_bin, key_bin, value_bin);
+            err = test_bkv_add(cfg, root, NULL, bucket, key, obj);
             err = riak_put(cxn, obj, NULL, &response);
             if (err) {
                 return err;
@@ -426,7 +431,7 @@ test_cleanup_db(riak_connection* cxn) {
 
     const int prefixlen = strlen(RIAK_TEST_BUCKET_PREFIX);
     riak_listbuckets_response *bucket_response = NULL;
-    riak_error err = riak_listbuckets(cxn, NULL, &bucket_response);
+    riak_error err = riak_listbuckets(cxn, NULL, DEFAULT_TIMEOUT, &bucket_response);
     if (err) {
         return err;
     }
@@ -440,13 +445,9 @@ test_cleanup_db(riak_connection* cxn) {
         if (riak_binary_len(bucket) < prefixlen) continue;
         // Does the bucket match the prefix? If so, start nuking
         if (memcmp(riak_binary_data(bucket), RIAK_TEST_BUCKET_PREFIX, prefixlen) == 0) {
-<<<<<<< HEAD
+
             riak_listkeys_response *key_response;
             err = riak_listkeys(cxn, NULL, bucket, 0, &key_response);
-=======
-            riak_listkeys_response *response = NULL;
-            err = riak_listkeys(cxn, NULL, bucket, 0, &response);
->>>>>>> test fixes, still core dumps on test_integration_async_listkeys
             if (err) {
                 return err;
             }

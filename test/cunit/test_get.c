@@ -317,7 +317,7 @@ test_integration_get_value() {
     CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
 
     riak_get_response *response = NULL;
-    err = riak_get(cxn, db->bucket, db->key, NULL, &response);
+    err = riak_get(cxn, NULL, db->bucket, db->key, NULL, &response);
     CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
     riak_uint32_t num = riak_get_get_n_content(response);
     CU_ASSERT_EQUAL_FATAL(num, 1)
@@ -400,7 +400,7 @@ test_get_async_thread(void *ptr) {
     test_async_pthread    *state = (test_async_pthread*)ptr;
     test_async_connection *conn  = state->conn;
     test_async_pthread_get_args *args = (test_async_pthread_get_args*)(state->args);
-    riak_error err = riak_async_register_get(conn->rop, args->bucket, args->key, args->opts, (riak_response_callback)test_get_async_cb);
+    riak_error err = riak_async_register_get(conn->rop, NULL, args->bucket, args->key, args->opts, (riak_response_callback)test_get_async_cb);
     if (err) {
         return (void*)riak_strerror(err);
     }
