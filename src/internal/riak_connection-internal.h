@@ -29,12 +29,12 @@
 #define RIAK_CONN_HOST_INIT_SIZE    10
 #define RIAK_CONN_POOL_INIT_SIZE    10
 
-typedef struct _riak_connection_host {
+typedef struct _riak_connection_node {
     char          hostname[RIAK_HOST_MAX_LEN];
     char          portnum[RIAK_HOST_MAX_LEN]; // Keep as a string for getaddrinfo
     riak_uint32_t max_cxns;
     riak_array   *cxns;
-} riak_connection_host;
+} riak_connection_node;
 
 struct _riak_connection {
     riak_config            *config;
@@ -48,7 +48,7 @@ struct _riak_connection {
     struct timeval          last_activity_time;
     struct timezone         last_activity_tz;
 
-    riak_connection_host   *host;   // With which host config is this connection associated (NULL for none)
+    riak_connection_node   *node;   // With which node is this connection associated (NULL for none)
     riak_boolean_t          active; // Is connection currently being used? (NEEDED?)
 };
 
@@ -58,7 +58,7 @@ struct _riak_connection_pool {
     riak_boolean_t lazy_connect;    // True if connections are created on-demand
     riak_array    *available_cxns;  // Queue of available connections
     riak_array    *in_use_cxns;     // Queue of currently in-use connections
-    riak_array    *host_configs;    // Queue of host configurations
+    riak_array    *node_configs;    // Queue of node configurations
     riak_connection_options *opt;   // Optional Connection Options
     riak_int64_t   idx;             // Which config is next in a round robin?
 };

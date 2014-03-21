@@ -106,42 +106,41 @@ riak_connection_pool_new(riak_config             *cfg,
  * @brief Free up the memory associated with a connection pool
  * NOTE: This closes all available connections
  * @param pool Riak Connection Pool
+ * @returns Error Code
  */
-void
+riak_error
 riak_connection_pool_free(riak_connection_pool **pool);
 
 /**
- * @brief Register a host for creating connections
+ * @brief Register a node for creating connections
  * @param pool Riak Connection Pool
  * @param hostname Name of Riak server
  * @param portnum Riak PBC port number
  * @param max_cxn Maximum allowed number of connections (0 for "unlimited")
- * @returns ERIAK_OUT_OF_MEMORY, ERIAK_DUPLICATE
+ * @returns Error Code
  */
 riak_error
-riak_connection_pool_add_host(riak_connection_pool *pool,
+riak_connection_pool_add_node(riak_connection_pool *pool,
                               const char           *hostname,
                               const char           *portnum,
                               riak_uint32_t         max_cxns);
 
 /**
- * @brief Remove a host from the list of connections
+ * @brief Remove a node from the list of connections
  * @param pool Riak Connection Pool
  * @param hostname Name of Riak server
  * @param portnum Riak PBC port number
- * @returns ERIAK_NOT_FOUND, ERIAK_OUT_OF_RANGE
+ * @returns Error Code
  */
 riak_error
-riak_connection_pool_remove_host(riak_connection_pool *pool,
+riak_connection_pool_remove_node(riak_connection_pool *pool,
                                  const char           *hostname,
                                  const char           *portnum);
 
 /**
  * @brief Get a connection from the pool to use
  * @param pool Riak Connection Pool
- * @returns ERIAK_MAX_CONNECTIONS if connections are left or
- *          ERIAK_UNINITIALIZED if no connections are defined or
- *          ERIAK_OUT_OF_MEMORY if memory is exhausted
+ * @returns Error Code
  */
 riak_error
 riak_connection_pool_get(riak_connection_pool *pool,
@@ -150,6 +149,7 @@ riak_connection_pool_get(riak_connection_pool *pool,
 /**
  * @brief Return a connection back to the pool
  * @param pool Riak Connection Pool
+ * @returns Error Code
  */
 riak_error
 riak_connection_pool_return(riak_connection_pool *pool,

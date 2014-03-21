@@ -134,11 +134,11 @@ test_connection_pool_add_host() {
     err = riak_connection_pool_new(cfg, &pool, NULL, 10, RIAK_FALSE);
     CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
 
-    err = riak_connection_pool_add_host(pool, "localhost", "8888", 0);
+    err = riak_connection_pool_add_node(pool, "localhost", "8888", 0);
     CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
-    err = riak_connection_pool_add_host(pool, "localhost", "1024", 0);
+    err = riak_connection_pool_add_node(pool, "localhost", "1024", 0);
     CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
-    err = riak_connection_pool_add_host(pool, "basho.com", "2048", 0);
+    err = riak_connection_pool_add_node(pool, "basho.com", "2048", 0);
     CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
 
     riak_connection_pool_free(&pool);
@@ -155,24 +155,24 @@ test_connection_pool_remove_host() {
     err = riak_connection_pool_new(cfg, &pool, NULL, 10, RIAK_FALSE);
     CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
 
-    err = riak_connection_pool_add_host(pool, "localhost", "8888", 0);
+    err = riak_connection_pool_add_node(pool, "localhost", "8888", 0);
     CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
-    err = riak_connection_pool_add_host(pool, "localhost", "1024", 0);
+    err = riak_connection_pool_add_node(pool, "localhost", "1024", 0);
     CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
-    err = riak_connection_pool_add_host(pool, "basho.com", "2048", 0);
+    err = riak_connection_pool_add_node(pool, "basho.com", "2048", 0);
     CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
 
     // Try to remove a non-existent one
-    err = riak_connection_pool_remove_host(pool, "mongodb.com", "666");
+    err = riak_connection_pool_remove_node(pool, "mongodb.com", "666");
     CU_ASSERT_EQUAL_FATAL(err,ERIAK_NOT_FOUND)
-    err = riak_connection_pool_remove_host(pool, "localhost", "8888");
+    err = riak_connection_pool_remove_node(pool, "localhost", "8888");
     CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
-    err = riak_connection_pool_remove_host(pool, "localhost", "1024");
+    err = riak_connection_pool_remove_node(pool, "localhost", "1024");
     CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
-    err = riak_connection_pool_remove_host(pool, "basho.com", "2048");
+    err = riak_connection_pool_remove_node(pool, "basho.com", "2048");
     CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
     // No one should be swimming in the pool at the moment
-    err = riak_connection_pool_remove_host(pool, "basho.com", "2048");
+    err = riak_connection_pool_remove_node(pool, "basho.com", "2048");
     CU_ASSERT_EQUAL_FATAL(err,ERIAK_NOT_FOUND)
 
     riak_connection_pool_free(&pool);
@@ -217,7 +217,7 @@ test_connection_pool_get_connection() {
     err = riak_connection_pool_new(cfg, &pool, &test_connection_dummy_options, 10, RIAK_FALSE);
     CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
 
-    err = riak_connection_pool_add_host(pool, "localhost", "8888", 0);
+    err = riak_connection_pool_add_node(pool, "localhost", "8888", 0);
     CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
 
     riak_connection *cxn;

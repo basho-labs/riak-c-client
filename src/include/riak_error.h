@@ -46,6 +46,7 @@ typedef enum riak_error_enum {
     ERIAK_THREAD,
     ERIAK_INVALID,
     ERIAK_MAX_CONNECTIONS,
+    ERIAK_OUT_OF_CONNECTIONS,
     ERIAK_DUPLICATE,
     ERIAK_NOT_FOUND,
     ERIAK_LAST_ERRORNUM
@@ -71,6 +72,7 @@ static const char* errmsgs[] = {
     "Threading Error",
     "Invalid Value",
     "Maximum number of connections reached",
+    "Insufficient of connections available",
     "Duplicate Value",
     "Value not found",
     "SENTINEL FOR LAST ERROR MESSAGE"
