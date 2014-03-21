@@ -53,6 +53,7 @@ struct _riak_operation {
 
     // Cache of request data
     struct {
+        riak_binary *bucket_type;
         riak_binary *bucket;
         riak_binary *key;
         riak_binary *index;
