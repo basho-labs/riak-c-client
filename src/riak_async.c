@@ -42,14 +42,14 @@ riak_async_register_serverinfo(riak_operation        *rop,
 
 riak_error
 riak_async_register_get(riak_operation        *rop,
-                        riak_binary           *bucket,
                         riak_binary           *bucket_type,
+                        riak_binary           *bucket,
                         riak_binary           *key,
                         riak_get_options      *get_options,
                         riak_response_callback cb) {
 
     riak_operation_set_response_cb(rop, cb);
-    return riak_get_request_encode(rop, bucket, bucket_type, key, get_options, &(rop->pb_request));
+    return riak_get_request_encode(rop, bucket_type, bucket, key, get_options, &(rop->pb_request));
 }
 
 riak_error
@@ -63,13 +63,13 @@ riak_async_register_put(riak_operation        *rop,
 
 riak_error
 riak_async_register_delete(riak_operation        *rop,
-                           riak_binary           *bucket,
                            riak_binary           *bucket_type,
+                           riak_binary           *bucket,
                            riak_binary           *key,
                            riak_delete_options   *options,
                            riak_response_callback cb) {
     riak_operation_set_response_cb(rop, cb);
-    return riak_delete_request_encode(rop, bucket, bucket_type, key, NULL, &(rop->pb_request));
+    return riak_delete_request_encode(rop, bucket_type, bucket, key, NULL, &(rop->pb_request));
 }
 
 riak_error
@@ -86,14 +86,14 @@ riak_async_register_listbuckets(riak_operation        *rop,
 
 riak_error
 riak_async_register_listkeys(riak_operation        *rop,
-                             riak_binary           *bucket,
                              riak_binary           *bucket_type,
+                             riak_binary           *bucket,
                              riak_uint32_t          timeout,
                              riak_response_callback cb ) {
     riak_operation_set_response_cb(rop, cb);
     return riak_listkeys_request_encode(rop,
-                                        bucket,
                                         bucket_type,
+                                        bucket,
                                         timeout,
                                         &(rop->pb_request));
 }
@@ -115,27 +115,30 @@ riak_async_register_set_clientid(riak_operation  *rop,
 
 riak_error
 riak_async_register_get_bucketprops(riak_operation  *rop,
-                                    riak_binary     *bucket,
+                                    riak_binary     *bucket_type_bin,                                    
+                                    riak_binary     *bucket_bin,
                                     riak_response_callback cb) {
     riak_operation_set_response_cb(rop, cb);
-    return riak_get_bucketprops_request_encode(rop, bucket, &(rop->pb_request));
+    return riak_get_bucketprops_request_encode(rop, bucket_type_bin, bucket_bin, &(rop->pb_request));
 }
 
 riak_error
 riak_async_register_reset_bucketprops(riak_operation  *rop,
-                                      riak_binary     *bucket,
+                                      riak_binary     *bucket_type_bin,
+                                      riak_binary     *bucket_bin,
                                       riak_response_callback cb) {
     riak_operation_set_response_cb(rop, cb);
-    return riak_reset_bucketprops_request_encode(rop, bucket, &(rop->pb_request));
+    return riak_reset_bucketprops_request_encode(rop, bucket_type_bin, bucket_bin, &(rop->pb_request));
 }
 
 riak_error
 riak_async_register_set_bucketprops(riak_operation        *rop,
-                                    riak_binary           *bucket,
+                                    riak_binary           *bucket_type_bin,
+                                    riak_binary           *bucket_bin,
                                     riak_bucketprops      *props,
                                     riak_response_callback cb) {
     riak_operation_set_response_cb(rop, cb);
-    return riak_set_bucketprops_request_encode(rop, bucket, props, &(rop->pb_request));
+    return riak_set_bucketprops_request_encode(rop, bucket_type_bin, bucket_bin, props, &(rop->pb_request));
 }
 
 riak_error
@@ -150,15 +153,15 @@ riak_async_register_mapreduce(riak_operation        *rop,
 
 riak_error
 riak_async_register_2i(riak_operation        *rop,
-                       riak_binary           *bucket,
                        riak_binary           *bucket_type,
+                       riak_binary           *bucket,
                        riak_binary           *index,
                        riak_2i_options   *index_options,
                        riak_response_callback cb) {
     riak_operation_set_response_cb(rop, cb);
     return riak_2i_request_encode(rop,
-                                  bucket,
                                   bucket_type,
+                                  bucket,
                                   index,
                                   index_options,
                                   &(rop->pb_request));
@@ -166,12 +169,12 @@ riak_async_register_2i(riak_operation        *rop,
 
 riak_error
 riak_async_register_search(riak_operation      *rop,
-                           riak_binary         *bucket,
+                           riak_binary         *bucket_bin,
                            riak_binary         *query,
                            riak_search_options *search_options,
                            riak_response_callback cb) {
 
     riak_operation_set_response_cb(rop, cb);
-    return riak_search_request_encode(rop, bucket, query, search_options, &(rop->pb_request));
+    return riak_search_request_encode(rop, bucket_bin, query, search_options, &(rop->pb_request));
 }
 

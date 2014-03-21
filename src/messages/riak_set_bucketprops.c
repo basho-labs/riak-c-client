@@ -32,6 +32,7 @@
 
 riak_error
 riak_set_bucketprops_request_encode(riak_operation      *rop,
+                                    riak_binary         *bucket_type,
                                     riak_binary         *bucket,
                                     riak_bucketprops    *props,
                                     riak_pb_message    **req) {
@@ -39,6 +40,11 @@ riak_set_bucketprops_request_encode(riak_operation      *rop,
     riak_config *cfg = riak_operation_get_config(rop);
     RpbSetBucketReq setmsg;
     rpb_set_bucket_req__init(&setmsg);
+
+    if(bucket_type != NULL) {
+        riak_binary_copy_to_pb(&(setmsg.type), bucket_type);
+        setmsg.has_type = RIAK_TRUE;
+    }
 
     riak_binary_copy_to_pb(&setmsg.bucket, bucket);
     RpbBucketProps pbprops;

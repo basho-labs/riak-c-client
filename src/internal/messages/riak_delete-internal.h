@@ -54,8 +54,8 @@ struct _riak_delete_response {
  */
 riak_error
 riak_delete_request_encode(riak_operation      *rop,
-                           riak_binary         *bucket,
                            riak_binary         *bucket_type,
+                           riak_binary         *bucket,
                            riak_binary         *key,
                            riak_delete_options *options,
                            riak_pb_message    **req);
