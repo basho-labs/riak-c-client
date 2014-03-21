@@ -138,7 +138,7 @@ riak_c_async_example_LDADD = \
         -lriak_c_client-0.5 \
         $(PROTOBUFC_LIBS) \
         $(PROTOBUF_LIBS) \
-        $(EVENT_FLAGS)
+        $(EVENT_LIBS)
 
 riak_c_async_example_DEPENDENCIES = libriak_c_client-0.5.la
 
