@@ -62,9 +62,7 @@ main(int   argc,
     // create some sample binary values to use
     riak_binary *bucket_bin   = riak_binary_copy_from_string(cfg, args.bucket); // Not copied
     riak_binary *bucket_type_bin = NULL;
-    if(args.has_bucket_type) {
-        bucket_type_bin = riak_binary_copy_from_string(cfg, args.bucket_type);
-    }
+    bucket_type_bin = riak_binary_copy_from_string(cfg, args.bucket_type);
     riak_binary *key_bin      = riak_binary_copy_from_string(cfg, args.key);   // Not copied
     riak_binary *value_bin    = riak_binary_copy_from_string(cfg, args.value); // Not copied
     riak_binary *index_bin    = riak_binary_copy_from_string(cfg, args.index); // Not copied
@@ -141,7 +139,7 @@ main(int   argc,
             }
             riak_get_options_set_basic_quorum(get_options, RIAK_TRUE);
             riak_get_options_set_r(get_options, 2);
-            err = riak_get(cxn, bucket_bin, bucket_type_bin, key_bin, get_options, &get_response);
+            err = riak_get(cxn, bucket_type_bin, bucket_bin,  key_bin, get_options, &get_response);
             if (err == ERIAK_OK) {
                 riak_get_response_print(&print_state, get_response);
                 printf("%s\n", output);
@@ -202,7 +200,7 @@ main(int   argc,
             }
             riak_delete_options_set_w(delete_options, 1);
             riak_delete_options_set_dw(delete_options, 1);
-            err = riak_delete(cxn, bucket_bin, bucket_type_bin, key_bin, delete_options);
+            err = riak_delete(cxn, bucket_type_bin, bucket_bin, key_bin, delete_options);
             riak_delete_options_free(cfg, &delete_options);
             if (err) {
                 fprintf(stderr, "Delete Problems [%s]\n", riak_strerror(err));
@@ -210,10 +208,7 @@ main(int   argc,
             }
             break;
         case RIAK_COMMAND_LISTBUCKETS:
-            err = riak_listbuckets(cxn,
-                                   bucket_type_bin,
-                                   args.timeout * 1000,
-                &bucket_response);
+            err = riak_listbuckets(cxn, bucket_type_bin, args.timeout * 1000, &bucket_response);
             if (err == ERIAK_OK) {
                 riak_listbuckets_response_print(&print_state, bucket_response);
                 printf("%s\n", output);
@@ -226,8 +221,8 @@ main(int   argc,
             break;
         case RIAK_COMMAND_LISTKEYS:
             err = riak_listkeys(cxn,
-                                bucket_bin,
                                 bucket_type_bin,
+                                bucket_bin,
                                 args.timeout * 1000,
                                 &key_response);
             if (err == ERIAK_OK) {
@@ -261,7 +256,7 @@ main(int   argc,
             }
             break;
         case RIAK_COMMAND_GETBUCKET:
-            err = riak_get_bucketprops(cxn, bucket_bin, &props_response);
+            err = riak_get_bucketprops(cxn, bucket_type_bin, bucket_bin, &props_response);
             if (err == ERIAK_OK) {
                 riak_get_bucketprops_response_print(&print_state, props_response);
                 printf("%s\n", output);
@@ -273,7 +268,7 @@ main(int   argc,
             }
             break;
         case RIAK_COMMAND_RESETBUCKET:
-            err = riak_reset_bucketprops(cxn, bucket_bin, &reset_response);
+            err = riak_reset_bucketprops(cxn, bucket_type_bin, bucket_bin, &reset_response);
             if (err == ERIAK_OK) {
                 riak_reset_bucketprops_response_free(cfg, &reset_response);
             }
@@ -290,7 +285,7 @@ main(int   argc,
             }
             riak_bucketprops_set_last_write_wins(props, RIAK_FALSE);
             riak_set_bucketprops_response *bucket_response = NULL;
-             err = riak_set_bucketprops(cxn, bucket_bin, props, &bucket_response);
+             err = riak_set_bucketprops(cxn, bucket_type_bin, bucket_bin, props, &bucket_response);
              if (err == ERIAK_OK) {
                  riak_set_bucketprops_response_free(cfg, &bucket_response);
              }
@@ -323,8 +318,8 @@ main(int   argc,
             riak_2i_options_set_timeout(index_options, 10000);
             riak_2i_options_set_key(cfg, index_options, value_bin);
             err = riak_2i(cxn,
-                          bucket_bin,
                           bucket_type_bin,
+                          bucket_bin,
                           index_bin,
                           index_options,
                           &index_response);
@@ -366,8 +361,8 @@ main(int   argc,
     }
 
     // cleanup
-    riak_binary_free(cfg, &bucket_bin);
     riak_binary_free(cfg, &bucket_type_bin);
+    riak_binary_free(cfg, &bucket_bin);
     riak_binary_free(cfg, &key_bin);
     riak_binary_free(cfg, &value_bin);
     riak_binary_free(cfg, &index_bin);

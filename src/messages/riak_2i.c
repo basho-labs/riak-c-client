@@ -32,8 +32,8 @@
 
 riak_error
 riak_2i_request_encode(riak_operation      *rop,
-                       riak_binary         *bucket,
                        riak_binary         *bucket_type,
+                       riak_binary         *bucket,
                        riak_binary         *index,
                        riak_2i_options *index_options,
                        riak_pb_message    **req) {

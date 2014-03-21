@@ -82,8 +82,8 @@ riak_serverinfo(riak_connection           *cxn,
  */
 riak_error
 riak_get(riak_connection           *cxn,
-         riak_binary               *bucket,
          riak_binary               *bucket_type,
+         riak_binary               *bucket,
          riak_binary               *key,
          riak_get_options          *opts,
          riak_get_response        **response);
@@ -112,8 +112,8 @@ riak_put(riak_connection    *cxn,
  */
 riak_error
 riak_delete(riak_connection     *cxn,
-            riak_binary         *bucket,
             riak_binary         *bucket_type,
+            riak_binary         *bucket,
             riak_binary         *key,
             riak_delete_options *opts);
 
@@ -139,8 +139,8 @@ riak_listbuckets(riak_connection            *cxn,
  */
 riak_error
 riak_listkeys(riak_connection         *cxn,
-              riak_binary             *bucket,
               riak_binary             *bucket_type,
+              riak_binary             *bucket,
               riak_uint32_t            timeout,
               riak_listkeys_response **repsonse);
 
@@ -174,7 +174,8 @@ riak_set_clientid(riak_connection             *cxn,
  * @return Error code
  */
 riak_error
-riak_get_bucketprops(riak_connection                   *cxn,
+riak_get_bucketprops(riak_connection                *cxn,
+                     riak_binary                    *bucket_type,
                      riak_binary                    *bucket,
                      riak_get_bucketprops_response **repsonse);
 
@@ -187,6 +188,7 @@ riak_get_bucketprops(riak_connection                   *cxn,
  */
 riak_error
 riak_reset_bucketprops(riak_connection                  *cxn,
+                       riak_binary                      *bucket_type,
                        riak_binary                      *bucket,
                        riak_reset_bucketprops_response **response);
 
@@ -200,6 +202,7 @@ riak_reset_bucketprops(riak_connection                  *cxn,
  */
 riak_error
 riak_set_bucketprops(riak_connection                *cxn,
+                     riak_binary                    *bucket_type,
                      riak_binary                    *bucket,
                      riak_bucketprops               *props,
                      riak_set_bucketprops_response **response);
@@ -214,8 +217,8 @@ riak_set_bucketprops(riak_connection                *cxn,
  * @return Error code */
 riak_error
 riak_2i(riak_connection       *cxn,
-        riak_binary           *bucket,
         riak_binary           *bucket_type,
+        riak_binary           *bucket,
         riak_binary           *index,
         riak_2i_options   *opts,
         riak_2i_response **response);
@@ -269,8 +272,8 @@ riak_async_register_serverinfo(riak_operation        *rop,
 
 riak_error
 riak_async_register_get(riak_operation        *rop,
-                        riak_binary           *bucket,
                         riak_binary           *bucket_type,
+                        riak_binary           *bucket,
                         riak_binary           *key,
                         riak_get_options      *get_options,
                         riak_response_callback cb);
@@ -282,8 +285,8 @@ riak_async_register_put(riak_operation        *rop,
                         riak_response_callback cb);
 riak_error
 riak_async_register_delete(riak_operation        *rop,
-                           riak_binary           *bucket,
                            riak_binary           *bucket_type,
+                           riak_binary           *bucket,
                            riak_binary           *key,
                            riak_delete_options   *options,
                            riak_response_callback cb);
@@ -296,8 +299,8 @@ riak_async_register_listbuckets(riak_operation        *rop,
 
 riak_error
 riak_async_register_listkeys(riak_operation        *rop,
+                             riak_binary           *bucket_type,
                              riak_binary           *bucket,
-                             riak_binary           *bucket_types,
                              riak_uint32_t          timeout,
                              riak_response_callback cb );
 
@@ -312,14 +315,17 @@ riak_async_register_set_clientid(riak_operation        *rop,
 
 riak_error
 riak_async_register_get_bucketprops(riak_operation        *rop,
+                                    riak_binary           *bucket_type,
                                     riak_binary           *bucket,
                                     riak_response_callback cb);
 riak_error
 riak_async_register_reset_bucketprops(riak_operation        *rop,
+                                      riak_binary           *bucket_type,
                                       riak_binary           *bucket,
                                       riak_response_callback cb);
 riak_error
 riak_async_register_set_bucketprops(riak_operation        *rop,
+                                    riak_binary           *bucket_type,
                                     riak_binary           *bucket,
                                     riak_bucketprops      *props,
                                     riak_response_callback cb);
@@ -351,8 +357,8 @@ riak_async_register_mapreduce(riak_operation        *rop,
  */
 riak_error
 riak_async_register_2i(riak_operation        *rop,
-                       riak_binary           *bucket,
                        riak_binary           *bucket_type,
+                       riak_binary           *bucket,
                        riak_binary           *index,
                        riak_2i_options   *index_options,
                        riak_response_callback cb);

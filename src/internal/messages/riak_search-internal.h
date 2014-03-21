@@ -59,7 +59,7 @@ struct _riak_search_response
 
 riak_error
 riak_search_request_encode(riak_operation      *rop,
-                           riak_binary         *bucket,
+                           riak_binary         *bucket_bin,
                            riak_binary         *index,
                            riak_search_options *search_options,
                            riak_pb_message    **req);

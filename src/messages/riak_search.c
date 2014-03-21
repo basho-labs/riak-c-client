@@ -39,6 +39,7 @@ riak_search_request_encode(riak_operation      *rop,
     riak_config *cfg = riak_operation_get_config(rop);
     RpbSearchQueryReq srchmsg = RPB_SEARCH_QUERY_REQ__INIT;
 
+
     riak_operation_set_bucket(rop, bucket);
     riak_binary_copy_to_pb(&srchmsg.q, query);
     riak_binary_copy_to_pb(&srchmsg.index, bucket);
