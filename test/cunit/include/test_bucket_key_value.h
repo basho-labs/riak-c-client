@@ -24,6 +24,8 @@
 #define _TEST_BUCKET_KEY_VALUE_
 
 typedef struct _test_bucket_key_value {
+    riak_binary *bucket_type;
+
     riak_binary  *bucket;
     riak_binary  *key;
     riak_uint32_t n_objs;
@@ -43,7 +45,8 @@ typedef struct _test_bucket_key_value {
 riak_error
 test_bkv_add(riak_config            *cfg,
              test_bucket_key_value **root,
-             riak_binary            *bucket,
+             riak_binary            *bucket_type_bin,
+             riak_binary            *bucket_bin,
              riak_binary            *key,
              riak_object            *obj);
 

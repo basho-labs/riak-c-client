@@ -31,17 +31,18 @@
 
 riak_error
 riak_listkeys_request_encode(riak_operation   *rop,
-                             riak_binary      *bucket_type,
-                             riak_binary      *bucket,
+                             riak_binary      *bucket_type_bin,
+                             riak_binary      *bucket_bin,
                              riak_uint32_t     timeout,
                              riak_pb_message **req) {
     riak_config *cfg = riak_operation_get_config(rop);
     RpbListKeysReq listkeysreq = RPB_LIST_KEYS_REQ__INIT;
-    if(bucket_type != NULL) {
-        riak_binary_copy_to_pb(&listkeysreq.type, bucket_type);
+    
+    if(bucket_type_bin != NULL) {
+        riak_binary_copy_to_pb(&listkeysreq.type, bucket_type_bin);
         listkeysreq.has_type = RIAK_TRUE;
     }
-    riak_binary_copy_to_pb(&(listkeysreq.bucket), bucket);
+    riak_binary_copy_to_pb(&(listkeysreq.bucket), bucket_bin);
     if (timeout > 0) {
         listkeysreq.has_timeout = RIAK_TRUE;
         listkeysreq.timeout = timeout;
@@ -49,10 +50,9 @@ riak_listkeys_request_encode(riak_operation   *rop,
     riak_size_t msglen = rpb_list_keys_req__get_packed_size(&listkeysreq);
     riak_uint8_t *msgbuf = (riak_uint8_t*)(cfg->malloc_fn)(msglen);
     if (msgbuf == NULL) {
-        return 1;
+        return ERIAK_OUT_OF_MEMORY;
     }
     rpb_list_keys_req__pack(&listkeysreq, msgbuf);
-
     riak_pb_message* request = riak_pb_message_new(cfg, MSG_RPBLISTKEYSREQ, msglen, msgbuf);
     if (request == NULL) {
         return ERIAK_OUT_OF_MEMORY;

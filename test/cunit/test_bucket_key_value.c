@@ -30,7 +30,8 @@
 riak_error
 test_bkv_add(riak_config            *cfg,
              test_bucket_key_value **root,
-             riak_binary            *bucket,
+             riak_binary            *bucket_type_bin,
+             riak_binary            *bucket_bin,
              riak_binary            *key,
              riak_object            *obj) {
     // Is this a sibling?
@@ -54,6 +55,7 @@ test_bkv_add(riak_config            *cfg,
     }
     node->next   = *root;
     node->bucket = riak_binary_copy(cfg, bucket);
+    node->bucket_type = NULL;
     node->key    = riak_binary_copy(cfg, key);
     node->n_objs = 0;
     node->objs   = riak_config_clean_allocate(cfg, sizeof(riak_object*));
