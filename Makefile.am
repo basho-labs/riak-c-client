@@ -125,7 +125,7 @@ riak_c_async_example_DEPENDENCIES = libriak_c_client-0.5.la
 riak_c_async_example_SOURCES = examples/async_example.c \
             examples/riak_command.c \
             examples/example_call_backs.c \
-            examples/example_log.c 
+            examples/example_log.c
 
 riak_c_async_example_CPPFLAGS = \
             -DUSE_DEBUG -D_RIAK_DEBUG \
