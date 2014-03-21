@@ -243,7 +243,7 @@ test_load_db(riak_config            *cfg,
                 return err;
             }
             riak_put_response *response = NULL;
-            err = test_bkv_add(cfg, root, bucket_bin, key_bin, value_bin);
+            err = test_bkv_add(cfg, root, NULL, bucket_bin, key_bin, value_bin);
             err = riak_put(cxn, obj, NULL, &response);
             if (err) {
                 return err;
@@ -285,8 +285,8 @@ test_cleanup_db(riak_connection* cxn) {
         if (riak_binary_len(bucket) < prefixlen) continue;
         // Does the bucket match the prefix? If so, start nuking
         if (memcmp(riak_binary_data(bucket), RIAK_TEST_BUCKET_PREFIX, prefixlen) == 0) {
-            riak_listkeys_response *response;
-            err = riak_listkeys(cxn, bucket, NULL, 0, &response);
+            riak_listkeys_response *response = NULL;
+            err = riak_listkeys(cxn, NULL, bucket, 0, &response);
             if (err) {
                 return err;
             }
@@ -297,7 +297,7 @@ test_cleanup_db(riak_connection* cxn) {
             }
             for(int k = 0; k < num_keys; k++) {
                 riak_binary *key = keys[k];
-                err = riak_delete(cxn, bucket, NULL, key, NULL);
+                err = riak_delete(cxn, NULL, bucket, key, NULL);
                 if (err) {
                     fprintf(stderr, "DELETE Failed and leftover data may remain\n");
                     return err;

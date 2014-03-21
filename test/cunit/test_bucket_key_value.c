@@ -29,7 +29,8 @@
 riak_error
 test_bkv_add(riak_config            *cfg,
              test_bucket_key_value **root,
-             riak_binary            *bucket,
+             riak_binary            *bucket_type_bin,
+             riak_binary            *bucket_bin,
              riak_binary            *key,
              riak_binary            *value) {
 
@@ -38,7 +39,8 @@ test_bkv_add(riak_config            *cfg,
         return ERIAK_OUT_OF_MEMORY;
     }
     node->next = *root;
-    node->bucket = bucket;
+    node->bucket_type = bucket_type_bin;
+    node->bucket = bucket_bin;
     node->key = key;
     node->value = value;
     *root = node;

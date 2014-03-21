@@ -617,8 +617,8 @@ riak_object_free(riak_config *cfg,
     if (obj == NULL) return;
     riak_object* object = *obj;
     if (object == NULL) return;
-
     riak_binary_free(cfg, &(object->bucket));
+    riak_binary_free(cfg, &(object->bucket_type));
     riak_binary_free(cfg, &(object->charset));
     riak_binary_free(cfg, &(object->content_type));
     riak_binary_free(cfg, &(object->encoding));

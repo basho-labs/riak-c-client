@@ -90,8 +90,8 @@ test_integration_listkeys() {
 
     riak_listkeys_response *response = NULL;
     err = riak_listkeys(cxn,
-                        db->bucket,
                         NULL,
+                        db->bucket,
                         DEFAULT_TIMEOUT,
                         &response);
     CU_ASSERT_FATAL(err == ERIAK_OK)
@@ -129,6 +129,7 @@ test_listkeys_async_cb(riak_listkeys_response *response,
 }
 
 typedef struct _test_async_pthread_listkey_args {
+    riak_binary            *bucket_type;
     riak_binary            *bucket;
     riak_uint32_t           timeout;
 } test_async_pthread_listkey_args;
@@ -143,8 +144,8 @@ test_listkeys_async_thread(void *ptr) {
     test_async_connection *conn = state->conn;
     test_async_pthread_listkey_args *args = (test_async_pthread_listkey_args*)(state->args);
     riak_error err = riak_async_register_listkeys(conn->rop,
+                                                  args->bucket_type,
                                                   args->bucket,
-                                                  NULL,
                                                   args->timeout,
                                                   (riak_response_callback)test_listkeys_async_cb);
     if (err) {
@@ -171,6 +172,7 @@ test_integration_async_listkeys() {
 
     test_async_pthread_listkey_args args;
     args.bucket = db->bucket;  // Just pick a random bucket
+    args.bucket = NULL;
     args.timeout = 5000;
     err = test_async_thread_runner(cfg, test_listkeys_async_thread, (void*)&args);
     CU_ASSERT_FATAL(err == ERIAK_OK)
