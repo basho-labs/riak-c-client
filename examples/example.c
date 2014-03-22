@@ -95,7 +95,6 @@ main(int   argc,
     riak_reset_bucketprops_response *reset_response = NULL;
     riak_search_response            *search_response = NULL;
     riak_serverinfo_response        *serverinfo_response = NULL;
-    riak_set_clientid_response      *setcli_response = NULL;
 
     // iterate through argv
     for(it = 0; it < args.iterate; it++) {
@@ -239,8 +238,7 @@ main(int   argc,
             }
             break;
         case RIAK_COMMAND_SETCLIENTID:
-            err = riak_set_clientid(cxn, value_bin, &setcli_response);
-            riak_set_clientid_response_free(cfg, &setcli_response);
+            err = riak_set_clientid(cxn, value_bin);
             if (err) {
                 fprintf(stderr, "Set ClientID Problems [%s]\n", riak_strerror(err));
                 exit(1);

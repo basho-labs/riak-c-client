@@ -196,5 +196,11 @@ integration-tests: $(check_PROGRAMS)
 valgrind-tests: $(check_PROGRAMS)
 	$(LIBTOOL) --mode=execute valgrind --leak-check=full --show-leak-kinds=all ./riak_c_cunit
 
-.PHONY: integration-tests valgrind-tests
+gdb-tests: $(check_PROGRAMS)
+	$(LIBTOOL) --mode=execute gdb ./riak_c_cunit
+
+lldb-tests: $(check_PROGRAMS)
+	$(LIBTOOL) --mode=execute lldb ./riak_c_cunit
+
+.PHONY: integration-tests valgrind-tests gdb-tests lldb-tests
 

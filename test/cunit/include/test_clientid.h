@@ -25,3 +25,9 @@ test_set_clientid();
 
 void
 test_get_clientid();
+
+void
+test_integration_clientid();
+
+void
+test_integration_async_clientid();
