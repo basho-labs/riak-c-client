@@ -24,9 +24,8 @@
 struct _riak_get_response {
     riak_boolean_t has_vclock;
     riak_binary   *vclock;
-    riak_boolean_t has_unmodified;
-    riak_boolean_t unmodified;
-    riak_boolean_t deleted;
+    riak_boolean_t has_unchanged;
+    riak_boolean_t unchanged;
     riak_int32_t   n_content;
     riak_object  **content; // Array of pointers to allow expansion
 

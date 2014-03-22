@@ -117,8 +117,8 @@ riak_get_response_decode(riak_operation     *rop,
         }
     }
     if (rpbresp->has_unchanged) {
-        response->has_unmodified = RIAK_TRUE;
-        response->unmodified = rpbresp->unchanged;
+        response->has_unchanged = RIAK_TRUE;
+        response->unchanged = rpbresp->unchanged;
     }
     if (rpbresp->n_content > 0) {
         riak_error err = riak_object_new_array(cfg, &(response->content), rpbresp->n_content);
@@ -150,8 +150,7 @@ riak_get_response_print(riak_print_state  *state,
                         riak_get_response *response) {
     riak_int32_t wrote = 0;
     wrote += riak_print_label_binary_hex(state, "V-Clock", response->vclock);
-    wrote += riak_print_label_bool(state, "Unmodified", response->unmodified);
-    wrote += riak_print_label_bool(state, "Deleted", response->deleted);
+    wrote += riak_print_label_bool(state, "Unchanged", response->unchanged);
     wrote += riak_print_label_int(state, "Objects", response->n_content);
 
     riak_uint32_t i;
@@ -239,27 +238,17 @@ riak_get_get_vclock(riak_get_response *response) {
 
 riak_boolean_t
 riak_get_get_has_unmodified(riak_get_response *response) {
-    return response->has_unmodified;
+    return response->has_unchanged;
 }
 
 /**
- * @brief Access the Unmodified flag in a Get response
+ * @brief Access the Unchanged flag in a Get response
  * @param response Riak Get Response
  * @returns Unmodified flag
  */
 riak_boolean_t
-riak_get_get_unmodified(riak_get_response *response) {
-    return response->unmodified;
-}
-
-/**
- * @brief Access the Deleted flag in a Get response
- * @param response Riak Get Response
- * @returns Deleted flag
- */
-riak_boolean_t
-riak_get_get_deleted(riak_get_response *response) {
-    return response->deleted;
+riak_get_get_unchanged(riak_get_response *response) {
+    return response->unchanged;
 }
 
 /**

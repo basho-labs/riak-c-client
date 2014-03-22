@@ -75,20 +75,12 @@ riak_boolean_t
 riak_get_get_has_unmodified(riak_get_response *response);
 
 /**
- * @brief Access the Unmodified flag in a Get response
+ * @brief Access the Unchanged flag in a Get response
  * @param response Riak Get Response
- * @returns Unmodified flag
+ * @returns Unchanged flag
  */
 riak_boolean_t
-riak_get_get_unmodified(riak_get_response *response);
-
-/**
- * @brief Access the Deleted flag in a Get response
- * @param response Riak Get Response
- * @returns Deleted flag
- */
-riak_boolean_t
-riak_get_get_deleted(riak_get_response *response);
+riak_get_get_unchanged(riak_get_response *response);
 
 /**
  * @brief Access the Number of Riak Objects in a Get response
