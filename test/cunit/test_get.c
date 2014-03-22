@@ -274,7 +274,7 @@ test_get_decode_response() {
     riak_boolean_t     done;
     err = riak_get_response_decode(rop, &pb_response, &response, &done);
     CU_ASSERT_FATAL(err == ERIAK_OK)
-    CU_ASSERT_EQUAL(riak_get_get_deleted(response), RIAK_FALSE);
+    CU_ASSERT_EQUAL(riak_get_get_unchanged(response), RIAK_FALSE);
     CU_ASSERT_EQUAL(riak_get_get_has_vclock(response), RIAK_TRUE);
     riak_uint8_t vclock_bytes[] = {
         0x6b,0xce,0x61,0x60,0x60,0x60,0xcc,0x60,0xca,0x05,0x52,0x1c,0x47,0x83,
@@ -320,6 +320,8 @@ test_integration_get_value() {
     CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
     riak_uint32_t num = riak_get_get_n_content(response);
     CU_ASSERT_EQUAL_FATAL(num, 1)
+    riak_boolean_t unchanged = riak_get_get_unchanged(response);
+    CU_ASSERT_EQUAL_FATAL(unchanged, RIAK_FALSE)
     riak_object **objs = riak_get_get_content(response);
     CU_ASSERT_NOT_EQUAL_FATAL(objs, NULL)
     riak_object *obj = objs[0];

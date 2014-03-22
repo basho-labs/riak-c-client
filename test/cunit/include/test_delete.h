@@ -22,3 +22,9 @@
 
 void
 test_delete_encode_request();
+
+void
+test_integration_delete();
+
+void
+test_integration_async_delete();
