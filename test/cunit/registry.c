@@ -194,6 +194,14 @@ main(int   argc,
     // Only run integration tests if an argument is passed in
     if (argc < 2) {
         CU_set_suite_active(integration_suite, CU_FALSE);
+    } else {
+        CU_set_suite_active(array_suite, CU_FALSE);
+        CU_set_suite_active(binary_suite, CU_FALSE);
+        CU_set_suite_active(config_suite, CU_FALSE);
+        CU_set_suite_active(connection_suite, CU_FALSE);
+        CU_set_suite_active(config_suite, CU_FALSE);
+        CU_set_suite_active(operation_suite, CU_FALSE);
+        CU_set_suite_active(messages_suite, CU_FALSE);
     }
 
     // Run all tests using the CUnit Basic interface

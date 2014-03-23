@@ -56,6 +56,8 @@ riak_operation_free(riak_operation **rop_target) {
     riak_binary_free(cfg, &(rop->request.bucket));
     riak_binary_free(cfg, &(rop->request.key));
     riak_binary_free(cfg, &(rop->request.index));
+    riak_free(cfg, &(rop->msgbuf));
+    riak_server_error_free(cfg, &(rop->error));
     riak_free(cfg, rop_target);
 }
 
