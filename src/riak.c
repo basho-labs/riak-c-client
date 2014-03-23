@@ -254,9 +254,8 @@ riak_get_clientid(riak_connection             *cxn,
 }
 
 riak_error
-riak_set_clientid(riak_connection             *cxn,
-                  riak_binary                 *clientid,
-                  riak_set_clientid_response **response) {
+riak_set_clientid(riak_connection *cxn,
+                  riak_binary     *clientid) {
     riak_operation *rop = NULL;
     riak_error err = riak_operation_new(cxn, &rop, NULL, NULL, NULL);
     if (err) {
@@ -266,7 +265,8 @@ riak_set_clientid(riak_connection             *cxn,
     if (err) {
         return err;
     }
-    err = riak_sync_request(&rop, (void**)response);
+    riak_set_clientid_response *response = NULL;
+    err = riak_sync_request(&rop, (void**)&response);
     if (err) {
         return err;
     }

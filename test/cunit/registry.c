@@ -185,6 +185,8 @@ main(int   argc,
     CU_ADD_TEST(integration_suite, test_integration_async_get_bad_value);
     CU_ADD_TEST(integration_suite, test_integration_delete);
     CU_ADD_TEST(integration_suite, test_integration_async_delete);
+    CU_ADD_TEST(integration_suite, test_integration_clientid);
+    CU_ADD_TEST(integration_suite, test_integration_async_clientid);
 
     // Only run integration tests if an argument is passed in
     if (argc < 2) {

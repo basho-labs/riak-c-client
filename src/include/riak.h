@@ -154,13 +154,11 @@ riak_get_clientid(riak_connection             *cxn,
  * @brief Synchronous fetching of client ID request
  * @param cxn Riak Connection
  * @param clientid Name of client id for current connection
- * @param response Returned Fetched data
  * @returns Error code
  */
 riak_error
 riak_set_clientid(riak_connection             *cxn,
-                  riak_binary                 *clientid,
-                  riak_set_clientid_response **response);
+                  riak_binary                 *clientid);
 
 /**
  * @brief List the properties associated with a bucket
