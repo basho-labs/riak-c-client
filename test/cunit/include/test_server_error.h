@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * test_error.h: Riak C Unit testing for Server Errors
+ * test_server_error.h: Riak C Unit testing for Server Errors
  *
  * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.
  *

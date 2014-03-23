@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * test_error.c: Riak C Unit testing for Server Errors
+ * test_server_error.c: Riak C Unit testing for Server Errors
  *
  * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.
  *
@@ -32,6 +32,11 @@
 #include "riak_operation-internal.h"
 #include "test.h"
 
+/**
+ * @brief Send invalid parameters to a 2i query request which will always
+ * result in an error being returned from Riak.  This message will appear
+ * from the call: ERR #0 - Invalid equality query undefined
+ */
 void
 test_integration_error() {
     riak_config     *cfg;
@@ -75,8 +80,8 @@ test_error_async_cb(riak_2index_response *response,
 }
 
 /**
- * @brief Encode and Send a Get request
- * @param args Parameters required to create error request
+ * @brief Encode and send a bad 2i request
+ * @param args Parameters required to create bad 2i request
  */
 void*
 test_error_async_thread(void *ptr) {
@@ -94,6 +99,11 @@ test_error_async_thread(void *ptr) {
     return NULL;
 }
 
+/**
+ * @brief Send invalid parameters to a 2i query request which will always
+ * result in an error being returned from Riak.  This message will appear
+ * from the async callback: CALLBACK ERROR: Invalid equality query undefined
+ */
 void
 test_integration_async_error() {
     riak_config           *cfg;
