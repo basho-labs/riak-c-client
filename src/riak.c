@@ -492,7 +492,7 @@ riak_read(riak_operation *rop,
             if (rop->error_cb) {
                 (rop->error_cb)(err_response, rop->cb_data);
             }
-            riak_server_serror_response_free(cfg, &err_response);
+            riak_server_error_response_free(cfg, &err_response);
             rop->response = NULL;
             return ERIAK_SERVER_ERROR;
         }
