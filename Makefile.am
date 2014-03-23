@@ -143,8 +143,6 @@ riak_c_async_example_LDADD = \
 	$(PROTOBUF_LIBS) \
 	$(EVENT_LIBS)
 
-riak_c_async_example_DEPENDENCIES = libriak_c_client-0.5.la
-
 check_PROGRAMS = riak_c_cunit
 riak_c_cunit_SOURCES = test/cunit/test.c \
 			test/cunit/registry.c \
@@ -192,3 +190,19 @@ pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = riak-c-client-async.pc \
 			riak-c-client.pc
 
+integration-tests: $(check_PROGRAMS)
+	./riak_c_cunit --integration
+
+valgrind-tests: $(check_PROGRAMS)
+	$(LIBTOOL) --mode=execute valgrind --leak-check=full --show-leak-kinds=all ./riak_c_cunit
+
+valgrind-integration-tests: $(check_PROGRAMS)
+	$(LIBTOOL) --mode=execute valgrind --leak-check=full --show-leak-kinds=all ./riak_c_cunit --integration
+
+gdb-tests: $(check_PROGRAMS)
+	$(LIBTOOL) --mode=execute gdb ./riak_c_cunit
+
+lldb-tests: $(check_PROGRAMS)
+	$(LIBTOOL) --mode=execute lldb ./riak_c_cunit
+
+.PHONY: integration-tests valgrind-tests valgrind-integration-tests gdb-tests lldb-tests
