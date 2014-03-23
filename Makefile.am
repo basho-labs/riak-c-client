@@ -196,5 +196,8 @@ integration-tests: $(check_PROGRAMS)
 valgrind-tests: $(check_PROGRAMS)
 	$(LIBTOOL) --mode=execute valgrind --leak-check=full --show-leak-kinds=all ./riak_c_cunit
 
+valgrind-integration-tests: $(check_PROGRAMS)
+	$(LIBTOOL) --mode=execute valgrind --leak-check=full --show-leak-kinds=all ./riak_c_cunit --integration
+
 .PHONY: integration-tests valgrind-tests
 
