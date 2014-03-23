@@ -27,7 +27,7 @@
 extern "C" {
 #endif
 
-typedef struct _riak_error_response riak_error_response;
+typedef struct _riak_server_error_response riak_server_error_response;
 
 /**
  * @brief Free memory used by an error response
@@ -35,8 +35,8 @@ typedef struct _riak_error_response riak_error_response;
  * @param resp Error structure to be freed
  */
 void
-riak_error_response_free(riak_config         *cfg,
-                         riak_error_response **resp);
+riak_server_error_response_free(riak_config                 *cfg,
+                                riak_server_error_response **resp);
 
 #ifdef __cplusplus
 }

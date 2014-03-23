@@ -25,7 +25,7 @@ include_HEADERS =	src/include/riak.h \
 msgincludedir =		$(includedir)/messages
 dist_msginclude_DATA =	src/include/messages/riak_2index.h \
 			src/include/messages/riak_delete.h \
-			src/include/messages/riak_error.h \
+			src/include/messages/riak_server_error.h \
 			src/include/messages/riak_get.h \
 			src/include/messages/riak_get_bucketprops.h \
 			src/include/messages/riak_get_clientid.h \
@@ -59,7 +59,7 @@ libriak_c_client_0_5_la_SOURCES = \
 			src/riak_utils.c \
 			src/messages/riak_2index.c \
 			src/messages/riak_delete.c \
-			src/messages/riak_error.c \
+			src/messages/riak_server_error.c \
 			src/messages/riak_get.c \
 			src/messages/riak_get_bucketprops.c \
 			src/messages/riak_get_clientid.c \
@@ -155,7 +155,6 @@ riak_c_cunit_SOURCES = test/cunit/test.c \
 			test/cunit/test_config.c \
 			test/cunit/test_connection.c \
 			test/cunit/test_delete.c \
-			test/cunit/test_error.c \
 			test/cunit/test_get.c \
 			test/cunit/test_log.c \
   			test/cunit/test_mapreduce.c \
@@ -166,6 +165,7 @@ riak_c_cunit_SOURCES = test/cunit/test.c \
 			test/cunit/test_ping.c \
 			test/cunit/test_put.c \
 			test/cunit/test_search.c \
+			test/cunit/test_server_error.c \
 			test/cunit/test_serverinfo.c
 
 riak_c_cunit_CPPFLAGS = -I$(SRCDIR)/include \

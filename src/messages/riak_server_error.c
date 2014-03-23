@@ -31,16 +31,16 @@
 #include "riak_bucketprops-internal.h"
 
 riak_error
-riak_error_response_decode(riak_operation       *rop,
-                           riak_pb_message      *pbresp,
-                           riak_error_response **resp,
-                           riak_boolean_t       *done) {
+riak_server_error_response_decode(riak_operation              *rop,
+                                  riak_pb_message             *pbresp,
+                                  riak_server_error_response **resp,
+                                  riak_boolean_t              *done) {
     riak_config *cfg = riak_operation_get_config(rop);
     RpbErrorResp *errresp = rpb_error_resp__unpack(cfg->pb_allocator, (pbresp->len)-1, (uint8_t*)((pbresp->data)+1));
     if (errresp == NULL) {
         return ERIAK_MESSAGE_FORMAT;
     }
-    riak_error_response *response = (riak_error_response*)(cfg->malloc_fn)(sizeof(riak_error_response));
+    riak_server_error_response *response = (riak_server_error_response*)(cfg->malloc_fn)(sizeof(riak_server_error_response));
     *done = RIAK_TRUE;
     riak_free(cfg, &pbresp);
     if (response == NULL) {
@@ -78,9 +78,9 @@ riak_error_response_decode(riak_operation       *rop,
 }
 
 void
-riak_error_response_free(riak_config          *cfg,
-                         riak_error_response **resp) {
-    riak_error_response *response = *resp;
+riak_server_error_response_free(riak_config                 *cfg,
+                                riak_server_error_response **resp) {
+    riak_server_error_response *response = *resp;
     if (response == NULL) return;
     rpb_error_resp__free_unpacked(response->_internal, cfg->pb_allocator);
     riak_free(cfg, &(response->errmsg));

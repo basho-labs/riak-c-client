@@ -22,7 +22,6 @@
 
 #include "messages/riak_2index.h"
 #include "messages/riak_delete.h"
-#include "messages/riak_error.h"
 #include "messages/riak_get.h"
 #include "messages/riak_get_bucketprops.h"
 #include "messages/riak_get_clientid.h"
@@ -33,6 +32,7 @@
 #include "messages/riak_put.h"
 #include "messages/riak_reset_bucketprops.h"
 #include "messages/riak_search.h"
+#include "messages/riak_server_error.h"
 #include "messages/riak_serverinfo.h"
 #include "messages/riak_set_bucketprops.h"
 #include "messages/riak_set_clientid.h"

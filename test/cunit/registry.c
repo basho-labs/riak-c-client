@@ -37,7 +37,6 @@
 #include "test_config.h"
 #include "test_connection.h"
 #include "test_delete.h"
-#include "test_error.h"
 #include "test_get.h"
 #include "test_listbuckets.h"
 #include "test_listkeys.h"
@@ -47,6 +46,7 @@
 #include "test_ping.h"
 #include "test_put.h"
 #include "test_search.h"
+#include "test_server_error.h"
 #include "test_serverinfo.h"
 
 int
