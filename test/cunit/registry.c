@@ -37,6 +37,7 @@
 #include "test_config.h"
 #include "test_connection.h"
 #include "test_delete.h"
+#include "test_error.h"
 #include "test_get.h"
 #include "test_listbuckets.h"
 #include "test_listkeys.h"
@@ -187,6 +188,8 @@ main(int   argc,
     CU_ADD_TEST(integration_suite, test_integration_async_delete);
     CU_ADD_TEST(integration_suite, test_integration_clientid);
     CU_ADD_TEST(integration_suite, test_integration_async_clientid);
+    CU_ADD_TEST(integration_suite, test_integration_error);
+    CU_ADD_TEST(integration_suite, test_integration_async_error);
 
     // Only run integration tests if an argument is passed in
     if (argc < 2) {
