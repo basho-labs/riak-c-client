@@ -46,6 +46,7 @@
 #include "test_ping.h"
 #include "test_put.h"
 #include "test_search.h"
+#include "test_server_error.h"
 #include "test_serverinfo.h"
 
 int
@@ -187,10 +188,20 @@ main(int   argc,
     CU_ADD_TEST(integration_suite, test_integration_async_delete);
     CU_ADD_TEST(integration_suite, test_integration_clientid);
     CU_ADD_TEST(integration_suite, test_integration_async_clientid);
+    CU_ADD_TEST(integration_suite, test_integration_error);
+    CU_ADD_TEST(integration_suite, test_integration_async_error);
 
     // Only run integration tests if an argument is passed in
     if (argc < 2) {
         CU_set_suite_active(integration_suite, CU_FALSE);
+    } else {
+        CU_set_suite_active(array_suite, CU_FALSE);
+        CU_set_suite_active(binary_suite, CU_FALSE);
+        CU_set_suite_active(config_suite, CU_FALSE);
+        CU_set_suite_active(connection_suite, CU_FALSE);
+        CU_set_suite_active(config_suite, CU_FALSE);
+        CU_set_suite_active(operation_suite, CU_FALSE);
+        CU_set_suite_active(messages_suite, CU_FALSE);
     }
 
     // Run all tests using the CUnit Basic interface

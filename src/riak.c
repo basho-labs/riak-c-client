@@ -185,10 +185,10 @@ riak_delete(riak_connection    *cxn,
     }
     riak_delete_response *response = NULL;
     err = riak_sync_request(&rop, (void**)&response);
+    riak_delete_response_free(cfg, &response);
     if (err) {
         return err;
     }
-    riak_delete_response_free(cfg, &response);
 
     return ERIAK_OK;
 }
@@ -267,6 +267,7 @@ riak_set_clientid(riak_connection *cxn,
     }
     riak_set_clientid_response *response = NULL;
     err = riak_sync_request(&rop, (void**)&response);
+    riak_set_clientid_response_free(riak_connection_get_config(cxn), &response);
     if (err) {
         return err;
     }
@@ -475,7 +476,7 @@ riak_read(riak_operation *rop,
         rop->msglen_complete = RIAK_FALSE;
 
         // Response varies by data type
-        riak_error_response *err_response = NULL;
+        riak_server_error_response *err_response = NULL;
         // Assume we are doing a single loop, unless told otherwise
         *done_streaming = RIAK_TRUE;
         if (rop->decoder == NULL) {
@@ -483,7 +484,7 @@ riak_read(riak_operation *rop,
             return ERIAK_READ;
         }
         if (msgid == MSG_RPBERRORRESP) {
-            result = riak_error_response_decode(rop, pbresp, &err_response, done_streaming);
+            result = riak_server_error_response_decode(rop, pbresp, &err_response, done_streaming);
             // Convert error response to a null-terminated string
             char errmsg[2048];
             riak_binary_print(err_response->errmsg, errmsg, sizeof(errmsg));
@@ -491,6 +492,7 @@ riak_read(riak_operation *rop,
             if (rop->error_cb) {
                 (rop->error_cb)(err_response, rop->cb_data);
             }
+            riak_server_error_response_free(cfg, &err_response);
             rop->response = NULL;
             return ERIAK_SERVER_ERROR;
         }

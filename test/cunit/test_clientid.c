@@ -123,6 +123,7 @@ test_integration_clientid() {
     CU_ASSERT_EQUAL_FATAL(equals,0)
     riak_get_clientid_response_free(cfg, &response);
 
+    riak_binary_free(cfg, &client_id);
     test_disconnect(cfg, &cxn);
     test_cleanup(&cfg);
     CU_PASS("test_integration_clientid passed")
@@ -228,6 +229,7 @@ test_integration_async_clientid() {
     err = test_async_thread_runner(cfg, test_get_clientid_async_thread, (void*)&args, (void*)client_id);
     CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
 
+    riak_binary_free(cfg, &client_id);
     test_disconnect(cfg, &cxn);
     test_cleanup(&cfg);
     CU_PASS("test_integration_async_clientid passed")

@@ -128,6 +128,7 @@ test_delete_async_cb(riak_delete_response *del_response,
     test_async_connection          *conn = (test_async_connection*)state->conn;
     test_async_pthread_delete_args *args = (test_async_pthread_delete_args*)state->args;
 
+    riak_delete_response_free(conn->cfg, &del_response);
     riak_get_response *response;
     riak_error err = riak_get(conn->cxn, args->bucket, args->key, NULL, &response);
     if (err) {

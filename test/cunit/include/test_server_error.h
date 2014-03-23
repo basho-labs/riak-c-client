@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * riak_error.h: Riak C Client Error Message
+ * test_server_error.h: Riak C Unit testing for Server Errors
  *
  * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.
  *
@@ -20,26 +20,8 @@
  *
  *********************************************************************/
 
-#ifndef _RIAK_ERROR_MESSAGE_H
-#define _RIAK_ERROR_MESSAGE_H
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-typedef struct _riak_error_response riak_error_response;
-
-/**
- * @brief Free memory used by an error response
- * @param cfg Riak Configuration
- * @param resp Error structure to be freed
- */
 void
-riak_error_response_free(riak_config         *cfg,
-                         riak_error_response **resp);
+test_integration_error();
 
-#ifdef __cplusplus
-}
-#endif
-
-#endif
+void
+test_integration_async_error();

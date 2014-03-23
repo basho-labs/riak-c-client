@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * riak_messages.h: Riak C Client External Messages
+ * riak_error.h: Riak C Client Error Message
  *
  * Copyright (c) 2007-2014 Basho Technologies, Inc.  All Rights Reserved.
  *
@@ -20,19 +20,26 @@
  *
  *********************************************************************/
 
-#include "messages/riak_2index.h"
-#include "messages/riak_delete.h"
-#include "messages/riak_get.h"
-#include "messages/riak_get_bucketprops.h"
-#include "messages/riak_get_clientid.h"
-#include "messages/riak_listbuckets.h"
-#include "messages/riak_listkeys.h"
-#include "messages/riak_mapreduce.h"
-#include "messages/riak_ping.h"
-#include "messages/riak_put.h"
-#include "messages/riak_reset_bucketprops.h"
-#include "messages/riak_search.h"
-#include "messages/riak_server_error.h"
-#include "messages/riak_serverinfo.h"
-#include "messages/riak_set_bucketprops.h"
-#include "messages/riak_set_clientid.h"
+#ifndef _RIAK_ERROR_MESSAGE_H
+#define _RIAK_ERROR_MESSAGE_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+typedef struct _riak_server_error_response riak_server_error_response;
+
+/**
+ * @brief Free memory used by an error response
+ * @param cfg Riak Configuration
+ * @param resp Error structure to be freed
+ */
+void
+riak_server_error_response_free(riak_config                 *cfg,
+                                riak_server_error_response **resp);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif

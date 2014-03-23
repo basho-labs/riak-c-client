@@ -131,7 +131,7 @@ riak_pb_message_free(riak_config     *cfg,
 #include "messages/riak_set_clientid-internal.h"
 
 // Based on RpbErrorResp
-struct _riak_error_response {
+struct _riak_server_error_response {
     riak_uint32_t errcode;
     riak_binary  *errmsg;
 
@@ -152,10 +152,10 @@ struct _riak_ping_response {
  * @return Error if out of memory
  */
 riak_error
-riak_error_response_decode(riak_operation       *rop,
-                           riak_pb_message      *pbresp,
-                           riak_error_response **resp,
-                           riak_boolean_t       *done);
+riak_server_error_response_decode(riak_operation              *rop,
+                                  riak_pb_message             *pbresp,
+                                  riak_server_error_response **resp,
+                                  riak_boolean_t              *done);
 
 /**
  * @brief Build a ping request
