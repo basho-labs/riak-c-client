@@ -451,7 +451,7 @@ test_cleanup_db(riak_connection* cxn) {
 
     const int prefixlen = strlen(RIAK_TEST_BUCKET_PREFIX);
     riak_listbuckets_response *bucket_response = NULL;
-    riak_error err = riak_listbuckets(cxn, NULL, 10000, &bucket_response);
+    riak_error err = riak_listbuckets(cxn, NULL, RIAK_DEFAULT_TIMEOUT, &bucket_response);
     if (err) {
         return err;
     }
