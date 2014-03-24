@@ -172,6 +172,7 @@ riak_mapreduce_response_free(riak_config              *cfg,
         riak_free(cfg, &(response->msg[i]));
         rpb_map_red_resp__free_unpacked(response->_internal[i], cfg->pb_allocator);
     }
+    riak_free(cfg, &(response->msg));
     riak_free(cfg, &(response->_internal));
     riak_free(cfg, resp);
 }
