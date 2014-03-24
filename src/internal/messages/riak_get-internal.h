@@ -67,6 +67,7 @@ struct _riak_get_options {
  */
 riak_error
 riak_get_request_encode(riak_operation   *rop,
+                        riak_binary      *bucket_type,
                         riak_binary      *bucket,
                         riak_binary      *key,
                         riak_get_options *options,

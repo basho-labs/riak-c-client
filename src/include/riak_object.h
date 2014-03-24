@@ -113,6 +113,34 @@ riak_binary*
 riak_object_get_bucket(riak_object *obj);
 
 /**
+ * @brief Access the name of the bucket type
+ * @param obj Riak Object
+ * @returns The name of the bucket type
+ */
+riak_binary*
+riak_object_get_bucket_type(riak_object *obj);
+
+/**
+ * @brief Determine if the bucket type has been populated
+ * @param obj Riak Object
+ * @returns True if the bucket type has been populated
+ */
+riak_boolean_t
+riak_object_has_bucket_type(riak_object *obj);
+
+/**
+ * @brief Set the name of the bucket type
+ * @param cfg Riak Configuration
+ * @param obj Riak Object
+ * @param value Name of the bucket type
+ * @returns Error code
+ */
+riak_error
+riak_object_set_bucket_type(riak_config *cfg,
+                            riak_object *obj,
+                            riak_binary *value);
+
+/**
  * @brief Determine if the `Key` has been populated
  * @param obj Riak Object
  * @returns True if the `Key` has been populated

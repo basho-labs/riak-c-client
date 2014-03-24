@@ -32,6 +32,7 @@
 
 riak_error
 riak_get_request_encode(riak_operation  *rop,
+                        riak_binary      *bucket_type,
                         riak_binary      *bucket,
                         riak_binary      *key,
                         riak_get_options *get_options,
@@ -39,12 +40,16 @@ riak_get_request_encode(riak_operation  *rop,
 
     riak_config *cfg = riak_operation_get_config(rop);
     RpbGetReq getmsg = RPB_GET_REQ__INIT;
-
+    riak_operation_set_bucket_type(rop, bucket_type);
     riak_operation_set_bucket(rop, bucket);
     riak_operation_set_key(rop, key);
     riak_binary_copy_to_pb(&getmsg.bucket, bucket);
     riak_binary_copy_to_pb(&getmsg.key, key);
 
+    if(bucket_type != NULL) {
+        riak_binary_copy_to_pb(&getmsg.type, bucket_type);
+        getmsg.has_type = RIAK_TRUE;
+    }
     // process get options
     if(get_options != NULL) {
         getmsg.has_r = get_options->has_r;
@@ -136,6 +141,10 @@ riak_get_response_decode(riak_operation     *rop,
                 return err;
             }
             response->content[i]->bucket  = riak_binary_copy(cfg, riak_operation_get_bucket(rop));
+            if(riak_operation_has_bucket_type(rop)) {
+                response->content[i]->bucket_type  = riak_binary_copy(cfg, riak_operation_get_bucket_type(rop));
+                response->content[i]->has_bucket_type = RIAK_TRUE;
+            }
             response->content[i]->key     = riak_binary_copy(cfg, riak_operation_get_key(rop));
             response->content[i]->has_key = RIAK_TRUE;
         }

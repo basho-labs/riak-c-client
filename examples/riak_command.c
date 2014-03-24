@@ -74,6 +74,7 @@ static riak_command s_commands[] = {
     {"port",         "",                       "number", 'p', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
     {"timeout",      "",                       "secs",   't', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
     {"value",        "",                       "val",    'v', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
+    {"bucket-type",  "",                       "type",   'B', RIAK_FALSE, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE},
     {NULL, NULL, NULL, 0, RIAK_FALSE, RIAK_FALSE, RIAK_FALSE}
 };
 
@@ -196,6 +197,7 @@ riak_parse_args(int           argc,
     args->port       = 10017;
     args->timeout    = 10;
     args->has_bucket = RIAK_FALSE;
+    args->has_bucket_type = RIAK_FALSE;    
     args->has_key    = RIAK_FALSE;
     args->has_value  = RIAK_FALSE;
     args->has_index  = RIAK_FALSE;
@@ -237,6 +239,12 @@ riak_parse_args(int           argc,
                 args->has_bucket = RIAK_TRUE;
                 break;
 
+            case 'B':
+                 printf ("option -B with value `%s'\n", optarg);
+                 riak_strlcpy(args->bucket_type, optarg, sizeof(args->bucket_type));
+                 args->has_bucket_type = RIAK_TRUE;
+                 break;
+ 
             case 'd':
                 args->threaded = RIAK_TRUE;
                 break;

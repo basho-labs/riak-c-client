@@ -32,6 +32,7 @@
 
 riak_error
 riak_delete_request_encode(riak_operation      *rop,
+                           riak_binary         *bucket_type,
                            riak_binary         *bucket,
                            riak_binary         *key,
                            riak_delete_options *options,
@@ -39,7 +40,10 @@ riak_delete_request_encode(riak_operation      *rop,
 
     riak_config *cfg = riak_operation_get_config(rop);
     RpbDelReq delmsg = RPB_DEL_REQ__INIT;
-
+    if(bucket_type != NULL) {
+        riak_binary_copy_to_pb(&delmsg.type, bucket_type);
+        delmsg.has_type = RIAK_TRUE;
+    }
     riak_binary_copy_to_pb(&delmsg.bucket, bucket);
     riak_binary_copy_to_pb(&delmsg.key, key);
 

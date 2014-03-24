@@ -114,6 +114,32 @@ void
 riak_operation_set_bucket(riak_operation *rop,
                           riak_binary    *bucket);
 
+
+/**
+ * @brief Set the bucket type on the current operation
+ * @param rop Riak Operation
+ * @param bucket Name of bucket type in Riak
+ */
+void
+riak_operation_set_bucket_type(riak_operation *rop,
+                               riak_binary    *bucket_type);
+
+/**
+ * @brief Gets the bucket type on the current operation
+ * @param rop Riak Operation
+ * @returns Name of bucket type in Riak
+ */
+riak_binary*
+riak_operation_get_bucket_type(riak_operation *rop);
+
+/**
+ * @brief returns TRUE if bucket_type is defined
+ * @param rop Riak Operation
+ * @returns returns TRUE if bucket_type is defined
+ */
+riak_boolean_t
+riak_operation_has_bucket_type(riak_operation *rop);
+
 /**
  * @brief Set the bucket on the current operation
  * @param rop Riak Operation

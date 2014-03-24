@@ -46,6 +46,9 @@ struct _riak_pair
 struct _riak_object {
     riak_binary   *bucket;
 
+    riak_boolean_t has_bucket_type;
+    riak_binary   *bucket_type;
+
     riak_boolean_t has_key;
     riak_binary   *key;
 

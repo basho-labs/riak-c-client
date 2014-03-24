@@ -68,7 +68,7 @@ test_delete_encode_request() {
     key.data = (riak_uint8_t*)"key";
     key.len  = 3;
 
-    err = riak_delete_request_encode(rop, &bucket, &key, opt, &request);
+    err = riak_delete_request_encode(rop, NULL, &bucket, &key, opt, &request);
     CU_ASSERT_FATAL(err == ERIAK_OK)
     riak_uint8_t bytes[] = { 0x0a,0x06,0x62,0x75,0x63,0x6b,0x65,0x74,0x12,0x03,0x6b,
                              0x65,0x79,0x22,0x08,0x31,0x32,0x33,0x34,0x35,0x36,0x37,
@@ -99,10 +99,10 @@ test_integration_delete() {
     err = test_load_db(cfg, cxn, &db, 1, 1);
     CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
 
-    err = riak_delete(cxn, db->bucket, db->key, NULL);
+    err = riak_delete(cxn, NULL, db->bucket, db->key, NULL);
     CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
     riak_get_response *response = NULL;
-    err = riak_get(cxn, db->bucket, db->key, NULL, &response);
+    err = riak_get(cxn, NULL, db->bucket, db->key, NULL, &response);
     CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
     riak_uint32_t num = riak_get_get_n_content(response);
     CU_ASSERT_EQUAL_FATAL(num, 0)
@@ -130,7 +130,7 @@ test_delete_async_cb(riak_delete_response *del_response,
 
     riak_delete_response_free(conn->cfg, &del_response);
     riak_get_response *response;
-    riak_error err = riak_get(conn->cxn, args->bucket, args->key, NULL, &response);
+    riak_error err = riak_get(conn->cxn, NULL, args->bucket, args->key, NULL, &response);
     if (err) {
         state->err = err;
         riak_get_response_free(conn->cfg, &response);
@@ -157,7 +157,7 @@ test_delete_async_thread(void *ptr) {
     test_async_pthread    *state = (test_async_pthread*)ptr;
     test_async_connection *conn  = state->conn;
     test_async_pthread_delete_args *args = (test_async_pthread_delete_args*)(state->args);
-    riak_error err = riak_async_register_delete(conn->rop, args->bucket, args->key, args->opts, (riak_response_callback)test_delete_async_cb);
+    riak_error err = riak_async_register_delete(conn->rop, NULL, args->bucket, args->key, args->opts, (riak_response_callback)test_delete_async_cb);
     if (err) {
         return (void*)riak_strerror(err);
     }

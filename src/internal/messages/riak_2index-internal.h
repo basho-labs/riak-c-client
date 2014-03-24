@@ -69,6 +69,7 @@ struct _riak_2index_response
 
 riak_error
 riak_2index_request_encode(riak_operation      *rop,
+                           riak_binary         *bucket_type,
                            riak_binary         *bucket,
                            riak_binary         *index,
                            riak_2index_options *index_options,

@@ -31,11 +31,21 @@
 
 riak_error
 riak_listbuckets_request_encode(riak_operation   *rop,
+                                riak_binary  *bucket_type,
+                                riak_uint32_t timeout,
                                 riak_pb_message **req) {
     riak_config *cfg = riak_operation_get_config(rop);
     RpbListBucketsReq listbucketsreq = RPB_LIST_BUCKETS_REQ__INIT;
     listbucketsreq.stream = RIAK_TRUE;
     listbucketsreq.has_stream = RIAK_TRUE;
+    if(bucket_type != NULL) {
+        riak_binary_copy_to_pb(&listbucketsreq.type, bucket_type);
+        listbucketsreq.has_type = RIAK_TRUE;
+    }
+    if (timeout > 0) {
+        listbucketsreq.has_timeout = RIAK_TRUE;
+        listbucketsreq.timeout = timeout;
+    }
     riak_size_t msglen = rpb_list_buckets_req__get_packed_size(&listbucketsreq);
     riak_uint8_t *msgbuf = (riak_uint8_t*)(cfg->malloc_fn)(msglen);
     if (msgbuf == NULL) {
