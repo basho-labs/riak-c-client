@@ -89,7 +89,7 @@ test_integration_listkeys() {
     CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
 
     riak_listkeys_response *response = NULL;
-    err = riak_listkeys(cxn, db->bucket, 5000, &response);
+    err = riak_listkeys(cxn, NULL, db->bucket, 5000, &response);
     CU_ASSERT_FATAL(err == ERIAK_OK)
     CU_ASSERT_EQUAL(response->n_keys, 50)
 
@@ -141,7 +141,7 @@ test_listkeys_async_thread(void *ptr) {
     test_async_pthread    *state = (test_async_pthread*)ptr;
     test_async_connection *conn  = state->conn;
     test_async_pthread_listkey_args *args = (test_async_pthread_listkey_args*)(state->args);
-    riak_error err = riak_async_register_listkeys(conn->rop, args->bucket, args->timeout, (riak_response_callback)test_listkeys_async_cb);
+    riak_error err = riak_async_register_listkeys(conn->rop, NULL, args->bucket, args->timeout, (riak_response_callback)test_listkeys_async_cb);
     if (err) {
         return (void*)riak_strerror(err);
     }

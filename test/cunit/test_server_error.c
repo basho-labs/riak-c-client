@@ -53,7 +53,7 @@ test_integration_error() {
     CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
 
     riak_2index_response *response;
-    err = riak_2index(cxn, db->bucket, db->key, NULL, &response);
+    err = riak_2index(cxn, NULL, db->bucket, db->key, NULL, &response);
     CU_ASSERT_EQUAL_FATAL(err,ERIAK_SERVER_ERROR)
     riak_2index_response_free(cfg, &response);
 
@@ -88,7 +88,7 @@ test_error_async_thread(void *ptr) {
     test_async_pthread    *state = (test_async_pthread*)ptr;
     test_async_connection *conn  = state->conn;
     test_async_pthread_error_args *args = (test_async_pthread_error_args*)(state->args);
-    riak_error err = riak_async_register_2index(conn->rop, args->bucket, args->key, NULL, (riak_response_callback)test_error_async_cb);
+    riak_error err = riak_async_register_2index(conn->rop, NULL, args->bucket, args->key, NULL, (riak_response_callback)test_error_async_cb);
     if (err) {
         return (void*)riak_strerror(err);
     }

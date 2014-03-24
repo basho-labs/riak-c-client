@@ -43,6 +43,7 @@
 #define RIAK_TEST_HOST          "RIAK_TEST_HOST"
 #define RIAK_TEST_PB_PORT       "RIAK_TEST_PB_PORT"
 
+#define RIAK_DEFAULT_TIMEOUT        10000
 /**
  * @brief Generic logging function which writes to stderr
  * @param ptr Pointer to user-defined data structure (not used)
