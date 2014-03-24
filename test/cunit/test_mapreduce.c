@@ -302,7 +302,7 @@ test_integration_async_mapreduce() {
     test_async_pthread_mapreduce_args args;
     args.content   = content;
     args.query     = query;
-    args.streaming = RIAK_TRUE;
+    args.streaming = RIAK_FALSE;
     err = test_async_thread_runner(cfg, test_mapreduce_async_thread, (void*)&args, (void*)NULL);
     CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
 
