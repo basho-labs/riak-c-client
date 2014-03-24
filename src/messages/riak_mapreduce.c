@@ -176,6 +176,11 @@ riak_mapreduce_response_free(riak_config              *cfg,
     riak_free(cfg, resp);
 }
 
+riak_int32_t
+riak_mapreduce_get_n_messages(riak_mapreduce_response *response) {
+    return response->n_responses;
+}
+
 riak_mapreduce_message**
 riak_mapreduce_get_messages(riak_mapreduce_response *response) {
     return response->msg;

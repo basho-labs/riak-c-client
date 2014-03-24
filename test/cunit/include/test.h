@@ -157,6 +157,17 @@ test_random_string(riak_config  *cfg,
 riak_binary*
 test_random_binary(riak_config  *cfg,
                    riak_uint32_t len);
+/**
+ * @brief Build a random printable riak_binary with a specific prefix
+ * @param cfg Riak Configuration
+ * @param prefix Constant string prepended to resulting string
+ * @param len Length of generated string
+ * @returns Random riak_binary
+ */
+riak_binary*
+test_random_binary_with_prefix(riak_config  *cfg,
+                               const char   *prefix,
+                               riak_uint32_t len);
 
 /**
  * @brief Generate a random integer

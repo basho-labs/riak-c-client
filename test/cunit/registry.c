@@ -190,6 +190,8 @@ main(int   argc,
     CU_ADD_TEST(integration_suite, test_integration_async_clientid);
     CU_ADD_TEST(integration_suite, test_integration_error);
     CU_ADD_TEST(integration_suite, test_integration_async_error);
+    CU_ADD_TEST(integration_suite, test_integration_mapreduce);
+    CU_ADD_TEST(integration_suite, test_integration_async_mapreduce);
 
     // Only run integration tests if an argument is passed in
     if (argc < 2) {
