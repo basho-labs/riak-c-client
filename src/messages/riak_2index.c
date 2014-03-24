@@ -32,17 +32,22 @@
 
 riak_error
 riak_2index_request_encode(riak_operation      *rop,
+                           riak_binary         *bucket_type,
                            riak_binary         *bucket,
                            riak_binary         *index,
                            riak_2index_options *index_options,
                            riak_pb_message    **req) {
     riak_config *cfg = riak_operation_get_config(rop);
     RpbIndexReq twoimsg = RPB_INDEX_REQ__INIT;
-
+    riak_operation_set_bucket_type(rop, bucket_type);
     riak_operation_set_bucket(rop, bucket);
     riak_operation_set_index(rop, index);
     riak_binary_copy_to_pb(&twoimsg.bucket, bucket);
     riak_binary_copy_to_pb(&twoimsg.index, index);
+    if(bucket_type != NULL) {
+        riak_binary_copy_to_pb(&twoimsg.type, bucket_type);
+        twoimsg.has_type = RIAK_TRUE;
+    }
 
     // process get options
     if (index_options != NULL) {

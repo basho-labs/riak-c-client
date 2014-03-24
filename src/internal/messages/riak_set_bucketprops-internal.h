@@ -45,6 +45,7 @@ struct _riak_set_bucketprops_response
  */
 riak_error
 riak_set_bucketprops_request_encode(riak_operation   *rop,
+                                    riak_binary      *bucket_type,
                                     riak_binary      *bucket,
                                     riak_bucketprops *props,
                                     riak_pb_message  **req);

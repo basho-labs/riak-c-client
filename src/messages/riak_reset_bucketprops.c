@@ -33,12 +33,16 @@
 riak_error
 riak_reset_bucketprops_request_encode(riak_operation      *rop,
                                       riak_binary         *bucket,
+                                      riak_binary         *bucket_type,                                      
                                       riak_pb_message    **req) {
 
     riak_config *cfg = riak_operation_get_config(rop);
     RpbResetBucketReq resetmsg;
     rpb_reset_bucket_req__init(&resetmsg);
-
+    if(bucket_type != NULL) {
+        riak_binary_copy_to_pb(&resetmsg.type, bucket_type);
+        resetmsg.has_type = RIAK_TRUE;
+    }
     riak_binary_copy_to_pb(&resetmsg.bucket, bucket);
 
     riak_uint32_t msglen = rpb_reset_bucket_req__get_packed_size(&resetmsg);

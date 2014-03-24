@@ -702,7 +702,9 @@ riak_object_print(riak_print_state *state,
                   riak_object      *obj) {
     riak_int32_t wrote = 0;
     wrote += riak_print_label_binary(state, "Bucket", obj->bucket);
-
+    if (obj->has_bucket_type) {
+        wrote += riak_print_label_binary(state, "Bucket type", obj->bucket_type);
+    } 
     if (obj->has_key) {
         wrote += riak_print_label_binary(state, "Key", obj->key);
     }
@@ -747,6 +749,7 @@ riak_object_free(riak_config *cfg,
     riak_object* object = *obj;
     if (object == NULL) return;
 
+    riak_binary_free(cfg, &(object->bucket_type));
     riak_binary_free(cfg, &(object->bucket));
     riak_binary_free(cfg, &(object->charset));
     riak_binary_free(cfg, &(object->content_type));
@@ -775,6 +778,17 @@ riak_binary*
 riak_object_get_bucket(riak_object *obj)
 {
     return obj->bucket;
+}
+
+riak_binary*
+riak_object_get_bucket_type(riak_object *obj)
+{
+    return obj->bucket_type;
+}
+
+riak_boolean_t
+riak_object_has_bucket_type(riak_object *obj) {
+    return obj->has_bucket_type;
 }
 
 riak_boolean_t
@@ -941,6 +955,18 @@ riak_object_set_bucket(riak_config *cfg,
     if (obj->bucket == NULL) {
         return ERIAK_OUT_OF_MEMORY;
     }
+    return ERIAK_OK;
+}
+
+riak_error
+riak_object_set_bucket_type(riak_config *cfg,
+                            riak_object *obj,
+                            riak_binary *value) {
+    obj->bucket_type = riak_binary_copy(cfg, value);
+    if (obj->bucket_type == NULL) {
+        return ERIAK_OUT_OF_MEMORY;
+    }
+    obj->has_bucket_type = RIAK_TRUE;
     return ERIAK_OK;
 }
 
