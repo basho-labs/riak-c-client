@@ -172,8 +172,14 @@ riak_mapreduce_response_free(riak_config              *cfg,
         riak_free(cfg, &(response->msg[i]));
         rpb_map_red_resp__free_unpacked(response->_internal[i], cfg->pb_allocator);
     }
+    riak_free(cfg, &(response->msg));
     riak_free(cfg, &(response->_internal));
     riak_free(cfg, resp);
+}
+
+riak_int32_t
+riak_mapreduce_get_n_messages(riak_mapreduce_response *response) {
+    return response->n_responses;
 }
 
 riak_mapreduce_message**

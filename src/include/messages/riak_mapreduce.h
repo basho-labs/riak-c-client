@@ -51,6 +51,14 @@ riak_mapreduce_response_print(riak_print_state        *state,
                               riak_mapreduce_response *response);
 
 /**
+ * @brief Determine the number of messages returned in the response
+ * @prarm response The Map/Reduce response
+ * @returns Number of messages included in the response
+ */
+riak_int32_t
+riak_mapreduce_get_n_messages(riak_mapreduce_response *response);
+
+/**
  * @brief Access the array of received map/reduce messages
  * @param response Riak Map/Reduce response
  * @returns Array of pointers to map/reduce messages

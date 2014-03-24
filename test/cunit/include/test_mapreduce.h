@@ -22,3 +22,9 @@
 
 void
 test_mapreduce_response_decode();
+
+void
+test_integration_mapreduce();
+
+void
+test_integration_async_mapreduce();

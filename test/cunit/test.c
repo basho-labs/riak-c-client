@@ -194,7 +194,20 @@ test_random_string(riak_config  *cfg,
     if (result != NULL) {
         int i;
         for(i = 0; i< len; i++) {
-            result[i] = (char)(32+(rand() % (127-32)));
+            switch (rand()%3) {
+            // Numbers
+            case 0:
+                result[i] = (char)('0'+(rand() % 10));
+                break;
+            // Uppercase
+            case 1:
+                result[i] = (char)('A'+(rand() % 26));
+                break;
+            // Lowercase
+            case 2:
+                result[i] = (char)('a'+(rand() % 26));
+                break;
+            }
         }
         result[i] = '\0';
     }
@@ -209,6 +222,22 @@ test_random_binary(riak_config  *cfg,
         return NULL;
     }
     riak_binary *bin = riak_binary_new(cfg, len, (riak_uint8_t*)result);
+    riak_free(cfg, &result);
+    return bin;
+}
+
+riak_binary*
+test_random_binary_with_prefix(riak_config  *cfg,
+                               const char   *prefix,
+                               riak_uint32_t len) {
+    char buffer[512];
+    riak_uint32_t remaining = len - strlen(prefix);
+    char *result = test_random_string(cfg, remaining);
+    if (result == NULL) {
+        return NULL;
+    }
+    snprintf(buffer, sizeof(buffer), "%s%s", prefix, result);
+    riak_binary *bin = riak_binary_copy_from_string(cfg, buffer);
     riak_free(cfg, &result);
     return bin;
 }
@@ -381,9 +410,7 @@ test_load_db(riak_config            *cfg,
         if (suffix == NULL) {
             return ERIAK_OUT_OF_MEMORY;
         }
-        char bucket_str[128];
-        snprintf(bucket_str, sizeof(bucket_str), "%s%s", RIAK_TEST_BUCKET_PREFIX, suffix);
-        riak_binary *bucket = riak_binary_copy_from_string(cfg, bucket_str);
+        riak_binary *bucket = test_random_binary_with_prefix(cfg, RIAK_TEST_BUCKET_PREFIX, RIAK_TEST_BUCKET_KEY_LEN);
         if (bucket == NULL) {
             return ERIAK_OUT_OF_MEMORY;
         }
