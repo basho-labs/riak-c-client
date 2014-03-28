@@ -12,13 +12,10 @@ AC_PROG_LIBTOOL
 LT_INIT
 
 PKG_CHECK_MODULES([EVENT], [libevent_pthreads])
-EVENT_INCLUDES=`pkg-config libevent_pthreads --cflags`
 PKG_CHECK_MODULES([PROTOBUFC], [libprotobuf-c])
-PROTOBUFC_INCLUDES=`pkg-config libprotobuf-c --cflags-only-I`
 PKG_CHECK_MODULES([PROTOBUF], [protobuf])
-PROTOBUF_INCLUDES=`pkg-config protobuf --cflags-only-I`
 PKG_CHECK_MODULES([CUNIT], [cunit])
-CUNIT_INCLUDES=`pkg-config cunit --cflags-only-I`
+PKG_CHECK_MODULES([GLIB], [glib-2.0])
 
 AC_TYPE_SIZE_T
 AC_TYPE_UINT8_T

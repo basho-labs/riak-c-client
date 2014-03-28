@@ -80,9 +80,10 @@ libriak_c_client_0_5_la_SOURCES = \
 			riak_pb/c/riak_yokozuna.pb-c.c
 
 libriak_c_client_0_5_la_CPPFLAGS = \
-			$(PROTOBUFC_INCLUDES) \
-			$(PROTOBUF_INCLUDES) \
-			$(EVENT_INCLUDES) \
+			$(PROTOBUFC_CFLAGS) \
+			$(PROTOBUF_CFLAGS) \
+			$(EVENT_CFLAGS) \
+			$(GLIB_CFLAGS) \
 			-I$(SRCDIR)/include \
 			-I$(SRCDIR)/internal \
 			-I$(RIAK_PB)/c \
@@ -92,7 +93,8 @@ libriak_c_client_0_5_la_CPPFLAGS = \
 libriak_c_client_0_5_la_LIBADD = \
 			$(PROTOBUFC_LIBS) \
 			$(PROTOBUF_LIBS) \
-			$(EVENT_LIBS)
+			$(EVENT_LIBS) \
+			$(GLIB_LIBS)
 
 AM_CFLAGS =		-g -Wall
 
@@ -113,12 +115,14 @@ riak_c_example_CPPFLAGS = \
 			-I$(RIAK_PB)/c \
 			-I$(SRCDIR)/adapters \
 			-I$(SRCDIR) \
+			$(GLIB_CFLAGS) \
 			-Iexamples/include
 
 riak_c_example_LDADD = \
 		-lriak_c_client-0.5 \
 		$(PROTOBUFC_LIBS) \
-		$(PROTOBUF_LIBS)
+		$(PROTOBUF_LIBS) \
+		$(GLIB_LIBS)
 
 riak_c_async_example_DEPENDENCIES = libriak_c_client-0.5.la
 
@@ -128,20 +132,22 @@ riak_c_async_example_SOURCES = examples/async_example.c \
             examples/example_log.c 
 
 riak_c_async_example_CPPFLAGS = \
-            -DUSE_DEBUG -D_RIAK_DEBUG \
-            -I$(SRCDIR)/include \
-            -I$(SRCDIR)/internal \
-            -I$(RIAK_PB)/c \
-            -I$(SRCDIR)/adapters \
-            -I$(SRCDIR) \
-            -Iexamples/include \
-            $(EVENT_INCLUDES)
+		-DUSE_DEBUG -D_RIAK_DEBUG \
+		-I$(SRCDIR)/include \
+		-I$(SRCDIR)/internal \
+		-I$(RIAK_PB)/c \
+		-I$(SRCDIR)/adapters \
+		-I$(SRCDIR) \
+		-Iexamples/include \
+		$(EVENT_CFLAGS) \
+		$(GLIB_CFLAGS)
 
 riak_c_async_example_LDADD = \
-	-lriak_c_client-0.5 \
-	$(PROTOBUFC_LIBS) \
-	$(PROTOBUF_LIBS) \
-	$(EVENT_LIBS)
+		-lriak_c_client-0.5 \
+		$(PROTOBUFC_LIBS) \
+		$(PROTOBUF_LIBS) \
+		$(EVENT_LIBS) \
+		$(GLIB_LIBS)
 
 check_PROGRAMS = riak_c_cunit
 riak_c_cunit_SOURCES = test/cunit/test.c \
@@ -173,14 +179,16 @@ riak_c_cunit_CPPFLAGS = -I$(SRCDIR)/include \
 			-I$(RIAK_PB)/c \
 			-I$(SRCDIR) \
 			-I$(TESTCUNITDIR)/include \
-			$(EVENT_INCLUDES) \
-			$(CUNIT_INCLUDES)
+			$(EVENT_CFLAGS) \
+			$(CUNIT_CFLAGS) \
+			$(GLIB_CFLAGS)
 
 riak_c_cunit_LDADD =	-lriak_c_client-0.5 \
 			$(PROTOBUFC_LIBS) \
 			$(PROTOBUF_LIBS) \
 			$(EVENT_LIBS) \
-			$(CUNIT_LIBS)
+			$(CUNIT_LIBS) \
+			$(GLIB_LIBS)
 
 riak_c_cunit_DEPENDENCIES = libriak_c_client-0.5.la
 

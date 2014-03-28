@@ -34,6 +34,7 @@ Doxygen generated docs located [here](http://basho.github.io/riak-c-client/globa
 * cunit-2.1-2
 * pkg-config
 * pthreads
+* glib-2.0
 * doxygen (if you are building docs)
 * riak_pb
 	* see note below
@@ -49,7 +50,7 @@ The riak-c-client depends on [riak_pb](https://github.com/basho/riak_pb), which 
 Be sure Xcode, command-line tools and [Home Brew](http://brew.sh/) installed first.
 
 ```
-brew install git automake autoconf libtool pkg-config protobuf protobuf-c libevent cunit doxygen
+brew install git automake autoconf libtool pkg-config protobuf protobuf-c libevent cunit doxygen glib
 
 git clone https://github.com/basho/riak-c-client
 cd riak-c-client
@@ -177,6 +178,7 @@ sudo pkg install -v pkg:/developer/build/automake-111@1.11.2-0.175.1.0.0.24.0
 sudo pkg install -v pkg:/developer/build/autoconf@2.68-0.175.1.0.0.24.0
 sudo pkg install -v pkg:/developer/versioning/git@1.7.9.2-0.175.1.0.0.24.0
 sudo pkg install -v pkg:/developer/documentation-tool/doxygen@1.7.6.1-0.175.1.0.0.24.0
+sudo pkg install -v pkg:/developer/build/libtool@2.4.2-0.175.1.0.0.24.0
 
 wget https://github.com/downloads/libevent/libevent/libevent-2.0.21-stable.tar.gz
 tar fx libevent-2.0.21-stable.tar.gz
@@ -237,8 +239,18 @@ sudo pkg install libtool-2.4.2_2
 sudo pkg install libevent2-2.0.21
 sudo pkg install protobuf-2.5.0_1
 sudo pkg install protobuf-c-0.15_1
-sudo pkg install cunit-2.1.0_2
 sudo pkg install gmake-3.82_1
+sudo pkg install wget-1.15
+
+wget http://sourceforge.net/projects/cunit/files/CUnit/2.1-2/CUnit-2.1-2-src.tar.bz2
+tar fx CUnit-2.1-2-src.tar.bz2
+cd CUnit-2.1-2
+CC=gcc46 ./configure
+make
+make check
+sudo make install
+sudo mv /usr/local/lib/pkgconfig/cunit.pc /usr/local/libdata/pkgconfig
+cd ..
 
 git clone https://github.com/basho/riak-c-client
 cd riak-c-client
