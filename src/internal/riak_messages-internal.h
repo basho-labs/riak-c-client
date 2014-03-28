@@ -115,7 +115,7 @@ void
 riak_pb_message_free(riak_config     *cfg,
                      riak_pb_message **pb);
 
-#include "messages/riak_2index-internal.h"
+#include "messages/riak_2i-internal.h"
 #include "messages/riak_delete-internal.h"
 #include "messages/riak_get_bucketprops-internal.h"
 #include "messages/riak_get_clientid-internal.h"

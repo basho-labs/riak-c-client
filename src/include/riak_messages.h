@@ -20,7 +20,7 @@
  *
  *********************************************************************/
 
-#include "messages/riak_2index.h"
+#include "messages/riak_2i.h"
 #include "messages/riak_delete.h"
 #include "messages/riak_get.h"
 #include "messages/riak_get_bucketprops.h"

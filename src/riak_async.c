@@ -145,14 +145,14 @@ riak_async_register_mapreduce(riak_operation        *rop,
 }
 
 riak_error
-riak_async_register_2index(riak_operation        *rop,
+riak_async_register_2i(riak_operation        *rop,
                            riak_binary           *bucket_type,
                            riak_binary           *bucket,
                            riak_binary           *index,
-                           riak_2index_options   *index_options,
+                           riak_2i_options   *index_options,
                            riak_response_callback cb) {
     riak_operation_set_response_cb(rop, cb);
-    return riak_2index_request_encode(rop, bucket_type, bucket, index, index_options, &(rop->pb_request));
+    return riak_2i_request_encode(rop, bucket_type, bucket, index, index_options, &(rop->pb_request));
 }
 
 riak_error

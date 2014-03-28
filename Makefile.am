@@ -23,7 +23,7 @@ include_HEADERS =	src/include/riak.h \
 			src/include/riak_print.h \
 			src/adapters/riak_libevent.h
 msgincludedir =		$(includedir)/messages
-dist_msginclude_DATA =	src/include/messages/riak_2index.h \
+dist_msginclude_DATA =	src/include/messages/riak_2i.h \
 			src/include/messages/riak_delete.h \
 			src/include/messages/riak_server_error.h \
 			src/include/messages/riak_get.h \
@@ -57,7 +57,7 @@ libriak_c_client_0_5_la_SOURCES = \
 			src/riak_operation.c \
 			src/riak_print.c \
 			src/riak_utils.c \
-			src/messages/riak_2index.c \
+			src/messages/riak_2i.c \
 			src/messages/riak_delete.c \
 			src/messages/riak_server_error.c \
 			src/messages/riak_get.c \
@@ -146,7 +146,7 @@ riak_c_async_example_LDADD = \
 check_PROGRAMS = riak_c_cunit
 riak_c_cunit_SOURCES = test/cunit/test.c \
 			test/cunit/registry.c \
-			test/cunit/test_2index.c \
+			test/cunit/test_2i.c \
 			test/cunit/test_array.c \
 			test/cunit/test_binary.c \
 			test/cunit/test_bucket_key_value.c \

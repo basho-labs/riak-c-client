@@ -24,7 +24,7 @@
 //    riak_binary bucket;
 //    riak_binary index;
 // Based on RpbIndexReq
-struct _riak_2index_options
+struct _riak_2i_options
 {
     RpbIndexReq__IndexQueryType qtype;
     riak_boolean_t has_key;
@@ -52,7 +52,7 @@ struct _riak_2index_options
 };
 
 // Based on RpbIndexResp
-struct _riak_2index_response
+struct _riak_2i_response
 {
     riak_uint32_t  n_keys;
     riak_binary  **keys;
@@ -68,16 +68,16 @@ struct _riak_2index_response
 };
 
 riak_error
-riak_2index_request_encode(riak_operation      *rop,
+riak_2i_request_encode(riak_operation      *rop,
                            riak_binary         *bucket_type,
                            riak_binary         *bucket,
                            riak_binary         *index,
-                           riak_2index_options *index_options,
+                           riak_2i_options *index_options,
                            riak_pb_message    **req);
 
 riak_error
-riak_2index_response_decode(riak_operation       *rop,
+riak_2i_response_decode(riak_operation       *rop,
                            riak_pb_message       *pbresp,
-                           riak_2index_response **resp,
+                           riak_2i_response **resp,
                            riak_boolean_t        *done);
 
