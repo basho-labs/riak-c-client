@@ -52,10 +52,10 @@ test_integration_error() {
     err = test_load_db(cfg, cxn, &db, 1, 1);
     CU_ASSERT_EQUAL_FATAL(err,ERIAK_OK)
 
-    riak_2index_response *response;
-    err = riak_2index(cxn, NULL, db->bucket, db->key, NULL, &response);
+    riak_2i_response *response;
+    err = riak_2i(cxn, NULL, db->bucket, db->key, NULL, &response);
     CU_ASSERT_EQUAL_FATAL(err,ERIAK_SERVER_ERROR)
-    riak_2index_response_free(cfg, &response);
+    riak_2i_response_free(cfg, &response);
 
     test_bkv_free(cfg, &db);
     test_cleanup_db(cxn);
@@ -70,12 +70,12 @@ typedef struct _test_async_pthread_error_args {
 } test_async_pthread_error_args;
 
 void
-test_error_async_cb(riak_2index_response *response,
+test_error_async_cb(riak_2i_response *response,
                     void                 *ptr) {
     test_async_pthread    *state = (test_async_pthread*)ptr;
     test_async_connection *conn = (test_async_connection*)state->conn;
 
-    riak_2index_response_free(conn->cfg, &response);
+    riak_2i_response_free(conn->cfg, &response);
     state->err = ERIAK_OK;
 }
 
@@ -88,7 +88,7 @@ test_error_async_thread(void *ptr) {
     test_async_pthread    *state = (test_async_pthread*)ptr;
     test_async_connection *conn  = state->conn;
     test_async_pthread_error_args *args = (test_async_pthread_error_args*)(state->args);
-    riak_error err = riak_async_register_2index(conn->rop, NULL, args->bucket, args->key, NULL, (riak_response_callback)test_error_async_cb);
+    riak_error err = riak_async_register_2i(conn->rop, NULL, args->bucket, args->key, NULL, (riak_response_callback)test_error_async_cb);
     if (err) {
         return (void*)riak_strerror(err);
     }
