@@ -23,6 +23,8 @@
 #ifndef _RIAK_UTILS_INTERNAL_H
 #define _RIAK_UTILS_INTERNAL_H
 
+#include <glib.h>
+
 /**
  * @brief Since strlcpy is not standard everywhere, write our own
  * @param dst Destination
