@@ -55,7 +55,7 @@ brew install git automake autoconf libtool pkg-config protobuf protobuf-c libeve
 git clone https://github.com/basho/riak-c-client
 cd riak-c-client
 ./autogen.sh
-./configure
+./configure CFLAGS=-I/usr/local/Cellar/protobuf-c/0.15/include
 make
 make check
 doxygen
